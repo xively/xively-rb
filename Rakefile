@@ -10,7 +10,6 @@ CLEAN.include('pkg')
 CLOBBER.include('html')
 
 task :default => :spec
-task :default => :test
 
 # run tests before building
 task :build => :spec
