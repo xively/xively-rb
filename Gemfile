@@ -1,4 +1,4 @@
 source :rubygems
 
-# Gem dependencies specified in cachew.gemspec
+# Gem dependencies specified in pachube-data-formats.gemspec
 gemspec
