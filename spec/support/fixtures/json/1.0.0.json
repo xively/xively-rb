@@ -1,0 +1,97 @@
+{
+    "datastreams": [
+        {
+            "min_value": "0.0",
+            "at": "2011-02-16T14:19:19.677816Z",
+            "tags": [
+                "humidity"
+            ],
+            "current_value": "27",
+            "max_value": "658.0",
+            "id": "0"
+        },
+        {
+            "min_value": "0.0",
+            "at": "2011-02-16T14:19:19.677816Z",
+            "tags": [
+                "light level"
+            ],
+            "current_value": "854",
+            "max_value": "980.0",
+            "id": "1"
+        },
+        {
+            "min_value": "158.0",
+            "at": "2011-02-16T14:19:19.677816Z",
+            "tags": [
+                "temperature"
+            ],
+            "current_value": "314",
+            "max_value": "774.0",
+            "id": "2"
+        },
+        {
+            "min_value": "0.0",
+            "at": "2011-02-16T14:19:19.677816Z",
+            "tags": [
+                "door 1"
+            ],
+            "current_value": "0",
+            "max_value": "0.0",
+            "id": "3"
+        },
+        {
+            "min_value": "0.0",
+            "at": "2011-02-16T14:19:19.677816Z",
+            "tags": [
+                "door 2"
+            ],
+            "current_value": "0",
+            "max_value": "0.0",
+            "id": "4"
+        },
+        {
+            "min_value": "0.0",
+            "at": "2011-02-16T14:19:19.677816Z",
+            "tags": [
+                "failures"
+            ],
+            "current_value": "40",
+            "max_value": "40.0",
+            "id": "5"
+        },
+        {
+            "min_value": "-32768.0",
+            "at": "2011-02-16T14:19:19.677816Z",
+            "tags": [
+                "successes"
+            ],
+            "current_value": "2135",
+            "max_value": "32767.0",
+            "id": "6"
+        }
+    ],
+    "status": "live",
+    "updated": "2011-02-16T14:19:14.682921Z",
+    "tags": [
+        "hq",
+        "office"
+    ],
+    "description": "Sensors in Pachube.com's headquarters.",
+    "title": "Pachube Office environment",
+    "website": "http://www.pachube.com/",
+    "private": "false",
+    "version": "1.0.0",
+    "id": 504,
+    "location": {
+        "domain": "physical",
+        "lon": -0.0807666778564453,
+        "disposition": "fixed",
+        "ele": "23.0",
+        "exposure": "indoor",
+        "lat": 51.5235375648154,
+        "name": "office"
+    },
+    "feed": "http://api.pachube.com/v2/feeds/504.json"
+}
+

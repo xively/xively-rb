@@ -21,10 +21,11 @@ pachube_data_formats is a gem designed to make interfacing with pachube easier. 
 
   s.required_rubygems_version = ">=1.3.6"
 
-  #s.add_dependency("yajl", "<=2.3.10")
+  s.add_dependency("yajl-ruby", ">=0.8.1")
 
   s.add_development_dependency("rake", ">=0.8.7")
   s.add_development_dependency("rspec", "=2.5.0")
+  s.add_development_dependency("ruby-debug")
   #s.add_development_dependency("mocha", ">=0.9.9")
 
   s.extra_rdoc_files = ["README", "CHANGELOG", "MIT-LICENSE"]
