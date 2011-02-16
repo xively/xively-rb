@@ -15,6 +15,13 @@ describe PachubeDataFormats::Feed do
           feed = PachubeDataFormats::Feed.new(feed_as_(format, :with => {:unknown_field => "is like totally bogus"}))
           feed.hash["unknown_field"].should be_nil
         end
+
+        it "should store all hash keys as strings (never as symbols)" do
+          feed = PachubeDataFormats::Feed.new(feed_as_(format))
+          feed.hash.each do |key, _|
+            raise "Stored a key as a #{key.class} instead of a String" unless key.class == String
+          end
+        end
       end
     end
   end
