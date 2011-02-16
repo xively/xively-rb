@@ -20,7 +20,7 @@ echo "Running custom build.sh - install bundle, rake"
 rm -rf .bundle .gem
 bundle --path=.gem/
 set +e
-bundle exec rake
+rake
 #> $outdir/testtask.log
 spec_rc=$?
 set -e
