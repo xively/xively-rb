@@ -13,7 +13,6 @@ describe PachubeDataFormats::Feed do
 
         it "should ignore unknown fields" do
           feed = PachubeDataFormats::Feed.new(feed_as_(format, :with => {:unknown_field => "is like totally bogus"}))
-          feed.hash[:unknown_field].should be_nil
           feed.hash["unknown_field"].should be_nil
         end
       end
@@ -24,11 +23,10 @@ describe PachubeDataFormats::Feed do
     context "output to #{format}" do
       describe "#to_#{format}" do
         it "should output Pachube #{format}" do
-          feed = PachubeDataFormats::Feed.new(feed_as_("json"))
-          json = feed.send("to_#{format}")
-          json.should_not be_nil
-          parsed_json = JSON.parse(json)
-          parsed_json.should == JSON.parse(feed_as_("json"))
+          feed = PachubeDataFormats::Feed.new(feed_as_(format))
+          output = feed.send("to_#{format}")
+          output.should_not be_nil
+          output.parse_feed_as_(format).should == feed_as_(format).parse_feed_as_(format)
         end
       end
     end
