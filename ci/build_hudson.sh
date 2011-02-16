@@ -17,6 +17,7 @@ set +e
 set -e
 
 echo "Running custom build.sh - install bundle, rake"
+rm -rf .bundle .gem
 bundle --path=.gem/
 set +e
 rake
