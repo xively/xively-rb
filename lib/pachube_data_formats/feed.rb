@@ -1,6 +1,6 @@
 module PachubeDataFormats
   class Feed
-    ALLOWED_KEYS = %w(title version)
+    ALLOWED_KEYS = %w(datastreams status updated tags description title website private version id location feed)
     attr_accessor(:hash)
 
     def initialize(input)
