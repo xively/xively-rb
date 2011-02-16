@@ -11,10 +11,11 @@ describe PachubeDataFormats::Feed do
           lambda{PachubeDataFormats::Feed.new(feed_as_(format))}.should_not raise_exception
         end
 
-        it "should ignore unknown fields"
-        #  feed = PachubeDataFormats::Feed.new({:title => "my name is", :bunny => "is a terrorist"})
-        #  feed.hash[:bunny].should be_nil
-        #end
+        it "should ignore unknown fields" do
+          feed = PachubeDataFormats::Feed.new(feed_as_(format, :with => {:unknown_field => "is like totally bogus"}))
+          feed.hash[:unknown_field].should be_nil
+          feed.hash["unknown_field"].should be_nil
+        end
       end
     end
   end
