@@ -1,17 +1,17 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "pachube-data-formats/version"
+require "pachube_data_formats/version"
 
 Gem::Specification.new do |s|
-  s.name        = "pachube-data-formats"
+  s.name        = "pachube_data_formats"
   s.version     = PachubeDataFormats::VERSION::STRING
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Paul Bellamy", "Levent Ali"]
   s.email       = ["paul.a.bellamy@gmail.com", "lebreeze@gmail.com"]
-  s.homepage    = "http://github.com/pachube/pachube-data-formats"
-  s.summary     = %q{pachube-data-formats is a gem designed to make interfacing with pachube easier. It converts to and from Pachube's data formats.}
+  s.homepage    = "http://github.com/pachube/pachube_data_formats"
+  s.summary     = %q{pachube_data_formats is a gem designed to make interfacing with pachube easier. It converts to and from Pachube's data formats.}
   s.description = <<-EOF
-pachube-data-formats is a gem designed to make interfacing with pachube easier. It converts to and from Pachube's data formats.
+pachube_data_formats is a gem designed to make interfacing with pachube easier. It converts to and from Pachube's data formats.
   EOF
 
   s.files         = `git ls-files`.split("\n")
