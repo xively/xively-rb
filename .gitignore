@@ -1,5 +1,6 @@
 .bundle/*
 *.swp
+*.swo
 Gemfile.lock
 .gem/*
 build_artefacts/*
