@@ -1,10 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe PachubeDataFormats::Feed do
-  INPUT_FORMATS = %w(json hash)
-  OUTPUT_FORMATS = %w(json hash)
-  #ALLOWED_KEYS = %w(datastreams status updated tags description title website private version id location feed)
-  ALLOWED_KEYS = %w(retrieved_at created_at title csv_version updated_at private deleted_at feed_content owner_id mime_type id icon website tag_list feed_retrieved description mapped feed_content_hash feed email)
+  ALLOWED_KEYS = %w(created_at csv_version datastreams description email feed icon id location owner private retrieved_at status tags title updated_at website)
 
   context "instance methods" do
     before(:each) do
@@ -46,34 +43,37 @@ describe PachubeDataFormats::Feed do
     end
   end
 
-  INPUT_FORMATS.each do |format|
-    context "input from #{format}" do
-      describe "#initialize" do
-        it "should accept one parameter" do
-          lambda{PachubeDataFormats::Feed.new(feed_as_(format))}.should_not raise_exception
-        end
+  context "input from json" do
+    describe "#initialize" do
+      it "should accept one parameter" do
+        lambda{PachubeDataFormats::Feed.new(feed_as_(:json))}.should_not raise_exception
+      end
 
-        it "should parse and store all pertinent fields" do
-          feed = PachubeDataFormats::Feed.new(feed_as_(format))
-          hash = feed_as_(:hash)
-          ALLOWED_KEYS.each do |key|
-            feed.send(key).should == hash[key]
-          end
-        end
+      it "should parse and store stuff" do
+        feed = PachubeDataFormats::Feed.new(feed_as_(:json))
+        hash = JSON.parse(feed_as_(:json))
+
+        feed.title.should == hash["title"]
+        feed.status.should == hash["status"]
+        feed.retrieved_at.should == hash["updated"]
+        feed.description.should == hash["description"]
+        feed.website.should == hash["website"]
+        feed.private.should == hash["private"]
+        feed.id.should == hash["id"]
+        feed.location.should == hash["location"]
+        feed.feed.should == hash["feed"]
+        feed.datastreams.should == hash["datastreams"]
       end
     end
   end
 
-  OUTPUT_FORMATS.each do |format|
-    context "output to #{format}" do
-      describe "#to_#{format}" do
-        it "should output Pachube #{format}" do
-          feed = PachubeDataFormats::Feed.new(feed_as_(format))
-          output = feed.send("to_#{format}")
-          output.should_not be_nil
-          output.parse_feed_as_(format).should == feed_as_(format).parse_feed_as_(format)
-        end
-      end
+  describe "#to_json" do
+    it "should output Pachube json" do
+      feed = PachubeDataFormats::Feed.new(feed_as_('json'))
+      output = feed.to_json
+      output.should_not be_nil
+      parsed = JSON.parse(output)
+      parsed.should == JSON.parse(feed_as_('json'))
     end
   end
 end

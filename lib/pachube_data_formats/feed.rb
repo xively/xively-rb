@@ -1,20 +1,18 @@
 module PachubeDataFormats
   class Feed
-    #ALLOWED_KEYS = %w(datastreams status updated tags description title website private version id location feed)
-    ALLOWED_KEYS = %w(retrieved_at created_at title csv_version updated_at private deleted_at feed_content owner_id mime_type id icon website tag_list feed_retrieved description mapped feed_content_hash feed email)
+    ALLOWED_KEYS = %w(created_at csv_version datastreams description email feed icon id location owner private retrieved_at status tags title updated_at website)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
     def initialize(input)
-      if input.is_a? Hash
-        self.hash = input
-      else
-        self.hash = FeedParser::JSON.parse(input)
-      end
+      self.hash = FeedParser::JSON.parse(input)
     end
 
     def hash
       h = {}
-      ALLOWED_KEYS.each { |key| h[key] = self.send(key) }
+      ALLOWED_KEYS.each do |key|
+        value = self.send(key)
+        h[key] = value unless value.nil?
+      end
       return h
     end
 
