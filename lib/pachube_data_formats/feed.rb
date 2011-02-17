@@ -4,7 +4,7 @@ module PachubeDataFormats
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
     def initialize(input)
-      self.hash = FeedParser::JSON.parse(input)
+      self.hash = FeedFormats::JSON.decode(input)
     end
 
     def hash
@@ -24,7 +24,7 @@ module PachubeDataFormats
     alias_method :to_hash, :hash
 
     def to_json
-      JSON.generate(hash)
+      FeedFormats::JSON.encode(hash)
     end
   end
 end
