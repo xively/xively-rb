@@ -3,7 +3,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe PachubeDataFormats::Feed do
   INPUT_FORMATS = %w(json hash)
   OUTPUT_FORMATS = %w(json hash)
-  ALLOWED_KEYS = %w(datastreams status updated tags description title website private version id location feed)
+  #ALLOWED_KEYS = %w(datastreams status updated tags description title website private version id location feed)
+  ALLOWED_KEYS = %w(retrieved_at created_at title csv_version updated_at private deleted_at feed_content owner_id mime_type id icon website tag_list feed_retrieved description mapped feed_content_hash feed email)
 
   context "instance methods" do
     before(:each) do

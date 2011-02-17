@@ -1,13 +1,14 @@
 module PachubeDataFormats
   class Feed
-    ALLOWED_KEYS = %w(datastreams status updated tags description title website private version id location feed)
+    #ALLOWED_KEYS = %w(datastreams status updated tags description title website private version id location feed)
+    ALLOWED_KEYS = %w(retrieved_at created_at title csv_version updated_at private deleted_at feed_content owner_id mime_type id icon website tag_list feed_retrieved description mapped feed_content_hash feed email)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
     def initialize(input)
       if input.is_a? Hash
         self.hash = input
       else
-        self.hash = JSON.parse(input)
+        self.hash = FeedParser::JSON.parse(input)
       end
     end
 
