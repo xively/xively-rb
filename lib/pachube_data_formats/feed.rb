@@ -4,10 +4,14 @@ module PachubeDataFormats
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
     def initialize(input)
-      self.hash = FeedFormats::JSON.decode(input)
+      if input.is_a?(Hash)
+        self.attributes = FeedFormats::Hash.parse(input)
+      else
+        self.attributes = FeedFormats::JSON.parse(input)
+      end
     end
 
-    def hash
+    def attributes
       h = {}
       ALLOWED_KEYS.each do |key|
         value = self.send(key)
@@ -16,15 +20,18 @@ module PachubeDataFormats
       return h
     end
 
-    def hash=(input)
+    def attributes=(input)
       return if input.nil?
       ALLOWED_KEYS.each { |key| self.send("#{key}=", input[key]) }
-      return hash
+      return attributes
     end
-    alias_method :to_hash, :hash
 
     def to_json
-      FeedFormats::JSON.encode(hash)
+      FeedFormats::JSON.generate(attributes)
+    end
+
+    def to_hash
+      FeedFormats::Hash.generate(attributes)
     end
   end
 end

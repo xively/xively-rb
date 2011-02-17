@@ -67,6 +67,30 @@ describe PachubeDataFormats::Feed do
     end
   end
 
+  context "input from hash" do
+    describe "#initialize" do
+      it "should accept one parameter" do
+        lambda{PachubeDataFormats::Feed.new(feed_as_(:hash))}.should_not raise_exception
+      end
+
+      it "should parse and store stuff" do
+        hash = feed_as_(:hash)
+        feed = PachubeDataFormats::Feed.new(hash)
+
+        feed.title.should == hash["title"]
+        feed.status.should == hash["status"]
+        feed.retrieved_at.should == hash["retrieved_at"]
+        feed.description.should == hash["description"]
+        feed.website.should == hash["website"]
+        feed.private.should == hash["private"]
+        feed.id.should == hash["id"]
+        feed.location.should == hash["location"]
+        feed.feed.should == hash["feed"]
+        feed.datastreams.should == hash["datastreams"]
+      end
+    end
+  end
+
   describe "#to_json" do
     it "should output Pachube json" do
       feed = PachubeDataFormats::Feed.new(feed_as_('json'))
@@ -74,6 +98,15 @@ describe PachubeDataFormats::Feed do
       output.should_not be_nil
       parsed = JSON.parse(output)
       parsed.should == JSON.parse(feed_as_('json'))
+    end
+  end
+
+  describe "#to_hash" do
+    it "should output Pachube hash" do
+      feed = PachubeDataFormats::Feed.new(feed_as_('hash'))
+      output = feed.to_hash
+      output.should_not be_nil
+      output.should == feed_as_(:hash)
     end
   end
 end
