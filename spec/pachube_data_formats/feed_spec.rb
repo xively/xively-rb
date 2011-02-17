@@ -3,26 +3,47 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe PachubeDataFormats::Feed do
   INPUT_FORMATS = %w(json hash)
   OUTPUT_FORMATS = %w(json hash)
+  ALLOWED_KEYS = %w(datastreams status updated tags description title website private version id location feed)
 
-  #context "instance methods" do
-  #  before(:each) do
-  #    @feed = PachubeDataFormats::Feed.new(feed_as_(:json))
-  #  end
+  context "instance methods" do
+    before(:each) do
+      @feed = PachubeDataFormats::Feed.new(feed_as_(:json))
+    end
 
-  #  describe "#hash=" do
-  #    it "should be possible to set whitelisted fields" do
-  #      %w(datastreams status updated tags description title website private version id location feed).each do |key|
-  #        @feed.hash[key] = key
-  #        @feed.hash[key].should == key
-  #      end
-  #    end
+    describe "setting whitelisted fields" do
+      ALLOWED_KEYS.each do |key|
+        it "##{key}=" do
+          lambda {
+            @feed.send("#{key}=", key)
+          }.should_not raise_error
+        end
+      end
+    end
 
-  #    it "should not be possible to set non-whitelisted fields" do
-  #      @feed.hash['something_bogus'] = 'whatevs'
-  #      @feed.hash['something_bogus'].should be_nil
-  #    end
-  #  end
-  #end
+    describe "getting whitelisted fields" do
+      ALLOWED_KEYS.each do |key|
+        it "##{key}" do
+          lambda {
+            @feed.send(key)
+          }.should_not raise_error
+        end
+      end
+    end
+
+    describe "setting non-whitelisted keys" do
+      it "should not be possible to set non-whitelisted fields" do
+        lambda {
+          @feed.something_bogus = 'whatevs'
+        }.should raise_error
+      end
+
+      it "should not be possible to get non-whitelisted fields" do
+        lambda {
+          @feed.something_bogus
+        }.should raise_error
+      end
+    end
+  end
 
   INPUT_FORMATS.each do |format|
     context "input from #{format}" do
@@ -31,15 +52,11 @@ describe PachubeDataFormats::Feed do
           lambda{PachubeDataFormats::Feed.new(feed_as_(format))}.should_not raise_exception
         end
 
-        it "should ignore unknown fields" do
-          feed = PachubeDataFormats::Feed.new(feed_as_(format, :with => {:unknown_field => "is like totally bogus"}))
-          feed.hash["unknown_field"].should be_nil
-        end
-
-        it "should store all hash keys as strings (never as symbols)" do
+        it "should parse and store all pertinent fields" do
           feed = PachubeDataFormats::Feed.new(feed_as_(format))
-          feed.hash.each do |key, _|
-            raise "Stored a key as a #{key.class} instead of a String" unless key.class == String
+          hash = feed_as_(:hash)
+          ALLOWED_KEYS.each do |key|
+            feed.send(key).should == hash[key]
           end
         end
       end

@@ -1,25 +1,31 @@
 module PachubeDataFormats
   class Feed
     ALLOWED_KEYS = %w(datastreams status updated tags description title website private version id location feed)
-    attr_accessor(:hash)
+    ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
     def initialize(input)
       if input.is_a? Hash
-        @hash = input
+        self.hash = input
       else
-        @hash = JSON.parse(input)
+        self.hash = JSON.parse(input)
       end
-
-      # Whitelist all incoming keys
-      @hash = @hash.reject { |key,_| !ALLOWED_KEYS.include? key }
     end
 
-    def to_hash
-      @hash
+    def hash
+      h = {}
+      ALLOWED_KEYS.each { |key| h[key] = self.send(key) }
+      return h
     end
+
+    def hash=(input)
+      return if input.nil?
+      ALLOWED_KEYS.each { |key| self.send("#{key}=", input[key]) }
+      return hash
+    end
+    alias_method :to_hash, :hash
 
     def to_json
-      JSON.generate(@hash)
+      JSON.generate(hash)
     end
   end
 end
