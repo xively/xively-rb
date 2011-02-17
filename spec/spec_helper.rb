@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'bundler/setup'
 
+require 'rspec'
 require 'ruby-debug'
 
 Dir['./spec/support/**/*.rb'].map {|f| require f}
