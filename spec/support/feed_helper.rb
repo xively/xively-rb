@@ -107,9 +107,11 @@ end
 # or output_string.parse_feed_as_("xml")
 # and get back a nicely formatted hash
 # for comparison in tests
-class String
+class Object
   def parse_feed_as_(format, options = {})
     case format.to_s
+    when 'hash'
+      self
     when 'json'
       JSON.parse(self)
     else

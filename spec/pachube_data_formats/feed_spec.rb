@@ -1,8 +1,28 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe PachubeDataFormats::Feed do
-  INPUT_FORMATS = %w(json)
-  OUTPUT_FORMATS = %w(json)
+  INPUT_FORMATS = %w(json hash)
+  OUTPUT_FORMATS = %w(json hash)
+
+  #context "instance methods" do
+  #  before(:each) do
+  #    @feed = PachubeDataFormats::Feed.new(feed_as_(:json))
+  #  end
+
+  #  describe "#hash=" do
+  #    it "should be possible to set whitelisted fields" do
+  #      %w(datastreams status updated tags description title website private version id location feed).each do |key|
+  #        @feed.hash[key] = key
+  #        @feed.hash[key].should == key
+  #      end
+  #    end
+
+  #    it "should not be possible to set non-whitelisted fields" do
+  #      @feed.hash['something_bogus'] = 'whatevs'
+  #      @feed.hash['something_bogus'].should be_nil
+  #    end
+  #  end
+  #end
 
   INPUT_FORMATS.each do |format|
     context "input from #{format}" do
