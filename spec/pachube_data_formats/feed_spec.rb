@@ -43,70 +43,41 @@ describe PachubeDataFormats::Feed do
     end
   end
 
-  context "input from json" do
-    describe "#initialize" do
-      it "should accept one parameter" do
-        lambda{PachubeDataFormats::Feed.new(feed_as_(:json))}.should_not raise_exception
-      end
+  describe "#initialize" do
+    it "should accept one parameter" do
+      lambda{PachubeDataFormats::Feed.new}.should raise_exception(ArgumentError, "wrong number of arguments (0 for 1)")
+    end
 
-      it "should parse and store stuff" do
+    context "input from json" do
+      it "should use the PachubeJSON parser and store the outcome" do
+        PachubeDataFormats::FeedFormats::PachubeJSON.should_receive(:parse).with(feed_as_(:json)).and_return({"title" => "Environment"})
         feed = PachubeDataFormats::Feed.new(feed_as_(:json))
-        hash = JSON.parse(feed_as_(:json))
-
-        feed.title.should == hash["title"]
-        feed.status.should == hash["status"]
-        feed.retrieved_at.should == hash["updated"]
-        feed.description.should == hash["description"]
-        feed.website.should == hash["website"]
-        feed.private.should == hash["private"]
-        feed.id.should == hash["id"]
-        feed.location.should == hash["location"]
-        feed.feed.should == hash["feed"]
-        feed.datastreams.should == hash["datastreams"]
+        feed.title.should == "Environment"
       end
     end
-  end
 
-  context "input from hash" do
-    describe "#initialize" do
-      it "should accept one parameter" do
-        lambda{PachubeDataFormats::Feed.new(feed_as_(:hash))}.should_not raise_exception
-      end
-
-      it "should parse and store stuff" do
-        hash = feed_as_(:hash)
-        feed = PachubeDataFormats::Feed.new(hash)
-
-        feed.title.should == hash["title"]
-        feed.status.should == hash["status"]
-        feed.retrieved_at.should == hash["retrieved_at"]
-        feed.description.should == hash["description"]
-        feed.website.should == hash["website"]
-        feed.private.should == hash["private"]
-        feed.id.should == hash["id"]
-        feed.location.should == hash["location"]
-        feed.feed.should == hash["feed"]
-        feed.datastreams.should == hash["datastreams"]
+    context "input from hash" do
+      it "should use the PachubeHash parser and store the outcome" do
+        PachubeDataFormats::FeedFormats::PachubeHash.should_receive(:parse).with(feed_as_(:hash)).and_return({"title" => "Environment"})
+        feed = PachubeDataFormats::Feed.new(feed_as_(:hash))
+        feed.title.should == "Environment"
       end
     end
   end
 
   describe "#to_json" do
-    it "should output Pachube json" do
-      feed = PachubeDataFormats::Feed.new(feed_as_('json'))
-      output = feed.to_json
-      output.should_not be_nil
-      parsed = JSON.parse(output)
-      parsed.should == JSON.parse(feed_as_('json'))
+    it "should use the PachubeJSON generator" do
+      feed = PachubeDataFormats::Feed.new(feed_as_('hash'))
+      PachubeDataFormats::FeedFormats::PachubeJSON.should_receive(:generate).with(feed_as_(:hash)).and_return({"title" => "Environment"})
+      feed.to_json.should == {"title" => "Environment"}
     end
   end
 
   describe "#to_hash" do
-    it "should output Pachube hash" do
+    it "should use the PachubeHash generator" do
       feed = PachubeDataFormats::Feed.new(feed_as_('hash'))
-      output = feed.to_hash
-      output.should_not be_nil
-      output.should == feed_as_(:hash)
+      PachubeDataFormats::FeedFormats::PachubeHash.should_receive(:generate).with(feed_as_(:hash)).and_return({"title" => "Environment"})
+      feed.to_hash.should == {"title" => "Environment"}
     end
   end
 end

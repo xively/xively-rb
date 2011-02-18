@@ -1,9 +1,6 @@
 module PachubeDataFormats
   module FeedFormats
-    class Hash
-      extend Generator
-      extend Parser
-
+    class PachubeHash < Base
       def self.parse(input)
         input
       end
@@ -11,7 +8,6 @@ module PachubeDataFormats
       def self.generate(hash)
         hash
       end
-
     end
   end
 end

@@ -1,8 +1,6 @@
 module PachubeDataFormats
   module FeedFormats
-    class JSON
-      extend Generator
-      extend Parser
+    class PachubeJSON < Base
       def self.parse(input)
         hash = ::JSON.parse(input)
         hash['retrieved_at'] = hash.delete('updated')
