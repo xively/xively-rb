@@ -116,7 +116,12 @@ describe PachubeDataFormats::Feed do
   end
 
   describe "#datastreams=" do
-    it "should accept and store an array of datastreams"
+    it "should accept and store an array of datastreams" do
+      datastreams = [PachubeDataFormats::Datastream.new(datastream_as_(:hash))]
+      feed = PachubeDataFormats::Feed.new({})
+      feed.datastreams = datastreams
+      feed.datastreams.should == datastreams
+    end
   end
 
   describe "#to_json" do
