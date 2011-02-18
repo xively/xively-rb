@@ -65,6 +65,43 @@ describe PachubeDataFormats::Feed do
     end
   end
 
+  describe "#attributes" do
+    it "should return a hash of feed properties" do
+      attrs = {}
+      PachubeDataFormats::Feed::ALLOWED_KEYS.each do |key|
+        attrs[key] = "key #{rand(1000)}"
+      end
+      feed = PachubeDataFormats::Feed.new(attrs)
+
+      feed.attributes.should == attrs
+    end
+
+    it "should not return nil values" do
+      attrs = {}
+      PachubeDataFormats::Feed::ALLOWED_KEYS.each do |key|
+        attrs[key] = "key #{rand(1000)}"
+      end
+      attrs["created_at"] = nil
+      feed = PachubeDataFormats::Feed.new(attrs)
+
+      feed.attributes.should_not include("created_at")
+    end
+  end
+
+  describe "#attributes=" do
+    it "should accept and save a hash of feed properties" do
+      feed = PachubeDataFormats::Feed.new({})
+
+      attrs = {}
+      PachubeDataFormats::Feed::ALLOWED_KEYS.each do |key|
+        value = "key #{rand(1000)}"
+        attrs[key] = value
+        feed.should_receive("#{key}=").with(value)
+      end
+      feed.attributes=(attrs)
+    end
+  end
+
   describe "#to_json" do
     it "should use the PachubeJSON generator" do
       feed = PachubeDataFormats::Feed.new(feed_as_('hash'))
