@@ -1,15 +1,19 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe PachubeDataFormats::Feed do
-  ALLOWED_KEYS = %w(created_at csv_version datastreams description email feed icon id location owner private retrieved_at status tags title updated_at website)
 
-  context "instance methods" do
+  it "should have a constant that defines the allowed keys" do
+    PachubeDataFormats::Feed::ALLOWED_KEYS.should == %w(created_at csv_version datastreams description email feed icon id location owner private retrieved_at status tags title updated_at website)
+  end
+
+
+  context "attr accessors" do
     before(:each) do
       @feed = PachubeDataFormats::Feed.new(feed_as_(:json))
     end
 
     describe "setting whitelisted fields" do
-      ALLOWED_KEYS.each do |key|
+      PachubeDataFormats::Feed::ALLOWED_KEYS.each do |key|
         it "##{key}=" do
           lambda {
             @feed.send("#{key}=", key)
@@ -19,7 +23,7 @@ describe PachubeDataFormats::Feed do
     end
 
     describe "getting whitelisted fields" do
-      ALLOWED_KEYS.each do |key|
+      PachubeDataFormats::Feed::ALLOWED_KEYS.each do |key|
         it "##{key}" do
           lambda {
             @feed.send(key)
@@ -44,7 +48,7 @@ describe PachubeDataFormats::Feed do
   end
 
   describe "#initialize" do
-    it "should accept one parameter" do
+    it "should require one parameter" do
       lambda{PachubeDataFormats::Feed.new}.should raise_exception(ArgumentError, "wrong number of arguments (0 for 1)")
     end
 
@@ -100,6 +104,19 @@ describe PachubeDataFormats::Feed do
       end
       feed.attributes=(attrs)
     end
+  end
+
+  describe "#datastreams" do
+    it "should return an array of datastreams" do
+      datastreams = [PachubeDataFormats::Datastream.new(datastream_as_(:hash))]
+      attrs = {"datastreams" => datastreams}
+      feed = PachubeDataFormats::Feed.new(attrs)
+      feed.datastreams.should == datastreams
+    end
+  end
+
+  describe "#datastreams=" do
+    it "should accept and store an array of datastreams"
   end
 
   describe "#to_json" do
