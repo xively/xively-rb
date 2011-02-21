@@ -4,6 +4,8 @@ require 'bundler/setup'
 require 'rspec'
 require 'ruby-debug'
 
+require 'time'
+
 Dir['./spec/support/**/*.rb'].map {|f| require f}
 
 $:.push File.expand_path("../lib", __FILE__)

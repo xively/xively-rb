@@ -189,5 +189,18 @@ describe PachubeDataFormats::Feed do
       PachubeDataFormats::FeedFormats::PachubeHash.should_receive(:generate).with(feed_hash).and_return({"title" => "Environment"})
       feed.to_hash.should == {"title" => "Environment"}
     end
+
+    it "should use the PachubeHash generator for datastreams" do
+      feed = PachubeDataFormats::Feed.new(feed_as_(:hash))
+      feed.datastreams = datastream_as_(:hash)
+      feed.datastreams.each do |ds|
+        ds.should_receive(:to_hash).and_return({"stream_id" => "#{ds.id}"})
+      end
+      datastreams = feed.to_hash["datastreams"]
+      feed.datastreams.each do |ds|
+        datastreams.should include({"stream_id" => ds.id})
+      end
+    end
+
   end
 end

@@ -43,7 +43,9 @@ module PachubeDataFormats
     end
 
     def to_hash
-      FeedFormats::PachubeHash.generate(attributes)
+      hash = FeedFormats::PachubeHash.generate(attributes)
+      hash["datastreams"] = datastreams.map(&:to_hash) if datastreams
+      hash
     end
   end
 end
