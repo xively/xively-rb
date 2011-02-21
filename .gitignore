@@ -5,3 +5,5 @@ Gemfile.lock
 .gem/*
 build_artefacts/*
 coverage/*
+debug.log
+test.sqlite3.db
