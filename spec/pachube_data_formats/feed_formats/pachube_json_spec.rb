@@ -29,8 +29,9 @@ describe PachubeDataFormats::FeedFormats::PachubeJSON do
       PachubeDataFormats::Feed::ALLOWED_KEYS.each do |key|
         attrs[key] = "key #{rand(1000)}"
       end
+      attrs["datastreams"] = [{"stream_id" => "ein"}]
       json = PachubeDataFormats::FeedFormats::PachubeJSON.generate(attrs.clone)
-      parsed_json = JSON.parse(json)
+      parsed_json = json
       parsed_json["version"].should == "1.0.0"
       parsed_json["updated"].should == attrs["retrieved_at"]
       parsed_json["title"].should == attrs["title"]

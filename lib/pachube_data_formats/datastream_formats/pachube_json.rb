@@ -23,7 +23,7 @@ module PachubeDataFormats
           'symbol' => hash.delete('unit_symbol'),
           'label' => hash.delete('unit_label')
         }
-        ::JSON.generate(hash)
+        hash
       end
     end
   end

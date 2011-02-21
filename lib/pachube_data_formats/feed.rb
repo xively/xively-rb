@@ -26,8 +26,20 @@ module PachubeDataFormats
       return attributes
     end
 
+    def datastreams=(array)
+      return unless array.is_a?(Array)
+      @datastreams = []
+      array.each do |datastream|
+        if datastream.is_a?(Datastream)
+          @datastreams << datastream
+        elsif datastream.is_a?(Hash)
+          @datastreams << Datastream.new(datastream)
+        end
+      end
+    end
+
     def to_json
-      FeedFormats::PachubeJSON.generate(attributes)
+      ::JSON.generate FeedFormats::PachubeJSON.generate(attributes)
     end
 
     def to_hash
@@ -35,4 +47,5 @@ module PachubeDataFormats
     end
   end
 end
+
 

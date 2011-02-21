@@ -10,7 +10,7 @@ module PachubeDataFormats
       def self.generate(hash)
         hash['updated'] = hash.delete('retrieved_at')
         hash['version'] = '1.0.0'
-        ::JSON.generate(hash)
+        hash
       end
     end
   end

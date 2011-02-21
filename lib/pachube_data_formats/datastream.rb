@@ -24,6 +24,14 @@ module PachubeDataFormats
     def attributes=(input)
       ALLOWED_KEYS.each { |key| self.send("#{key}=", input[key]) }
     end
+
+    def to_hash
+      DatastreamFormats::PachubeHash.generate(attributes)
+    end
+
+    def to_json
+      ::JSON.generate DatastreamFormats::PachubeJSON.generate(attributes)
+    end
   end
 end
 

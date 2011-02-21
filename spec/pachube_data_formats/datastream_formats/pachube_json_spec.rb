@@ -29,7 +29,7 @@ describe PachubeDataFormats::DatastreamFormats::PachubeJSON do
         attrs[key] = "key #{rand(1000)}"
       end
       json = PachubeDataFormats::DatastreamFormats::PachubeJSON.generate(attrs.clone)
-      parsed_json = JSON.parse(json)
+      parsed_json = json
       parsed_json["id"].should == attrs["id"]
       parsed_json["at"].should == attrs["retrieved_at"]
       parsed_json["current_value"].should == attrs["value"]

@@ -65,5 +65,20 @@ describe PachubeDataFormats::Datastream do
     end
   end
 
+  describe "#to_json" do
+    it "should use the PachubeJSON generator" do
+      datastream = PachubeDataFormats::Datastream.new(datastream_as_(:hash))
+      PachubeDataFormats::DatastreamFormats::PachubeJSON.should_receive(:generate).with(datastream_as_(:hash)).and_return({"stream_id" => "env1"})
+      datastream.to_json.should == {"stream_id" => "env1"}.to_json
+    end
+  end
+
+  describe "#to_hash" do
+    it "should use the PachubeHash generator" do
+      datastream = PachubeDataFormats::Datastream.new(datastream_as_(:hash))
+      PachubeDataFormats::DatastreamFormats::PachubeHash.should_receive(:generate).with(datastream_as_(:hash)).and_return({"stream_id" => "env1"})
+      datastream.to_hash.should == {"stream_id" => "env1"}
+    end
+  end
 
 end

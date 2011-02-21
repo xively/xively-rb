@@ -75,6 +75,7 @@ describe PachubeDataFormats::Feed do
       PachubeDataFormats::Feed::ALLOWED_KEYS.each do |key|
         attrs[key] = "key #{rand(1000)}"
       end
+      attrs["datastreams"] = [PachubeDataFormats::Datastream.new({"id" => "ein"})]
       feed = PachubeDataFormats::Feed.new(attrs)
 
       feed.attributes.should == attrs
@@ -106,36 +107,86 @@ describe PachubeDataFormats::Feed do
     end
   end
 
-  describe "#datastreams" do
-    it "should return an array of datastreams" do
-      datastreams = [PachubeDataFormats::Datastream.new(datastream_as_(:hash))]
-      attrs = {"datastreams" => datastreams}
-      feed = PachubeDataFormats::Feed.new(attrs)
-      feed.datastreams.should == datastreams
-    end
-  end
+  context "associated datastreams" do
 
-  describe "#datastreams=" do
-    it "should accept and store an array of datastreams" do
-      datastreams = [PachubeDataFormats::Datastream.new(datastream_as_(:hash))]
-      feed = PachubeDataFormats::Feed.new({})
-      feed.datastreams = datastreams
-      feed.datastreams.should == datastreams
+    describe "#datastreams" do
+      it "should return an array of datastreams" do
+        datastreams = [PachubeDataFormats::Datastream.new(datastream_as_(:hash))]
+        attrs = {"datastreams" => datastreams}
+        feed = PachubeDataFormats::Feed.new(attrs)
+        feed.datastreams.each do |ds|
+          ds.should be_kind_of(PachubeDataFormats::Datastream)
+        end
+      end
     end
+
+    describe "#datastreams=" do
+      before(:each) do
+        @feed = PachubeDataFormats::Feed.new({})
+      end
+
+      it "should return nil if not an array" do
+        @feed.datastreams = "kittens"
+        @feed.datastreams.should be_nil
+      end
+
+      it "should accept an array of datastreams and hashes and store an array of datastreams" do
+        new_datastream1 = PachubeDataFormats::Datastream.new(datastream_as_(:hash))
+        new_datastream2 = PachubeDataFormats::Datastream.new(datastream_as_(:hash))
+        PachubeDataFormats::Datastream.should_receive(:new).with(datastream_as_(:hash)).and_return(new_datastream2)
+
+        datastreams = [new_datastream1, datastream_as_(:hash)]
+        @feed.datastreams = datastreams
+        @feed.datastreams.length.should == 2
+        @feed.datastreams.should include(new_datastream1)
+        @feed.datastreams.should include(new_datastream2)
+      end
+
+      it "should accept an array of datastreams and store an array of datastreams" do
+        datastreams = [PachubeDataFormats::Datastream.new(datastream_as_(:hash))]
+        @feed.datastreams = datastreams
+        @feed.datastreams.should == datastreams
+      end
+
+      it "should accept an array of hashes and store an array of datastreams" do
+        new_datastream = PachubeDataFormats::Datastream.new(datastream_as_(:hash))
+        PachubeDataFormats::Datastream.should_receive(:new).with(datastream_as_(:hash)).and_return(new_datastream)
+
+        datastreams_hash = [datastream_as_(:hash)]
+        @feed.datastreams = datastreams_hash
+        @feed.datastreams.should == [new_datastream]
+      end
+    end
+
   end
 
   describe "#to_json" do
     it "should use the PachubeJSON generator" do
-      feed = PachubeDataFormats::Feed.new(feed_as_('hash'))
-      PachubeDataFormats::FeedFormats::PachubeJSON.should_receive(:generate).with(feed_as_(:hash)).and_return({"title" => "Environment"})
-      feed.to_json.should == {"title" => "Environment"}
+      feed_hash = {"title" => "Environment"}
+      feed = PachubeDataFormats::Feed.new(feed_hash)
+      PachubeDataFormats::FeedFormats::PachubeJSON.should_receive(:generate).with(feed_hash).and_return({"title" => "Environment"})
+      feed.to_json.should == {"title" => "Environment"}.to_json
     end
+
+    it "should use the PachubeJSON generator for datastreams" do
+      feed = PachubeDataFormats::Feed.new(feed_as_('hash'))
+      feed.datastreams = datastream_as_(:hash)
+      feed.datastreams.each do |ds|
+        ds.should_receive(:to_json).and_return("{\"stream_id\":\"#{ds.id}\"}")
+      end
+      parsed_datastreams = JSON.parse(feed.to_json)["datastreams"]
+      feed.datastreams.each do |ds|
+        parsed_datastreams.should include({"stream_id" => ds.id})
+      end
+    end
+
   end
 
   describe "#to_hash" do
     it "should use the PachubeHash generator" do
-      feed = PachubeDataFormats::Feed.new(feed_as_('hash'))
-      PachubeDataFormats::FeedFormats::PachubeHash.should_receive(:generate).with(feed_as_(:hash)).and_return({"title" => "Environment"})
+      feed_hash = {"title" => "Environment"}
+      feed = PachubeDataFormats::Feed.new(feed_hash)
+      PachubeDataFormats::FeedFormats::PachubeHash.should_receive(:generate).with(feed_hash).and_return({"title" => "Environment"})
       feed.to_hash.should == {"title" => "Environment"}
     end
   end
