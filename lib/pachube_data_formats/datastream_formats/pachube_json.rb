@@ -18,11 +18,13 @@ module PachubeDataFormats
         hash['at'] = hash.delete('retrieved_at') if hash['retrieved_at']
         hash['current_value'] = hash.delete('value')
         hash['tags'] = hash.delete('tag_list').split(',') if hash['tag_list']
-        hash['unit'] = {
-          'type' => hash.delete('unit_type'),
-          'symbol' => hash.delete('unit_symbol'),
-          'label' => hash.delete('unit_label')
-        } if hash['unit_type'] || hash['unit_symbol'] || hash['unit_label']
+        if hash['unit_type'] || hash['unit_symbol'] || hash['unit_label']
+          hash['unit'] = {
+            'type' => hash.delete('unit_type'),
+            'symbol' => hash.delete('unit_symbol'),
+            'label' => hash.delete('unit_label')
+          } 
+        end
         hash
       end
     end
