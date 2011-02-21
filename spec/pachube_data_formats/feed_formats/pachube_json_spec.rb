@@ -32,7 +32,6 @@ describe PachubeDataFormats::FeedFormats::PachubeJSON do
       attrs["datastreams"] = [{"stream_id" => "ein"}]
       json = PachubeDataFormats::FeedFormats::PachubeJSON.generate(attrs.clone)
       parsed_json = json
-      parsed_json["version"].should == "1.0.0"
       parsed_json["updated"].should == attrs["retrieved_at"]
       parsed_json["title"].should == attrs["title"]
       parsed_json["status"].should == attrs["status"]

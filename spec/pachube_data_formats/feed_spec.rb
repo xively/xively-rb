@@ -164,8 +164,15 @@ describe PachubeDataFormats::Feed do
     it "should use the PachubeJSON generator" do
       feed_hash = {"title" => "Environment"}
       feed = PachubeDataFormats::Feed.new(feed_hash)
-      PachubeDataFormats::FeedFormats::PachubeJSON.should_receive(:generate).with(feed_hash).and_return({"title" => "Environment"})
+      PachubeDataFormats::FeedFormats::PachubeJSON.should_receive(:generate).with(hash_including(feed_hash)).and_return({"title" => "Environment"})
       feed.to_json.should == {"title" => "Environment"}.to_json
+    end
+
+    it "should append the json version" do
+      version = "1.0.0"
+      feed_hash = {"title" => "Environment"}
+      feed = PachubeDataFormats::Feed.new(feed_hash)
+      feed.to_json.should == {"title" => "Environment", "version" => version}.to_json
     end
 
     it "should use the PachubeJSON generator for datastreams" do

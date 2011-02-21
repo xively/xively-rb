@@ -39,7 +39,7 @@ module PachubeDataFormats
     end
 
     def to_json
-      ::JSON.generate FeedFormats::PachubeJSON.generate(attributes)
+      ::JSON.generate FeedFormats::PachubeJSON.generate(attributes.merge("version" => "1.0.0"))
     end
 
     def to_hash

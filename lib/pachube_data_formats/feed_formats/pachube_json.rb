@@ -8,8 +8,8 @@ module PachubeDataFormats
       end
 
       def self.generate(hash)
-        hash['updated'] = hash.delete('retrieved_at')
-        hash['version'] = '1.0.0'
+        hash['updated'] = hash.delete('retrieved_at') if hash['retrieved_at']
+        # hash['version'] = '1.0.0'
         hash
       end
     end

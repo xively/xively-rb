@@ -66,9 +66,17 @@ describe PachubeDataFormats::Datastream do
   end
 
   describe "#to_json" do
+
+    it "should append the json version" do
+      version = "1.0.0"
+      datastream_hash = {"id" => "env001", "value" => "2344"}
+      datastream = PachubeDataFormats::Datastream.new(datastream_hash)
+      datastream.to_json.should == {"id" => "env001", "current_value" => "2344", "version" => version}.to_json
+    end
+
     it "should use the PachubeJSON generator" do
       datastream = PachubeDataFormats::Datastream.new(datastream_as_(:hash))
-      PachubeDataFormats::DatastreamFormats::PachubeJSON.should_receive(:generate).with(datastream_as_(:hash)).and_return({"stream_id" => "env1"})
+      PachubeDataFormats::DatastreamFormats::PachubeJSON.should_receive(:generate).with(hash_including(datastream_as_(:hash))).and_return({"stream_id" => "env1"})
       datastream.to_json.should == {"stream_id" => "env1"}.to_json
     end
   end

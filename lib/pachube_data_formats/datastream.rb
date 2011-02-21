@@ -30,7 +30,7 @@ module PachubeDataFormats
     end
 
     def to_json
-      ::JSON.generate DatastreamFormats::PachubeJSON.generate(attributes)
+      ::JSON.generate DatastreamFormats::PachubeJSON.generate(attributes.merge("version" => "1.0.0"))
     end
   end
 end
