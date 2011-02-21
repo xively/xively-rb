@@ -42,6 +42,11 @@ describe PachubeDataFormats::DatastreamFormats::PachubeJSON do
         "label" => attrs["unit_label"]
       }
     end
+
+    it "should generate minimal Pachube JSON" do
+      json = PachubeDataFormats::DatastreamFormats::PachubeJSON.generate({"id" => "one", "value" => "1"})
+      json.should == {"id" => "one", "current_value"=>"1"}
+    end
   end
 
 end
