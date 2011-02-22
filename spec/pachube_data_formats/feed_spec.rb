@@ -160,26 +160,42 @@ describe PachubeDataFormats::Feed do
 
   end
 
-  describe "#to_json" do
+  describe "#as_json" do
     it "should use the PachubeJSON generator" do
       feed_hash = {"title" => "Environment"}
       feed = PachubeDataFormats::Feed.new(feed_hash)
       PachubeDataFormats::Formats::Feeds::JSON.should_receive(:generate).with(hash_including(feed_hash)).and_return({"title" => "Environment"})
-      feed.to_json.should == {"title" => "Environment"}.to_json
+      feed.as_json.should == {"title" => "Environment"}
     end
 
     it "should append the json version" do
       version = "1.0.0"
       feed_hash = {"title" => "Environment"}
       feed = PachubeDataFormats::Feed.new(feed_hash)
-      feed.to_json.should == {"title" => "Environment", "version" => version}.to_json
+      feed.as_json.should == {"title" => "Environment", "version" => version}
     end
 
     it "should accept optional json version" do
       version = "0.6-alpha"
       feed_hash = {"title" => "Environment"}
       feed = PachubeDataFormats::Feed.new(feed_hash)
-      feed.to_json(:version => version).should == {"title" => "Environment", "version" => version}.to_json
+      feed.as_json(:version => version).should == {"title" => "Environment", "version" => version}
+    end
+  end
+
+  describe "#to_json" do
+    it "should call #as_json" do
+      feed_hash = {"title" => "Environment"}
+      feed = PachubeDataFormats::Feed.new(feed_hash)
+      feed.should_receive(:as_json).with({})
+      feed.to_json
+    end
+
+    it "should pass options through to #as_json" do
+      feed_hash = {"title" => "Environment"}
+      feed = PachubeDataFormats::Feed.new(feed_hash)
+      feed.should_receive(:as_json).with({:crazy => "options"})
+      feed.to_json({:crazy => "options"})
     end
 
     it "should use the PachubeJSON generator for datastreams" do
@@ -194,6 +210,13 @@ describe PachubeDataFormats::Feed do
       end
     end
 
+    it "should pass the output of #as_json to yajl" do
+      feed_hash = {"title" => "Environment"}
+      feed = PachubeDataFormats::Feed.new(feed_hash)
+      feed.should_receive(:as_json).and_return({:awesome => "hash"})
+      ::JSON.should_receive(:generate).with({:awesome => "hash"})
+      feed.to_json
+    end
   end
 
   describe "#to_hash" do
