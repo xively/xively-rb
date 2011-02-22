@@ -52,7 +52,6 @@ describe PachubeDataFormats::Formats::Datastreams::JSON do
       attrs["tag_list"] = "alpha, gamma, ray gun, freakin lasers"
       json = PachubeDataFormats::Formats::Datastreams::JSON.generate(attrs.clone.merge("version" => "0.6-alpha"))
       parsed_json = json
-      y parsed_json
       parsed_json["id"].should == attrs["id"]
       parsed_json["values"]["recorded_at"].should == attrs["retrieved_at"]
       parsed_json["values"]["value"].should == attrs["value"]
