@@ -1,5 +1,5 @@
 module PachubeDataFormats
-  module DatastreamFormats
+  module Formats
     class Base
       def self.parse(input)
         raise "Implement - self.parse(input)"

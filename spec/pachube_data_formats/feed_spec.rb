@@ -54,7 +54,7 @@ describe PachubeDataFormats::Feed do
 
     context "input from json" do
       it "should use the PachubeJSON parser and store the outcome" do
-        PachubeDataFormats::FeedFormats::PachubeJSON.should_receive(:parse).with(feed_as_(:json)).and_return({"title" => "Environment"})
+        PachubeDataFormats::Formats::Feeds::JSON.should_receive(:parse).with(feed_as_(:json)).and_return({"title" => "Environment"})
         feed = PachubeDataFormats::Feed.new(feed_as_(:json))
         feed.title.should == "Environment"
       end
@@ -62,7 +62,7 @@ describe PachubeDataFormats::Feed do
 
     context "input from hash" do
       it "should use the PachubeHash parser and store the outcome" do
-        PachubeDataFormats::FeedFormats::PachubeHash.should_receive(:parse).with(feed_as_(:hash)).and_return({"title" => "Environment"})
+        PachubeDataFormats::Formats::Feeds::Hash.should_receive(:parse).with(feed_as_(:hash)).and_return({"title" => "Environment"})
         feed = PachubeDataFormats::Feed.new(feed_as_(:hash))
         feed.title.should == "Environment"
       end
@@ -164,7 +164,7 @@ describe PachubeDataFormats::Feed do
     it "should use the PachubeJSON generator" do
       feed_hash = {"title" => "Environment"}
       feed = PachubeDataFormats::Feed.new(feed_hash)
-      PachubeDataFormats::FeedFormats::PachubeJSON.should_receive(:generate).with(hash_including(feed_hash)).and_return({"title" => "Environment"})
+      PachubeDataFormats::Formats::Feeds::JSON.should_receive(:generate).with(hash_including(feed_hash)).and_return({"title" => "Environment"})
       feed.to_json.should == {"title" => "Environment"}.to_json
     end
 
@@ -193,7 +193,7 @@ describe PachubeDataFormats::Feed do
     it "should use the PachubeHash generator" do
       feed_hash = {"title" => "Environment"}
       feed = PachubeDataFormats::Feed.new(feed_hash)
-      PachubeDataFormats::FeedFormats::PachubeHash.should_receive(:generate).with(feed_hash).and_return({"title" => "Environment"})
+      PachubeDataFormats::Formats::Feeds::Hash.should_receive(:generate).with(feed_hash).and_return({"title" => "Environment"})
       feed.to_hash.should == {"title" => "Environment"}
     end
 

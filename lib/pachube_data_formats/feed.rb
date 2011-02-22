@@ -5,9 +5,9 @@ module PachubeDataFormats
 
     def initialize(input)
       if input.is_a?(Hash)
-        self.attributes = FeedFormats::PachubeHash.parse(input)
+        self.attributes = Formats::Feeds::Hash.parse(input)
       else
-        self.attributes = FeedFormats::PachubeJSON.parse(input)
+        self.attributes = Formats::Feeds::JSON.parse(input)
       end
     end
 
@@ -39,11 +39,11 @@ module PachubeDataFormats
     end
 
     def to_json
-      ::JSON.generate FeedFormats::PachubeJSON.generate(attributes.merge("version" => "1.0.0"))
+      ::JSON.generate Formats::Feeds::JSON.generate(attributes.merge("version" => "1.0.0"))
     end
 
     def to_hash
-      hash = FeedFormats::PachubeHash.generate(attributes)
+      hash = Formats::Feeds::Hash.generate(attributes)
       hash["datastreams"] = datastreams.map(&:to_hash) if datastreams
       hash
     end

@@ -1,14 +1,14 @@
-require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/../../../spec_helper'
 
-describe PachubeDataFormats::DatastreamFormats::PachubeJSON do
-  it "should inherit from PachubeDataFormats::DatastreamFormats::Base" do
-    PachubeDataFormats::DatastreamFormats::PachubeJSON.new.should be_a_kind_of(PachubeDataFormats::DatastreamFormats::Base)
+describe PachubeDataFormats::Formats::Datastreams::JSON do
+  it "should inherit from PachubeDataFormats::Formats::Datastreams::Base" do
+    PachubeDataFormats::Formats::Datastreams::JSON.new.should be_a_kind_of(PachubeDataFormats::Formats::Base)
   end
 
   describe "parser" do
     it "should parse json and return a datastream hash" do
       json = datastream_as_(:json)
-      parsed_json = PachubeDataFormats::DatastreamFormats::PachubeJSON.parse(json)
+      parsed_json = PachubeDataFormats::Formats::Datastreams::JSON.parse(json)
       hash = JSON.parse(json)
       parsed_json["id"].should == hash["id"]
       parsed_json["retrieved_at"].should == hash["at"]
@@ -29,7 +29,7 @@ describe PachubeDataFormats::DatastreamFormats::PachubeJSON do
         attrs[key] = "key #{rand(1000)}"
       end
       attrs["tag_list"] = "alpha, gamma, ray gun, freakin lasers"
-      json = PachubeDataFormats::DatastreamFormats::PachubeJSON.generate(attrs.clone)
+      json = PachubeDataFormats::Formats::Datastreams::JSON.generate(attrs.clone)
       parsed_json = json
       parsed_json["id"].should == attrs["id"]
       parsed_json["at"].should == attrs["retrieved_at"]
@@ -45,7 +45,7 @@ describe PachubeDataFormats::DatastreamFormats::PachubeJSON do
     end
 
     it "should generate minimal Pachube JSON" do
-      json = PachubeDataFormats::DatastreamFormats::PachubeJSON.generate({"id" => "one", "value" => "1"})
+      json = PachubeDataFormats::Formats::Datastreams::JSON.generate({"id" => "one", "value" => "1"})
       json.should == {"id" => "one", "current_value"=>"1"}
     end
   end

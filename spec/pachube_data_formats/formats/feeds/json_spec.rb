@@ -1,14 +1,14 @@
-require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/../../../spec_helper'
 
-describe PachubeDataFormats::FeedFormats::PachubeJSON do
-  it "should inherit from PachubeDataFormats::FeedFormats::Base" do
-    PachubeDataFormats::FeedFormats::PachubeJSON.new.should be_a_kind_of(PachubeDataFormats::FeedFormats::Base)
+describe PachubeDataFormats::Formats::Feeds::JSON do
+  it "should inherit from PachubeDataFormats::Formats::Feeds::Base" do
+    PachubeDataFormats::Formats::Feeds::JSON.new.should be_a_kind_of(PachubeDataFormats::Formats::Base)
   end
 
   describe "parser" do
     it "should parse json and return a feed hash" do
       json = feed_as_(:json)
-      parsed_json = PachubeDataFormats::FeedFormats::PachubeJSON.parse(json)
+      parsed_json = PachubeDataFormats::Formats::Feeds::JSON.parse(json)
       hash = JSON.parse(json)
       parsed_json["title"].should == hash["title"]
       parsed_json["status"].should == hash["status"]
@@ -32,7 +32,7 @@ describe PachubeDataFormats::FeedFormats::PachubeJSON do
       end
       attrs["datastreams"] = [{"stream_id" => "ein"}]
       attrs["tag_list"] = "a,z, deeee, nine"
-      json = PachubeDataFormats::FeedFormats::PachubeJSON.generate(attrs.clone)
+      json = PachubeDataFormats::Formats::Feeds::JSON.generate(attrs.clone)
       parsed_json = json
       parsed_json["updated"].should == attrs["retrieved_at"]
       parsed_json["title"].should == attrs["title"]

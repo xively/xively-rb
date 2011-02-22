@@ -1,8 +1,8 @@
-require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/../../../spec_helper'
 
-describe PachubeDataFormats::FeedFormats::PachubeHash do
-  it "should inherit from PachubeDataFormats::FeedFormats::Base" do
-    PachubeDataFormats::FeedFormats::PachubeHash.new.should be_a_kind_of(PachubeDataFormats::FeedFormats::Base)
+describe PachubeDataFormats::Formats::Feeds::Hash do
+  it "should inherit from PachubeDataFormats::Formats::Base" do
+    PachubeDataFormats::Formats::Feeds::Hash.new.should be_a_kind_of(PachubeDataFormats::Formats::Base)
   end
 
   describe "parser" do
@@ -11,7 +11,7 @@ describe PachubeDataFormats::FeedFormats::PachubeHash do
       PachubeDataFormats::Feed::ALLOWED_KEYS.each do |key|
         attrs[key] = "key #{rand(1000)}"
       end
-      hash = PachubeDataFormats::FeedFormats::PachubeHash.parse(attrs.clone)
+      hash = PachubeDataFormats::Formats::Feeds::Hash.parse(attrs.clone)
       hash.should == attrs
     end
   end
@@ -22,7 +22,7 @@ describe PachubeDataFormats::FeedFormats::PachubeHash do
       PachubeDataFormats::Feed::ALLOWED_KEYS.each do |key|
         attrs[key] = "key #{rand(1000)}"
       end
-      hash = PachubeDataFormats::FeedFormats::PachubeHash.generate(attrs.clone)
+      hash = PachubeDataFormats::Formats::Feeds::Hash.generate(attrs.clone)
       hash.should == attrs
     end
   end

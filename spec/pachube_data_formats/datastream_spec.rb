@@ -13,7 +13,7 @@ describe PachubeDataFormats::Datastream do
 
     context "input from json" do
       it "should use the PachubeJSON parser and store the outcome" do
-        PachubeDataFormats::DatastreamFormats::PachubeJSON.should_receive(:parse).with(datastream_as_(:json)).and_return({"value" => "001"})
+        PachubeDataFormats::Formats::Datastreams::JSON.should_receive(:parse).with(datastream_as_(:json)).and_return({"value" => "001"})
         datastream = PachubeDataFormats::Datastream.new(datastream_as_(:json))
         datastream.attributes.should == {"value" => "001"}
       end
@@ -21,7 +21,7 @@ describe PachubeDataFormats::Datastream do
 
     context "input from hash" do
       it "should use the PachubeHash parser and store the outcome" do
-        PachubeDataFormats::DatastreamFormats::PachubeHash.should_receive(:parse).with(datastream_as_(:hash)).and_return({"value" => "one"})
+        PachubeDataFormats::Formats::Datastreams::Hash.should_receive(:parse).with(datastream_as_(:hash)).and_return({"value" => "one"})
         datastream = PachubeDataFormats::Datastream.new(datastream_as_(:hash))
         datastream.attributes.should == {"value" => "one"}
       end
@@ -82,7 +82,7 @@ describe PachubeDataFormats::Datastream do
 
     it "should use the PachubeJSON generator" do
       datastream = PachubeDataFormats::Datastream.new(datastream_as_(:hash))
-      PachubeDataFormats::DatastreamFormats::PachubeJSON.should_receive(:generate).with(hash_including(datastream_as_(:hash))).and_return({"stream_id" => "env1"})
+      PachubeDataFormats::Formats::Datastreams::JSON.should_receive(:generate).with(hash_including(datastream_as_(:hash))).and_return({"stream_id" => "env1"})
       datastream.to_json.should == {"stream_id" => "env1"}.to_json
     end
   end
@@ -90,7 +90,7 @@ describe PachubeDataFormats::Datastream do
   describe "#to_hash" do
     it "should use the PachubeHash generator" do
       datastream = PachubeDataFormats::Datastream.new(datastream_as_(:hash))
-      PachubeDataFormats::DatastreamFormats::PachubeHash.should_receive(:generate).with(datastream_as_(:hash)).and_return({"stream_id" => "env1"})
+      PachubeDataFormats::Formats::Datastreams::Hash.should_receive(:generate).with(datastream_as_(:hash)).and_return({"stream_id" => "env1"})
       datastream.to_hash.should == {"stream_id" => "env1"}
     end
   end

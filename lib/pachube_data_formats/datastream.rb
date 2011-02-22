@@ -6,9 +6,9 @@ module PachubeDataFormats
     attr_accessor :id
     def initialize(input)
       if input.is_a? Hash
-        self.attributes = DatastreamFormats::PachubeHash.parse(input)
+        self.attributes = Formats::Datastreams::Hash.parse(input)
       else
-        self.attributes = DatastreamFormats::PachubeJSON.parse(input)
+        self.attributes = Formats::Datastreams::JSON.parse(input)
       end
     end
 
@@ -26,12 +26,12 @@ module PachubeDataFormats
     end
 
     def to_hash
-      DatastreamFormats::PachubeHash.generate(attributes)
+      Formats::Datastreams::Hash.generate(attributes)
     end
 
     def to_json(options = {})
       attrs = options[:version] ? attributes.clone.merge("version" => "1.0.0") : attributes.clone
-      ::JSON.generate DatastreamFormats::PachubeJSON.generate(attrs)
+      ::JSON.generate Formats::Datastreams::JSON.generate(attrs)
     end
   end
 end
