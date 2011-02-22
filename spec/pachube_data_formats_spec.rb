@@ -1,17 +1,17 @@
-require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
+require File.dirname(__FILE__) + '/spec_helper'
 
 describe PachubeDataFormats do
-  it "should provide a template for Generator classes" do
-    class TestGenerator
-      extend PachubeDataFormats::Generator
+  context "if ActiveRecord is present" do
+    it "should have extended active record" do
+      ActiveRecord::Base.included_modules.should include PachubeDataFormats::ActiveRecord
     end
-    lambda{TestGenerator.generate("")}.should raise_error(RuntimeError, "Implement self.generate(hash)")
+
+    it "should extend ActiveRecord with ClassMethods" do
+      ActiveRecord::Base.should respond_to "is_pachube_data_format"
+    end
   end
 
-  it "should provide a template for Parser classes" do
-    class TestParser
-      extend PachubeDataFormats::Parser
-    end
-    lambda{TestParser.parse("")}.should raise_error(RuntimeError, "Implement self.parse(input)")
+  context "if ActiveRecord is not present" do
+    it "should not raise an error"
   end
 end
