@@ -4,13 +4,13 @@ def datastream_as_(format, options = {})
     data = {
       "retrieved_at" => Time.parse('2011-01-02'),
       "max_value"=>658.0,
-      "unit_type"=>"",
+      "unit_type"=>"derived SI",
       "min_value"=>0.0,
-      "unit_label"=>"",
+      "unit_label"=>"percentage",
       "value"=>"14",
       "id"=>"0",
       "tag_list"=>"humidity,temperature,freakin lasers",
-      "unit_symbol"=>""
+      "unit_symbol"=>"%"
     }
   when 'json'
     data = {

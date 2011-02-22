@@ -1,6 +1,6 @@
 module PachubeDataFormats
   class Feed
-    ALLOWED_KEYS = %w(created_at csv_version datastreams description email feed icon id location owner private retrieved_at status tags title updated_at website)
+    ALLOWED_KEYS = %w(created_at csv_version datastreams description email feed icon id location private retrieved_at status tag_list title updated_at website)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
     def initialize(input)

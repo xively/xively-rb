@@ -6,7 +6,7 @@ module PachubeDataFormats
       # Outputs Pachube v2 JSON
       #
       def to_pachube_json
-        PachubeDataFormats::Feed.new(attributes).to_json
+        PachubeDataFormats::Feed.new(attributes.merge("datastreams" => datastreams.map(&:attributes))).to_json
       end
     end
   end

@@ -29,8 +29,9 @@ module PachubeDataFormats
       DatastreamFormats::PachubeHash.generate(attributes)
     end
 
-    def to_json
-      ::JSON.generate DatastreamFormats::PachubeJSON.generate(attributes.merge("version" => "1.0.0"))
+    def to_json(options = {})
+      attrs = options[:version] ? attributes.clone.merge("version" => "1.0.0") : attributes.clone
+      ::JSON.generate DatastreamFormats::PachubeJSON.generate(attrs)
     end
   end
 end

@@ -28,6 +28,7 @@ describe PachubeDataFormats::DatastreamFormats::PachubeJSON do
       PachubeDataFormats::Datastream::ALLOWED_KEYS.each do |key|
         attrs[key] = "key #{rand(1000)}"
       end
+      attrs["tag_list"] = "alpha, gamma, ray gun, freakin lasers"
       json = PachubeDataFormats::DatastreamFormats::PachubeJSON.generate(attrs.clone)
       parsed_json = json
       parsed_json["id"].should == attrs["id"]
@@ -35,7 +36,7 @@ describe PachubeDataFormats::DatastreamFormats::PachubeJSON do
       parsed_json["current_value"].should == attrs["value"]
       parsed_json["max_value"].should == attrs["max_value"]
       parsed_json["min_value"].should == attrs["min_value"]
-      parsed_json["tags"].should == attrs["tag_list"].split(',')
+      parsed_json["tags"].should == attrs["tag_list"].split(',').map(&:strip).sort
       parsed_json["unit"].should == {
         "type" => attrs["unit_type"],
         "symbol" => attrs["unit_symbol"],

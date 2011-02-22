@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe PachubeDataFormats::Feed do
 
   it "should have a constant that defines the allowed keys" do
-    PachubeDataFormats::Feed::ALLOWED_KEYS.should == %w(created_at csv_version datastreams description email feed icon id location owner private retrieved_at status tags title updated_at website)
+    PachubeDataFormats::Feed::ALLOWED_KEYS.should == %w(created_at csv_version datastreams description email feed icon id location private retrieved_at status tag_list title updated_at website)
   end
 
 

@@ -16,6 +16,7 @@ describe PachubeDataFormats::FeedFormats::PachubeJSON do
       parsed_json["description"].should == hash["description"]
       parsed_json["website"].should == hash["website"]
       parsed_json["private"].should == hash["private"]
+      parsed_json["tag_list"].should == hash["tags"].join(",")
       parsed_json["id"].should == hash["id"]
       parsed_json["location"].should == hash["location"]
       parsed_json["feed"].should == hash["feed"]
@@ -30,6 +31,7 @@ describe PachubeDataFormats::FeedFormats::PachubeJSON do
         attrs[key] = "key #{rand(1000)}"
       end
       attrs["datastreams"] = [{"stream_id" => "ein"}]
+      attrs["tag_list"] = "a,z, deeee, nine"
       json = PachubeDataFormats::FeedFormats::PachubeJSON.generate(attrs.clone)
       parsed_json = json
       parsed_json["updated"].should == attrs["retrieved_at"]
@@ -41,6 +43,7 @@ describe PachubeDataFormats::FeedFormats::PachubeJSON do
       parsed_json["id"].should == attrs["id"]
       parsed_json["location"].should == attrs["location"]
       parsed_json["feed"].should == attrs["feed"]
+      parsed_json["tags"].should == attrs["tag_list"].split(',').map(&:strip).sort
       parsed_json["datastreams"].should == attrs["datastreams"]
     end
   end
