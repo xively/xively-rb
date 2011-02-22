@@ -30,8 +30,10 @@ module PachubeDataFormats
     end
 
     def to_json(options = {})
-      attrs = options[:version] ? attributes.clone.merge("version" => "1.0.0") : attributes.clone
-      ::JSON.generate Formats::Datastreams::JSON.generate(attrs)
+      options[:version] ||= "1.0.0"
+      datastream = Formats::Datastreams::JSON.generate(attributes.merge("version" => options[:version]))
+      datastream["version"] = options[:version] if options[:append_version]
+      ::JSON.generate datastream
     end
   end
 end

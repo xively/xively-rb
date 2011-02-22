@@ -71,7 +71,7 @@ describe PachubeDataFormats::Datastream do
       version = "1.0.0"
       datastream_hash = {"id" => "env001", "value" => "2344"}
       datastream = PachubeDataFormats::Datastream.new(datastream_hash)
-      datastream.to_json(:version => true).should == {"id" => "env001", "current_value" => "2344", "version" => version}.to_json
+      datastream.to_json(:append_version => true).should == {"id" => "env001", "current_value" => "2344", "version" => version}.to_json
     end
 
     it "should not append the json version by default" do

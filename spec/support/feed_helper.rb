@@ -91,7 +91,38 @@ def feed_as_(format, options = {})
         "unit_symbol"=>""}]
     }
   when 'json'
-    data = {
+    data = feed_as_json(options[:version] || "1.0.0")
+  end
+
+  # Add extra options we passed
+  if options[:with]
+    options[:with].each do |field, value|
+      data[field.to_s] = value
+    end
+  end
+
+  # Remove options we don't need
+  if options[:except]
+    options[:except].each do |field,_|
+      data.delete(field.to_s)
+    end
+  end
+
+  # Return the feed in the requested format
+  case format.to_s
+  when 'hash'
+    data
+  when 'json'
+    data.to_json
+  else
+    raise "#{format} undefined"
+  end
+end
+
+def feed_as_json(version)
+  case version
+  when "1.0.0"
+    {
       'title' => 'Pachube Office Environment',
       'status' => 'live',
       'updated' => '2011-02-16T16:21:01.834174Z',
@@ -165,32 +196,101 @@ def feed_as_(format, options = {})
           }
         ]
     }
-  end
-
-  # Add extra options we passed
-  if options[:with]
-    options[:with].each do |field, value|
-      data[field.to_s] = value
-    end
-  end
-
-  # Remove options we don't need
-  if options[:except]
-    options[:except].each do |field,_|
-      data.delete(field.to_s)
-    end
-  end
-
-  # Return the feed in the requested format
-  case format.to_s
-  when 'hash'
-    data
-  when 'json'
-    data.to_json
+  when "0.6-alpha"
+    {
+        "datastreams" => [{
+            "tags" => ["humidity"],
+            "values" => [{
+                "min_value" => "0.0",
+                "recorded_at" => "2011-02-22T14:28:50Z",
+                "value" => "129",
+                "max_value" => "658.0"
+            }],
+            "id" => "0"
+        },
+        {
+            "tags" => ["light level"],
+            "values" => [{
+                "min_value" => "0.0",
+                "recorded_at" => "2011-02-22T14:28:50Z",
+                "value" => "683",
+                "max_value" => "980.0"
+            }],
+            "id" => "1"
+        },
+        {
+            "tags" => ["temperature"],
+            "values" => [{
+                "min_value" => "158.0",
+                "recorded_at" => "2011-02-22T14:28:50Z",
+                "value" => "314",
+                "max_value" => "774.0"
+            }],
+            "id" => "2"
+        },
+        {
+            "tags" => ["door 1"],
+            "values" => [{
+                "min_value" => "0.0",
+                "recorded_at" => "2011-02-22T14:28:50Z",
+                "value" => "0",
+                "max_value" => "0.0"
+            }],
+            "id" => "3"
+        },
+        {
+            "tags" => ["door 2"],
+            "values" => [{
+                "min_value" => "0.0",
+                "recorded_at" => "2011-02-22T14:28:50Z",
+                "value" => "0",
+                "max_value" => "0.0"
+            }],
+            "id" => "4"
+        },
+        {
+            "tags" => ["failures"],
+            "values" => [{
+                "min_value" => "0.0",
+                "recorded_at" => "2011-02-22T14:28:50Z",
+                "value" => "40",
+                "max_value" => "40.0"
+            }],
+            "id" => "5"
+        },
+        {
+            "tags" => ["successes"],
+            "values" => [{
+                "min_value" => "-32768.0",
+                "recorded_at" => "2011-02-22T14:28:50Z",
+                "value" => "31680",
+                "max_value" => "32767.0"
+            }],
+            "id" => "6"
+        }],
+        "status" => "live",
+        "updated" => "2011-02-22T14:28:50.590716Z",
+        "description" => "Sensors in Pachube.com's headquarters.",
+        "title" => "Pachube Office environment",
+        "website" => "http://www.pachube.com/",
+        "version" => "0.6-alpha",
+        "id" => 504,
+        "location" => {
+            "domain" => "physical",
+            "lon" => -0.0807666778564453,
+            "disposition" => "fixed",
+            "ele" => "23.0",
+            "exposure" => "indoor",
+            "lat" => 51.5235375648154,
+            "name" => "office"
+        },
+        "feed" => "http://api.pachube.com/v2/feeds/504.json"
+    }
   else
-    raise "#{format} undefined"
+    raise "No such JSON version"
   end
 end
+#
 
 # Helpful method which allows us to do
 #    output_string.parse_feed_as_("json"),

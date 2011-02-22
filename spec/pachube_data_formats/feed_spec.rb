@@ -175,6 +175,13 @@ describe PachubeDataFormats::Feed do
       feed.to_json.should == {"title" => "Environment", "version" => version}.to_json
     end
 
+    it "should accept optional json version" do
+      version = "0.6-alpha"
+      feed_hash = {"title" => "Environment"}
+      feed = PachubeDataFormats::Feed.new(feed_hash)
+      feed.to_json(:version => version).should == {"title" => "Environment", "version" => version}.to_json
+    end
+
     it "should use the PachubeJSON generator for datastreams" do
       feed = PachubeDataFormats::Feed.new(feed_as_('hash'))
       feed.datastreams = datastream_as_(:hash)

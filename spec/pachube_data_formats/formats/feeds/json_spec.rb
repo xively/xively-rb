@@ -46,6 +46,28 @@ describe PachubeDataFormats::Formats::Feeds::JSON do
       parsed_json["tags"].should == attrs["tag_list"].split(',').map(&:strip).sort
       parsed_json["datastreams"].should == attrs["datastreams"]
     end
+
+    it "should optionally generate Pachube 0.6-alpha JSON" do
+      attrs = {}
+      PachubeDataFormats::Feed::ALLOWED_KEYS.each do |key|
+        attrs[key] = "key #{rand(1000)}"
+      end
+      attrs["datastreams"] = [{"stream_id" => "ein"}]
+      attrs["tag_list"] = "a,z, deeee, nine"
+      json = PachubeDataFormats::Formats::Feeds::JSON.generate(attrs.clone.merge("version" => "0.6-alpha"))
+      parsed_json = json
+      parsed_json["updated"].should == attrs["retrieved_at"]
+      parsed_json["title"].should == attrs["title"]
+      parsed_json["status"].should == attrs["status"]
+      parsed_json["description"].should == attrs["description"]
+      parsed_json["website"].should == attrs["website"]
+      parsed_json["private"].should be_nil
+      parsed_json["id"].should == attrs["id"]
+      parsed_json["location"].should == attrs["location"]
+      parsed_json["feed"].should == attrs["feed"]
+      parsed_json["tags"].should be_nil
+      parsed_json["datastreams"].should == attrs["datastreams"]
+    end
   end
 
 end

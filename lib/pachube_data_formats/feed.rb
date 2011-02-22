@@ -38,8 +38,9 @@ module PachubeDataFormats
       end
     end
 
-    def to_json
-      ::JSON.generate Formats::Feeds::JSON.generate(attributes.merge("version" => "1.0.0"))
+    def to_json(options = {})
+      options[:version] ||= "1.0.0"
+      ::JSON.generate Formats::Feeds::JSON.generate(attributes.merge("version" => options[:version]))
     end
 
     def to_hash

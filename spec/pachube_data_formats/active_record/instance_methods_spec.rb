@@ -7,33 +7,42 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
       :login => "fred",
       :email => "fred@example.com"
     )
+    @feed = Feed.create!(
+      {
+        "retrieved_at" => Time.parse("20110202"),
+        "title" => "Feed Title",
+        "csv_version" => "v2",
+        "private" => true,
+        "icon" => "http://pachube.com/logo.png",
+        "website" => "http://pachube.com",
+        "tag_list" => "kittens, sofa, aardvark",
+        "description" => "Test feed",
+        "feed" => "http://test.host/testfeed.html?random=890299&rand2=91",
+        "email" => "abc@example.com",
+        "owner" => @owner
+      })
+    @datastream1 = @feed.datastreams.create!(datastream_as_(:hash))
+    @datastream2 = @feed.datastreams.create!(datastream_as_(:hash))
   end
 
   describe "#to_pachube_json" do
     it "should return Pachube json based on the object's attributes" do
-      feed = Feed.create!(:title => "Pachube Feed", :description => "Stuff", :website => "http://pachube.com", :tag_list => "alpha, beta, aardvark, kittens", :owner => @owner)
-      PachubeDataFormats::Feed.should_receive(:new).with(hash_including(feed.attributes)).and_return(:feed => "json representation of a feed")
-      feed.to_pachube_json.should == {:feed => "json representation of a feed"}.to_json
+      PachubeDataFormats::Feed.should_receive(:new).with(hash_including(@feed.attributes)).and_return(:feed => "json representation of a feed")
+      @feed.to_pachube_json.should == {:feed => "json representation of a feed"}.to_json
+    end
+
+    it "should default to Pachube JSON version 1.0.0" do
+      PachubeDataFormats::Formats::Feeds::JSON.should_receive(:generate).with(hash_including("version" => "1.0.0"))
+      @feed.to_pachube_json
+    end
+
+    it "should accept optional JSON" do
+      PachubeDataFormats::Formats::Feeds::JSON.should_receive(:generate).with(hash_including("version" => "0.6-alpha"))
+      @feed.to_pachube_json("0.6-alpha")
     end
 
     it "should return full Pachube json with associated datastreams" do
-      feed = Feed.create!(
-        {
-          "retrieved_at" => Time.parse("20110202"),
-          "title" => "Feed Title",
-          "csv_version" => "v2",
-          "private" => true,
-          "icon" => "http://pachube.com/logo.png",
-          "website" => "http://pachube.com",
-          "tag_list" => "kittens, sofa, aardvark",
-          "description" => "Test feed",
-          "feed" => "http://test.host/testfeed.html?random=890299&rand2=91",
-          "email" => "abc@example.com",
-          "owner" => @owner
-        })
-      datastream1 = feed.datastreams.create!(datastream_as_(:hash))
-      datastream2 = feed.datastreams.create!(datastream_as_(:hash))
-      json = JSON.parse(feed.to_pachube_json)
+      json = JSON.parse(@feed.to_pachube_json)
       json["version"].should == "1.0.0"
       json["title"].should == "Feed Title"
       json["csv_version"].should == "v2"
@@ -49,10 +58,35 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
         ds["max_value"].should == 658.0
         ds["min_value"].should == 0.0
         ds["current_value"].should == "14"
-        feed.datastreams.find(ds["id"]).should_not be_nil
+        @feed.datastreams.find(ds["id"]).should_not be_nil
         ds["tags"].should == ["freakin lasers", "humidity", "temperature"]
       end
     end
+
+    it "should optionally return full Pachube v1 0.6-alpha json with associated datastreams" do
+      pending
+      json = JSON.parse(@feed.to_pachube_json("0.6-alpha"))
+      json["version"].should == "0.6-alpha"
+      json["title"].should == "Feed Title"
+      json["csv_version"].should == "v2"
+      json["private"].should be_nil
+      json["icon"].should == "http://pachube.com/logo.png"
+      json["website"].should == "http://pachube.com"
+      json["tags"].should be_nil
+      json["description"].should == "Test feed"
+      json["feed"].should == "http://test.host/testfeed.html?random=890299&rand2=91"
+      json["email"].should == "abc@example.com"
+      json["datastreams"].should have(2).things
+      json["datastreams"].each do |ds|
+        ds["values"]["max_value"].should == 658.0
+        ds["values"]["min_value"].should == 0.0
+        ds["values"]["value"].should == "14"
+        ds["values"]["recorded_at"].should == "14"
+        @feed.datastreams.find(ds["id"]).should_not be_nil
+        ds["tags"].should == ["freakin lasers", "humidity", "temperature"]
+      end
+    end
+
 
   end
 
