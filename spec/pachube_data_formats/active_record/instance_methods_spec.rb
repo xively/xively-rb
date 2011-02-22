@@ -64,7 +64,6 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
     end
 
     it "should optionally return full Pachube v1 0.6-alpha json with associated datastreams" do
-      pending
       json = JSON.parse(@feed.to_pachube_json("0.6-alpha"))
       json["version"].should == "0.6-alpha"
       json["title"].should == "Feed Title"
@@ -81,7 +80,7 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
         ds["values"]["max_value"].should == 658.0
         ds["values"]["min_value"].should == 0.0
         ds["values"]["value"].should == "14"
-        ds["values"]["recorded_at"].should == "14"
+        ds["values"]["recorded_at"].should == "2011/01/02 00:00:00 +0000"
         @feed.datastreams.find(ds["id"]).should_not be_nil
         ds["tags"].should == ["freakin lasers", "humidity", "temperature"]
       end

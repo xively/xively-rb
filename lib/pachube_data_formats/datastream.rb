@@ -3,7 +3,7 @@ module PachubeDataFormats
     ALLOWED_KEYS = %w(id max_value min_value retrieved_at tag_list unit_label unit_symbol unit_type value)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
-    attr_accessor :id
+    attr_accessor :version
     def initialize(input)
       if input.is_a? Hash
         self.attributes = Formats::Datastreams::Hash.parse(input)
@@ -30,7 +30,7 @@ module PachubeDataFormats
     end
 
     def to_json(options = {})
-      options[:version] ||= "1.0.0"
+      options[:version] ||= version || "1.0.0"
       datastream = Formats::Datastreams::JSON.generate(attributes.merge("version" => options[:version]))
       datastream["version"] = options[:version] if options[:append_version]
       ::JSON.generate datastream

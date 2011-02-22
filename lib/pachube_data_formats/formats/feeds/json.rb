@@ -19,6 +19,7 @@ module PachubeDataFormats
             hash['updated'] = hash.delete('retrieved_at') if hash['retrieved_at']
             hash['tags'] = hash.delete('tag_list').split(',').map(&:strip).sort if hash['tag_list']
           end
+          hash['datastreams'].each {|ds| ds.version = hash["version"] if ds.respond_to?(:version=)} if hash['datastreams']
           hash
         end
       end
