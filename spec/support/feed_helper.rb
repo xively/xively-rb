@@ -290,22 +290,4 @@ def feed_as_json(version)
     raise "No such JSON version"
   end
 end
-#
 
-# Helpful method which allows us to do
-#    output_string.parse_feed_as_("json"),
-# or output_string.parse_feed_as_("xml")
-# and get back a nicely formatted hash
-# for comparison in tests
-class Object
-  def parse_feed_as_(format, options = {})
-    case format.to_s
-    when 'hash'
-      self
-    when 'json'
-      JSON.parse(self)
-    else
-      raise "#{format} undefined"
-    end
-  end
-end
