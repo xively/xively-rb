@@ -14,6 +14,6 @@ rescue LoadError
   # No ActiveRecord present
 else
   # ActiveRecord is present
-  require 'pachube_data_formats/acts_as_pachube_data_format'
-  ActiveRecord::Base.send :include, ActsAsPachubeDataFormat
+  require 'pachube_data_formats/active_record'
+  ActiveRecord::Base.send :include, PachubeDataFormats::ActiveRecord
 end

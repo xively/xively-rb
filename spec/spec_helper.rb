@@ -15,7 +15,7 @@ $:.push File.expand_path("../lib", __FILE__)
 require 'pachube_data_formats'
 
 def load_schema
-  config = YAML::load(IO.read(File.dirname(__FILE__) + '/database.yml'))
+  config = YAML::load(IO.read(File.dirname(__FILE__) + '/fixtures/database.yml'))
   ActiveRecord::Base.logger = Logger.new(File.dirname(__FILE__) + "/../debug.log")
 
   db_adapter = ENV['DB']
@@ -39,7 +39,9 @@ def load_schema
   end
 
   ActiveRecord::Base.establish_connection(config[db_adapter])
-  load(File.dirname(__FILE__) + "/schema.rb")
+  load(File.dirname(__FILE__) + "/fixtures/schema.rb")
   require File.dirname(__FILE__) + '/../init.rb'
 end
+
+require File.dirname(__FILE__) + '/fixtures/models.rb'
 
