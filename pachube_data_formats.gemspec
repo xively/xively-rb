@@ -30,7 +30,7 @@ pachube_data_formats is a gem designed to make interfacing with pachube easier. 
   s.add_development_dependency("activerecord", "~>2.3.8")
   s.add_development_dependency("sqlite3-ruby", "~>1.3.3")
 
-  s.extra_rdoc_files = ["README", "CHANGELOG", "MIT-LICENSE"]
+  s.extra_rdoc_files = ["README.markdown", "CHANGELOG", "MIT-LICENSE"]
   s.rdoc_options << '--main' << 'README'
 end
 

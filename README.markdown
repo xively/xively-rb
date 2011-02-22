@@ -9,18 +9,36 @@ You can use it to prepare data for sending to Pachube or for parsing data receiv
 Allowed inputs
 --------------
 
- * XML (Pachube EEML)
+ * XML (Pachube EEML) - Not Yet Implemented
  * JSON
- * CSV
+ * CSV - Not Yet Implemented
  * Hash
 
 Outputs
 -------
 
- * XML (Pachube EEML)
- * JSON
- * CSV
+ * XML (Pachube EEML) - Not Yet Implemented
+ * JSON - Version 2 JSON
+ * CSV - Not Yet Implemented
  * Hash
+
+ActiveRecord support
+--------------------
+
+If you have a ActiveRecord structure that maps to a Pachube Feed, this plugin will provide many convenience methods.
+Currently it will only work at Feed level and implements a Pachube API V2 JSON formatter.
+Attribute to Pachube field mapping in progress.
+
+    class Datastream < ActiveRecord::Base
+      belongs_to :feed
+    end
+
+    class Feed < ActiveRecord::Base
+      has_many :datastreams
+      is_pachube_data_format :feed
+    end
+
+    feed.to_pachube_json # converts your feed and associated datastreams into Pachube V2 JSON
 
 Examples
 --------
