@@ -7,8 +7,15 @@ module PachubeDataFormats
       # Optionally outputs Pachube v1 JSON "0.6-alpha"
       #
       def to_pachube_json(version = "1.0.0")
-        PachubeDataFormats::Feed.new(attributes.merge("datastreams" => datastreams.map(&:attributes))).to_json(:version => version)
+        PachubeDataFormats::Feed.new(attributes_with_associations).to_json(:version => version)
       end
+
+      protected
+
+      def attributes_with_associations
+        attributes.merge("datastreams" => datastreams.map(&:attributes))
+      end
+
     end
   end
 end
