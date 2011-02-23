@@ -202,7 +202,7 @@ describe PachubeDataFormats::Feed do
       feed = PachubeDataFormats::Feed.new(feed_as_('hash'))
       feed.datastreams = datastream_as_(:hash)
       feed.datastreams.each do |ds|
-        ds.should_receive(:to_json).and_return("{\"stream_id\":\"#{ds.id}\"}")
+        ds.should_receive(:as_json).and_return({"stream_id" => "#{ds.id}"})
       end
       parsed_datastreams = JSON.parse(feed.to_json)["datastreams"]
       feed.datastreams.each do |ds|

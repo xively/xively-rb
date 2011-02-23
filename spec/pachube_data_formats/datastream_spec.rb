@@ -65,25 +65,50 @@ describe PachubeDataFormats::Datastream do
     end
   end
 
-  describe "#to_json" do
+  describe "#as_json" do
 
     it "should optionally append the json version" do
       version = "1.0.0"
       datastream_hash = {"id" => "env001", "value" => "2344"}
       datastream = PachubeDataFormats::Datastream.new(datastream_hash)
-      datastream.to_json(:append_version => true).should == {"id" => "env001", "current_value" => "2344", "version" => version}.to_json
+      datastream.as_json(:append_version => true).should == {"id" => "env001", "current_value" => "2344", "version" => version}
     end
 
     it "should not append the json version by default" do
       datastream_hash = {"id" => "env001", "value" => "2344"}
       datastream = PachubeDataFormats::Datastream.new(datastream_hash)
-      datastream.to_json.should == {"id" => "env001", "current_value" => "2344"}.to_json
+      datastream.as_json.should == {"id" => "env001", "current_value" => "2344"}
     end
 
     it "should use the PachubeJSON generator" do
       datastream = PachubeDataFormats::Datastream.new(datastream_as_(:hash))
       PachubeDataFormats::Formats::Datastreams::JSON.should_receive(:generate).with(hash_including(datastream_as_(:hash))).and_return({"stream_id" => "env1"})
-      datastream.to_json.should == {"stream_id" => "env1"}.to_json
+      datastream.as_json.should == {"stream_id" => "env1"}
+    end
+
+  end
+
+  describe "#to_json" do
+    it "should call #as_json" do
+      datastream_hash = {"id" => "env001", "value" => "2344"}
+      datastream = PachubeDataFormats::Datastream.new(datastream_hash)
+      datastream.should_receive(:as_json).with({})
+      datastream.to_json
+    end
+
+    it "should pass options through to #as_json" do
+      datastream_hash = {"id" => "env001", "value" => "2344"}
+      datastream = PachubeDataFormats::Datastream.new(datastream_hash)
+      datastream.should_receive(:as_json).with({:crazy => "options"})
+      datastream.to_json({:crazy => "options"})
+    end
+
+    it "should pass the output of #as_json to yajl" do
+      datastream_hash = {"id" => "env001", "value" => "2344"}
+      datastream = PachubeDataFormats::Datastream.new(datastream_hash)
+      datastream.should_receive(:as_json).and_return({:awesome => "hash"})
+      ::JSON.should_receive(:generate).with({:awesome => "hash"})
+      datastream.to_json
     end
   end
 

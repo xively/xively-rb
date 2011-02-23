@@ -25,24 +25,24 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
     @datastream2 = @feed.datastreams.create!(datastream_as_(:hash))
   end
 
-  describe "#to_pachube_json" do
-    it "should return Pachube json based on the object's attributes" do
+  describe "#as_pachube_json" do
+    it "should return Pachube json hash based on the object's attributes" do
       PachubeDataFormats::Feed.should_receive(:new).with(hash_including(@feed.attributes)).and_return(:feed => "json representation of a feed")
-      @feed.to_pachube_json.should == {:feed => "json representation of a feed"}.to_json
+      @feed.as_pachube_json.should == {:feed => "json representation of a feed"}
     end
 
     it "should default to Pachube JSON version 1.0.0" do
       PachubeDataFormats::Formats::Feeds::JSON.should_receive(:generate).with(hash_including("version" => "1.0.0"))
-      @feed.to_pachube_json
+      @feed.as_pachube_json
     end
 
     it "should accept optional JSON" do
       PachubeDataFormats::Formats::Feeds::JSON.should_receive(:generate).with(hash_including("version" => "0.6-alpha"))
-      @feed.to_pachube_json("0.6-alpha")
+      @feed.as_pachube_json("0.6-alpha")
     end
 
-    it "should return full Pachube json with associated datastreams" do
-      json = JSON.parse(@feed.to_pachube_json)
+    it "should return full Pachube JSON hash with associated datastreams" do
+      json = @feed.as_pachube_json
       json["version"].should == "1.0.0"
       json["title"].should == "Feed Title"
       json["csv_version"].should == "v2"
@@ -64,6 +64,68 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
     end
 
     it "should optionally return full Pachube v1 0.6-alpha json with associated datastreams" do
+      json = @feed.as_pachube_json("0.6-alpha")
+      json["version"].should == "0.6-alpha"
+      json["title"].should == "Feed Title"
+      json["csv_version"].should == "v2"
+      json["private"].should be_nil
+      json["icon"].should == "http://pachube.com/logo.png"
+      json["website"].should == "http://pachube.com"
+      json["tags"].should be_nil
+      json["description"].should == "Test feed"
+      json["feed"].should == "http://test.host/testfeed.html?random=890299&rand2=91"
+      json["email"].should == "abc@example.com"
+      json["datastreams"].should have(2).things
+      json["datastreams"].each do |ds|
+        ds["values"]["max_value"].should == 658.0
+        ds["values"]["min_value"].should == 0.0
+        ds["values"]["value"].should == "14"
+        ds["values"]["recorded_at"].should == Time.parse("2011/01/02 00:00:00 +0000")
+        @feed.datastreams.find(ds["id"]).should_not be_nil
+        ds["tags"].should == ["freakin lasers", "humidity", "temperature"]
+      end
+    end
+  end
+
+  describe "#to_pachube_json" do
+    it "should return Pachube json based on the object's attributes" do
+      PachubeDataFormats::Feed.should_receive(:new).with(hash_including(@feed.attributes)).and_return(:feed => "json representation of a feed")
+      @feed.to_pachube_json.should == {:feed => "json representation of a feed"}.to_json
+    end
+
+    it "should default to Pachube JSON version 1.0.0" do
+      PachubeDataFormats::Formats::Feeds::JSON.should_receive(:generate).with(hash_including("version" => "1.0.0"))
+      @feed.to_pachube_json
+    end
+
+    it "should accept optional JSON" do
+      PachubeDataFormats::Formats::Feeds::JSON.should_receive(:generate).with(hash_including("version" => "0.6-alpha"))
+      @feed.to_pachube_json("0.6-alpha")
+    end
+
+    it "should return full Pachube JSON with associated datastreams" do
+      json = JSON.parse(@feed.to_pachube_json)
+      json["version"].should == "1.0.0"
+      json["title"].should == "Feed Title"
+      json["csv_version"].should == "v2"
+      json["private"].should == true
+      json["icon"].should == "http://pachube.com/logo.png"
+      json["website"].should == "http://pachube.com"
+      json["tags"].should == ["aardvark", "kittens", "sofa"]
+      json["description"].should == "Test feed"
+      json["feed"].should == "http://test.host/testfeed.html?random=890299&rand2=91"
+      json["email"].should == "abc@example.com"
+      json["datastreams"].should have(2).things
+      json["datastreams"].each do |ds|
+        ds["max_value"].should == 658.0
+        ds["min_value"].should == 0.0
+        ds["current_value"].should == "14"
+        @feed.datastreams.find(ds["id"]).should_not be_nil
+        ds["tags"].should == ["freakin lasers", "humidity", "temperature"]
+      end
+    end
+
+    it "should optionally return full Pachube v1 0.6-alpha JSON with associated datastreams" do
       json = JSON.parse(@feed.to_pachube_json("0.6-alpha"))
       json["version"].should == "0.6-alpha"
       json["title"].should == "Feed Title"

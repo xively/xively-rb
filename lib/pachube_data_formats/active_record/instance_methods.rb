@@ -10,6 +10,10 @@ module PachubeDataFormats
         PachubeDataFormats::Feed.new(attributes_with_associations).to_json(:version => version)
       end
 
+      def as_pachube_json(version = "1.0.0")
+        PachubeDataFormats::Feed.new(attributes_with_associations).as_json(:version => version)
+      end
+
       protected
 
       def attributes_with_associations
