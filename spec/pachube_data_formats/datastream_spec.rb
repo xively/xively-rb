@@ -65,25 +65,27 @@ describe PachubeDataFormats::Datastream do
     end
   end
 
+  # Provided by PachubeDataFormats::Templates::DatastreamDefaults
+  describe "#generate_json" do
+    it "should take a version and generate the appropriate template" do
+      datastream = PachubeDataFormats::Datastream.new({})
+      PachubeDataFormats::Template.should_receive(:new).with(datastream, :json)
+      lambda {datastream.generate_json("1.0.0")}.should raise_error(NoMethodError)
+    end
+  end
+
   describe "#as_json" do
 
-    it "should optionally append the json version" do
-      version = "1.0.0"
-      datastream_hash = {"id" => "env001", "value" => "2344"}
-      datastream = PachubeDataFormats::Datastream.new(datastream_hash)
-      datastream.as_json(:append_version => true).should == {"id" => "env001", "current_value" => "2344", "version" => version}
+    it "should call the json generator with default version" do
+      datastream = PachubeDataFormats::Datastream.new({})
+      datastream.should_receive(:generate_json).with("1.0.0").and_return({"title" => "Environment"})
+      datastream.as_json.should == {"title" => "Environment"}
     end
 
-    it "should not append the json version by default" do
-      datastream_hash = {"id" => "env001", "value" => "2344"}
-      datastream = PachubeDataFormats::Datastream.new(datastream_hash)
-      datastream.as_json.should == {"id" => "env001", "current_value" => "2344"}
-    end
-
-    it "should use the PachubeJSON generator" do
-      datastream = PachubeDataFormats::Datastream.new(datastream_as_(:hash))
-      PachubeDataFormats::Formats::Datastreams::JSON.should_receive(:generate).with(hash_including(datastream_as_(:hash))).and_return({"stream_id" => "env1"})
-      datastream.as_json.should == {"stream_id" => "env1"}
+    it "should accept optional json version" do
+      datastream = PachubeDataFormats::Datastream.new({})
+      datastream.should_receive(:generate_json).with("0.6-alpha").and_return({"title" => "Environment"})
+      datastream.as_json(:version => "0.6-alpha").should == {"title" => "Environment"}
     end
 
   end

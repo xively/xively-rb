@@ -1,23 +1,33 @@
 def feed_as_(format, options = {})
   # Default data
-  # This data is taken from http://api.pachube.com/v2/feeds/504
+  # This data is based on http://api.pachube.com/v2/feeds/504
   case format.to_s
   when 'hash'
     data = {
      "retrieved_at"=>Time.parse('2011-01-02'),
      "created_at"=>Time.parse('2011-01-01'),
      "title"=>"Pachube Office environment",
-     "csv_version"=>"",
+     "csv_version"=>"v2",
      "updated_at"=>Time.parse('2011-02-16'),
      "private"=>false,
      "owner"=>"hdr",
      "id"=>504,
-     "icon"=>"",
-     "website"=>"http://www.pachube.com/",
-     "tags"=>["hq", "office"],
+     "icon"=>"http://pachube.com/logo.png",
+     "website"=>"http://pachube.com",
+     "tag_list" => "kittens , sofa, aardvark",
      "description"=>"Sensors in Pachube.com's headquarters.",
-     "feed"=>"http://92.27.75.48/",
-     "email"=>"",
+     "feed" => "http://test.host/testfeed.html?random=890299&rand2=91",
+     "email"=>"abc@example.com",
+     "state"=>"live",
+     'location' =>
+       { 'domain' => 'physical',
+         'lon' => -0.0807666778564453,
+         'disposition' => 'fixed',
+         'ele' => '23.0',
+         'exposure' => 'indoor',
+         'lat' => 51.5235375648154,
+         'name' => 'office'
+       },
      "datastreams" => [
        {
         "retrieved_at" => Time.parse('2011-01-02'),
@@ -27,7 +37,7 @@ def feed_as_(format, options = {})
         "unit_label"=>"",
         "value"=>"14",
         "id"=>"0",
-        "tag_list"=>"humidity",
+        "tag_list"=>"humidity,temperature, freakin lasers",
         "unit_symbol"=>""},
        {
         "retrieved_at" => Time.parse('2011-01-02'),
@@ -128,7 +138,6 @@ def feed_as_json(version)
       'updated' => '2011-02-16T16:21:01.834174Z',
       'tags' => ['hq', 'office'],
       'description' => 'Sensors in Pachube.com\'s headquarters.',
-      'title' => 'Pachube Office environment',
       'website' => 'http://www.pachube.com/',
       'private' => 'false',
       'version' => '1.0.0',

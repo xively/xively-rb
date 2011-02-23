@@ -26,26 +26,10 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
   end
 
   describe "#as_pachube_json" do
-    it "should return Pachube json hash based on the object's attributes" do
-      PachubeDataFormats::Feed.should_receive(:new).with(hash_including(@feed.attributes)).and_return(:feed => "json representation of a feed")
-      @feed.as_pachube_json.should == {:feed => "json representation of a feed"}
-    end
-
-    it "should default to Pachube JSON version 1.0.0" do
-      PachubeDataFormats::Formats::Feeds::JSON.should_receive(:generate).with(hash_including("version" => "1.0.0"))
-      @feed.as_pachube_json
-    end
-
-    it "should accept optional JSON" do
-      PachubeDataFormats::Formats::Feeds::JSON.should_receive(:generate).with(hash_including("version" => "0.6-alpha"))
-      @feed.as_pachube_json("0.6-alpha")
-    end
-
     it "should return full Pachube JSON hash with associated datastreams" do
       json = @feed.as_pachube_json
       json["version"].should == "1.0.0"
       json["title"].should == "Feed Title"
-      json["csv_version"].should == "v2"
       json["private"].should == true
       json["icon"].should == "http://pachube.com/logo.png"
       json["website"].should == "http://pachube.com"
@@ -67,7 +51,6 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
       json = @feed.as_pachube_json("0.6-alpha")
       json["version"].should == "0.6-alpha"
       json["title"].should == "Feed Title"
-      json["csv_version"].should == "v2"
       json["private"].should be_nil
       json["icon"].should == "http://pachube.com/logo.png"
       json["website"].should == "http://pachube.com"
@@ -80,7 +63,7 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
         ds["values"]["max_value"].should == 658.0
         ds["values"]["min_value"].should == 0.0
         ds["values"]["value"].should == "14"
-        ds["values"]["recorded_at"].should == Time.parse("2011/01/02 00:00:00 +0000")
+        ds["values"]["recorded_at"].should == Time.parse("2011/01/02 00:00:00 +0000").iso8601
         @feed.datastreams.find(ds["id"]).should_not be_nil
         ds["tags"].should == ["freakin lasers", "humidity", "temperature"]
       end
@@ -93,21 +76,10 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
       @feed.to_pachube_json.should == {:feed => "json representation of a feed"}.to_json
     end
 
-    it "should default to Pachube JSON version 1.0.0" do
-      PachubeDataFormats::Formats::Feeds::JSON.should_receive(:generate).with(hash_including("version" => "1.0.0"))
-      @feed.to_pachube_json
-    end
-
-    it "should accept optional JSON" do
-      PachubeDataFormats::Formats::Feeds::JSON.should_receive(:generate).with(hash_including("version" => "0.6-alpha"))
-      @feed.to_pachube_json("0.6-alpha")
-    end
-
     it "should return full Pachube JSON with associated datastreams" do
       json = JSON.parse(@feed.to_pachube_json)
       json["version"].should == "1.0.0"
       json["title"].should == "Feed Title"
-      json["csv_version"].should == "v2"
       json["private"].should == true
       json["icon"].should == "http://pachube.com/logo.png"
       json["website"].should == "http://pachube.com"
@@ -129,7 +101,6 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
       json = JSON.parse(@feed.to_pachube_json("0.6-alpha"))
       json["version"].should == "0.6-alpha"
       json["title"].should == "Feed Title"
-      json["csv_version"].should == "v2"
       json["private"].should be_nil
       json["icon"].should == "http://pachube.com/logo.png"
       json["website"].should == "http://pachube.com"
@@ -142,7 +113,7 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
         ds["values"]["max_value"].should == 658.0
         ds["values"]["min_value"].should == 0.0
         ds["values"]["value"].should == "14"
-        ds["values"]["recorded_at"].should == "2011/01/02 00:00:00 +0000"
+        ds["values"]["recorded_at"].should == Time.parse("2011/01/02 00:00:00 +0000").iso8601
         @feed.datastreams.find(ds["id"]).should_not be_nil
         ds["tags"].should == ["freakin lasers", "humidity", "temperature"]
       end

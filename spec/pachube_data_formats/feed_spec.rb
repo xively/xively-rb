@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe PachubeDataFormats::Feed do
 
   it "should have a constant that defines the allowed keys" do
-    PachubeDataFormats::Feed::ALLOWED_KEYS.should == %w(created_at csv_version datastreams description email feed icon id location private retrieved_at status tag_list title updated_at website)
+    PachubeDataFormats::Feed::ALLOWED_KEYS.should == %w(created_at datastreams description email feed icon id location private retrieved_at state tag_list title updated_at website)
   end
 
 
@@ -160,26 +160,27 @@ describe PachubeDataFormats::Feed do
 
   end
 
-  describe "#as_json" do
-    it "should use the PachubeJSON generator" do
-      feed_hash = {"title" => "Environment"}
-      feed = PachubeDataFormats::Feed.new(feed_hash)
-      PachubeDataFormats::Formats::Feeds::JSON.should_receive(:generate).with(hash_including(feed_hash)).and_return({"title" => "Environment"})
-      feed.as_json.should == {"title" => "Environment"}
+  # Provided by PachubeDataFormats::Templates::FeedDefaults
+  describe "#generate_json" do
+    it "should take a version and generate the appropriate template" do
+      feed = PachubeDataFormats::Feed.new({})
+      PachubeDataFormats::Template.should_receive(:new).with(feed, :json)
+      lambda {feed.generate_json("1.0.0")}.should raise_error(NoMethodError)
     end
+  end
 
-    it "should append the json version" do
-      version = "1.0.0"
-      feed_hash = {"title" => "Environment"}
-      feed = PachubeDataFormats::Feed.new(feed_hash)
-      feed.as_json.should == {"title" => "Environment", "version" => version}
+  describe "#as_json" do
+    it "should call the json generator with default version" do
+      feed = PachubeDataFormats::Feed.new({})
+      feed.should_receive(:generate_json).with("1.0.0").and_return({"title" => "Environment"})
+      feed.as_json.should == {"title" => "Environment"}
     end
 
     it "should accept optional json version" do
       version = "0.6-alpha"
-      feed_hash = {"title" => "Environment"}
-      feed = PachubeDataFormats::Feed.new(feed_hash)
-      feed.as_json(:version => version).should == {"title" => "Environment", "version" => version}
+      feed = PachubeDataFormats::Feed.new({})
+      feed.should_receive(:generate_json).with(version).and_return({"title" => "Environment"})
+      feed.as_json(:version => version).should == {"title" => "Environment"}
     end
   end
 
@@ -198,16 +199,10 @@ describe PachubeDataFormats::Feed do
       feed.to_json({:crazy => "options"})
     end
 
-    it "should use the PachubeJSON generator for datastreams" do
+    it "should generate datastreams" do
       feed = PachubeDataFormats::Feed.new(feed_as_('hash'))
       feed.datastreams = datastream_as_(:hash)
-      feed.datastreams.each do |ds|
-        ds.should_receive(:as_json).and_return({"stream_id" => "#{ds.id}"})
-      end
-      parsed_datastreams = JSON.parse(feed.to_json)["datastreams"]
-      feed.datastreams.each do |ds|
-        parsed_datastreams.should include({"stream_id" => ds.id})
-      end
+      JSON.parse(feed.to_json)["datastreams"].should_not be_nil
     end
 
     it "should pass the output of #as_json to yajl" do

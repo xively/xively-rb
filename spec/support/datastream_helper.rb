@@ -9,7 +9,7 @@ def datastream_as_(format, options = {})
       "unit_label"=>"percentage",
       "value"=>"14",
       "id"=>"0",
-      "tag_list"=>"humidity,temperature,freakin lasers",
+      "tag_list"=>"humidity,temperature   ,freakin lasers",
       "unit_symbol"=>"%"
     }
   when 'json'
