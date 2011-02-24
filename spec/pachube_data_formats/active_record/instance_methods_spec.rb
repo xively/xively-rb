@@ -60,10 +60,10 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
       json["email"].should == "abc@example.com"
       json["datastreams"].should have(2).things
       json["datastreams"].each do |ds|
-        ds["values"]["max_value"].should == 658.0
-        ds["values"]["min_value"].should == 0.0
-        ds["values"]["value"].should == "14"
-        ds["values"]["recorded_at"].should == Time.parse("2011/01/02 00:00:00 +0000").iso8601
+        ds["values"].first["max_value"].should == 658.0
+        ds["values"].first["min_value"].should == 0.0
+        ds["values"].first["value"].should == "14"
+        ds["values"].first["recorded_at"].should == Time.parse("2011/01/02 00:00:00 +0000").iso8601
         @feed.datastreams.find(ds["id"]).should_not be_nil
         ds["tags"].should == ["freakin lasers", "humidity", "temperature"]
       end
@@ -110,16 +110,14 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
       json["email"].should == "abc@example.com"
       json["datastreams"].should have(2).things
       json["datastreams"].each do |ds|
-        ds["values"]["max_value"].should == 658.0
-        ds["values"]["min_value"].should == 0.0
-        ds["values"]["value"].should == "14"
-        ds["values"]["recorded_at"].should == Time.parse("2011/01/02 00:00:00 +0000").iso8601
+        ds["values"].first["max_value"].should == 658.0
+        ds["values"].first["min_value"].should == 0.0
+        ds["values"].first["value"].should == "14"
+        ds["values"].first["recorded_at"].should == Time.parse("2011/01/02 00:00:00 +0000").iso8601
         @feed.datastreams.find(ds["id"]).should_not be_nil
         ds["tags"].should == ["freakin lasers", "humidity", "temperature"]
       end
     end
-
-
   end
 
 end

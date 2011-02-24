@@ -13,19 +13,7 @@ def datastream_as_(format, options = {})
       "unit_symbol"=>"%"
     }
   when 'json'
-    data = {
-      'min_value' => '0.0',
-      'at' => '2011-02-16T16:21:01.834174Z',
-      'tags' => ['humidity', 'temperature', 'freakin lasers'],
-      'current_value' => '14',
-      'max_value' => '658.0',
-      'id' => '0',
-      "unit" => {
-          "type" => "derived SI",
-          "symbol" => "%",
-          "label" => "percentage"
-      }
-    }
+    data = datastream_as_json(options[:version] || "1.0.0")
   end
  
   # Add extra options we passed
@@ -52,5 +40,44 @@ def datastream_as_(format, options = {})
     raise "#{format} undefined"
   end
 
+end
+
+def datastream_as_json(version)
+  case version
+  when "1.0.0"
+    {
+      'min_value' => '0.0',
+      'at' => '2011-02-16T16:21:01.834174Z',
+      'tags' => ['humidity', 'temperature', 'freakin lasers'],
+      'current_value' => '14',
+      'max_value' => '658.0',
+      'id' => '0',
+      "unit" => {
+      "type" => "derived SI",
+      "symbol" => "%",
+      "label" => "percentage"
+    },
+      'version' => '1.0.0'
+    }
+  when "0.6-alpha"
+    {
+      "tags" => ["humidity"],
+      "values" => [{
+        "min_value" => "0.0",
+        "recorded_at" => "2011-02-22T14:28:50Z",
+        "value" => "129",
+        "max_value" => "658.0"
+      }],
+      "id" => "0",
+      "unit" => {
+      "type" => "derived SI",
+      "symbol" => "%",
+      "label" => "percentage"
+    },
+      'version' => '0.6-alpha'
+    }
+  else
+    raise "Datastream as JSON #{version} not implemented"
+  end
 end
 

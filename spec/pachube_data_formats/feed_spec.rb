@@ -52,21 +52,16 @@ describe PachubeDataFormats::Feed do
       lambda{PachubeDataFormats::Feed.new}.should raise_exception(ArgumentError, "wrong number of arguments (0 for 1)")
     end
 
-    context "input from json" do
-      it "should use the PachubeJSON parser and store the outcome" do
-        PachubeDataFormats::Formats::Feeds::JSON.should_receive(:parse).with(feed_as_(:json)).and_return({"title" => "Environment"})
-        feed = PachubeDataFormats::Feed.new(feed_as_(:json))
-        feed.title.should == "Environment"
-      end
+    it "should accept json" do
+      feed = PachubeDataFormats::Feed.new(feed_as_(:json))
+      feed.title.should == "Pachube Office Environment"
     end
 
-    context "input from hash" do
-      it "should use the PachubeHash parser and store the outcome" do
-        PachubeDataFormats::Formats::Feeds::Hash.should_receive(:parse).with(feed_as_(:hash)).and_return({"title" => "Environment"})
-        feed = PachubeDataFormats::Feed.new(feed_as_(:hash))
-        feed.title.should == "Environment"
-      end
+    it "should accept a hash of attributes" do
+      feed = PachubeDataFormats::Feed.new(feed_as_(:hash))
+      feed.title.should == "Pachube Office Environment"
     end
+
   end
 
   describe "#attributes" do
@@ -213,26 +208,5 @@ describe PachubeDataFormats::Feed do
       feed.to_json
     end
   end
-
-  describe "#to_hash" do
-    it "should use the PachubeHash generator" do
-      feed_hash = {"title" => "Environment"}
-      feed = PachubeDataFormats::Feed.new(feed_hash)
-      PachubeDataFormats::Formats::Feeds::Hash.should_receive(:generate).with(feed_hash).and_return({"title" => "Environment"})
-      feed.to_hash.should == {"title" => "Environment"}
-    end
-
-    it "should use the PachubeHash generator for datastreams" do
-      feed = PachubeDataFormats::Feed.new(feed_as_(:hash))
-      feed.datastreams = datastream_as_(:hash)
-      feed.datastreams.each do |ds|
-        ds.should_receive(:to_hash).and_return({"stream_id" => "#{ds.id}"})
-      end
-      datastreams = feed.to_hash["datastreams"]
-      feed.datastreams.each do |ds|
-        datastreams.should include({"stream_id" => ds.id})
-      end
-    end
-
-  end
 end
+

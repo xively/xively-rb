@@ -30,10 +30,10 @@ module PachubeDataFormats
         template.id
         template.version {"0.6-alpha"}
         template.values {
-          { "recorded_at" => retrieved_at,
+          [{ "recorded_at" => retrieved_at,
             "value" => value,
             "max_value" => max_value,
-            "min_value" => min_value }
+            "min_value" => min_value }]
         }
         template.tags {tag_list.split(',').map(&:strip).sort}
         template.unit {{"label" => unit_label, "symbol" => unit_symbol, "type" => unit_type}}

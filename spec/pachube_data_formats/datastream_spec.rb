@@ -11,20 +11,14 @@ describe PachubeDataFormats::Datastream do
       lambda{PachubeDataFormats::Datastream.new}.should raise_exception(ArgumentError, "wrong number of arguments (0 for 1)")
     end
 
-    context "input from json" do
-      it "should use the PachubeJSON parser and store the outcome" do
-        PachubeDataFormats::Formats::Datastreams::JSON.should_receive(:parse).with(datastream_as_(:json)).and_return({"value" => "001"})
-        datastream = PachubeDataFormats::Datastream.new(datastream_as_(:json))
-        datastream.attributes.should == {"value" => "001"}
-      end
+    it "should accept json" do
+      datastream = PachubeDataFormats::Datastream.new(datastream_as_(:json))
+      datastream.value.should == "14"
     end
 
-    context "input from hash" do
-      it "should use the PachubeHash parser and store the outcome" do
-        PachubeDataFormats::Formats::Datastreams::Hash.should_receive(:parse).with(datastream_as_(:hash)).and_return({"value" => "one"})
-        datastream = PachubeDataFormats::Datastream.new(datastream_as_(:hash))
-        datastream.attributes.should == {"value" => "one"}
-      end
+    it "should accept a hash of attributes" do
+      datastream = PachubeDataFormats::Datastream.new(datastream_as_(:hash))
+      datastream.value.should == "14"
     end
   end
 
@@ -113,13 +107,5 @@ describe PachubeDataFormats::Datastream do
       datastream.to_json
     end
   end
-
-  describe "#to_hash" do
-    it "should use the PachubeHash generator" do
-      datastream = PachubeDataFormats::Datastream.new(datastream_as_(:hash))
-      PachubeDataFormats::Formats::Datastreams::Hash.should_receive(:generate).with(datastream_as_(:hash)).and_return({"stream_id" => "env1"})
-      datastream.to_hash.should == {"stream_id" => "env1"}
-    end
-  end
-
 end
+

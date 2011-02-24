@@ -30,10 +30,10 @@ describe "default datastream templates" do
       json = @datastream.generate_json("0.6-alpha")
       json["id"].should == @datastream.id
       json["version"].should == "0.6-alpha"
-      json["values"]["recorded_at"].should == @datastream.retrieved_at
-      json["values"]["value"].should == @datastream.value
-      json["values"]["max_value"].should == @datastream.max_value
-      json["values"]["min_value"].should == @datastream.min_value
+      json["values"].first["recorded_at"].should == @datastream.retrieved_at
+      json["values"].first["value"].should == @datastream.value
+      json["values"].first["max_value"].should == @datastream.max_value
+      json["values"].first["min_value"].should == @datastream.min_value
       json["tags"].should == @datastream.tag_list.split(',').map(&:strip).sort
       json["unit"].should == {
         "type" => @datastream.unit_type,

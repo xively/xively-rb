@@ -58,12 +58,12 @@ module PachubeDataFormats
             datastreams.collect do |ds|
               {
                 "id" => ds.id,
-                "values" => {
+                "values" => [{
                   "max_value" => ds.max_value,
                   "min_value" => ds.min_value,
                   "value" => ds.value,
                   "recorded_at" => ds.retrieved_at.iso8601
-                },
+                }],
                 "tags" => ds.tag_list.split(',').map(&:strip).sort
               }
             end

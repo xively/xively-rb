@@ -13,7 +13,7 @@ describe "default feed templates" do
     it "should represent Pachube JSON 1.0.0 (used by API v2)" do
       json = @feed.generate_json("1.0.0")
       json["version"].should == "1.0.0"
-      json["title"].should == "Pachube Office environment"
+      json["title"].should == "Pachube Office Environment"
       json["private"].should == false
       json["icon"].should == "http://pachube.com/logo.png"
       json["website"].should == "http://pachube.com"
@@ -37,7 +37,7 @@ describe "default feed templates" do
     it "should represent Pachube JSON 0.6-alpha (used by API v1)" do
       json = @feed.generate_json("0.6-alpha")
       json["version"].should == "0.6-alpha"
-      json["title"].should == "Pachube Office environment"
+      json["title"].should == "Pachube Office Environment"
       json["private"].should be_nil
       json["icon"].should == "http://pachube.com/logo.png"
       json["website"].should == "http://pachube.com"
@@ -50,10 +50,10 @@ describe "default feed templates" do
       json["datastreams"].should have(7).things
       json["datastreams"].each do |ds|
         datastream = @feed.datastreams.detect{|stream| stream.id == ds["id"]}
-        ds["values"]["max_value"].should == datastream.max_value
-        ds["values"]["min_value"].should == datastream.min_value
-        ds["values"]["value"].should == datastream.value
-        ds["values"]["recorded_at"].should == datastream.retrieved_at.iso8601
+        ds["values"].first["max_value"].should == datastream.max_value
+        ds["values"].first["min_value"].should == datastream.min_value
+        ds["values"].first["value"].should == datastream.value
+        ds["values"].first["recorded_at"].should == datastream.retrieved_at.iso8601
         ds["tags"].should == datastream.tag_list.split(',').map(&:strip).sort
       end
     end

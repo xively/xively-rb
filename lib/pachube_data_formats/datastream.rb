@@ -4,12 +4,13 @@ module PachubeDataFormats
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
     include PachubeDataFormats::Templates::DatastreamDefaults
+    include PachubeDataFormats::Parsers::DatastreamDefaults
 
     def initialize(input)
       if input.is_a? Hash
-        self.attributes = Formats::Datastreams::Hash.parse(input)
+        self.attributes = input
       else
-        self.attributes = Formats::Datastreams::JSON.parse(input)
+        self.attributes = from_json(input)
       end
     end
 
@@ -24,10 +25,6 @@ module PachubeDataFormats
 
     def attributes=(input)
       ALLOWED_KEYS.each { |key| self.send("#{key}=", input[key]) }
-    end
-
-    def to_hash
-      Formats::Datastreams::Hash.generate(attributes)
     end
 
     def as_json(options = {})
