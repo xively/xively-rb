@@ -8,7 +8,7 @@ def datastream_as_(format, options = {})
       "min_value"=>0.0,
       "unit_label"=>"percentage",
       "value"=>"14",
-      "id"=>"0",
+      "stream_id"=>"0",
       "tag_list"=>"humidity,temperature   ,freakin lasers",
       "unit_symbol"=>"%"
     }

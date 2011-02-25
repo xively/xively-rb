@@ -14,7 +14,7 @@ module PachubeDataFormats
       
       def json_1_0_0
         template = Template.new(self, :json)
-        template.id
+        template.id {stream_id}
         template.version {"1.0.0"}
         template.at {retrieved_at}
         template.current_value {value}
@@ -27,7 +27,7 @@ module PachubeDataFormats
 
       def json_0_6_alpha
         template = Template.new(self, :json)
-        template.id
+        template.id {stream_id}
         template.version {"0.6-alpha"}
         template.values {
           [{ "recorded_at" => retrieved_at,

@@ -24,7 +24,7 @@ module PachubeDataFormats
             unit_hash['unit_label'] = unit['label']
           end
           {
-            "id" => datastream["id"],
+            "stream_id" => datastream["id"],
             "value" => datastream["current_value"],
             "min_value" => datastream["min_value"],
             "max_value" => datastream["max_value"],
@@ -46,7 +46,7 @@ module PachubeDataFormats
             unit_hash['unit_label'] = unit['label']
           end
           {
-            "id" => datastream["id"],
+            "stream_id" => datastream["id"],
             "value" => datastream["values"].first["value"],
             "min_value" => datastream["values"].first["min_value"],
             "max_value" => datastream["values"].first["max_value"],

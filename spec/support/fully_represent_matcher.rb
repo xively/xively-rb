@@ -1,7 +1,7 @@
 RSpec::Matchers.define :fully_represent do |pdf_formatted|
   match do |pdf_object|
     json = JSON.parse(pdf_formatted)
-      feed = pdf_object
+    feed = pdf_object
     case json['version']
     when '1.0.0'
       feed.title.should == json["title"]
@@ -13,7 +13,7 @@ RSpec::Matchers.define :fully_represent do |pdf_formatted|
       no_units = true
       feed.datastreams.should_not be_empty
       feed.datastreams.each do |datastream|
-        ds = json['datastreams'].detect{|s| s["id"] == datastream.id}
+        ds = json['datastreams'].detect{|s| s["id"] == datastream.stream_id}
         datastream.value.should == ds["current_value"]
         datastream.min_value.should == ds["min_value"]
         datastream.max_value.should == ds["max_value"]
@@ -39,7 +39,7 @@ RSpec::Matchers.define :fully_represent do |pdf_formatted|
       no_units = true
       feed.datastreams.should_not be_empty
       feed.datastreams.each do |datastream|
-        ds = json['datastreams'].detect{|s| s["id"] == datastream.id}
+        ds = json['datastreams'].detect{|s| s["id"] == datastream.stream_id}
         datastream.value.should == ds["values"].first["value"]
         datastream.min_value.should == ds["values"].first["min_value"]
         datastream.max_value.should == ds["values"].first["max_value"]

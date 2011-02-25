@@ -25,7 +25,7 @@ describe "default feed templates" do
       json["email"].should == "abc@example.com"
       json["datastreams"].should have(7).things
       json["datastreams"].each do |ds|
-        datastream = @feed.datastreams.detect{|stream| stream.id == ds["id"]}
+        datastream = @feed.datastreams.detect{|stream| stream.stream_id == ds["id"]}
         ds["at"].should == datastream.retrieved_at.iso8601(6)
         ds["max_value"].should == datastream.max_value
         ds["min_value"].should == datastream.min_value
@@ -49,7 +49,7 @@ describe "default feed templates" do
       json["email"].should == "abc@example.com"
       json["datastreams"].should have(7).things
       json["datastreams"].each do |ds|
-        datastream = @feed.datastreams.detect{|stream| stream.id == ds["id"]}
+        datastream = @feed.datastreams.detect{|stream| stream.stream_id == ds["id"]}
         ds["values"].first["max_value"].should == datastream.max_value
         ds["values"].first["min_value"].should == datastream.min_value
         ds["values"].first["value"].should == datastream.value

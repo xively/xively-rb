@@ -42,7 +42,7 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
         ds["max_value"].should == 658.0
         ds["min_value"].should == 0.0
         ds["current_value"].should == "14"
-        @feed.datastreams.find(ds["id"]).should_not be_nil
+        @feed.datastreams.find_by_stream_id(ds["id"]).should_not be_nil
         ds["tags"].should == ["freakin lasers", "humidity", "temperature"]
       end
     end
@@ -64,7 +64,7 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
         ds["values"].first["min_value"].should == 0.0
         ds["values"].first["value"].should == "14"
         ds["values"].first["recorded_at"].should == Time.parse("2011/01/02 00:00:00 +0000").iso8601
-        @feed.datastreams.find(ds["id"]).should_not be_nil
+        @feed.datastreams.find_by_stream_id(ds["id"]).should_not be_nil
         ds["tags"].should == ["freakin lasers", "humidity", "temperature"]
       end
     end
@@ -92,7 +92,7 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
         ds["max_value"].should == 658.0
         ds["min_value"].should == 0.0
         ds["current_value"].should == "14"
-        @feed.datastreams.find(ds["id"]).should_not be_nil
+        @feed.datastreams.find_by_stream_id(ds["id"]).should_not be_nil
         ds["tags"].should == ["freakin lasers", "humidity", "temperature"]
       end
     end
@@ -114,7 +114,7 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
         ds["values"].first["min_value"].should == 0.0
         ds["values"].first["value"].should == "14"
         ds["values"].first["recorded_at"].should == Time.parse("2011/01/02 00:00:00 +0000").iso8601
-        @feed.datastreams.find(ds["id"]).should_not be_nil
+        @feed.datastreams.find_by_stream_id(ds["id"]).should_not be_nil
         ds["tags"].should == ["freakin lasers", "humidity", "temperature"]
       end
     end

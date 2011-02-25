@@ -29,7 +29,7 @@ module PachubeDataFormats
           template.datastreams do
             datastreams.collect do |ds|
               {
-                "id" => ds.id,
+                "id" => ds.stream_id,
                 "at" => ds.retrieved_at.iso8601(6),
                 "max_value" => ds.max_value,
                 "min_value" => ds.min_value,
@@ -57,7 +57,7 @@ module PachubeDataFormats
           template.datastreams do
             datastreams.collect do |ds|
               {
-                "id" => ds.id,
+                "id" => ds.stream_id,
                 "values" => [{
                   "max_value" => ds.max_value,
                   "min_value" => ds.min_value,

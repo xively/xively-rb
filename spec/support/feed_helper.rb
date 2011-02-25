@@ -36,7 +36,7 @@ def feed_as_(format, options = {})
         "min_value"=>0.0,
         "unit_label"=>"",
         "value"=>"14",
-        "id"=>"0",
+        "stream_id"=>"0",
         "tag_list"=>"humidity,temperature, freakin lasers",
         "unit_symbol"=>""},
         {
@@ -46,7 +46,7 @@ def feed_as_(format, options = {})
         "min_value"=>0.0,
         "unit_label"=>"",
         "value"=>"813",
-        "id"=>"1",
+        "stream_id"=>"1",
         "tag_list"=>"light level",
         "unit_symbol"=>""},
         {
@@ -56,7 +56,7 @@ def feed_as_(format, options = {})
         "min_value"=>158.0,
         "unit_label"=>"",
         "value"=>"318",
-        "id"=>"2",
+        "stream_id"=>"2",
         "tag_list"=>"temperature",
         "unit_symbol"=>""},
         {
@@ -66,7 +66,7 @@ def feed_as_(format, options = {})
         "min_value"=>0.0,
         "unit_label"=>"",
         "value"=>"0",
-        "id"=>"3",
+        "stream_id"=>"3",
         "tag_list"=>"door 1",
         "unit_symbol"=>""},
         {
@@ -76,7 +76,7 @@ def feed_as_(format, options = {})
         "min_value"=>0.0,
         "unit_label"=>"",
         "value"=>"0",
-        "id"=>"4",
+        "stream_id"=>"4",
         "tag_list"=>"door 2",
         "unit_symbol"=>""},
         {
@@ -86,7 +86,7 @@ def feed_as_(format, options = {})
         "min_value"=>0.0,
         "unit_label"=>"",
         "value"=>"40",
-        "id"=>"5",
+        "stream_id"=>"5",
         "tag_list"=>"failures",
         "unit_symbol"=>""},
         {
@@ -96,7 +96,7 @@ def feed_as_(format, options = {})
         "min_value"=>-32768.0,
         "unit_label"=>"",
         "value"=>"15545",
-        "id"=>"6",
+        "stream_id"=>"6",
         "tag_list"=>"successes",
         "unit_symbol"=>""}]
     }

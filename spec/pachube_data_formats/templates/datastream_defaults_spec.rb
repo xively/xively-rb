@@ -12,7 +12,7 @@ describe "default datastream templates" do
 
     it "should represent Pachube JSON 1.0.0 (used by API v2)" do
       json = @datastream.generate_json("1.0.0")
-      json["id"].should == @datastream.id
+      json["id"].should == @datastream.stream_id
       json["version"].should == "1.0.0"
       json["at"].should == @datastream.retrieved_at
       json["current_value"].should == @datastream.value
@@ -28,7 +28,7 @@ describe "default datastream templates" do
 
     it "should represent Pachube JSON 0.6-alpha (used by API v1)" do
       json = @datastream.generate_json("0.6-alpha")
-      json["id"].should == @datastream.id
+      json["id"].should == @datastream.stream_id
       json["version"].should == "0.6-alpha"
       json["values"].first["recorded_at"].should == @datastream.retrieved_at
       json["values"].first["value"].should == @datastream.value

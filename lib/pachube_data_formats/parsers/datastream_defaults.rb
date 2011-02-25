@@ -14,6 +14,7 @@ module PachubeDataFormats
       private
 
       def transform_1_0_0(hash)
+        hash["stream_id"] = hash.delete("id")
         hash["retrieved_at"] = hash.delete("at")
         hash["value"] = hash.delete("current_value")
         hash["tag_list"] = hash["tags"].join(',')
@@ -26,6 +27,7 @@ module PachubeDataFormats
       end
 
       def transform_0_6_alpha(hash)
+        hash["stream_id"] = hash.delete("id")
         hash["retrieved_at"] = hash["values"].first.delete("recorded_at")
         hash["value"] = hash["values"].first.delete("value")
         hash["max_value"] = hash["values"].first.delete("max_value")

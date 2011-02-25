@@ -1,6 +1,6 @@
 module PachubeDataFormats
   class Datastream
-    ALLOWED_KEYS = %w(id max_value min_value retrieved_at tag_list unit_label unit_symbol unit_type value)
+    ALLOWED_KEYS = %w(stream_id max_value min_value retrieved_at tag_list unit_label unit_symbol unit_type value)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
     include PachubeDataFormats::Templates::DatastreamDefaults

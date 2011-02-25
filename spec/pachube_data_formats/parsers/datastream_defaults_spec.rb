@@ -10,7 +10,7 @@ describe "default datastream parser" do
       @json = datastream_as_(:json)
       attributes = @datastream.from_json(@json)
       json = JSON.parse(@json)
-      attributes["id"].should == json["id"]
+      attributes["stream_id"].should == json["id"]
       attributes["retrieved_at"].should == json["at"]
       attributes["value"].should == json["current_value"]
       attributes["max_value"].should == json["max_value"]
@@ -25,7 +25,7 @@ describe "default datastream parser" do
       @json = datastream_as_(:json, :version => "0.6-alpha")
       attributes = @datastream.from_json(@json)
       json = JSON.parse(@json)
-      attributes["id"].should == json["id"]
+      attributes["stream_id"].should == json["id"]
       attributes["retrieved_at"].should == json["values"].first["recorded_at"]
       attributes["value"].should == json["values"].first["value"]
       attributes["max_value"].should == json["values"].first["max_value"]

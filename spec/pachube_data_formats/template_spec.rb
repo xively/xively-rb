@@ -35,12 +35,12 @@ describe PachubeDataFormats::Template do
       @template.datastreams do |f|
         f.datastreams.collect do |ds|
           {
-            :id => ds.id,
+            :id => ds.stream_id,
             :current_value => ds.value
           }
         end
       end
-      datastreams = @feed.datastreams.collect {|ds| {:id => ds.id, :current_value => ds.value}}
+      datastreams = @feed.datastreams.collect {|ds| {:id => ds.stream_id, :current_value => ds.value}}
       @template.output!.should == {
         :title => @feed.title,
         :datastreams => datastreams
