@@ -21,7 +21,7 @@ module PachubeDataFormats
     end
 
     def output!
-      @output
+      @output.reject {|k,v| v.nil?}
     end
   end
 end

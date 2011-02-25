@@ -46,6 +46,12 @@ describe PachubeDataFormats::Template do
         :datastreams => datastreams
       }
     end
+
+    it "should ignore nils" do
+      @feed.title = nil
+      @template.title
+      @template.output!.should == {}
+    end
   end
 end
 
