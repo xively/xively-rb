@@ -19,7 +19,7 @@ module PachubeDataFormats
         template.private
         template.icon
         template.website
-        template.tags {tag_list.split(',').map(&:strip).sort}
+        template.tags {tag_list.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}}
         template.description
         template.feed
         template.status {state}
@@ -35,7 +35,7 @@ module PachubeDataFormats
                 :max_value => ds.max_value,
                 :min_value => ds.min_value,
                 :current_value => ds.value,
-                :tags => ds.tag_list.split(',').map(&:strip).sort
+                :tags => ds.tag_list.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}
               }
             end
           end
@@ -66,7 +66,7 @@ module PachubeDataFormats
                   :value => ds.value,
                   :recorded_at => ds.retrieved_at.iso8601
                 }],
-                :tags => ds.tag_list.split(',').map(&:strip).sort
+                :tags => ds.tag_list.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}
               }
             end
           end

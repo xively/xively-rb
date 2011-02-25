@@ -37,7 +37,7 @@ def feed_as_(format, options = {})
         "unit_label"=>"",
         "value"=>"14",
         "stream_id"=>"0",
-        "tag_list"=>"humidity,temperature, freakin lasers",
+        "tag_list"=>"humidity,Temperature, freakin lasers",
         "unit_symbol"=>""},
         {
         "retrieved_at" => Time.parse('2011-01-02'),
@@ -57,7 +57,7 @@ def feed_as_(format, options = {})
         "unit_label"=>"",
         "value"=>"318",
         "stream_id"=>"2",
-        "tag_list"=>"temperature",
+        "tag_list"=>"Temperature",
         "unit_symbol"=>""},
         {
         "retrieved_at" => Time.parse('2011-01-02'),
@@ -177,7 +177,7 @@ def feed_as_json(version)
       },
         {'min_value' => '158.0',
           'at' => '2011-02-16T16:21:01.834174Z',
-          'tags' => ['temperature'],
+          'tags' => ['Temperature'],
           'current_value' => '316',
           'max_value' => '774.0',
           'id' => '2'
@@ -241,7 +241,7 @@ def feed_as_json(version)
       "id" => "1"
     },
       {
-      "tags" => ["temperature"],
+      "tags" => ["Temperature"],
       "values" => [{
       "min_value" => "158.0",
       "recorded_at" => "2011-02-22T14:28:50Z",

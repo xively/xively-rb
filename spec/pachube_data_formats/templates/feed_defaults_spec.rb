@@ -31,7 +31,7 @@ describe "default feed templates" do
         ds[:max_value].should == datastream.max_value
         ds[:min_value].should == datastream.min_value
         ds[:current_value].should == datastream.value
-        ds[:tags].should == datastream.tag_list.split(',').map(&:strip).sort
+        ds[:tags].should == datastream.tag_list.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}
       end
     end
 
@@ -56,7 +56,7 @@ describe "default feed templates" do
         ds[:values].first[:min_value].should == datastream.min_value
         ds[:values].first[:value].should == datastream.value
         ds[:values].first[:recorded_at].should == datastream.retrieved_at.iso8601
-        ds[:tags].should == datastream.tag_list.split(',').map(&:strip).sort
+        ds[:tags].should == datastream.tag_list.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}
       end
     end
   end

@@ -18,7 +18,7 @@ describe "default datastream templates" do
       json[:current_value].should == @datastream.value
       json[:max_value].should == @datastream.max_value
       json[:min_value].should == @datastream.min_value
-      json[:tags].should == @datastream.tag_list.split(',').map(&:strip).sort
+      json[:tags].should == @datastream.tag_list.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}
       json[:unit].should == {
         :type => @datastream.unit_type,
         :symbol => @datastream.unit_symbol,
@@ -34,7 +34,7 @@ describe "default datastream templates" do
       json[:values].first[:value].should == @datastream.value
       json[:values].first[:max_value].should == @datastream.max_value
       json[:values].first[:min_value].should == @datastream.min_value
-      json[:tags].should == @datastream.tag_list.split(',').map(&:strip).sort
+      json[:tags].should == @datastream.tag_list.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}
       json[:unit].should == {
         :type => @datastream.unit_type,
         :symbol => @datastream.unit_symbol,

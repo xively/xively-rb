@@ -20,7 +20,7 @@ module PachubeDataFormats
         template.current_value {value}
         template.max_value
         template.min_value
-        template.tags {tag_list.split(',').map(&:strip).sort}
+        template.tags {tag_list.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}}
         template.unit {{:label => unit_label, :symbol => unit_symbol, :type => unit_type}}
         template.output!
       end
@@ -35,7 +35,7 @@ module PachubeDataFormats
             :max_value => max_value,
             :min_value => min_value }]
         }
-        template.tags {tag_list.split(',').map(&:strip).sort}
+        template.tags {tag_list.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}}
         template.unit {{:label => unit_label, :symbol => unit_symbol, :type => unit_type}}
         template.output!
       end
