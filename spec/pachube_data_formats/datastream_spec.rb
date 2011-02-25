@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe PachubeDataFormats::Datastream do
 
   it "should have a constant that defines the allowed keys" do
-    PachubeDataFormats::Datastream::ALLOWED_KEYS.should == %w(id max_value min_value retrieved_at tag_list unit_label unit_symbol unit_type value)
+    PachubeDataFormats::Datastream::ALLOWED_KEYS.should == %w(stream_id max_value min_value retrieved_at tag_list unit_label unit_symbol unit_type value)
   end
 
   describe "#initialize" do
@@ -11,20 +11,14 @@ describe PachubeDataFormats::Datastream do
       lambda{PachubeDataFormats::Datastream.new}.should raise_exception(ArgumentError, "wrong number of arguments (0 for 1)")
     end
 
-    context "input from json" do
-      it "should use the PachubeJSON parser and store the outcome" do
-        PachubeDataFormats::Formats::Datastreams::JSON.should_receive(:parse).with(datastream_as_(:json)).and_return({"value" => "001"})
-        datastream = PachubeDataFormats::Datastream.new(datastream_as_(:json))
-        datastream.attributes.should == {"value" => "001"}
-      end
+    it "should accept json" do
+      datastream = PachubeDataFormats::Datastream.new(datastream_as_(:json))
+      datastream.value.should == "14"
     end
 
-    context "input from hash" do
-      it "should use the PachubeHash parser and store the outcome" do
-        PachubeDataFormats::Formats::Datastreams::Hash.should_receive(:parse).with(datastream_as_(:hash)).and_return({"value" => "one"})
-        datastream = PachubeDataFormats::Datastream.new(datastream_as_(:hash))
-        datastream.attributes.should == {"value" => "one"}
-      end
+    it "should accept a hash of attributes" do
+      datastream = PachubeDataFormats::Datastream.new(datastream_as_(:hash))
+      datastream.value.should == "14"
     end
   end
 
@@ -65,34 +59,53 @@ describe PachubeDataFormats::Datastream do
     end
   end
 
+  # Provided by PachubeDataFormats::Templates::DatastreamDefaults
+  describe "#generate_json" do
+    it "should take a version and generate the appropriate template" do
+      datastream = PachubeDataFormats::Datastream.new({})
+      PachubeDataFormats::Template.should_receive(:new).with(datastream, :json)
+      lambda {datastream.generate_json("1.0.0")}.should raise_error(NoMethodError)
+    end
+  end
+
+  describe "#as_json" do
+
+    it "should call the json generator with default version" do
+      datastream = PachubeDataFormats::Datastream.new({})
+      datastream.should_receive(:generate_json).with("1.0.0").and_return({"title" => "Environment"})
+      datastream.as_json.should == {"title" => "Environment"}
+    end
+
+    it "should accept optional json version" do
+      datastream = PachubeDataFormats::Datastream.new({})
+      datastream.should_receive(:generate_json).with("0.6-alpha").and_return({"title" => "Environment"})
+      datastream.as_json(:version => "0.6-alpha").should == {"title" => "Environment"}
+    end
+
+  end
+
   describe "#to_json" do
-
-    it "should optionally append the json version" do
-      version = "1.0.0"
+    it "should call #as_json" do
       datastream_hash = {"id" => "env001", "value" => "2344"}
       datastream = PachubeDataFormats::Datastream.new(datastream_hash)
-      datastream.to_json(:version => true).should == {"id" => "env001", "current_value" => "2344", "version" => version}.to_json
+      datastream.should_receive(:as_json).with({})
+      datastream.to_json
     end
 
-    it "should not append the json version by default" do
+    it "should pass options through to #as_json" do
       datastream_hash = {"id" => "env001", "value" => "2344"}
       datastream = PachubeDataFormats::Datastream.new(datastream_hash)
-      datastream.to_json.should == {"id" => "env001", "current_value" => "2344"}.to_json
+      datastream.should_receive(:as_json).with({:crazy => "options"})
+      datastream.to_json({:crazy => "options"})
     end
 
-    it "should use the PachubeJSON generator" do
-      datastream = PachubeDataFormats::Datastream.new(datastream_as_(:hash))
-      PachubeDataFormats::Formats::Datastreams::JSON.should_receive(:generate).with(hash_including(datastream_as_(:hash))).and_return({"stream_id" => "env1"})
-      datastream.to_json.should == {"stream_id" => "env1"}.to_json
-    end
-  end
-
-  describe "#to_hash" do
-    it "should use the PachubeHash generator" do
-      datastream = PachubeDataFormats::Datastream.new(datastream_as_(:hash))
-      PachubeDataFormats::Formats::Datastreams::Hash.should_receive(:generate).with(datastream_as_(:hash)).and_return({"stream_id" => "env1"})
-      datastream.to_hash.should == {"stream_id" => "env1"}
+    it "should pass the output of #as_json to yajl" do
+      datastream_hash = {"id" => "env001", "value" => "2344"}
+      datastream = PachubeDataFormats::Datastream.new(datastream_hash)
+      datastream.should_receive(:as_json).and_return({:awesome => "hash"})
+      ::JSON.should_receive(:generate).with({:awesome => "hash"})
+      datastream.to_json
     end
   end
-
 end
+

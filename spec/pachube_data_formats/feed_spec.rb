@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe PachubeDataFormats::Feed do
 
   it "should have a constant that defines the allowed keys" do
-    PachubeDataFormats::Feed::ALLOWED_KEYS.should == %w(created_at csv_version datastreams description email feed icon id location private retrieved_at status tag_list title updated_at website)
+    PachubeDataFormats::Feed::ALLOWED_KEYS.should == %w(created_at datastreams description email feed icon id location private retrieved_at state tag_list title updated_at website)
   end
 
 
@@ -52,21 +52,16 @@ describe PachubeDataFormats::Feed do
       lambda{PachubeDataFormats::Feed.new}.should raise_exception(ArgumentError, "wrong number of arguments (0 for 1)")
     end
 
-    context "input from json" do
-      it "should use the PachubeJSON parser and store the outcome" do
-        PachubeDataFormats::Formats::Feeds::JSON.should_receive(:parse).with(feed_as_(:json)).and_return({"title" => "Environment"})
-        feed = PachubeDataFormats::Feed.new(feed_as_(:json))
-        feed.title.should == "Environment"
-      end
+    it "should accept json" do
+      feed = PachubeDataFormats::Feed.new(feed_as_(:json))
+      feed.title.should == "Pachube Office Environment"
     end
 
-    context "input from hash" do
-      it "should use the PachubeHash parser and store the outcome" do
-        PachubeDataFormats::Formats::Feeds::Hash.should_receive(:parse).with(feed_as_(:hash)).and_return({"title" => "Environment"})
-        feed = PachubeDataFormats::Feed.new(feed_as_(:hash))
-        feed.title.should == "Environment"
-      end
+    it "should accept a hash of attributes" do
+      feed = PachubeDataFormats::Feed.new(feed_as_(:hash))
+      feed.title.should == "Pachube Office Environment"
     end
+
   end
 
   describe "#attributes" do
@@ -160,54 +155,58 @@ describe PachubeDataFormats::Feed do
 
   end
 
+  # Provided by PachubeDataFormats::Templates::FeedDefaults
+  describe "#generate_json" do
+    it "should take a version and generate the appropriate template" do
+      feed = PachubeDataFormats::Feed.new({})
+      PachubeDataFormats::Template.should_receive(:new).with(feed, :json)
+      lambda {feed.generate_json("1.0.0")}.should raise_error(NoMethodError)
+    end
+  end
+
+  describe "#as_json" do
+    it "should call the json generator with default version" do
+      feed = PachubeDataFormats::Feed.new({})
+      feed.should_receive(:generate_json).with("1.0.0").and_return({"title" => "Environment"})
+      feed.as_json.should == {"title" => "Environment"}
+    end
+
+    it "should accept optional json version" do
+      version = "0.6-alpha"
+      feed = PachubeDataFormats::Feed.new({})
+      feed.should_receive(:generate_json).with(version).and_return({"title" => "Environment"})
+      feed.as_json(:version => version).should == {"title" => "Environment"}
+    end
+  end
+
   describe "#to_json" do
-    it "should use the PachubeJSON generator" do
+    it "should call #as_json" do
       feed_hash = {"title" => "Environment"}
       feed = PachubeDataFormats::Feed.new(feed_hash)
-      PachubeDataFormats::Formats::Feeds::JSON.should_receive(:generate).with(hash_including(feed_hash)).and_return({"title" => "Environment"})
-      feed.to_json.should == {"title" => "Environment"}.to_json
+      feed.should_receive(:as_json).with({})
+      feed.to_json
     end
 
-    it "should append the json version" do
-      version = "1.0.0"
+    it "should pass options through to #as_json" do
       feed_hash = {"title" => "Environment"}
       feed = PachubeDataFormats::Feed.new(feed_hash)
-      feed.to_json.should == {"title" => "Environment", "version" => version}.to_json
+      feed.should_receive(:as_json).with({:crazy => "options"})
+      feed.to_json({:crazy => "options"})
     end
 
-    it "should use the PachubeJSON generator for datastreams" do
+    it "should generate datastreams" do
       feed = PachubeDataFormats::Feed.new(feed_as_('hash'))
       feed.datastreams = datastream_as_(:hash)
-      feed.datastreams.each do |ds|
-        ds.should_receive(:to_json).and_return("{\"stream_id\":\"#{ds.id}\"}")
-      end
-      parsed_datastreams = JSON.parse(feed.to_json)["datastreams"]
-      feed.datastreams.each do |ds|
-        parsed_datastreams.should include({"stream_id" => ds.id})
-      end
+      JSON.parse(feed.to_json)["datastreams"].should_not be_nil
     end
 
-  end
-
-  describe "#to_hash" do
-    it "should use the PachubeHash generator" do
+    it "should pass the output of #as_json to yajl" do
       feed_hash = {"title" => "Environment"}
       feed = PachubeDataFormats::Feed.new(feed_hash)
-      PachubeDataFormats::Formats::Feeds::Hash.should_receive(:generate).with(feed_hash).and_return({"title" => "Environment"})
-      feed.to_hash.should == {"title" => "Environment"}
+      feed.should_receive(:as_json).and_return({:awesome => "hash"})
+      ::JSON.should_receive(:generate).with({:awesome => "hash"})
+      feed.to_json
     end
-
-    it "should use the PachubeHash generator for datastreams" do
-      feed = PachubeDataFormats::Feed.new(feed_as_(:hash))
-      feed.datastreams = datastream_as_(:hash)
-      feed.datastreams.each do |ds|
-        ds.should_receive(:to_hash).and_return({"stream_id" => "#{ds.id}"})
-      end
-      datastreams = feed.to_hash["datastreams"]
-      feed.datastreams.each do |ds|
-        datastreams.should include({"stream_id" => ds.id})
-      end
-    end
-
   end
 end
+

@@ -1,14 +1,16 @@
 module PachubeDataFormats
   class Datastream
-    ALLOWED_KEYS = %w(id max_value min_value retrieved_at tag_list unit_label unit_symbol unit_type value)
+    ALLOWED_KEYS = %w(stream_id max_value min_value retrieved_at tag_list unit_label unit_symbol unit_type value)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
-    attr_accessor :id
+    include PachubeDataFormats::Templates::DatastreamDefaults
+    include PachubeDataFormats::Parsers::DatastreamDefaults
+
     def initialize(input)
       if input.is_a? Hash
-        self.attributes = Formats::Datastreams::Hash.parse(input)
+        self.attributes = input
       else
-        self.attributes = Formats::Datastreams::JSON.parse(input)
+        self.attributes = from_json(input)
       end
     end
 
@@ -25,13 +27,15 @@ module PachubeDataFormats
       ALLOWED_KEYS.each { |key| self.send("#{key}=", input[key]) }
     end
 
-    def to_hash
-      Formats::Datastreams::Hash.generate(attributes)
+    def as_json(options = {})
+      options[:version] ||= "1.0.0"
+      datastream = generate_json(options[:version])
+      datastream["version"] = options[:version] if options[:append_version]
+      datastream
     end
 
     def to_json(options = {})
-      attrs = options[:version] ? attributes.clone.merge("version" => "1.0.0") : attributes.clone
-      ::JSON.generate Formats::Datastreams::JSON.generate(attrs)
+      ::JSON.generate as_json(options)
     end
   end
 end

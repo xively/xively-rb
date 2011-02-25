@@ -1,13 +1,16 @@
 module PachubeDataFormats
   class Feed
-    ALLOWED_KEYS = %w(created_at csv_version datastreams description email feed icon id location private retrieved_at status tag_list title updated_at website)
+    ALLOWED_KEYS = %w(created_at datastreams description email feed icon id location private retrieved_at state tag_list title updated_at website)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
+
+    include PachubeDataFormats::Templates::FeedDefaults
+    include PachubeDataFormats::Parsers::FeedDefaults
 
     def initialize(input)
       if input.is_a?(Hash)
-        self.attributes = Formats::Feeds::Hash.parse(input)
+        self.attributes = input
       else
-        self.attributes = Formats::Feeds::JSON.parse(input)
+        self.attributes = from_json(input)
       end
     end
 
@@ -38,15 +41,15 @@ module PachubeDataFormats
       end
     end
 
-    def to_json
-      ::JSON.generate Formats::Feeds::JSON.generate(attributes.merge("version" => "1.0.0"))
+    def as_json(options = {})
+      options[:version] ||= "1.0.0"
+      generate_json(options[:version])
     end
 
-    def to_hash
-      hash = Formats::Feeds::Hash.generate(attributes)
-      hash["datastreams"] = datastreams.map(&:to_hash) if datastreams
-      hash
+    def to_json(options = {})
+      ::JSON.generate as_json(options)
     end
+
   end
 end
 
