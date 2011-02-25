@@ -21,8 +21,8 @@ module PachubeDataFormats
         template.max_value
         template.min_value
         template.tags {tag_list.split(',').map(&:strip).sort}
-        template.unit {{"label" => unit_label, "symbol" => unit_symbol, "type" => unit_type}}
-        template.output!.stringify_keys
+        template.unit {{:label => unit_label, :symbol => unit_symbol, :type => unit_type}}
+        template.output!
       end
 
       def json_0_6_alpha
@@ -30,14 +30,14 @@ module PachubeDataFormats
         template.id {stream_id}
         template.version {"0.6-alpha"}
         template.values {
-          [{ "recorded_at" => retrieved_at,
-            "value" => value,
-            "max_value" => max_value,
-            "min_value" => min_value }]
+          [{ :recorded_at => retrieved_at,
+            :value => value,
+            :max_value => max_value,
+            :min_value => min_value }]
         }
         template.tags {tag_list.split(',').map(&:strip).sort}
-        template.unit {{"label" => unit_label, "symbol" => unit_symbol, "type" => unit_type}}
-        template.output!.stringify_keys
+        template.unit {{:label => unit_label, :symbol => unit_symbol, :type => unit_type}}
+        template.output!
       end
     end
   end

@@ -30,17 +30,17 @@ module PachubeDataFormats
           template.datastreams do
             datastreams.collect do |ds|
               {
-                "id" => ds.stream_id,
-                "at" => ds.retrieved_at.iso8601(6),
-                "max_value" => ds.max_value,
-                "min_value" => ds.min_value,
-                "current_value" => ds.value,
-                "tags" => ds.tag_list.split(',').map(&:strip).sort
+                :id => ds.stream_id,
+                :at => ds.retrieved_at.iso8601(6),
+                :max_value => ds.max_value,
+                :min_value => ds.min_value,
+                :current_value => ds.value,
+                :tags => ds.tag_list.split(',').map(&:strip).sort
               }
             end
           end
         end
-        template.output!.stringify_keys
+        template.output!
       end
 
       def json_0_6_alpha
@@ -59,19 +59,19 @@ module PachubeDataFormats
           template.datastreams do
             datastreams.collect do |ds|
               {
-                "id" => ds.stream_id,
-                "values" => [{
-                  "max_value" => ds.max_value,
-                  "min_value" => ds.min_value,
-                  "value" => ds.value,
-                  "recorded_at" => ds.retrieved_at.iso8601
+                :id => ds.stream_id,
+                :values => [{
+                  :max_value => ds.max_value,
+                  :min_value => ds.min_value,
+                  :value => ds.value,
+                  :recorded_at => ds.retrieved_at.iso8601
                 }],
-                "tags" => ds.tag_list.split(',').map(&:strip).sort
+                :tags => ds.tag_list.split(',').map(&:strip).sort
               }
             end
           end
         end
-        template.output!.stringify_keys
+        template.output!
       end
     end
   end
