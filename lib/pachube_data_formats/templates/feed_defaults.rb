@@ -14,6 +14,7 @@ module PachubeDataFormats
       
       def json_1_0_0
         template = Template.new(self, :json)
+        template.id
         template.title
         template.private
         template.icon
@@ -44,6 +45,7 @@ module PachubeDataFormats
 
       def json_0_6_alpha
         template = Template.new(self, :json)
+        template.id
         template.title
         template.icon
         template.website

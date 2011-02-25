@@ -12,6 +12,7 @@ describe "default feed templates" do
 
     it "should represent Pachube JSON 1.0.0 (used by API v2)" do
       json = @feed.generate_json("1.0.0")
+      json["id"].should == @feed.id
       json["version"].should == "1.0.0"
       json["title"].should == "Pachube Office Environment"
       json["private"].should == false
@@ -36,6 +37,7 @@ describe "default feed templates" do
 
     it "should represent Pachube JSON 0.6-alpha (used by API v1)" do
       json = @feed.generate_json("0.6-alpha")
+      json["id"].should == @feed.id
       json["version"].should == "0.6-alpha"
       json["title"].should == "Pachube Office Environment"
       json["private"].should be_nil
