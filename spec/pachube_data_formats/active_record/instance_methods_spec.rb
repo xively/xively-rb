@@ -25,6 +25,29 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
     @datastream2 = @feed.datastreams.create!(datastream_as_(:hash))
   end
 
+  context "custom mappings" do
+    it "should create feed with attributes including datastreams by default" do
+      PachubeDataFormats::Feed.should_receive(:new).with(@feed.attributes.merge("datastreams" => @feed.datastreams.map(&:attributes)))
+      @feed.send(:new_feed)
+    end
+
+    it "should allow custom mappings" do
+      class CustomFeed < ActiveRecord::Base
+        set_table_name :feeds
+        belongs_to :owner
+        has_many :datastreams, :foreign_key => :feed_id
+        is_pachube_data_format :feed, {:feed => :custom_method}
+        def custom_method
+          "I haz customer"
+        end
+      end
+      feed = CustomFeed.create!(:title => "Name", :owner => @owner)
+      PachubeDataFormats::Feed.should_receive(:new).with(feed.attributes.merge({"datastreams" => feed.datastreams.map(&:attributes), "feed" => feed.custom_method}))
+      feed.send(:new_feed)
+    end
+
+  end
+
   describe "#as_pachube_json" do
     it "should return full Pachube JSON hash with associated datastreams" do
       json = @feed.as_pachube_json

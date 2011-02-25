@@ -21,6 +21,8 @@ module PachubeDataFormats
       #   is_pachube_data_format :datastream
       #
       def is_pachube_data_format(klass, options = {})
+        cattr_accessor :pachube_data_format_mappings
+        self.pachube_data_format_mappings = options
         send :include, PachubeDataFormats::ActiveRecord::InstanceMethods
       end
     end
