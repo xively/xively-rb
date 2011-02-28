@@ -14,7 +14,7 @@ describe "default datastream templates" do
       json = @datastream.generate_json("1.0.0")
       json[:id].should == @datastream.id
       json[:version].should == "1.0.0"
-      json[:at].should == @datastream.updated
+      json[:at].should == @datastream.updated.iso8601(6)
       json[:current_value].should == @datastream.current_value
       json[:max_value].should == @datastream.max_value
       json[:min_value].should == @datastream.min_value
@@ -30,7 +30,7 @@ describe "default datastream templates" do
       json = @datastream.generate_json("0.6-alpha")
       json[:id].should == @datastream.id
       json[:version].should == "0.6-alpha"
-      json[:values].first[:recorded_at].should == @datastream.updated
+      json[:values].first[:recorded_at].should == @datastream.updated.iso8601
       json[:values].first[:value].should == @datastream.current_value
       json[:values].first[:max_value].should == @datastream.max_value
       json[:values].first[:min_value].should == @datastream.min_value

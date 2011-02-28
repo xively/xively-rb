@@ -16,7 +16,7 @@ module PachubeDataFormats
         template = Template.new(self, :json)
         template.id
         template.version {"1.0.0"}
-        template.at {updated}
+        template.at {updated.iso8601(6)}
         template.current_value
         template.max_value
         template.min_value
@@ -30,7 +30,7 @@ module PachubeDataFormats
         template.id
         template.version {"0.6-alpha"}
         template.values {
-          [{ :recorded_at => updated,
+          [{ :recorded_at => updated.iso8601,
             :value => current_value,
             :max_value => max_value,
             :min_value => min_value }]
