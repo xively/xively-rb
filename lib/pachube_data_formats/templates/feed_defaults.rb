@@ -35,7 +35,12 @@ module PachubeDataFormats
                 :max_value => ds.max_value,
                 :min_value => ds.min_value,
                 :current_value => ds.current_value,
-                :tags => ds.tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}
+                :tags => ds.tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase},
+                :unit => {
+                  :type => ds.unit_type,
+                  :symbol => ds.unit_symbol,
+                  :label => ds.unit_label
+                }
               }
             end
           end
@@ -65,8 +70,13 @@ module PachubeDataFormats
                   :min_value => ds.min_value,
                   :value => ds.current_value,
                   :recorded_at => ds.updated.iso8601
-                }],
-                :tags => ds.tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}
+              }],
+                :tags => ds.tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase},
+                :unit => {
+                  :type => ds.unit_type,
+                  :symbol => ds.unit_symbol,
+                  :label => ds.unit_label
+                }
               }
             end
           end

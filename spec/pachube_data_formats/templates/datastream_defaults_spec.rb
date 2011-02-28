@@ -41,6 +41,21 @@ describe "default datastream templates" do
         :label => @datastream.unit_label
       }
     end
+
+    it "should ignore unit if none of the elements are set (1.0.0)" do
+      @datastream.unit_label = nil
+      @datastream.unit_symbol = nil
+      @datastream.unit_type = nil
+      json = @datastream.generate_json("1.0.0")
+      json[:unit].should be_nil
+    end
+    it "should ignore unit if none of the elements are set (0.6-alpha)" do
+      @datastream.unit_label = nil
+      @datastream.unit_symbol = nil
+      @datastream.unit_type = nil
+      json = @datastream.generate_json("0.6-alpha")
+      json[:unit].should be_nil
+    end
   end
 end
 

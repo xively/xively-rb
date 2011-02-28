@@ -32,6 +32,11 @@ describe "default feed templates" do
         ds[:min_value].should == datastream.min_value
         ds[:current_value].should == datastream.current_value
         ds[:tags].should == datastream.tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}
+        ds[:unit].should == {
+          :label => datastream.unit_label,
+          :type => datastream.unit_type,
+          :symbol => datastream.unit_symbol
+        }
       end
     end
 
@@ -57,6 +62,11 @@ describe "default feed templates" do
         ds[:values].first[:value].should == datastream.current_value
         ds[:values].first[:recorded_at].should == datastream.updated.iso8601
         ds[:tags].should == datastream.tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}
+        ds[:unit].should == {
+          :label => datastream.unit_label,
+          :type => datastream.unit_type,
+          :symbol => datastream.unit_symbol
+        }
       end
     end
   end
