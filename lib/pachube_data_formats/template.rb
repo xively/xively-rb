@@ -19,7 +19,7 @@ module PachubeDataFormats
         @output[sym] = @subject.send(sym)
       end
     rescue NoMethodError => e
-      # We're just going to ignore these for now
+      @output[sym] = nil
     end
 
     def output!
