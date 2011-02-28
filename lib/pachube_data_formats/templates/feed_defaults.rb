@@ -36,12 +36,8 @@ module PachubeDataFormats
                 :min_value => ds.min_value,
                 :current_value => ds.current_value,
                 :tags => ds.tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase},
-                :unit => {
-                  :type => ds.unit_type,
-                  :symbol => ds.unit_symbol,
-                  :label => ds.unit_label
-                }
-              }
+                :unit => unit_hash(ds)
+              }.delete_if{|k,v| v.nil?}
             end
           end
         end
@@ -72,16 +68,22 @@ module PachubeDataFormats
                   :recorded_at => ds.updated.iso8601
               }],
                 :tags => ds.tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase},
-                :unit => {
-                  :type => ds.unit_type,
-                  :symbol => ds.unit_symbol,
-                  :label => ds.unit_label
-                }
-              }
+                :unit => unit_hash(ds)
+              }.delete_if{|k,v| v.nil?}
             end
           end
         end
         template.output!
+      end
+
+      private
+
+      def unit_hash(datastream)
+        {
+          :type => datastream.unit_type,
+          :symbol => datastream.unit_symbol,
+          :label => datastream.unit_label
+        } if datastream.unit_type || datastream.unit_label || datastream.unit_symbol
       end
     end
   end
