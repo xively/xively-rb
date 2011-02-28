@@ -34,16 +34,29 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
     it "should allow custom mappings" do
       class CustomFeed < ActiveRecord::Base
         set_table_name :feeds
-        belongs_to :owner
         has_many :datastreams, :foreign_key => :feed_id
         is_pachube_data_format :feed, {:feed => :custom_method}
         def custom_method
           "I haz customer"
         end
       end
-      feed = CustomFeed.create!(:title => "Name", :owner => @owner)
+      feed = CustomFeed.create!(:title => "Name")
       PachubeDataFormats::Feed.should_receive(:new).with(feed.attributes.merge({"datastreams" => feed.datastreams.map(&:attributes), "feed" => feed.custom_method}))
       feed.send(:new_object)
+    end
+
+    it "should not rely on datastreams using this gem" do
+      class NewCustomFeed < ActiveRecord::Base
+        set_table_name :feeds
+        is_pachube_data_format :feed
+
+        def datastreams
+          ["fake datastream"]
+        end
+      end
+
+      feed = NewCustomFeed.create!(:title => "Name")
+      feed.as_pachube_json
     end
 
   end

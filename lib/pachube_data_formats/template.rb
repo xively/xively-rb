@@ -18,6 +18,8 @@ module PachubeDataFormats
       else
         @output[sym] = @subject.send(sym)
       end
+    rescue NoMethodError => e
+      # We're just going to ignore these for now
     end
 
     def output!

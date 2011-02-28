@@ -1,6 +1,5 @@
 class Feed < ActiveRecord::Base
   is_pachube_data_format :feed 
-  belongs_to :owner
   has_many :datastreams
 end
 

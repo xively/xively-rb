@@ -27,7 +27,7 @@ module PachubeDataFormats
       def custom_pachube_attributes
         hash = {}
         if self.respond_to?(:datastreams)
-          hash["datastreams"] = self.datastreams.map{|ds| (ds.attributes.merge(ds.custom_pachube_attributes))}
+          hash["datastreams"] = self.datastreams.map{|ds| (ds.attributes.merge(ds.custom_pachube_attributes)) if ds.kind_of?(PachubeDataFormats::ActiveRecord::InstanceMethods)}
         end
         self.pachube_data_format_mappings.each do |key, value|
           hash[key.to_s] = self.send(value)

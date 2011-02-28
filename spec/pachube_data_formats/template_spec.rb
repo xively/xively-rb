@@ -52,6 +52,11 @@ describe PachubeDataFormats::Template do
       @template.title
       @template.output!.should == {}
     end
+
+    it "should return nils for NoMethodErrors" do
+      @feed.title {litter}
+      @template.output!.should == {}
+    end
   end
 end
 
