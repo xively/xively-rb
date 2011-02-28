@@ -14,10 +14,10 @@ module PachubeDataFormats
       private
 
       def transform_1_0_0(hash)
-        hash["stream_id"] = hash.delete("id")
-        hash["retrieved_at"] = hash.delete("at")
-        hash["value"] = hash.delete("current_value")
-        hash["tag_list"] = hash["tags"].join(',')
+        hash["id"] = hash.delete("id")
+        hash["updated"] = hash.delete("at")
+        hash["current_value"] = hash.delete("current_value")
+        hash["tags"] = hash["tags"].join(',')
         if unit = hash.delete('unit')
           hash['unit_type'] = unit['type']
           hash['unit_symbol'] = unit['symbol']
@@ -27,12 +27,12 @@ module PachubeDataFormats
       end
 
       def transform_0_6_alpha(hash)
-        hash["stream_id"] = hash.delete("id")
-        hash["retrieved_at"] = hash["values"].first.delete("recorded_at")
-        hash["value"] = hash["values"].first.delete("value")
+        hash["id"] = hash.delete("id")
+        hash["updated"] = hash["values"].first.delete("recorded_at")
+        hash["current_value"] = hash["values"].first.delete("value")
         hash["max_value"] = hash["values"].first.delete("max_value")
         hash["min_value"] = hash["values"].first.delete("min_value")
-        hash["tag_list"] = hash["tags"].join(',')
+        hash["tags"] = hash["tags"].join(',')
         if unit = hash.delete('unit')
           hash['unit_type'] = unit['type']
           hash['unit_symbol'] = unit['symbol']

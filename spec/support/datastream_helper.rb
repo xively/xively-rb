@@ -2,14 +2,14 @@ def datastream_as_(format, options = {})
   case format.to_s
   when 'hash'
     data = {
-      "retrieved_at" => Time.parse('2011-01-02'),
+      "updated" => Time.parse('2011-01-02'),
       "max_value"=>658.0,
       "unit_type"=>"derived SI",
       "min_value"=>0.0,
       "unit_label"=>"percentage",
-      "value"=>"14",
-      "stream_id"=>"0",
-      "tag_list"=>"humidity,Temperature   ,freakin lasers",
+      "current_value"=>"14",
+      "id"=>"0",
+      "tags"=>"humidity,Temperature   ,freakin lasers",
       "unit_symbol"=>"%"
     }
   when 'json'

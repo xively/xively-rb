@@ -26,7 +26,16 @@ module PachubeDataFormats
       #
       def is_pachube_data_format(klass, options = {})
         cattr_accessor :pachube_data_format_mappings
+        cattr_accessor :pachube_data_format_class
         self.pachube_data_format_mappings = options
+        case klass
+        when :feed
+          self.pachube_data_format_class = PachubeDataFormats::Feed
+        when :datastream
+          self.pachube_data_format_class = PachubeDataFormats::Datastream
+        else
+          self.pachube_data_format_class = nil
+        end
         send :include, PachubeDataFormats::ActiveRecord::InstanceMethods
       end
     end

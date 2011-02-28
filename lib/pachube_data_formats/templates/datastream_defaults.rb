@@ -14,28 +14,28 @@ module PachubeDataFormats
       
       def json_1_0_0
         template = Template.new(self, :json)
-        template.id {stream_id}
+        template.id
         template.version {"1.0.0"}
-        template.at {retrieved_at}
-        template.current_value {value}
+        template.at {updated}
+        template.current_value
         template.max_value
         template.min_value
-        template.tags {tag_list.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}}
+        template.tags {tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}}
         template.unit {{:label => unit_label, :symbol => unit_symbol, :type => unit_type}}
         template.output!
       end
 
       def json_0_6_alpha
         template = Template.new(self, :json)
-        template.id {stream_id}
+        template.id
         template.version {"0.6-alpha"}
         template.values {
-          [{ :recorded_at => retrieved_at,
-            :value => value,
+          [{ :recorded_at => updated,
+            :value => current_value,
             :max_value => max_value,
             :min_value => min_value }]
         }
-        template.tags {tag_list.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}}
+        template.tags {tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}}
         template.unit {{:label => unit_label, :symbol => unit_symbol, :type => unit_type}}
         template.output!
       end

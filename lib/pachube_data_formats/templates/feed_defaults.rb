@@ -19,23 +19,23 @@ module PachubeDataFormats
         template.private
         template.icon
         template.website
-        template.tags {tag_list.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}}
+        template.tags {tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}}
         template.description
         template.feed
-        template.status {state}
-        template.updated {retrieved_at.iso8601(6)}
+        template.status
+        template.updated {updated.iso8601(6)}
         template.email
         template.version {"1.0.0"}
         if datastreams
           template.datastreams do
             datastreams.collect do |ds|
               {
-                :id => ds.stream_id,
-                :at => ds.retrieved_at.iso8601(6),
+                :id => ds.id,
+                :at => ds.updated.iso8601(6),
                 :max_value => ds.max_value,
                 :min_value => ds.min_value,
-                :current_value => ds.value,
-                :tags => ds.tag_list.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}
+                :current_value => ds.current_value,
+                :tags => ds.tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}
               }
             end
           end
@@ -51,22 +51,22 @@ module PachubeDataFormats
         template.website
         template.description
         template.feed
-        template.status {state}
-        template.updated {retrieved_at.iso8601(6)}
+        template.status
+        template.updated {updated.iso8601(6)}
         template.email
         template.version {"0.6-alpha"}
         if datastreams
           template.datastreams do
             datastreams.collect do |ds|
               {
-                :id => ds.stream_id,
+                :id => ds.id,
                 :values => [{
                   :max_value => ds.max_value,
                   :min_value => ds.min_value,
-                  :value => ds.value,
-                  :recorded_at => ds.retrieved_at.iso8601
+                  :value => ds.current_value,
+                  :recorded_at => ds.updated.iso8601
                 }],
-                :tags => ds.tag_list.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}
+                :tags => ds.tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}
               }
             end
           end

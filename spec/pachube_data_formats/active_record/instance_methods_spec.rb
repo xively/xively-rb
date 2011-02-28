@@ -3,32 +3,32 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 describe PachubeDataFormats::ActiveRecord::InstanceMethods do
   load_schema
   before(:each) do
-    @owner = Owner.create(
-      :login => "fred",
-      :email => "fred@example.com"
-    )
     @feed = Feed.create!(
       {
-        "retrieved_at" => Time.parse("20110202"),
+        "updated" => Time.parse("20110202"),
         "title" => "Feed Title",
-        "csv_version" => "v2",
         "private" => true,
         "icon" => "http://pachube.com/logo.png",
         "website" => "http://pachube.com",
-        "tag_list" => "kittens, sofa, aardvark",
+        "tags" => "kittens, sofa, aardvark",
         "description" => "Test feed",
         "feed" => "http://test.host/testfeed.html?random=890299&rand2=91",
         "email" => "abc@example.com",
-        "owner" => @owner
+        "creator" => "http://www.pachube.com"
       })
-    @datastream1 = @feed.datastreams.create!(datastream_as_(:hash))
-    @datastream2 = @feed.datastreams.create!(datastream_as_(:hash))
+    @datastream1 = @feed.datastreams.create!(datastream_as_(:hash, :with => {"stream_id" => "0"}))
+    @datastream2 = @feed.datastreams.create!(datastream_as_(:hash, :with => {"stream_id" => "two"}))
+  end
+
+  it "should allow mapping of datastreams" do
+    PachubeDataFormats::Datastream.should_receive(:new).with(@datastream2.attributes.merge("id" => "two"))
+    @datastream2.send(:new_object)
   end
 
   context "custom mappings" do
     it "should create feed with attributes including datastreams by default" do
-      PachubeDataFormats::Feed.should_receive(:new).with(@feed.attributes.merge("datastreams" => @feed.datastreams.map(&:attributes)))
-      @feed.send(:new_feed)
+      PachubeDataFormats::Feed.should_receive(:new).with(@feed.attributes.merge("datastreams" => @feed.datastreams.map{|ds|ds.attributes.merge(ds.send(:custom_pachube_attributes))}))
+      @feed.send(:new_object)
     end
 
     it "should allow custom mappings" do
@@ -43,7 +43,7 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
       end
       feed = CustomFeed.create!(:title => "Name", :owner => @owner)
       PachubeDataFormats::Feed.should_receive(:new).with(feed.attributes.merge({"datastreams" => feed.datastreams.map(&:attributes), "feed" => feed.custom_method}))
-      feed.send(:new_feed)
+      feed.send(:new_object)
     end
 
   end

@@ -7,25 +7,28 @@ module PachubeDataFormats
       # Optionally outputs Pachube v1 JSON "0.6-alpha"
       #
       def to_pachube_json(version = "1.0.0")
-        new_feed.to_json(:version => version)
+        new_object.to_json(:version => version)
       end
 
       def as_pachube_json(version = "1.0.0")
-        new_feed.as_json(:version => version)
+        new_object.as_json(:version => version)
       end
 
       protected
 
-      def new_feed
-        PachubeDataFormats::Feed.new(attributes_with_associations)
+      def new_object
+        pachube_data_format_class.new(attributes_with_associations)
       end
 
       def attributes_with_associations
-        attributes.merge("datastreams" => datastreams.map(&:attributes)).merge(custom_attributes)
+        attributes.merge(custom_pachube_attributes)
       end
 
-      def custom_attributes
+      def custom_pachube_attributes
         hash = {}
+        if self.respond_to?(:datastreams)
+          hash["datastreams"] = self.datastreams.map{|ds| (ds.attributes.merge(ds.custom_pachube_attributes))}
+        end
         self.pachube_data_format_mappings.each do |key, value|
           hash[key.to_s] = self.send(value)
         end
