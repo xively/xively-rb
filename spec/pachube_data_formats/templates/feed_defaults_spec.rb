@@ -117,6 +117,30 @@ describe "default feed templates" do
       json = @feed.generate_json("0.6-alpha")
       json[:tags].should be_nil
     end
+
+    it "should ignore location if all elements are nil (1.0.0)" do
+      @feed.location_name = nil
+      @feed.location_disposition = nil
+      @feed.location_lat = nil
+      @feed.location_lon = nil
+      @feed.location_exposure = nil
+      @feed.location_ele = nil
+      @feed.location_domain = nil
+      json = @feed.generate_json("1.0.0")
+      json[:location].should be_nil
+    end
+
+    it "should ignore location if all elements are nil (0.6-alpha)" do
+      @feed.location_name = nil
+      @feed.location_disposition = nil
+      @feed.location_lat = nil
+      @feed.location_lon = nil
+      @feed.location_exposure = nil
+      @feed.location_ele = nil
+      @feed.location_domain = nil
+      json = @feed.generate_json("0.6-alpha")
+      json[:location].should be_nil
+    end
   end
 end
 

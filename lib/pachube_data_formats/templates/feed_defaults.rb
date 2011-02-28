@@ -89,7 +89,7 @@ module PachubeDataFormats
           :ele => location_ele,
           :lat => location_lat,
           :lon => location_lon
-        }
+        } if location_disposition || location_name || location_exposure || location_domain || location_ele || location_lat || location_lon
       end
 
       def unit_hash(datastream)
