@@ -24,6 +24,13 @@ describe "default feed templates" do
       json[:status].should == "live"
       json[:updated].should == "2011-01-02T00:00:00.000000+00:00"
       json[:email].should == "abc@example.com"
+      json[:location][:disposition].should == "fixed"
+      json[:location][:name].should == "office"
+      json[:location][:exposure].should == "indoor"
+      json[:location][:domain].should == "physical"
+      json[:location][:ele].should == "23.0"
+      json[:location][:lat].should == 51.5235375648154
+      json[:location][:lon].should == -0.0807666778564453
       json[:datastreams].should have(7).things
       json[:datastreams].each do |ds|
         datastream = @feed.datastreams.detect{|stream| stream.id == ds[:id]}
@@ -54,6 +61,13 @@ describe "default feed templates" do
       json[:status].should == "live"
       json[:updated].should == "2011-01-02T00:00:00.000000+00:00"
       json[:email].should == "abc@example.com"
+      json[:location][:disposition].should == "fixed"
+      json[:location][:name].should == "office"
+      json[:location][:exposure].should == "indoor"
+      json[:location][:domain].should == "physical"
+      json[:location][:ele].should == "23.0"
+      json[:location][:lat].should == 51.5235375648154
+      json[:location][:lon].should == -0.0807666778564453
       json[:datastreams].should have(7).things
       json[:datastreams].each do |ds|
         datastream = @feed.datastreams.detect{|stream| stream.id == ds[:id]}

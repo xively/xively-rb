@@ -41,6 +41,7 @@ module PachubeDataFormats
             end
           end
         end
+        template.location {location_hash}
         template.output!
       end
 
@@ -73,10 +74,23 @@ module PachubeDataFormats
             end
           end
         end
+        template.location {location_hash}
         template.output!
       end
 
       private
+
+      def location_hash
+        {
+          :disposition => location_disposition,
+          :name => location_name,
+          :exposure => location_exposure,
+          :domain => location_domain,
+          :ele => location_ele,
+          :lat => location_lat,
+          :lon => location_lon
+        }
+      end
 
       def unit_hash(datastream)
         {

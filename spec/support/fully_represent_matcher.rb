@@ -28,6 +28,7 @@ RSpec::Matchers.define :fully_represent do |pdf_formatted|
       end
       raise "This test is testing a feed with no datastream units" if no_units
       feed.id.should == json["id"]
+      json["location"].should_not be_empty
       feed.location_disposition.should == json["location"]["disposition"]
       feed.location_domain.should == json["location"]["domain"]
       feed.location_ele.should == json["location"]["ele"]
@@ -60,6 +61,7 @@ RSpec::Matchers.define :fully_represent do |pdf_formatted|
       end
       raise "This test is testing a feed with no datastream units" if no_units
       feed.id.should == json["id"]
+      json["location"].should_not be_empty
       feed.location_disposition.should == json["location"]["disposition"]
       feed.location_domain.should == json["location"]["domain"]
       feed.location_ele.should == json["location"]["ele"]

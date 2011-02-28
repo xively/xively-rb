@@ -15,16 +15,14 @@ def feed_as_(format, options = {})
       "feed" => "http://test.host/testfeed.html?random=890299&rand2=91",
       "email"=>"abc@example.com",
       "status"=>"live",
-      'location' =>
-      { 'domain' => 'physical',
-        'lon' => -0.0807666778564453,
-        'disposition' => 'fixed',
-        'ele' => '23.0',
-        'exposure' => 'indoor',
-        'lat' => 51.5235375648154,
-        'name' => 'office'
-      },
-        "datastreams" => [
+      'location_domain' => 'physical',
+      'location_lon' => -0.0807666778564453,
+      'location_disposition' => 'fixed',
+      'location_ele' => '23.0',
+      'location_exposure' => 'indoor',
+      'location_lat' => 51.5235375648154,
+      'location_name' => 'office',
+      "datastreams" => [
           {
         "updated" => Time.parse('2011-01-02'),
         "max_value"=>658.0,
