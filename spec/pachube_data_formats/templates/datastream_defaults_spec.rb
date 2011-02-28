@@ -42,6 +42,18 @@ describe "default datastream templates" do
       }
     end
 
+    it "should ignore tags if nil (1.0.0)" do
+      @datastream.tags = nil
+      json = @datastream.generate_json("1.0.0")
+      json[:tags].should be_nil
+    end
+
+    it "should ignore tags if nil (0.6-alpha)" do
+      @datastream.tags = nil
+      json = @datastream.generate_json("0.6-alpha")
+      json[:tags].should be_nil
+    end
+
     it "should ignore unit if none of the elements are set (1.0.0)" do
       @datastream.unit_label = nil
       @datastream.unit_symbol = nil
@@ -49,6 +61,7 @@ describe "default datastream templates" do
       json = @datastream.generate_json("1.0.0")
       json[:unit].should be_nil
     end
+
     it "should ignore unit if none of the elements are set (0.6-alpha)" do
       @datastream.unit_label = nil
       @datastream.unit_symbol = nil

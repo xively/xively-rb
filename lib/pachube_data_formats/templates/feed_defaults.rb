@@ -19,7 +19,7 @@ module PachubeDataFormats
         template.private
         template.icon
         template.website
-        template.tags {tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}}
+        template.tags {tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}} if tags
         template.description
         template.feed
         template.status
@@ -35,7 +35,7 @@ module PachubeDataFormats
                 :max_value => ds.max_value,
                 :min_value => ds.min_value,
                 :current_value => ds.current_value,
-                :tags => ds.tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase},
+                :tags => split_tags(ds.tags),
                 :unit => unit_hash(ds)
               }.delete_if{|k,v| v.nil?}
             end
@@ -67,7 +67,7 @@ module PachubeDataFormats
                   :value => ds.current_value,
                   :recorded_at => ds.updated.iso8601
               }],
-                :tags => ds.tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase},
+                :tags => split_tags(ds.tags),
                 :unit => unit_hash(ds)
               }.delete_if{|k,v| v.nil?}
             end
@@ -84,6 +84,11 @@ module PachubeDataFormats
           :symbol => datastream.unit_symbol,
           :label => datastream.unit_label
         } if datastream.unit_type || datastream.unit_label || datastream.unit_symbol
+      end
+
+      def split_tags(tag_list)
+        return unless tag_list
+        tag_list.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}
       end
     end
   end

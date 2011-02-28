@@ -69,6 +69,40 @@ describe "default feed templates" do
         }
       end
     end
+
+    it "should ignore datastream tags if nil (1.0.0)" do
+      @feed.datastreams.each do |ds|
+        ds.tags = nil
+      end
+      json = @feed.generate_json("1.0.0")
+      json[:datastreams].each do |ds|
+        datastream = @feed.datastreams.detect{|stream| stream.id == ds[:id]}
+        datastream.tags.should be_nil
+      end
+    end
+
+    it "should ignore datastream tags if nil (0.6-alpha)" do
+      @feed.datastreams.each do |ds|
+        ds.tags = nil
+      end
+      json = @feed.generate_json("0.6-alpha")
+      json[:datastreams].each do |ds|
+        datastream = @feed.datastreams.detect{|stream| stream.id == ds[:id]}
+        datastream.tags.should be_nil
+      end
+    end
+
+    it "should ignore tags if nil (1.0.0)" do
+      @feed.tags = nil
+      json = @feed.generate_json("1.0.0")
+      json[:tags].should be_nil
+    end
+
+    it "should ignore tags if nil (0.6-alpha)" do
+      @feed.tags = nil
+      json = @feed.generate_json("0.6-alpha")
+      json[:tags].should be_nil
+    end
   end
 end
 
