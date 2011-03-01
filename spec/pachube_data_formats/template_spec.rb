@@ -25,9 +25,9 @@ describe PachubeDataFormats::Template do
       @template.output!.should == {:name => @feed.title}
     end
 
-    it "should allow describing :tags => @feed.tag_list.map(&:strip).sort" do
-      @template.tags { tag_list.map(&:strip).sort }
-      @template.output!.should == {:tags => @feed.tag_list.map(&:strip).sort}
+    it "should allow describing :tags => @feed.tags.map(&:strip).sort" do
+      @template.tags { tags.map(&:strip).sort }
+      @template.output!.should == {:tags => @feed.tags.map(&:strip).sort}
     end
 
     it "should allow describing datastreams" do
@@ -35,16 +35,27 @@ describe PachubeDataFormats::Template do
       @template.datastreams do |f|
         f.datastreams.collect do |ds|
           {
-            :id => ds.stream_id,
-            :current_value => ds.value
+            :id => ds.id,
+            :current_value => ds.current_value
           }
         end
       end
-      datastreams = @feed.datastreams.collect {|ds| {:id => ds.stream_id, :current_value => ds.value}}
+      datastreams = @feed.datastreams.collect {|ds| {:id => ds.id, :current_value => ds.current_value}}
       @template.output!.should == {
         :title => @feed.title,
         :datastreams => datastreams
       }
+    end
+
+    it "should ignore nils" do
+      @feed.title = nil
+      @template.title
+      @template.output!.should == {}
+    end
+
+    it "should return nils for NoMethodErrors" do
+      @feed.title {litter}
+      @template.output!.should == {}
     end
   end
 end

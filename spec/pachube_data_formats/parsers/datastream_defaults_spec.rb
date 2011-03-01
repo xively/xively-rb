@@ -10,12 +10,12 @@ describe "default datastream parser" do
       @json = datastream_as_(:json)
       attributes = @datastream.from_json(@json)
       json = JSON.parse(@json)
-      attributes["stream_id"].should == json["id"]
-      attributes["retrieved_at"].should == json["at"]
-      attributes["value"].should == json["current_value"]
+      attributes["id"].should == json["id"]
+      attributes["updated"].should == json["at"]
+      attributes["current_value"].should == json["current_value"]
       attributes["max_value"].should == json["max_value"]
       attributes["min_value"].should == json["min_value"]
-      attributes["tag_list"].should == json["tags"].join(',')
+      attributes["tags"].should == json["tags"].join(',')
       attributes["unit_type"].should == json["unit"]["type"]
       attributes["unit_label"].should == json["unit"]["label"]
       attributes["unit_symbol"].should == json["unit"]["symbol"]
@@ -25,12 +25,12 @@ describe "default datastream parser" do
       @json = datastream_as_(:json, :version => "0.6-alpha")
       attributes = @datastream.from_json(@json)
       json = JSON.parse(@json)
-      attributes["stream_id"].should == json["id"]
-      attributes["retrieved_at"].should == json["values"].first["recorded_at"]
-      attributes["value"].should == json["values"].first["value"]
+      attributes["id"].should == json["id"]
+      attributes["updated"].should == json["values"].first["recorded_at"]
+      attributes["current_value"].should == json["values"].first["value"]
       attributes["max_value"].should == json["values"].first["max_value"]
       attributes["min_value"].should == json["values"].first["min_value"]
-      attributes["tag_list"].should == json["tags"].join(',')
+      attributes["tags"].should == json["tags"].join(',')
       attributes["unit_type"].should == json["unit"]["type"]
       attributes["unit_label"].should == json["unit"]["label"]
       attributes["unit_symbol"].should == json["unit"]["symbol"]

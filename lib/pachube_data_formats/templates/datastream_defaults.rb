@@ -12,32 +12,34 @@ module PachubeDataFormats
 
       private
       
+      # As used by http://www.pachube.com/api/v2/FEED_ID/datastreams/DATASTREAM_ID.json
       def json_1_0_0
         template = Template.new(self, :json)
-        template.id {stream_id}
+        template.id
         template.version {"1.0.0"}
-        template.at {retrieved_at}
-        template.current_value {value}
+        template.at {updated.iso8601(6)}
+        template.current_value
         template.max_value
         template.min_value
-        template.tags {tag_list.split(',').map(&:strip).sort}
-        template.unit {{"label" => unit_label, "symbol" => unit_symbol, "type" => unit_type}}
-        template.output!.stringify_keys
+        template.tags {tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}}
+        template.unit {{:label => unit_label, :symbol => unit_symbol, :type => unit_type}} if unit_type || unit_symbol || unit_label
+        template.output!
       end
 
+      # As used by http://www.pachube.com/api/v1/FEED_ID/datastreams/DATASTREAM_ID.json
       def json_0_6_alpha
         template = Template.new(self, :json)
-        template.id {stream_id}
+        template.id
         template.version {"0.6-alpha"}
         template.values {
-          [{ "recorded_at" => retrieved_at,
-            "value" => value,
-            "max_value" => max_value,
-            "min_value" => min_value }]
+          [{ :recorded_at => updated.iso8601,
+            :value => current_value,
+            :max_value => max_value,
+            :min_value => min_value }]
         }
-        template.tags {tag_list.split(',').map(&:strip).sort}
-        template.unit {{"label" => unit_label, "symbol" => unit_symbol, "type" => unit_type}}
-        template.output!.stringify_keys
+        template.tags {tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}}
+        template.unit {{:label => unit_label, :symbol => unit_symbol, :type => unit_type}} if unit_type || unit_symbol || unit_label
+        template.output!
       end
     end
   end

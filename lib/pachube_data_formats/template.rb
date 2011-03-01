@@ -18,10 +18,12 @@ module PachubeDataFormats
       else
         @output[sym] = @subject.send(sym)
       end
+    rescue NoMethodError => e
+      @output[sym] = nil
     end
 
     def output!
-      @output
+      @output.reject {|k,v| v.nil?}
     end
   end
 end

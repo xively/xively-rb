@@ -40,10 +40,66 @@ Attribute to Pachube field mapping in progress.
 
     feed.to_pachube_json # converts your feed and associated datastreams into Pachube V2 JSON
 
+### Mapped fields
+
+See [the Pachube Api docs] [1] for a description of each field.
+
+  [1]: http://api.pachube.com/v2/#data-structure "Pachube Api Docs"
+
+By default the gem expects your object to have the following fields:
+
+#### Feeds
+
+ * feed
+ * creator
+ * title
+ * website
+ * icon
+ * description
+ * updated
+ * email
+ * private
+ * tags
+ * location_disposition
+ * location_domain
+ * location_ele
+ * location_exposure
+ * location_lat
+ * location_lon
+ * location_name
+
+#### Datastreams
+
+ * id
+ * current_value
+ * min_value
+ * max_value
+ * unit_label
+ * unit_type
+ * unit_symbol
+ * tags
+ * updated
+
+If you use different field names, want to map custom fields or want to map fields onto instance methods you can:
+
+    class Feed < ActiveRecord::Base
+      has_one :geo_location
+      is_pachube_data_format :feed, {:location_lat => :geo_lat, :location_lon => :geo_lon}
+
+      def geo_lat
+        geo_location.try(:latitude)
+      end
+
+      def geo_lon
+        geo_location.try(:longitude)
+      end
+    end
+
 Examples
 --------
 
     feed = PachubeDataFormats::Feed.new('{"title":"Pachube Office Environment"}')
+    feed.as_json # {"title" => "Pachube Office Environment"}
     feed.to_json # {"title":"Pachube Office Environment"}
     feed.to_xml
       #  <?xml version="1.0" encoding="UTF-8"?

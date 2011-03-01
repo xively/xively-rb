@@ -20,9 +20,22 @@ module PachubeDataFormats
       #
       #   is_pachube_data_format :datastream
       #
+      # To specify custom field mappings or map methods onto a field
+      #
+      #   is_pachube_data_format :feed, {:title => :my_custom_instance_method, :status => :determine_feed_state}
+      #
       def is_pachube_data_format(klass, options = {})
         cattr_accessor :pachube_data_format_mappings
+        cattr_accessor :pachube_data_format_class
         self.pachube_data_format_mappings = options
+        case klass
+        when :feed
+          self.pachube_data_format_class = PachubeDataFormats::Feed
+        when :datastream
+          self.pachube_data_format_class = PachubeDataFormats::Datastream
+        else
+          self.pachube_data_format_class = nil
+        end
         send :include, PachubeDataFormats::ActiveRecord::InstanceMethods
       end
     end
