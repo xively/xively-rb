@@ -15,6 +15,7 @@ def feed_as_(format, options = {})
       "feed" => "http://test.host/testfeed.html?random=890299&rand2=91",
       "email"=>"abc@example.com",
       "status"=>"live",
+      "creator"=>"http://pachube.com/users/skeletor",
       'location_domain' => 'physical',
       'location_lon' => -0.0807666778564453,
       'location_disposition' => 'fixed',
@@ -134,6 +135,7 @@ def feed_as_json(version)
       'description' => 'Sensors in Pachube.com\'s headquarters.',
       'website' => 'http://www.pachube.com/',
       'private' => 'false',
+      'creator' => 'http://pachube.com/users/skeletor',
       'version' => '1.0.0',
       'id' => 504,
       'location' =>

@@ -25,6 +25,7 @@ module PachubeDataFormats
         template.status
         template.updated {updated.iso8601(6)}
         template.email
+        template.creator
         template.version {"1.0.0"}
         if datastreams
           template.datastreams do

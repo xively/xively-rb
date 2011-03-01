@@ -6,6 +6,7 @@ RSpec::Matchers.define :fully_represent do |pdf_formatted|
     when '1.0.0'
       feed.title.should == json["title"]
       feed.status.should == json["status"]
+      feed.creator.should == json["creator"]
       feed.updated.should == json["updated"]
       feed.website.should == json["website"]
       feed.private.should == json["private"]

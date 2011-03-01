@@ -24,6 +24,7 @@ describe "default feed templates" do
       json[:status].should == "live"
       json[:updated].should == "2011-01-02T00:00:00.000000+00:00"
       json[:email].should == "abc@example.com"
+      json[:creator].should == "http://pachube.com/users/skeletor"
       json[:location][:disposition].should == "fixed"
       json[:location][:name].should == "office"
       json[:location][:exposure].should == "indoor"
