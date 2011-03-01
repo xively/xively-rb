@@ -5,7 +5,7 @@ module PachubeDataFormats
 
     include PachubeDataFormats::Templates::FeedJSONDefaults
     include PachubeDataFormats::Templates::FeedXMLDefaults
-    include PachubeDataFormats::Parsers::FeedDefaults
+    include PachubeDataFormats::Parsers::FeedJSONDefaults
 
     def initialize(input)
       if input.is_a?(Hash)

@@ -1,12 +1,11 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "default datastream parser" do
+describe "default datastream json parser" do
   before(:each) do
     @datastream = PachubeDataFormats::Datastream.new(datastream_as_(:json))
   end
 
-  describe "json" do
-    context "1.0.0 (used by API v2)"
+  context "1.0.0 (used by API v2)" do
     it "should convert into attributes hash" do
       @json = datastream_as_(:json)
       attributes = @datastream.from_json(@json)
@@ -50,5 +49,5 @@ describe "default datastream parser" do
       lambda {@datastream.from_json(@json)}.should_not raise_error
     end
   end
-end
 
+end

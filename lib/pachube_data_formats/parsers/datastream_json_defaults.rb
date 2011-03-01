@@ -1,6 +1,6 @@
 module PachubeDataFormats
   module Parsers
-    module DatastreamDefaults
+    module DatastreamJSONDefaults
       def from_json(json)
         hash = JSON.parse(json)
         case hash['version']

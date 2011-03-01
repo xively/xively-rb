@@ -5,13 +5,16 @@ module PachubeDataFormats
 
     include PachubeDataFormats::Templates::DatastreamJSONDefaults
     include PachubeDataFormats::Templates::DatastreamXMLDefaults
-    include PachubeDataFormats::Parsers::DatastreamDefaults
+    include PachubeDataFormats::Parsers::DatastreamJSONDefaults
+    include PachubeDataFormats::Parsers::DatastreamXMLDefaults
 
     def initialize(input)
       if input.is_a? Hash
         self.attributes = input
-      else
+      elsif input.strip.first == "{"
         self.attributes = from_json(input)
+      else
+        self.attributes = from_xml(input)
       end
     end
 

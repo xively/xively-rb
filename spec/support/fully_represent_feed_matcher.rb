@@ -1,7 +1,30 @@
-RSpec::Matchers.define :fully_represent do |pdf_formatted|
-  match do |pdf_object|
-    json = JSON.parse(pdf_formatted)
-    feed = pdf_object
+RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
+  match do |feed|
+    match_xml_feed(feed, formatted_feed) if format.to_sym == :xml
+    match_json_feed(feed, formatted_feed) if format.to_sym == :json
+  end
+
+  failure_message_for_should do |feed|
+    "expected #{feed} to fully represent #{formatted_feed}"
+  end
+
+  description do
+    "expected #{formatted_feed.class} to be fully represented"
+  end
+
+  def match_xml_feed(feed, formatted_feed)
+    xml = Nokogiri.parse(formatted_feed)
+    case xml.root.attributes["version"].value
+    when "0.5.1"
+      environment = xml.at_xpath("//xmlns:environment")
+      feed.title.should == environment.at_xpath("//xmlns:title").content
+    else
+      false
+    end
+  end
+
+  def match_json_feed(feed, formatted_feed)
+    json = JSON.parse(formatted_feed)
     case json['version']
     when '1.0.0'
       feed.title.should == json["title"]
@@ -75,13 +98,6 @@ RSpec::Matchers.define :fully_represent do |pdf_formatted|
     end
   end
 
-  failure_message_for_should do |pdf_object|
-    "expected #{pdf_object} to fully represent #{pdf_formatted}"
-  end
-
-  description do
-    "expected #{pdf_formatted.class} to be fully represented"
-  end
 end
 
 
