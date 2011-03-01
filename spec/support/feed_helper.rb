@@ -82,7 +82,6 @@ def feed_as_(format, options = {})
         "unit_label"=>"",
         "current_value"=>"40",
         "id"=>"5",
-        "tags"=>"failures",
         "unit_symbol"=>""},
         {
         "updated" => Time.parse('2011-01-02'),

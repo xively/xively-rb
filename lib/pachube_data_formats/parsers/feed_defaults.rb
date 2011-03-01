@@ -30,7 +30,7 @@ module PachubeDataFormats
             "min_value" => datastream["min_value"],
             "max_value" => datastream["max_value"],
             "updated" => datastream["at"],
-            "tags" => datastream["tags"].join(','),
+            "tags" => join_tags(datastream["tags"]),
           }.merge(unit_hash)
         end
         if location = hash.delete("location")
@@ -62,7 +62,7 @@ module PachubeDataFormats
             "min_value" => datastream["values"].first["min_value"],
             "max_value" => datastream["values"].first["max_value"],
             "updated" => datastream["values"].first["recorded_at"],
-            "tags" => datastream["tags"].join(','),
+            "tags" => join_tags(datastream["tags"]),
           }.merge(unit_hash)
         end
         if location = hash.delete("location")
@@ -77,6 +77,10 @@ module PachubeDataFormats
         hash
       end
 
+      def join_tags(tags)
+        return unless tags
+        tags.join(',')
+      end
     end
   end
 end

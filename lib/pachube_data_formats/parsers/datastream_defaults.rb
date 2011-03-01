@@ -18,7 +18,7 @@ module PachubeDataFormats
         hash["id"] = hash.delete("id")
         hash["updated"] = hash.delete("at")
         hash["current_value"] = hash.delete("current_value")
-        hash["tags"] = hash["tags"].join(',')
+        hash["tags"] = hash["tags"].join(',') if hash["tags"]
         if unit = hash.delete('unit')
           hash['unit_type'] = unit['type']
           hash['unit_symbol'] = unit['symbol']
@@ -34,7 +34,7 @@ module PachubeDataFormats
         hash["current_value"] = hash["values"].first.delete("value")
         hash["max_value"] = hash["values"].first.delete("max_value")
         hash["min_value"] = hash["values"].first.delete("min_value")
-        hash["tags"] = hash["tags"].join(',')
+        hash["tags"] = hash["tags"].join(',') if hash["tags"]
         if unit = hash.delete('unit')
           hash['unit_type'] = unit['type']
           hash['unit_symbol'] = unit['symbol']

@@ -6,7 +6,8 @@ describe "default datastream parser" do
   end
 
   describe "json" do
-    it "should convert Pachube JSON 1.0.0 (used by API v2) into attributes hash" do
+    context "1.0.0 (used by API v2)"
+    it "should convert into attributes hash" do
       @json = datastream_as_(:json)
       attributes = @datastream.from_json(@json)
       json = JSON.parse(@json)
@@ -21,7 +22,15 @@ describe "default datastream parser" do
       attributes["unit_symbol"].should == json["unit"]["symbol"]
     end
 
-    it "should convert Pachube JSON 0.6-alpha (used by API v1) into attributes hash" do
+    it "should handle blank tags" do
+      @json = datastream_as_(:json, :except => [:tags])
+      lambda {@datastream.from_json(@json)}.should_not raise_error
+    end
+  end
+
+  context "0.6-alpha (used by API v1)" do
+
+    it "should convert into attributes hash" do
       @json = datastream_as_(:json, :version => "0.6-alpha")
       attributes = @datastream.from_json(@json)
       json = JSON.parse(@json)
@@ -34,6 +43,11 @@ describe "default datastream parser" do
       attributes["unit_type"].should == json["unit"]["type"]
       attributes["unit_label"].should == json["unit"]["label"]
       attributes["unit_symbol"].should == json["unit"]["symbol"]
+    end
+
+    it "should handle blank tags" do
+      @json = datastream_as_(:json, :version => "0.6-alpha", :except => [:tags])
+      lambda {@datastream.from_json(@json)}.should_not raise_error
     end
   end
 end
