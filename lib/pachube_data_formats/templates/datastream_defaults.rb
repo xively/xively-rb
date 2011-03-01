@@ -12,6 +12,7 @@ module PachubeDataFormats
 
       private
       
+      # As used by http://www.pachube.com/api/v2/FEED_ID/datastreams/DATASTREAM_ID.json
       def json_1_0_0
         template = Template.new(self, :json)
         template.id
@@ -25,6 +26,7 @@ module PachubeDataFormats
         template.output!
       end
 
+      # As used by http://www.pachube.com/api/v1/FEED_ID/datastreams/DATASTREAM_ID.json
       def json_0_6_alpha
         template = Template.new(self, :json)
         template.id

@@ -18,7 +18,7 @@ module PachubeDataFormats
       #
       # A datastream
       #
-      #   is_pachube_data_format :datastream # Not yet implemented
+      #   is_pachube_data_format :datastream
       #
       # To specify custom field mappings or map methods onto a field
       #

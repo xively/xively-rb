@@ -13,6 +13,7 @@ module PachubeDataFormats
 
       private
 
+      # As produced by http://www.pachube.com/api/v2/FEED_ID/datastreams/DATASTREAM_ID.json
       def transform_1_0_0(hash)
         hash["id"] = hash.delete("id")
         hash["updated"] = hash.delete("at")
@@ -26,6 +27,7 @@ module PachubeDataFormats
         hash
       end
 
+      # As produced by http://www.pachube.com/api/v1/FEED_ID/datastreams/DATASTREAM_ID.json
       def transform_0_6_alpha(hash)
         hash["id"] = hash.delete("id")
         hash["updated"] = hash["values"].first.delete("recorded_at")

@@ -13,6 +13,7 @@ module PachubeDataFormats
 
       private
 
+      # As produced by http://www.pachube.com/api/v2/FEED_ID.json
       def transform_1_0_0(hash)
         hash["updated"] = hash["updated"]
         hash["status"] = hash["status"]
@@ -44,6 +45,7 @@ module PachubeDataFormats
         hash
       end
 
+      # As produced by http://www.pachube.com/api/v1/FEED_ID.json
       def transform_0_6_alpha(hash)
         hash["retrieved_at"] = hash["updated"]
         hash["state"] = hash["status"]
