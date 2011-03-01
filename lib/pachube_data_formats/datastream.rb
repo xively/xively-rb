@@ -3,7 +3,8 @@ module PachubeDataFormats
     ALLOWED_KEYS = %w(current_value id max_value min_value tags unit_label unit_symbol unit_type updated)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
-    include PachubeDataFormats::Templates::DatastreamDefaults
+    include PachubeDataFormats::Templates::DatastreamJSONDefaults
+    include PachubeDataFormats::Templates::DatastreamXMLDefaults
     include PachubeDataFormats::Parsers::DatastreamDefaults
 
     def initialize(input)
@@ -36,6 +37,11 @@ module PachubeDataFormats
 
     def to_json(options = {})
       ::JSON.generate as_json(options)
+    end
+
+    def to_xml(options = {})
+      options[:version] ||= "0.5.1"
+      generate_xml(options[:version])
     end
   end
 end
