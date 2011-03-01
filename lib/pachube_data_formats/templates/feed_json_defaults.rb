@@ -1,6 +1,6 @@
 module PachubeDataFormats
   module Templates
-    module FeedDefaults
+    module FeedJSONDefaults
       def generate_json(version)
         case version
         when "1.0.0"

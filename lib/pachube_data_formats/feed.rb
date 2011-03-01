@@ -3,7 +3,8 @@ module PachubeDataFormats
     ALLOWED_KEYS = %w(creator datastreams description email feed icon id location_disposition location_domain location_ele location_exposure location_lat location_lon location_name private status tags title updated website)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
-    include PachubeDataFormats::Templates::FeedDefaults
+    include PachubeDataFormats::Templates::FeedJSONDefaults
+    include PachubeDataFormats::Templates::FeedXMLDefaults
     include PachubeDataFormats::Parsers::FeedDefaults
 
     def initialize(input)

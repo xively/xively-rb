@@ -1,4 +1,4 @@
-RSpec::Matchers.define :contain_eeml_for_version do |eeml_version|
+RSpec::Matchers.define :contain_datastream_eeml_for_version do |eeml_version|
   match do |xml|
     hash = datastream_as_(:hash)
     case eeml_version

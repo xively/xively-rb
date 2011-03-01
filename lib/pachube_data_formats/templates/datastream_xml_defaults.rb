@@ -32,6 +32,7 @@ module PachubeDataFormats
         builder.to_xml
       end
 
+      # As used by http://www.pachube.com/api/v1/FEED_ID/datastreams/DATASTREAM_ID.xml
       def xml_5
         builder = Nokogiri::XML::Builder.new do |xml|
           xml.eeml(_eeml_5) do |eeml|
