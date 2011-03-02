@@ -14,7 +14,7 @@ module PachubeDataFormats
 
       # As used by http://www.pachube.com/api/v2/FEED_ID/datastreams/DATASTREAM_ID.xml
       def xml_0_5_1
-        builder = Nokogiri::XML::Builder.new do |xml|
+        builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
           xml.eeml(_eeml_0_5_1) do |eeml|
             eeml.environment(:updated => updated.iso8601(6), :id => id, :creator => creator) do |environment|
               environment.title title
@@ -53,7 +53,7 @@ module PachubeDataFormats
 
       # As used by http://www.pachube.com/api/v1/FEED_ID/datastreams/DATASTREAM_ID.xml
       def xml_5
-        builder = Nokogiri::XML::Builder.new do |xml|
+        builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
           xml.eeml(_eeml_5) do |eeml|
             eeml.environment(:updated => updated.iso8601(6), :id => id, :creator => creator) do |environment|
               environment.title title
