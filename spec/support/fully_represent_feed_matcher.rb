@@ -22,6 +22,7 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
       environment = xml.at_xpath("//xmlns:environment")
       feed.title.should == environment.at_xpath("xmlns:title").content
       feed.updated.should == environment.attributes["updated"].value
+      feed.creator.should == environment.attributes["creator"].value
       feed.feed.should == environment.at_xpath("xmlns:feed").content
       feed.status.should == environment.at_xpath("xmlns:status").content
       feed.description.should == environment.at_xpath("xmlns:description").content
@@ -59,6 +60,7 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
       environment = xml.at_xpath("//xmlns:environment")
       feed.title.should == environment.at_xpath("xmlns:title").content
       feed.updated.should == environment.attributes["updated"].value
+      feed.creator.should == environment.attributes["creator"].value
       feed.feed.should == environment.at_xpath("xmlns:feed").content
       feed.status.should == environment.at_xpath("xmlns:status").content
       feed.description.should == environment.at_xpath("xmlns:description").content
@@ -91,20 +93,6 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
       end
       true
     else
-    #  data = xml.at_xpath("//xmlns:environment").at_xpath("xmlns:data")
-    #  datastream.id.should == data.attributes["id"].value
-    #  datastream.tags.should == data.xpath("xmlns:tag").map(&:content).sort{|a,b| a.downcase<=>b.downcase}.join(',')
-    #  current_value = data.at_xpath("xmlns:value")
-    #  datastream.current_value.should == current_value.content
-    #  datastream.updated.should == xml.at_xpath("//xmlns:environment").attributes["updated"].value if xml.at_xpath("//xmlns:environment").attributes["updated"]
-    #  datastream.min_value.should == current_value.attributes["minValue"].value if current_value.attributes["minValue"]
-    #  datastream.max_value.should == current_value.attributes["maxValue"].value if current_value.attributes["maxValue"]
-    #  unit = data.at_xpath("xmlns:unit")
-    #  if unit
-    #    datastream.unit_label.should == unit.content
-    #    datastream.unit_type.should == unit.attributes["type"].value if unit.attributes["type"]
-    #    datastream.unit_symbol.should == unit.attributes["symbol"].value if unit.attributes["symbol"]
-    #  end
       false
     end
   end
