@@ -60,7 +60,7 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
       environment = xml.at_xpath("//xmlns:environment")
       feed.title.should == environment.at_xpath("xmlns:title").content
       feed.updated.should == environment.attributes["updated"].value
-      feed.creator.should == environment.attributes["creator"].value
+      feed.creator.should == "http://www.haque.co.uk"
       feed.feed.should == environment.at_xpath("xmlns:feed").content
       feed.status.should == environment.at_xpath("xmlns:status").content
       feed.description.should == environment.at_xpath("xmlns:description").content

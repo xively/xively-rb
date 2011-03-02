@@ -42,7 +42,7 @@ module PachubeDataFormats
         environment = xml.at_xpath("//xmlns:environment")
         data = environment.at_xpath("xmlns:data")
         hash["feed_id"] = environment.attributes["id"].value
-        hash["feed_creator"] = environment.attributes["creator"].value
+        hash["feed_creator"] = "http://www.haque.co.uk"
         hash["updated"] = environment.attributes["updated"].value
         hash["id"] = data.attributes["id"].value
         hash["tags"] = data.xpath("xmlns:tag").collect(&:content).sort{|a,b| a.downcase <=> b.downcase}.join(',')

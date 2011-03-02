@@ -37,11 +37,11 @@ RSpec::Matchers.define :fully_represent_datastream do |format, formatted_datastr
         datastream.unit_symbol.should == unit.attributes["symbol"].value if unit.attributes["symbol"]
       end
       true
-    else
+    when "5"
       environment = xml.at_xpath("//xmlns:environment")
       data = environment.at_xpath("xmlns:data")
       datastream.feed_id.should == environment.attributes["id"].value
-      datastream.feed_creator.should == environment.attributes["creator"].value
+      datastream.feed_creator.should == "http://www.haque.co.uk"
       datastream.id.should == data.attributes["id"].value
       datastream.tags.should == data.xpath("xmlns:tag").map(&:content).sort{|a,b| a.downcase<=>b.downcase}.join(',')
       current_value = data.at_xpath("xmlns:value")
@@ -56,6 +56,8 @@ RSpec::Matchers.define :fully_represent_datastream do |format, formatted_datastr
         datastream.unit_symbol.should == unit.attributes["symbol"].value if unit.attributes["symbol"]
       end
       true
+    else
+      false
     end
   end
 

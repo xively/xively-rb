@@ -57,7 +57,7 @@ module PachubeDataFormats
         hash = {}
         environment = xml.at_xpath("//xmlns:environment")
         hash["updated"] = environment.attributes["updated"].value
-        hash["creator"] = environment.attributes["creator"].value
+        hash["creator"] = "http://www.haque.co.uk"
         hash["title"] = environment.at_xpath("xmlns:title").content
         hash["feed"] = environment.at_xpath("xmlns:feed").content
         hash["status"] = environment.at_xpath("xmlns:status").content
