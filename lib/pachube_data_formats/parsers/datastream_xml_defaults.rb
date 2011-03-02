@@ -21,14 +21,14 @@ module PachubeDataFormats
         hash["tags"] = data.xpath("xmlns:tag").collect(&:content).sort{|a,b| a.downcase <=> b.downcase}.join(',')
         current_value = data.at_xpath("xmlns:current_value")
         hash["current_value"] = current_value.content
-        hash["updated"] = current_value.attributes["at"].value if current_value.attributes["at"]
+        hash["updated"] = current_value.attributes["at"].value
         hash["min_value"] = data.at_xpath("xmlns:min_value").content
         hash["max_value"] = data.at_xpath("xmlns:max_value").content
         unit = data.at_xpath("xmlns:unit")
         if unit
           hash["unit_label"] = unit.content
-          hash["unit_symbol"] = unit.attributes["symbol"].value if unit.attributes["symbol"]
-          hash["unit_type"] = unit.attributes["type"].value if unit.attributes["type"]
+          hash["unit_symbol"] = unit.attributes["symbol"].value
+          hash["unit_type"] = unit.attributes["type"].value
         end
         hash
       end
@@ -38,18 +38,18 @@ module PachubeDataFormats
         hash = {}
         environment = xml.at_xpath("//xmlns:environment")
         data = environment.at_xpath("xmlns:data")
-        hash["updated"] = environment.attributes["updated"].value if environment.attributes["updated"]
+        hash["updated"] = environment.attributes["updated"].value
         hash["id"] = data.attributes["id"].value
         hash["tags"] = data.xpath("xmlns:tag").collect(&:content).sort{|a,b| a.downcase <=> b.downcase}.join(',')
         current_value = data.at_xpath("xmlns:value")
         hash["current_value"] = current_value.content
-        hash["min_value"] = current_value.attributes["minValue"].value if current_value.attributes["minValue"]
-        hash["max_value"] = current_value.attributes["maxValue"].value if current_value.attributes["maxValue"]
+        hash["min_value"] = current_value.attributes["minValue"].value
+        hash["max_value"] = current_value.attributes["maxValue"].value
         unit = data.at_xpath("xmlns:unit")
         if unit
           hash["unit_label"] = unit.content
-          hash["unit_symbol"] = unit.attributes["symbol"].value if unit.attributes["symbol"]
-          hash["unit_type"] = unit.attributes["type"].value if unit.attributes["type"]
+          hash["unit_symbol"] = unit.attributes["symbol"].value
+          hash["unit_type"] = unit.attributes["type"].value
         end
         hash
       end

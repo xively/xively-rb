@@ -96,6 +96,8 @@ def feed_as_(format, options = {})
     }
   when 'json'
     data = feed_as_json(options[:version] || "1.0.0")
+  when 'xml'
+    data = feed_as_xml(options[:version] || "0.5.1")
   end
 
   # Add extra options we passed
@@ -118,6 +120,8 @@ def feed_as_(format, options = {})
     data
   when 'json'
     data.to_json
+  when 'xml'
+    data
   else
     raise "#{format} undefined"
   end
@@ -308,3 +312,89 @@ def feed_as_json(version)
   end
 end
 
+def feed_as_xml(version)
+
+  case version
+  when "0.5.1"
+    xml = <<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.5.1" xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd"> 
+ <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred"> 
+    <title>Pachube Office environment</title> 
+    <feed>http://test.host/v2/feeds/2357.xml</feed> 
+    <status>frozen</status> 
+    <description>meh</description> 
+    <website>http://alpha.com</website> 
+    <email>fred@example.com</email> 
+    <private>true</private> 
+    <tag>jag</tag> 
+    <tag>lag</tag> 
+    <tag>mag</tag> 
+    <tag>tag</tag> 
+    <location domain="physical" exposure="indoor" disposition="fixed"> 
+      <name>house</name> 
+      <lat>53.3308729830171</lat> 
+      <lon>111.796875</lon> 
+      <ele>2000</ele> 
+    </location> 
+    <data id="0"> 
+      <tag>freakin lasers</tag> 
+      <tag>humidity</tag> 
+      <tag>Temperature</tag> 
+      <current_value at="2011-02-16T16:21:01.834174Z">14</current_value> 
+      <max_value>658</max_value>
+      <min_value>54</min_value>
+      <unit type="derivedSI" symbol="A">Alpha</unit> 
+    </data> 
+    <data id="1">
+      <current_value at="2011-02-16T16:21:01.834174Z">14444</current_value> 
+      <unit>Alpha</unit> 
+    </data> 
+    <data id="two">
+      <max_value>1004</max_value> 
+      <current_value at="2011-02-16T16:21:01.834174Z">14344</current_value> 
+      <unit type="derivedSI">Alpha</unit> 
+    </data> 
+  </environment> 
+</eeml>
+XML
+  when "5"
+    xml = <<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="5" xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
+ <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred"> 
+    <title>Pachube Office environment</title> 
+    <feed>http://test.host/v2/feeds/2357.xml</feed> 
+    <status>frozen</status> 
+    <description>meh</description> 
+    <website>http://alpha.com</website> 
+    <email>fred@example.com</email> 
+    <location domain="physical" exposure="indoor" disposition="fixed"> 
+      <name>house</name> 
+      <lat>53.3308729830171</lat> 
+      <lon>111.796875</lon> 
+      <ele>2000</ele> 
+    </location> 
+    <data id="0"> 
+      <tag>freakin lasers</tag> 
+      <tag>humidity</tag> 
+      <tag>Temperature</tag> 
+      <value maxValue="658.0" minValue="658">14</value> 
+      <unit type="derivedSI" symbol="A">Alpha</unit> 
+    </data> 
+    <data id="1">
+      <value>14</value> 
+      <unit>Alpha</unit> 
+    </data> 
+    <data id="two">
+      <value maxValue="658.0">1004</value> 
+      <unit type="derivedSI">Alpha</unit> 
+    </data> 
+  </environment> 
+</eeml>
+XML
+  else
+    raise "Datastream as XML #{version} not implemented"
+  end
+
+end

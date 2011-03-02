@@ -1,7 +1,10 @@
 RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
   match do |feed|
-    match_xml_feed(feed, formatted_feed) if format.to_sym == :xml
-    match_json_feed(feed, formatted_feed) if format.to_sym == :json
+    if format.to_sym == :xml
+      match_xml_feed(feed, formatted_feed)
+    else
+      match_json_feed(feed, formatted_feed)
+    end
   end
 
   failure_message_for_should do |feed|
@@ -17,11 +20,95 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
     case xml.root.attributes["version"].value
     when "0.5.1"
       environment = xml.at_xpath("//xmlns:environment")
-      feed.title.should == environment.at_xpath("//xmlns:title").content
+      feed.title.should == environment.at_xpath("xmlns:title").content
+      feed.updated.should == environment.attributes["updated"].value
+      feed.feed.should == environment.at_xpath("xmlns:feed").content
+      feed.status.should == environment.at_xpath("xmlns:status").content
+      feed.description.should == environment.at_xpath("xmlns:description").content
+      feed.icon.should == environment.at_xpath("xmlns:icon").content
+      feed.website.should == environment.at_xpath("xmlns:website").content
+      feed.email.should == environment.at_xpath("xmlns:email").content
+      feed.private.should == environment.at_xpath("xmlns:private").content
+      feed.tags.should == environment.xpath("xmlns:tag").map(&:content).sort{|a,b| a.downcase<=>b.downcase}.join(',')
+      location = environment.at_xpath("xmlns:location")
+      feed.location_name.should == location.at_xpath("xmlns:name").content
+      feed.location_lat.should == location.at_xpath("xmlns:lat").content
+      feed.location_lon.should == location.at_xpath("xmlns:lon").content
+      feed.location_ele.should == location.at_xpath("xmlns:ele").content
+      feed.location_domain.should == location.attributes["domain"].value
+      feed.location_exposure.should == location.attributes["exposure"].value
+      feed.location_disposition.should == location.attributes["disposition"].value
+      feed.datastreams.each do |ds|
+        data = environment.at_xpath("xmlns:data[@id=\"#{ds.id}\"]")
+        ds.id.should == data.attributes["id"].value
+        ds.tags.should == data.xpath("xmlns:tag").map(&:content).sort{|a,b| a.downcase<=>b.downcase}.join(',')
+        current_value = data.at_xpath("xmlns:current_value")
+        ds.current_value.should == current_value.content
+        ds.updated.should == current_value.attributes["at"].value
+        ds.min_value.should == data.at_xpath("xmlns:min_value").content
+        ds.max_value.should == data.at_xpath("xmlns:max_value").content
+        unit = data.at_xpath("xmlns:unit")
+        if unit
+          ds.unit_label.should == unit.content
+          ds.unit_type.should == unit.attributes["type"].value
+          ds.unit_symbol.should == unit.attributes["symbol"].value
+        end
+      end
+      true
+    when "5"
+      environment = xml.at_xpath("//xmlns:environment")
+      feed.title.should == environment.at_xpath("xmlns:title").content
+      feed.updated.should == environment.attributes["updated"].value
+      feed.feed.should == environment.at_xpath("xmlns:feed").content
+      feed.status.should == environment.at_xpath("xmlns:status").content
+      feed.description.should == environment.at_xpath("xmlns:description").content
+      feed.icon.should == environment.at_xpath("xmlns:icon").content
+      feed.website.should == environment.at_xpath("xmlns:website").content
+      feed.email.should == environment.at_xpath("xmlns:email").content
+      location = environment.at_xpath("xmlns:location")
+      feed.location_name.should == location.at_xpath("xmlns:name").content
+      feed.location_lat.should == location.at_xpath("xmlns:lat").content
+      feed.location_lon.should == location.at_xpath("xmlns:lon").content
+      feed.location_ele.should == location.at_xpath("xmlns:ele").content
+      feed.location_domain.should == location.attributes["domain"].value
+      feed.location_exposure.should == location.attributes["exposure"].value
+      feed.location_disposition.should == location.attributes["disposition"].value
+      feed.datastreams.each do |ds|
+        data = environment.at_xpath("xmlns:data[@id=\"#{ds.id}\"]")
+        ds.id.should == data.attributes["id"].value
+        ds.tags.should == data.xpath("xmlns:tag").map(&:content).sort{|a,b| a.downcase<=>b.downcase}.join(',')
+        current_value = data.at_xpath("xmlns:value")
+        ds.current_value.should == current_value.content
+        ds.updated.should == environment.attributes["updated"].value
+        ds.min_value.should == current_value.attributes["minValue"].value
+        ds.max_value.should == current_value.attributes["maxValue"].value
+        unit = data.at_xpath("xmlns:unit")
+        if unit
+          ds.unit_label.should == unit.content
+          ds.unit_type.should == unit.attributes["type"].value
+          ds.unit_symbol.should == unit.attributes["symbol"].value
+        end
+      end
+      true
     else
+    #  data = xml.at_xpath("//xmlns:environment").at_xpath("xmlns:data")
+    #  datastream.id.should == data.attributes["id"].value
+    #  datastream.tags.should == data.xpath("xmlns:tag").map(&:content).sort{|a,b| a.downcase<=>b.downcase}.join(',')
+    #  current_value = data.at_xpath("xmlns:value")
+    #  datastream.current_value.should == current_value.content
+    #  datastream.updated.should == xml.at_xpath("//xmlns:environment").attributes["updated"].value if xml.at_xpath("//xmlns:environment").attributes["updated"]
+    #  datastream.min_value.should == current_value.attributes["minValue"].value if current_value.attributes["minValue"]
+    #  datastream.max_value.should == current_value.attributes["maxValue"].value if current_value.attributes["maxValue"]
+    #  unit = data.at_xpath("xmlns:unit")
+    #  if unit
+    #    datastream.unit_label.should == unit.content
+    #    datastream.unit_type.should == unit.attributes["type"].value if unit.attributes["type"]
+    #    datastream.unit_symbol.should == unit.attributes["symbol"].value if unit.attributes["symbol"]
+    #  end
       false
     end
   end
+
 
   def match_json_feed(feed, formatted_feed)
     json = JSON.parse(formatted_feed)

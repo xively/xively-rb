@@ -1,10 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "default datastream xml parser" do
-  before(:each) do
-    @datastream = PachubeDataFormats::Datastream.new(datastream_as_(:json))
-  end
-
   context "0.5.1 (used by API v2)" do
     it "should convert into attributes hash" do
       @xml = datastream_as_(:xml)

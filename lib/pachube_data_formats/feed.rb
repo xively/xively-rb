@@ -6,12 +6,15 @@ module PachubeDataFormats
     include PachubeDataFormats::Templates::FeedJSONDefaults
     include PachubeDataFormats::Templates::FeedXMLDefaults
     include PachubeDataFormats::Parsers::FeedJSONDefaults
+    include PachubeDataFormats::Parsers::FeedXMLDefaults
 
     def initialize(input)
       if input.is_a?(Hash)
         self.attributes = input
-      else
+      elsif input.strip.first == "{"
         self.attributes = from_json(input)
+      else
+        self.attributes = from_xml(input)
       end
     end
 

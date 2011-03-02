@@ -1,9 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "default datastream parser" do
-  before(:each) do
-  end
-
+describe "default feed json parser" do
   describe "json" do
     it "should convert Pachube JSON 1.0.0 (used by API v2) into attributes hash" do
       json = feed_as_(:json)

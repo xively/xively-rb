@@ -1,87 +1,93 @@
 module PachubeDataFormats
   module Parsers
     module FeedXMLDefaults
-     # def from_xml(xml)
-     #   parsed_xml = Nokogiri.parse(xml)
-     #   raise "Start coding from here"
-     #   case hash['version']
-     #   when '0.5.1'
-     #     transform_0_5_1(hash)
-     #   when '0.6-alpha'
-     #     transform_0_6_alpha(hash)
-     #   end
-     # end
+      def from_xml(xml)
+        xml = Nokogiri.parse(xml)
+        case xml.root.attributes["version"].value
+        when "0.5.1"
+          transform_0_5_1(xml)
+         when "5"
+           transform_5(xml)
+        end
+      end
 
-     # private
+      # As produced by http://www.pachube.com/api/v2/FEED_ID.xml
+      def transform_0_5_1(xml)
+        hash = {}
+        environment = xml.at_xpath("//xmlns:environment")
+        hash["updated"] = environment.attributes["updated"].value
+        hash["title"] = environment.at_xpath("xmlns:title").content
+        hash["feed"] = environment.at_xpath("xmlns:feed").content
+        hash["status"] = environment.at_xpath("xmlns:status").content
+        hash["description"] = environment.at_xpath("xmlns:description").content
+        hash["icon"] = environment.at_xpath("xmlns:icon").content
+        hash["website"] = environment.at_xpath("xmlns:website").content
+        hash["email"] = environment.at_xpath("xmlns:email").content
+        hash["private"] = environment.at_xpath("xmlns:private").content
+        hash["tags"] = environment.xpath("xmlns:tag").collect(&:content).sort{|a,b| a.downcase <=> b.downcase}.join(',')
+        location = environment.at_xpath("xmlns:location")
+        hash["location_name"] = location.at_xpath("xmlns:name").content
+        hash["location_lat"] = location.at_xpath("xmlns:lat").content
+        hash["location_lon"] = location.at_xpath("xmlns:lon").content
+        hash["location_ele"] = location.at_xpath("xmlns:ele").content
+        hash["location_domain"] = location.attributes["domain"].value
+        hash["location_exposure"] = location.attributes["exposure"].value
+        hash["location_disposition"] = location.attributes["disposition"].value
+        hash["datastreams"] = environment.xpath("xmlns:data").collect do |datastream|
+          current_value = datastream.at_xpath("xmlns:current_value")
+          unit = datastream.at_xpath("xmlns:unit")
+          {
+            "id" => datastream.attributes["id"].value,
+            "tags" => datastream.xpath("xmlns:tag").collect(&:content).sort{|a,b| a.downcase <=> b.downcase}.join(','),
+            "current_value" => current_value.content,
+            "updated" => current_value.attributes["at"].value,
+            "min_value" => datastream.at_xpath("xmlns:min_value").content,
+            "max_value" => datastream.at_xpath("xmlns:max_value").content,
+            "unit_label" => unit.content,
+            "unit_type" => unit.attributes["type"].value,
+            "unit_symbol" => unit.attributes["symbol"].value,
+          }
+        end
+        hash
+      end
 
-     # # As produced by http://www.pachube.com/api/v2/FEED_ID.json
-     # def transform_1_0_0(hash)
-     #   hash["updated"] = hash["updated"]
-     #   hash["status"] = hash["status"]
-     #   hash["datastreams"] = hash["datastreams"].collect do |datastream|
-     #     unit_hash = {}
-     #     if unit = datastream.delete('unit')
-     #       unit_hash['unit_type'] = unit['type']
-     #       unit_hash['unit_symbol'] = unit['symbol']
-     #       unit_hash['unit_label'] = unit['label']
-     #     end
-     #     {
-     #       "id" => datastream["id"],
-     #       "current_value" => datastream["current_value"],
-     #       "min_value" => datastream["min_value"],
-     #       "max_value" => datastream["max_value"],
-     #       "updated" => datastream["at"],
-     #       "tags" => join_tags(datastream["tags"]),
-     #     }.merge(unit_hash)
-     #   end
-     #   if location = hash.delete("location")
-     #     hash["location_disposition"] = location["disposition"]
-     #     hash["location_domain"] = location["domain"]
-     #     hash["location_ele"] = location["ele"]
-     #     hash["location_exposure"] = location["exposure"]
-     #     hash["location_lat"] = location["lat"]
-     #     hash["location_lon"] = location["lon"]
-     #     hash["location_name"] = location["name"]
-     #   end
-     #   hash
-     # end
-
-     # # As produced by http://www.pachube.com/api/v1/FEED_ID.json
-     # def transform_0_6_alpha(hash)
-     #   hash["retrieved_at"] = hash["updated"]
-     #   hash["state"] = hash["status"]
-     #   hash["datastreams"] = hash["datastreams"].collect do |datastream|
-     #     unit_hash = {}
-     #     if unit = datastream.delete('unit')
-     #       unit_hash['unit_type'] = unit['type']
-     #       unit_hash['unit_symbol'] = unit['symbol']
-     #       unit_hash['unit_label'] = unit['label']
-     #     end
-     #     {
-     #       "id" => datastream["id"],
-     #       "current_value" => datastream["values"].first["value"],
-     #       "min_value" => datastream["values"].first["min_value"],
-     #       "max_value" => datastream["values"].first["max_value"],
-     #       "updated" => datastream["values"].first["recorded_at"],
-     #       "tags" => join_tags(datastream["tags"]),
-     #     }.merge(unit_hash)
-     #   end
-     #   if location = hash.delete("location")
-     #     hash["location_disposition"] = location["disposition"]
-     #     hash["location_domain"] = location["domain"]
-     #     hash["location_ele"] = location["ele"]
-     #     hash["location_exposure"] = location["exposure"]
-     #     hash["location_lat"] = location["lat"]
-     #     hash["location_lon"] = location["lon"]
-     #     hash["location_name"] = location["name"]
-     #   end
-     #   hash
-     # end
-
-     # def join_tags(tags)
-     #   return unless tags
-     #   tags.join(',')
-     # end
+      # As produced by http://www.pachube.com/api/v1/FEED_ID.xml
+      def transform_5(xml)
+        hash = {}
+        environment = xml.at_xpath("//xmlns:environment")
+        hash["updated"] = environment.attributes["updated"].value
+        hash["title"] = environment.at_xpath("xmlns:title").content
+        hash["feed"] = environment.at_xpath("xmlns:feed").content
+        hash["status"] = environment.at_xpath("xmlns:status").content
+        hash["description"] = environment.at_xpath("xmlns:description").content
+        hash["icon"] = environment.at_xpath("xmlns:icon").content
+        hash["website"] = environment.at_xpath("xmlns:website").content
+        hash["email"] = environment.at_xpath("xmlns:email").content
+        location = environment.at_xpath("xmlns:location")
+        hash["location_name"] = location.at_xpath("xmlns:name").content
+        hash["location_lat"] = location.at_xpath("xmlns:lat").content
+        hash["location_lon"] = location.at_xpath("xmlns:lon").content
+        hash["location_ele"] = location.at_xpath("xmlns:ele").content
+        hash["location_domain"] = location.attributes["domain"].value
+        hash["location_exposure"] = location.attributes["exposure"].value
+        hash["location_disposition"] = location.attributes["disposition"].value
+        hash["datastreams"] = environment.xpath("xmlns:data").collect do |datastream|
+          current_value = datastream.at_xpath("xmlns:value")
+          unit = datastream.at_xpath("xmlns:unit")
+          {
+            "id" => datastream.attributes["id"].value,
+            "tags" => datastream.xpath("xmlns:tag").collect(&:content).sort{|a,b| a.downcase <=> b.downcase}.join(','),
+            "current_value" => current_value.content,
+            "updated" => environment.attributes["updated"].value,
+            "min_value" => current_value.attributes["minValue"].value,
+            "max_value" => current_value.attributes["maxValue"].value,
+            "unit_label" => unit.content,
+            "unit_type" => unit.attributes["type"].value,
+            "unit_symbol" => unit.attributes["symbol"].value,
+          }
+        end
+        hash
+      end
     end
   end
 end
