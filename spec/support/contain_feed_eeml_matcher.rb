@@ -47,7 +47,7 @@ RSpec::Matchers.define :contain_feed_eeml_for_version do |eeml_version|
       environment = xml.at_xpath("//xmlns:environment")
       environment.attributes["updated"].value.should == hash["updated"].iso8601(6)
       environment.attributes["id"].value.should == hash["id"].to_s
-      environment.attributes["creator"].value.should == hash["creator"]
+      environment.attributes["creator"].value.should == "http://www.haque.co.uk"
       environment.at_xpath("//xmlns:title").content.should == hash["title"]
       environment.at_xpath("//xmlns:feed").content.should == hash["feed"]
       environment.at_xpath("//xmlns:status").content.should == hash["status"]

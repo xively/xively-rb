@@ -26,7 +26,7 @@ RSpec::Matchers.define :contain_datastream_eeml_for_version do |eeml_version|
       environment = xml.at_xpath("//xmlns:environment")
       environment.attributes["updated"].value.should == hash["updated"].iso8601
       environment.attributes["id"].value.should == hash["feed_id"]
-      environment.attributes["creator"].value.should == hash["feed_creator"]
+      environment.attributes["creator"].value.should == "http://www.haque.co.uk"
       datastream = environment.at_xpath("//xmlns:data")
       datastream.attributes["id"].value.should == hash["id"]
       tags = datastream.xpath("//xmlns:tag")
