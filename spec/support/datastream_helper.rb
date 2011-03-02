@@ -12,7 +12,19 @@ def datastream_as_(format, options = {})
       "tags"=>"humidity,Temperature   ,freakin lasers",
       "unit_symbol"=>"%",
       "feed_id" => "24568",
-      "feed_creator" => "Dennis"
+      "feed_creator" => "Dennis",
+      "datapoints" => [{
+          "value" => "1",
+          "at" => "2011-03-02T15:59:56.895922Z"
+      },
+      {
+          "value" => "1",
+          "at" => "2011-03-02T16:00:07.188648Z"
+      },
+      {
+          "value" => "2",
+          "at" => "2011-03-02T16:00:18.416500Z"
+      }]
     }
   when 'json'
     data = datastream_as_json(options[:version] || "1.0.0")
@@ -57,6 +69,18 @@ def datastream_as_json(version)
       'tags' => ['humidity', 'Temperature', 'freakin lasers'],
       'current_value' => '14',
       'max_value' => '658.0',
+      "datapoints" => [{
+          "value" => "1",
+          "at" => "2011-03-02T15:59:56.895922Z"
+      },
+      {
+          "value" => "1",
+          "at" => "2011-03-02T16:00:07.188648Z"
+      },
+      {
+          "value" => "2",
+          "at" => "2011-03-02T16:00:18.416500Z"
+      }],
       'id' => '0',
       "unit" => {
       "type" => "derived SI",
@@ -167,6 +191,11 @@ XML
       <max_value>658.0</max_value> 
       <min_value>0.0</min_value> 
       <unit type="derivedSI" symbol="A">Alpha</unit> 
+      <datapoints> 
+        <value at="2011-03-02T15:59:56.895922Z">1</value> 
+        <value at="2011-03-02T16:00:07.188648Z">1</value> 
+        <value at="2011-03-02T16:00:18.416500Z">2</value> 
+      </datapoints>
     </data> 
   </environment> 
 </eeml>

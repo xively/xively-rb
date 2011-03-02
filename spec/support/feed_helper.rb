@@ -33,9 +33,21 @@ def feed_as_(format, options = {})
         "current_value"=>"14",
         "id"=>"0",
         "tags"=>"humidity,Temperature, freakin lasers",
+        "datapoints" => [{
+          "value" => "1",
+          "at" => "2011-03-02T15:59:56.895922Z"
+        },
+          {
+          "value" => "1",
+          "at" => "2011-03-02T16:00:07.188648Z"
+        },
+          {
+          "value" => "2",
+          "at" => "2011-03-02T16:00:18.416500Z"
+        }],
         "unit_symbol"=>""},
         {
-        "updated" => Time.parse('2011-01-02'),
+      "updated" => Time.parse('2011-01-02'),
         "max_value"=>980.0,
         "unit_type"=>"",
         "min_value"=>0.0,
@@ -179,7 +191,19 @@ def feed_as_json(version)
           'tags' => ['Temperature'],
           'current_value' => '316',
           'max_value' => '774.0',
-          'id' => '2'
+          'id' => '2',
+          "datapoints" => [{
+            "value" => "1",
+            "at" => "2011-03-02T15:59:56.895922Z"
+          },
+            {
+            "value" => "1",
+            "at" => "2011-03-02T16:00:07.188648Z"
+          },
+            {
+            "value" => "2",
+            "at" => "2011-03-02T16:00:18.416500Z"
+          }]
       },
         {'min_value' => '0.0',
           'at' => '2011-02-16T16:21:01.834174Z',
@@ -345,6 +369,11 @@ def feed_as_xml(version)
       <max_value>658</max_value>
       <min_value>54</min_value>
       <unit type="derivedSI" symbol="A">Alpha</unit> 
+      <datapoints> 
+        <value at="2011-03-02T15:59:56.895922Z">1</value> 
+        <value at="2011-03-02T16:00:07.188648Z">1</value> 
+        <value at="2011-03-02T16:00:18.416500Z">2</value> 
+      </datapoints>
     </data> 
     <data id="1">
       <current_value at="2011-02-16T16:21:01.834174Z">14444</current_value> 
@@ -354,6 +383,9 @@ def feed_as_xml(version)
       <max_value>1004</max_value> 
       <current_value at="2011-02-16T16:21:01.834174Z">14344</current_value> 
       <unit type="derivedSI">Alpha</unit> 
+      <datapoints> 
+        <value at="2011-03-02T16:00:18.416500Z">2</value> 
+      </datapoints>
     </data> 
   </environment> 
 </eeml>

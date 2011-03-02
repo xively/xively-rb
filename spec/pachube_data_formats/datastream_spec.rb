@@ -3,12 +3,17 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe PachubeDataFormats::Datastream do
 
   it "should have a constant that defines the allowed keys" do
-    PachubeDataFormats::Datastream::ALLOWED_KEYS.should == %w(current_value feed_creator feed_id id max_value min_value tags unit_label unit_symbol unit_type updated)
+    PachubeDataFormats::Datastream::ALLOWED_KEYS.should == %w(current_value datapoints feed_creator feed_id id max_value min_value tags unit_label unit_symbol unit_type updated)
   end
 
   describe "#initialize" do
     it "should require one parameter" do
       lambda{PachubeDataFormats::Datastream.new}.should raise_exception(ArgumentError, "wrong number of arguments (0 for 1)")
+    end
+
+    it "should accept xml" do
+      datastream = PachubeDataFormats::Datastream.new(datastream_as_(:xml))
+      datastream.current_value.should == "14"
     end
 
     it "should accept json" do
@@ -28,6 +33,7 @@ describe PachubeDataFormats::Datastream do
       PachubeDataFormats::Datastream::ALLOWED_KEYS.each do |key|
         attrs[key] = "key #{rand(1000)}"
       end
+      attrs["datapoints"] = [PachubeDataFormats::Datapoint.new({"value" => "ein"})]
       datastream = PachubeDataFormats::Datastream.new(attrs)
 
       datastream.attributes.should == attrs
@@ -56,6 +62,58 @@ describe PachubeDataFormats::Datastream do
         datastream.should_receive("#{key}=").with(value)
       end
       datastream.attributes=(attrs)
+    end
+  end
+
+  context "associated datapoints" do
+
+    describe "#datapoints" do
+      it "should return an array of datapoints" do
+        datapoints = [PachubeDataFormats::Datapoint.new(datapoint_as_(:hash))]
+        attrs = {"datapoints" => datapoints}
+        datastream = PachubeDataFormats::Datastream.new(attrs)
+        datastream.datapoints.each do |ds|
+          ds.should be_kind_of(PachubeDataFormats::Datapoint)
+        end
+      end
+    end
+
+    describe "#datapoints=" do
+      before(:each) do
+        @datastream = PachubeDataFormats::Datastream.new({})
+      end
+
+      it "should return nil if not an array" do
+        @datastream.datapoints = "kittens"
+        @datastream.datapoints.should be_nil
+      end
+
+      it "should accept an array of datapoints and hashes and store an array of datapoints" do
+        new_datapoint1 = PachubeDataFormats::Datapoint.new(datapoint_as_(:hash))
+        new_datapoint2 = PachubeDataFormats::Datapoint.new(datapoint_as_(:hash))
+        PachubeDataFormats::Datapoint.should_receive(:new).with(datapoint_as_(:hash)).and_return(new_datapoint2)
+
+        datapoints = [new_datapoint1, datapoint_as_(:hash)]
+        @datastream.datapoints = datapoints
+        @datastream.datapoints.length.should == 2
+        @datastream.datapoints.should include(new_datapoint1)
+        @datastream.datapoints.should include(new_datapoint2)
+      end
+
+      it "should accept an array of datapoints and store an array of datapoints" do
+        datapoints = [PachubeDataFormats::Datapoint.new(datapoint_as_(:hash))]
+        @datastream.datapoints = datapoints
+        @datastream.datapoints.should == datapoints
+      end
+
+      it "should accept an array of hashes and store an array of datapoints" do
+        new_datapoint = PachubeDataFormats::Datapoint.new(datapoint_as_(:hash))
+        PachubeDataFormats::Datapoint.should_receive(:new).with(datapoint_as_(:hash)).and_return(new_datapoint)
+
+        datapoints_hash = [datapoint_as_(:hash)]
+        @datastream.datapoints = datapoints_hash
+        @datastream.datapoints.should == [new_datapoint]
+      end
     end
   end
 

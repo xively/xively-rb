@@ -19,6 +19,14 @@ describe "default datastream json parser" do
       attributes["unit_type"].should == json["unit"]["type"]
       attributes["unit_label"].should == json["unit"]["label"]
       attributes["unit_symbol"].should == json["unit"]["symbol"]
+      at_least_one_datapoint = false
+      attributes["datapoints"].each do |point|
+        at_least_one_datapoint = true
+        dp = json["datapoints"].detect {|dp| dp["at"] == point["at"]}
+        point["value"].should == dp["value"]
+        point["at"].should == dp["at"]
+      end
+      at_least_one_datapoint.should be_true
     end
 
     it "should handle blank tags" do

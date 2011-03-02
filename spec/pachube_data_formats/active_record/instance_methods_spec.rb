@@ -16,8 +16,8 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
         "email" => "abc@example.com",
         "creator" => "http://www.pachube.com"
       })
-    @datastream1 = @feed.datastreams.create!(datastream_as_(:hash, :with => {"stream_id" => "0"}))
-    @datastream2 = @feed.datastreams.create!(datastream_as_(:hash, :with => {"stream_id" => "two"}))
+    @datastream1 = @feed.datastreams.create!(datastream_as_(:hash, :with => {"stream_id" => "0"}, :except => ["datapoints"]))
+    @datastream2 = @feed.datastreams.create!(datastream_as_(:hash, :with => {"stream_id" => "two"}, :except => ["datapoints"]))
   end
 
   it "should allow mapping of datastreams" do

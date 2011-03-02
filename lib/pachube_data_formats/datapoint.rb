@@ -1,12 +1,12 @@
 module PachubeDataFormats
-  class Datastream
-    ALLOWED_KEYS = %w(current_value datapoints feed_creator feed_id id max_value min_value tags unit_label unit_symbol unit_type updated)
+  class Datapoint
+    ALLOWED_KEYS = %w(at value)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
-    include PachubeDataFormats::Templates::DatastreamJSONDefaults
-    include PachubeDataFormats::Templates::DatastreamXMLDefaults
-    include PachubeDataFormats::Parsers::DatastreamJSONDefaults
-    include PachubeDataFormats::Parsers::DatastreamXMLDefaults
+    include PachubeDataFormats::Templates::DatapointJSONDefaults
+    include PachubeDataFormats::Templates::DatapointXMLDefaults
+    include PachubeDataFormats::Parsers::DatapointJSONDefaults
+    include PachubeDataFormats::Parsers::DatapointXMLDefaults
 
     def initialize(input)
       if input.is_a? Hash
@@ -29,18 +29,6 @@ module PachubeDataFormats
 
     def attributes=(input)
       ALLOWED_KEYS.each { |key| self.send("#{key}=", input[key]) }
-    end
-
-    def datapoints=(array)
-      return unless array.is_a?(Array)
-      @datapoints = []
-      array.each do |datapoint|
-        if datapoint.is_a?(Datapoint)
-          @datapoints << datapoint
-        elsif datapoint.is_a?(Hash)
-          @datapoints << Datapoint.new(datapoint)
-        end
-      end
     end
 
     def as_json(options = {})

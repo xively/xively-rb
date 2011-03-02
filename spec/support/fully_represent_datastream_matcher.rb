@@ -36,6 +36,10 @@ RSpec::Matchers.define :fully_represent_datastream do |format, formatted_datastr
         datastream.unit_type.should == unit.attributes["type"].value if unit.attributes["type"]
         datastream.unit_symbol.should == unit.attributes["symbol"].value if unit.attributes["symbol"]
       end
+      datastream.datapoints.each do |point|
+        dp = data.at_xpath("xmlns:datapoints").at_xpath("xmlns:value[@at=\"#{point.at}\"]")
+        point.value.should == dp.content
+      end
       true
     when "5"
       environment = xml.at_xpath("//xmlns:environment")

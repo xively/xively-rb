@@ -33,6 +33,13 @@ module PachubeDataFormats
           hash["unit_symbol"] = unit.attributes["symbol"].value
           hash["unit_type"] = unit.attributes["type"].value
         end
+        hash["datapoints"] = data.xpath("xmlns:datapoints").collect do |datapoint|
+          value = datapoint.at_xpath("xmlns:value")
+          {
+            "value" => value.content,
+            "at" => value.attributes["at"].content
+          }
+        end
         hash
       end
 

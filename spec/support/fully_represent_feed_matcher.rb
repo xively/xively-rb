@@ -54,6 +54,10 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
           ds.unit_type.should == unit.attributes["type"].value
           ds.unit_symbol.should == unit.attributes["symbol"].value
         end
+        ds.datapoints.each do |point|
+          dp = data.at_xpath("xmlns:datapoints").at_xpath("xmlns:value[@at=\"#{point.at}\"]")
+          point.value.should == dp.content
+        end
       end
       true
     when "5"
