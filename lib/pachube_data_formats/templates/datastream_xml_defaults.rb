@@ -16,7 +16,7 @@ module PachubeDataFormats
       def xml_0_5_1
         builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
           xml.eeml(_eeml_0_5_1) do |eeml|
-            eeml.environment(:updated => updated.iso8601(6)) do |environment|
+            eeml.environment(:updated => updated.iso8601(6), :id => feed_id, :creator => feed_creator) do |environment|
               environment.data(:id => id) do |data|
                 split_tags(tags).each do |tag|
                   data.tag tag
@@ -36,7 +36,7 @@ module PachubeDataFormats
       def xml_5
         builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
           xml.eeml(_eeml_5) do |eeml|
-            eeml.environment(:updated => updated.iso8601) do |environment|
+            eeml.environment(:updated => updated.iso8601, :id => feed_id, :creator => feed_creator) do |environment|
               environment.data(:id => id) do |data|
                 split_tags(tags).each do |tag|
                   data.tag tag

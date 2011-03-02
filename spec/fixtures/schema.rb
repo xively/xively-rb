@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 0) do
   create_table "datastreams", :force => true do |t|
     t.string   "stream_id", :null => false
     t.integer  "feed_id", :null => false
+    t.string   "feed_creator"
     t.string   "current_value"
     t.float    "min_value"
     t.float    "max_value"

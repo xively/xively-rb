@@ -1,6 +1,6 @@
 module PachubeDataFormats
   class Datastream
-    ALLOWED_KEYS = %w(current_value id max_value min_value tags unit_label unit_symbol unit_type updated)
+    ALLOWED_KEYS = %w(current_value feed_creator feed_id id max_value min_value tags unit_label unit_symbol unit_type updated)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
     include PachubeDataFormats::Templates::DatastreamJSONDefaults

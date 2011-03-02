@@ -10,7 +10,9 @@ def datastream_as_(format, options = {})
       "current_value"=>"14",
       "id"=>"0",
       "tags"=>"humidity,Temperature   ,freakin lasers",
-      "unit_symbol"=>"%"
+      "unit_symbol"=>"%",
+      "feed_id" => "24568",
+      "feed_creator" => "Dennis"
     }
   when 'json'
     data = datastream_as_json(options[:version] || "1.0.0")

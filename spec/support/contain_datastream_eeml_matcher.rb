@@ -5,7 +5,8 @@ RSpec::Matchers.define :contain_datastream_eeml_for_version do |eeml_version|
     when "0.5.1"
       environment = xml.at_xpath("//xmlns:environment")
       environment.attributes["updated"].value.should == hash["updated"].iso8601(6)
-      # TODO add creator and id (feed) to datastream wrapper
+      environment.attributes["id"].value.should == hash["feed_id"]
+      environment.attributes["creator"].value.should == hash["feed_creator"]
       datastream = environment.at_xpath("//xmlns:data")
       datastream.attributes["id"].value.should == hash["id"]
       tags = datastream.xpath("//xmlns:tag")
@@ -24,7 +25,8 @@ RSpec::Matchers.define :contain_datastream_eeml_for_version do |eeml_version|
     when "5"
       environment = xml.at_xpath("//xmlns:environment")
       environment.attributes["updated"].value.should == hash["updated"].iso8601
-      # TODO add creator and id (feed) to datastream wrapper
+      environment.attributes["id"].value.should == hash["feed_id"]
+      environment.attributes["creator"].value.should == hash["feed_creator"]
       datastream = environment.at_xpath("//xmlns:data")
       datastream.attributes["id"].value.should == hash["id"]
       tags = datastream.xpath("//xmlns:tag")

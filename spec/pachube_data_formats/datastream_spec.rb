@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe PachubeDataFormats::Datastream do
 
   it "should have a constant that defines the allowed keys" do
-    PachubeDataFormats::Datastream::ALLOWED_KEYS.should == %w(current_value id max_value min_value tags unit_label unit_symbol unit_type updated)
+    PachubeDataFormats::Datastream::ALLOWED_KEYS.should == %w(current_value feed_creator feed_id id max_value min_value tags unit_label unit_symbol unit_type updated)
   end
 
   describe "#initialize" do

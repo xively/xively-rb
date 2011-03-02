@@ -16,7 +16,10 @@ module PachubeDataFormats
       # As produced by http://www.pachube.com/api/v2/FEED_ID/datastreams/DATASTREAM_ID.xml
       def transform_0_5_1(xml)
         hash = {}
-        data = xml.at_xpath("//xmlns:environment").at_xpath("xmlns:data")
+        environment = xml.at_xpath("//xmlns:environment")
+        data = environment.at_xpath("xmlns:data")
+        hash["feed_id"] = environment.attributes["id"].value
+        hash["feed_creator"] = environment.attributes["creator"].value
         hash["id"] = data.attributes["id"].value
         hash["tags"] = data.xpath("xmlns:tag").collect(&:content).sort{|a,b| a.downcase <=> b.downcase}.join(',')
         current_value = data.at_xpath("xmlns:current_value")
@@ -38,6 +41,8 @@ module PachubeDataFormats
         hash = {}
         environment = xml.at_xpath("//xmlns:environment")
         data = environment.at_xpath("xmlns:data")
+        hash["feed_id"] = environment.attributes["id"].value
+        hash["feed_creator"] = environment.attributes["creator"].value
         hash["updated"] = environment.attributes["updated"].value
         hash["id"] = data.attributes["id"].value
         hash["tags"] = data.xpath("xmlns:tag").collect(&:content).sort{|a,b| a.downcase <=> b.downcase}.join(',')
