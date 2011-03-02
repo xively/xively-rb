@@ -14,6 +14,10 @@ module PachubeDataFormats
         new_object.as_json(:version => version)
       end
 
+      def to_pachube_xml(version = "0.5.1")
+        new_object.to_xml(:version => version)
+      end
+
       protected
 
       def new_object

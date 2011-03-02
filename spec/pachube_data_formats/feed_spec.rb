@@ -164,6 +164,21 @@ describe PachubeDataFormats::Feed do
     end
   end
 
+  describe "#to_xml" do
+    it "should call the xml generator with default version" do
+      feed = PachubeDataFormats::Feed.new({})
+      feed.should_receive(:generate_xml).with("0.5.1").and_return("<xml></xml>")
+      feed.to_xml.should == "<xml></xml>"
+    end
+
+    it "should accept optional xml version" do
+      version = "5"
+      feed = PachubeDataFormats::Feed.new({})
+      feed.should_receive(:generate_xml).with(version).and_return("<xml></xml>")
+      feed.to_xml(:version => version).should == "<xml></xml>"
+    end
+  end
+
   describe "#as_json" do
     it "should call the json generator with default version" do
       feed = PachubeDataFormats::Feed.new({})

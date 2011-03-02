@@ -54,6 +54,11 @@ module PachubeDataFormats
       ::JSON.generate as_json(options)
     end
 
+    def to_xml(options = {})
+      options[:version] ||= "0.5.1"
+      generate_xml(options[:version])
+    end
+
   end
 end
 

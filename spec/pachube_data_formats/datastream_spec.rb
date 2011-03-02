@@ -68,6 +68,22 @@ describe PachubeDataFormats::Datastream do
     end
   end
 
+  describe "#to_xml" do
+
+    it "should call the xml generator with default version" do
+      datastream = PachubeDataFormats::Datastream.new({})
+      datastream.should_receive(:generate_xml).with("0.5.1").and_return("<xml></xml>")
+      datastream.to_xml.should == "<xml></xml>"
+    end
+
+    it "should accept optional xml version" do
+      datastream = PachubeDataFormats::Datastream.new({})
+      datastream.should_receive(:generate_xml).with("5").and_return("<xml></xml>")
+      datastream.to_xml(:version => "5").should == "<xml></xml>"
+    end
+
+  end
+
   describe "#as_json" do
 
     it "should call the json generator with default version" do

@@ -9,7 +9,7 @@ You can use it to prepare data for sending to Pachube or for parsing data receiv
 Allowed inputs
 --------------
 
- * XML (Pachube EEML) - Not Yet Implemented
+ * XML (Pachube EEML)
  * JSON
  * CSV - Not Yet Implemented
  * Hash
@@ -17,7 +17,7 @@ Allowed inputs
 Outputs
 -------
 
- * XML (Pachube EEML) - Not Yet Implemented
+ * XML (Pachube EEML)
  * JSON - Version 2 JSON
  * CSV - Not Yet Implemented
  * Hash
@@ -38,7 +38,11 @@ Attribute to Pachube field mapping in progress.
       is_pachube_data_format :feed
     end
 
-    feed.to_pachube_json # converts your feed and associated datastreams into Pachube V2 JSON
+### Provided methods
+
+    feed.to_pachube_json("1.0.0") # converts your feed and associated datastreams into Pachube V2 JSON
+    feed.as_pachube_json("0.6-alpha") # provides a json hash for 0.6-alpha
+    feed.as_pachube_xml("0.5.1") # converts your feed and associated datastreams into Pachube V2 XML (EEML)
 
 ### Mapped fields
 

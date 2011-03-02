@@ -58,7 +58,29 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
       feed = NewCustomFeed.create!(:title => "Name")
       feed.as_pachube_json
     end
+  end
 
+  describe "#to_pachube_xml" do
+    it "should accept an optional version" do
+      feed = PachubeDataFormats::Feed.new({})
+      feed.should_receive(:to_xml).with(:version => "5").and_return("xml")
+      PachubeDataFormats::Feed.should_receive(:new).with(@feed.send(:attributes_with_associations)).and_return(feed)
+      @feed.to_pachube_xml("5").should == "xml"
+    end
+
+    it "should return the appropriate xml representation of a feed by default" do
+      feed = PachubeDataFormats::Feed.new({})
+      feed.stub(:to_xml).and_return("xml")
+      PachubeDataFormats::Feed.should_receive(:new).with(@feed.send(:attributes_with_associations)).and_return(feed)
+      @feed.to_pachube_xml.should == "xml"
+    end
+
+    it "should return the appropriate xml representation of a datastream" do
+      datastream = PachubeDataFormats::Datastream.new({})
+      datastream.stub(:to_xml).and_return("xml")
+      PachubeDataFormats::Datastream.should_receive(:new).with(@datastream2.send(:attributes_with_associations)).and_return(datastream)
+      @datastream2.to_pachube_xml.should == "xml"
+    end
   end
 
   describe "#as_pachube_json" do
