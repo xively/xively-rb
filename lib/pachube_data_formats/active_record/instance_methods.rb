@@ -6,32 +6,34 @@ module PachubeDataFormats
       # Outputs Pachube v2 JSON "1.0.0"
       # Optionally outputs Pachube v1 JSON "0.6-alpha"
       #
-      def to_pachube_json(version = "1.0.0")
-        new_object.to_json(:version => version)
+      def to_pachube_json(version = "1.0.0", options = {})
+        new_object(options).to_json(:version => version)
       end
 
-      def as_pachube_json(version = "1.0.0")
-        new_object.as_json(:version => version)
+      def as_pachube_json(version = "1.0.0", options = {})
+        new_object(options).as_json(:version => version)
       end
 
-      def to_pachube_xml(version = "0.5.1")
-        new_object.to_xml(:version => version)
+      def to_pachube_xml(version = "0.5.1", options = {})
+        new_object(options).to_xml(:version => version)
       end
 
       protected
 
-      def new_object
-        pachube_data_format_class.new(attributes_with_associations)
+      def new_object(options = {})
+        pachube_data_format_class.new(attributes_with_associations(options))
       end
 
-      def attributes_with_associations
-        attributes.merge(custom_pachube_attributes)
+      def attributes_with_associations(options = {})
+        attributes.merge(custom_pachube_attributes(options))
       end
 
-      def custom_pachube_attributes
+      def custom_pachube_attributes(options = {})
         hash = {}
-        if self.respond_to?(:datastreams)
-          hash["datastreams"] = self.datastreams.map{|ds| (ds.attributes.merge(ds.custom_pachube_attributes)) if ds.kind_of?(PachubeDataFormats::ActiveRecord::InstanceMethods)}
+        unless [*options[:exclude]].include?(:datastreams)
+          if self.respond_to?(:datastreams)
+            hash["datastreams"] = self.datastreams.map{|ds| (ds.attributes.merge(ds.custom_pachube_attributes)) if ds.kind_of?(PachubeDataFormats::ActiveRecord::InstanceMethods)}
+          end
         end
         self.pachube_data_format_mappings.each do |key, value|
           hash[key.to_s] = self.send(value)

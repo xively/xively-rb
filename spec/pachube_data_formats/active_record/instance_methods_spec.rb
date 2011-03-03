@@ -68,6 +68,11 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
       @feed.to_pachube_xml("5").should == "xml"
     end
 
+    it "should allow disabling datastreams" do
+      xml = Nokogiri.parse(@feed.to_pachube_xml("0.5.1", :exclude => :datastreams))
+      xml.xpath("//xmlns:data").should be_empty
+    end
+
     it "should return the appropriate xml representation of a feed by default" do
       feed = PachubeDataFormats::Feed.new({})
       feed.stub(:to_xml).and_return("xml")
@@ -84,6 +89,12 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
   end
 
   describe "#as_pachube_json" do
+
+    it "should allow disabling datastreams" do
+      json = @feed.as_pachube_json("1.0.0", :exclude => :datastreams)
+      json[:datastreams].should be_nil
+    end
+
     it "should return full Pachube JSON hash with associated datastreams" do
       json = @feed.as_pachube_json
       json[:version].should == "1.0.0"
@@ -130,6 +141,12 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
   end
 
   describe "#to_pachube_json" do
+
+    it "should allow disabling datastreams" do
+      json = JSON.parse(@feed.to_pachube_json("1.0.0", :exclude => :datastreams))
+      json["datastreams"].should be_nil
+    end
+
     it "should return Pachube json based on the object's attributes" do
       PachubeDataFormats::Feed.should_receive(:new).with(hash_including(@feed.attributes)).and_return(:feed => "json representation of a feed")
       @feed.to_pachube_json.should == {:feed => "json representation of a feed"}.to_json
