@@ -43,7 +43,7 @@ module PachubeDataFormats
                 :tags => split_tags(ds.tags),
                 :unit => unit_hash(ds),
                 :datapoints => datapoints
-              }.delete_if{|k,v| v.nil?}
+              }.delete_if_nil_value
             end
           end
         end
@@ -77,7 +77,7 @@ module PachubeDataFormats
               }],
                 :tags => split_tags(ds.tags),
                 :unit => unit_hash(ds)
-              }.delete_if{|k,v| v.nil?}
+              }.delete_if_nil_value
             end
           end
         end

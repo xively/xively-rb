@@ -26,6 +26,13 @@ describe "default datastream xml templates" do
       xml = @datastream.generate_xml("0.5.1")
       Nokogiri.parse(xml).xpath("//xmlns:datapoints").should be_empty
     end
+
+    it "should ignore blank attributes" do
+      @datastream.unit_symbol = nil
+      @datastream.unit_label = "Woohoo"
+      @datastream.unit_type = "Type A"
+      Nokogiri.parse(@datastream.generate_xml("0.5.1")).at_xpath("//xmlns:unit").attributes["symbol"].should be_nil
+    end
   end
 
   context "5 (used by API V1)" do
@@ -41,6 +48,15 @@ describe "default datastream xml templates" do
       lambda {@datastream.generate_xml("5")}.should_not raise_error
     end
 
+    it "should ignore blank attributes" do
+      @datastream.max_value = nil
+      @datastream.unit_symbol = nil
+      @datastream.unit_label = "Woohoo"
+      @datastream.unit_type = "Type A"
+      p @datastream.generate_xml("5")
+      Nokogiri.parse(@datastream.generate_xml("5")).at_xpath("//xmlns:unit").attributes["symbol"].should be_nil
+      Nokogiri.parse(@datastream.generate_xml("5")).at_xpath("//xmlns:value").attributes["maxValue"].should be_nil
+    end
   end
 end
 

@@ -26,7 +26,7 @@ module PachubeDataFormats
                 data.current_value current_value, :at => updated.iso8601(6)
                 data.max_value max_value
                 data.min_value min_value
-                data.unit unit_label, :type => unit_type, :symbol => unit_symbol
+                data.unit unit_label, {:type => unit_type, :symbol => unit_symbol}.delete_if_nil_value
                 data.datapoints do
                   datapoints.each do |datapoint|
                     data.value(datapoint.value, "at" => Time.parse(datapoint.at).iso8601(6))
@@ -48,8 +48,8 @@ module PachubeDataFormats
                 split_tags(tags).each do |tag|
                   data.tag tag
                 end if tags
-                data.value current_value, :minValue => min_value, :maxValue => max_value
-                data.unit unit_label, :type => unit_type, :symbol => unit_symbol
+                data.value current_value, {:minValue => min_value, :maxValue => max_value}.delete_if_nil_value
+                data.unit unit_label, {:type => unit_type, :symbol => unit_symbol}.delete_if_nil_value
               end
             end
           end

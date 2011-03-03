@@ -30,7 +30,7 @@ module PachubeDataFormats
               split_tags(tags).each do |tag|
                 environment.tag tag
               end if tags
-              environment.location(:disposition => location_disposition, :exposure => location_exposure, :domain => location_domain) do |location|
+              environment.location({:disposition => location_disposition, :exposure => location_exposure, :domain => location_domain}.delete_if_nil_value) do |location|
                 location.name location_name
                 location.lat location_lat
                 location.lon location_lon
@@ -44,7 +44,7 @@ module PachubeDataFormats
                   data.current_value ds.current_value, :at => ds.updated.iso8601(6)
                   data.max_value ds.max_value
                   data.min_value ds.min_value
-                  data.unit ds.unit_label, :type => ds.unit_type, :symbol => ds.unit_symbol
+                  data.unit ds.unit_label, {:type => ds.unit_type, :symbol => ds.unit_symbol}.delete_if_nil_value
                   data.datapoints do
                     ds.datapoints.each do |datapoint|
                       data.value(datapoint.value, "at" => Time.parse(datapoint.at).iso8601(6))
@@ -70,7 +70,7 @@ module PachubeDataFormats
               environment.icon icon
               environment.website website
               environment.email email
-              environment.location(:disposition => location_disposition, :exposure => location_exposure, :domain => location_domain) do |location|
+              environment.location({:disposition => location_disposition, :exposure => location_exposure, :domain => location_domain}.delete_if_nil_value) do |location|
                 location.name location_name
                 location.lat location_lat
                 location.lon location_lon
@@ -81,8 +81,8 @@ module PachubeDataFormats
                   split_tags(ds.tags).each do |tag|
                     data.tag tag
                   end if ds.tags
-                  data.value ds.current_value, :minValue => ds.min_value, :maxValue => ds.max_value
-                  data.unit ds.unit_label, :type => ds.unit_type, :symbol => ds.unit_symbol
+                  data.value ds.current_value, {:minValue => ds.min_value, :maxValue => ds.max_value}.delete_if_nil_value
+                  data.unit ds.unit_label, {:type => ds.unit_type, :symbol => ds.unit_symbol}.delete_if_nil_value
                 end
               end if datastreams
             end

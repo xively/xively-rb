@@ -21,6 +21,17 @@ describe "default feed xml templates" do
       lambda {@feed.generate_xml("0.5.1")}.should_not raise_error
     end
 
+    it "should ignore blank attributes" do
+      @feed.datastreams.each do |ds|
+        ds.unit_symbol = nil
+        ds.unit_label = "Woohoo"
+        ds.unit_type = "Type A"
+      end
+      Nokogiri.parse(@feed.generate_xml("0.5.1")).xpath("//xmlns:unit").each do |unit_node|
+        unit_node.attributes["symbol"].should be_nil
+      end
+    end
+
   end
 
   context "5 (used by API V1)" do
@@ -35,6 +46,22 @@ describe "default feed xml templates" do
       @feed.tags = nil
       lambda {@feed.generate_xml("5")}.should_not raise_error
     end
+
+    it "should ignore blank attributes" do
+      @feed.datastreams.each do |ds|
+        ds.max_value = nil
+        ds.unit_symbol = nil
+        ds.unit_label = "Woohoo"
+        ds.unit_type = "Type A"
+      end
+      Nokogiri.parse(@feed.generate_xml("5")).xpath("//xmlns:unit").each do |unit_node|
+        unit_node.attributes["symbol"].should be_nil
+      end
+      Nokogiri.parse(@feed.generate_xml("5")).xpath("//xmlns:value").each do |value_node|
+        value_node.attributes["maxValue"].should be_nil
+      end
+    end
+
 
   end
 

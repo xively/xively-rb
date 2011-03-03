@@ -1,6 +1,7 @@
 require 'nokogiri'
 require 'yajl/json_gem'
 require 'pachube_data_formats/nil_content'
+require 'pachube_data_formats/hash_extensions'
 require 'pachube_data_formats/template'
 require 'pachube_data_formats/templates/xml_headers'
 require 'pachube_data_formats/templates/feed_json_defaults'
