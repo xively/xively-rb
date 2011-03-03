@@ -30,7 +30,7 @@ module PachubeDataFormats
               split_tags(tags).each do |tag|
                 environment.tag tag
               end if tags
-              environment.location(:domain => location_domain, :exposure => location_exposure, :disposition => location_disposition) do |location|
+              environment.location(:disposition => location_disposition, :exposure => location_exposure, :domain => location_domain) do |location|
                 location.name location_name
                 location.lat location_lat
                 location.lon location_lon
@@ -70,7 +70,7 @@ module PachubeDataFormats
               environment.icon icon
               environment.website website
               environment.email email
-              environment.location(:domain => location_domain, :exposure => location_exposure, :disposition => location_disposition) do |location|
+              environment.location(:disposition => location_disposition, :exposure => location_exposure, :domain => location_domain) do |location|
                 location.name location_name
                 location.lat location_lat
                 location.lon location_lon
