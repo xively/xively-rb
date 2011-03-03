@@ -47,7 +47,7 @@ module PachubeDataFormats
                   data.unit ds.unit_label, {:type => ds.unit_type, :symbol => ds.unit_symbol}.delete_if_nil_value if ds.unit_label || ds.unit_symbol || ds.unit_type
                   data.datapoints do
                     ds.datapoints.each do |datapoint|
-                      data.value(datapoint.value, "at" => Time.parse(datapoint.at).iso8601(6))
+                      data.value(datapoint.value, "at" => datapoint.at.iso8601(6))
                     end
                   end if ds.datapoints.any?
                 end

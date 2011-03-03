@@ -32,7 +32,12 @@ module PachubeDataFormats
         hash = {}
         unless [*options[:exclude]].include?(:datastreams)
           if self.respond_to?(:datastreams)
-            hash["datastreams"] = self.datastreams.map{|ds| (ds.attributes.merge(ds.custom_pachube_attributes)) if ds.kind_of?(PachubeDataFormats::ActiveRecord::InstanceMethods)}
+            hash["datastreams"] = self.datastreams.map{|ds| (ds.attributes.merge(ds.custom_pachube_attributes(options))) if ds.kind_of?(PachubeDataFormats::ActiveRecord::InstanceMethods)}
+          end
+        end
+        if [*options[:include]].include?(:datapoints)
+          if self.respond_to?(:datapoints)
+            hash["datapoints"] = self.datapoints.map{|ds| (ds.attributes.merge(ds.custom_pachube_attributes(options))) if ds.kind_of?(PachubeDataFormats::ActiveRecord::InstanceMethods)}
           end
         end
         self.pachube_data_format_mappings.each do |key, value|

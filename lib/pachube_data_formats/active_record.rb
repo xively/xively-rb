@@ -33,6 +33,8 @@ module PachubeDataFormats
           self.pachube_data_format_class = PachubeDataFormats::Feed
         when :datastream
           self.pachube_data_format_class = PachubeDataFormats::Datastream
+        when :datapoint
+          self.pachube_data_format_class = PachubeDataFormats::Datapoint
         else
           self.pachube_data_format_class = nil
         end

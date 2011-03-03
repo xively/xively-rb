@@ -32,5 +32,11 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "tags"
     t.datetime "updated"
   end
+
+  create_table "datapoints", :force => true do |t|
+    t.datetime "at"
+    t.string   "value"    
+    t.integer  "datastream_id", :null => false
+  end    
 end
 

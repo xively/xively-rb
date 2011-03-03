@@ -49,9 +49,7 @@ module PachubeDataFormats
 
     def as_json(options = {})
       options[:version] ||= "1.0.0"
-      datastream = generate_json(options[:version])
-      datastream["version"] = options[:version] if options[:append_version]
-      datastream
+      generate_json(options[:version])
     end
 
     def to_json(options = {})

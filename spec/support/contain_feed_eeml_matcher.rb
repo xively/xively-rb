@@ -43,7 +43,7 @@ RSpec::Matchers.define :contain_feed_eeml_for_version do |eeml_version|
         unit.attributes["type"].value.should == ds_hash["unit_type"]
         unit.attributes["symbol"].value.should == ds_hash["unit_symbol"]
         ds_hash["datapoints"].each do |dp_hash|
-          datapoint = datastream.at_xpath("xmlns:datapoints").at_xpath("xmlns:value[@at=\"#{dp_hash["at"]}\"]")
+          datapoint = datastream.at_xpath("xmlns:datapoints").at_xpath("xmlns:value[@at=\"#{dp_hash["at"].iso8601(6)}\"]")
           datapoint.content.should == dp_hash["value"]
         end if ds_hash["datapoints"]
       end

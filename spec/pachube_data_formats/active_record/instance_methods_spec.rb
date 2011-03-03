@@ -18,6 +18,7 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
       })
     @datastream1 = @feed.datastreams.create!(datastream_as_(:hash, :with => {"stream_id" => "0"}, :except => ["datapoints"]))
     @datastream2 = @feed.datastreams.create!(datastream_as_(:hash, :with => {"stream_id" => "two"}, :except => ["datapoints"]))
+    10.times {@datastream2.datapoints.create!(:value => "#{rand(10000)}", :at => rand(10000).minutes.ago)}
   end
 
   it "should allow mapping of datastreams" do
@@ -68,6 +69,11 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
       @feed.to_pachube_xml("5").should == "xml"
     end
 
+    it "should allow optional datapoints" do
+      xml = Nokogiri.parse(@feed.to_pachube_xml("0.5.1", :include => :datapoints))
+      xml.xpath("//xmlns:datapoints").should_not be_empty
+    end
+
     it "should allow disabling datastreams" do
       xml = Nokogiri.parse(@feed.to_pachube_xml("0.5.1", :exclude => :datastreams))
       xml.xpath("//xmlns:data").should be_empty
@@ -93,6 +99,11 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
     it "should allow disabling datastreams" do
       json = @feed.as_pachube_json("1.0.0", :exclude => :datastreams)
       json[:datastreams].should be_nil
+    end
+
+    it "should allow optional datapoints" do
+      json = @feed.as_pachube_json("1.0.0", :include => :datapoints)
+      json[:datastreams].detect{|json| json[:id] == "two"}[:datapoints].should_not be_nil
     end
 
     it "should return full Pachube JSON hash with associated datastreams" do
@@ -145,6 +156,11 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
     it "should allow disabling datastreams" do
       json = JSON.parse(@feed.to_pachube_json("1.0.0", :exclude => :datastreams))
       json["datastreams"].should be_nil
+    end
+
+    it "should allow optional datapoints" do
+      json = JSON.parse(@feed.to_pachube_json("1.0.0", :include => :datapoints))
+      json["datastreams"].detect{|json| json["id"] == "two"}["datapoints"].should_not be_nil
     end
 
     it "should return Pachube json based on the object's attributes" do

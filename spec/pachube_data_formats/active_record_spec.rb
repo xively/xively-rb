@@ -16,6 +16,13 @@ describe PachubeDataFormats::ActiveRecord do
       TestClass.pachube_data_format_class.should == PachubeDataFormats::Datastream
     end
 
+    it "should assign mapping class for datapoints" do
+      class TestClass < ActiveRecord::Base
+        is_pachube_data_format :datapoint
+      end
+      TestClass.pachube_data_format_class.should == PachubeDataFormats::Datapoint
+    end
+
     it "should not assign mapping class if unrecognized" do
       class TestClass < ActiveRecord::Base
         is_pachube_data_format :hero_stream
