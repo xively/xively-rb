@@ -31,6 +31,9 @@ module PachubeDataFormats
         if datastreams
           template.datastreams do
             datastreams.collect do |ds|
+              if ds.datapoints.any?
+                datapoints = ds.datapoints.collect {|dp| {:value => dp.value, :at => dp.at}}
+              end
               {
                 :id => ds.id,
                 :at => ds.updated.iso8601(6),
@@ -38,7 +41,8 @@ module PachubeDataFormats
                 :min_value => ds.min_value,
                 :current_value => ds.current_value,
                 :tags => split_tags(ds.tags),
-                :unit => unit_hash(ds)
+                :unit => unit_hash(ds),
+                :datapoints => datapoints
               }.delete_if{|k,v| v.nil?}
             end
           end

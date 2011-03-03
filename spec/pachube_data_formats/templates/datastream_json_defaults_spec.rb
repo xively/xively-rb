@@ -23,6 +23,10 @@ describe "default datastream json templates" do
       :symbol => @datastream.unit_symbol,
       :label => @datastream.unit_label
     }
+    json[:datapoints].should_not be_nil
+    json[:datapoints].each do |datapoint|
+      @datastream.datapoints.detect {|dp| dp.at == datapoint["at"]}.value.should == datapoint["value"]
+    end
   end
 
   it "should represent Pachube JSON 0.6-alpha (used by API v1)" do
@@ -51,6 +55,12 @@ describe "default datastream json templates" do
     @datastream.tags = nil
     json = @datastream.generate_json("0.6-alpha")
     json[:tags].should be_nil
+  end
+
+  it "should ignore datapoints if empty (1.0.0)" do
+    @datastream.datapoints = []
+    json = @datastream.generate_json("1.0.0")
+    json[:datapoints].should be_nil
   end
 
   it "should ignore unit if none of the elements are set (1.0.0)" do

@@ -23,6 +23,14 @@ module PachubeDataFormats
         template.min_value
         template.tags {tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}}
         template.unit {{:label => unit_label, :symbol => unit_symbol, :type => unit_type}} if unit_type || unit_symbol || unit_label
+        template.datapoints do
+          datapoints.collect do |datapoint|
+            {
+              :at => datapoint.at,
+              :value => datapoint.value
+            }
+          end
+        end if datapoints.any?
         template.output!
       end
 

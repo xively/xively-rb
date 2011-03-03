@@ -44,6 +44,10 @@ describe "default feed json templates" do
         :type => datastream.unit_type,
         :symbol => datastream.unit_symbol
       }
+      ds[:datapoints].each do |dp|
+        datapoint = datastream.datapoints.detect {|point| point.at == dp[:at]}
+        dp[:value].should == datapoint.value
+      end if ds[:datapoints]
     end
   end
 
@@ -81,6 +85,16 @@ describe "default feed json templates" do
         :type => datastream.unit_type,
         :symbol => datastream.unit_symbol
       }
+    end
+  end
+
+  it "should ignore datastream datapoints if empty (1.0.0)" do
+    @feed.datastreams.each do |ds|
+      ds.datapoints = []
+    end
+    json = @feed.generate_json("1.0.0")
+    json[:datastreams].each do |ds|
+      ds[:datapoints].should be_nil
     end
   end
 

@@ -20,6 +20,12 @@ describe "default datastream xml templates" do
       @datastream.tags = nil
       lambda {@datastream.generate_xml("0.5.1")}.should_not raise_error
     end
+
+    it "should handle a lack of datapoints" do
+      @datastream.datapoints = []
+      xml = @datastream.generate_xml("0.5.1")
+      Nokogiri.parse(xml).xpath("//xmlns:datapoints").should be_empty
+    end
   end
 
   context "5 (used by API V1)" do

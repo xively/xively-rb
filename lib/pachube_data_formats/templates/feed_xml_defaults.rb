@@ -45,6 +45,15 @@ module PachubeDataFormats
                   data.max_value ds.max_value
                   data.min_value ds.min_value
                   data.unit ds.unit_label, :type => ds.unit_type, :symbol => ds.unit_symbol
+
+
+
+                  data.datapoints do
+                    ds.datapoints.each do |datapoint|
+                      data.value(datapoint.value, "at" => Time.parse(datapoint.at).iso8601(6))
+                    end
+                  end if ds.datapoints.any?
+
                 end
               end if datastreams
             end

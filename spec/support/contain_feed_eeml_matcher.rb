@@ -42,6 +42,10 @@ RSpec::Matchers.define :contain_feed_eeml_for_version do |eeml_version|
         unit.content.should == ds_hash["unit_label"]
         unit.attributes["type"].value.should == ds_hash["unit_type"]
         unit.attributes["symbol"].value.should == ds_hash["unit_symbol"]
+        ds_hash["datapoints"].each do |dp_hash|
+          datapoint = datastream.at_xpath("xmlns:datapoints").at_xpath("xmlns:value[@at=\"#{dp_hash["at"]}\"]")
+          datapoint.content.should == dp_hash["value"]
+        end if ds_hash["datapoints"]
       end
     when "5"
       environment = xml.at_xpath("//xmlns:environment")

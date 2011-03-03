@@ -31,6 +31,10 @@ module PachubeDataFormats
       ALLOWED_KEYS.each { |key| self.send("#{key}=", input[key]) }
     end
 
+    def datapoints
+      @datapoints.nil? ? [] : @datapoints
+    end
+
     def datapoints=(array)
       return unless array.is_a?(Array)
       @datapoints = []

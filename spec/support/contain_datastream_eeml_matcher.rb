@@ -22,6 +22,11 @@ RSpec::Matchers.define :contain_datastream_eeml_for_version do |eeml_version|
       unit.content.should == hash["unit_label"]
       unit.attributes["type"].value.should == hash["unit_type"]
       unit.attributes["symbol"].value.should == hash["unit_symbol"]
+      datapoints = datastream.at_xpath("xmlns:datapoints")
+      datapoints.xpath("xmlns:value").each do |datapoint|
+        dp = hash["datapoints"].detect{|dp| dp["at"] == datapoint.attributes["at"].value}
+        datapoint.content.should == dp["value"]
+      end
     when "5"
       environment = xml.at_xpath("//xmlns:environment")
       environment.attributes["updated"].value.should == hash["updated"].iso8601

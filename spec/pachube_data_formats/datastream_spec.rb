@@ -76,6 +76,10 @@ describe PachubeDataFormats::Datastream do
           ds.should be_kind_of(PachubeDataFormats::Datapoint)
         end
       end
+
+      it "should never be nil" do
+        PachubeDataFormats::Datastream.new({}).datapoints.should == []
+      end
     end
 
     describe "#datapoints=" do
@@ -83,9 +87,9 @@ describe PachubeDataFormats::Datastream do
         @datastream = PachubeDataFormats::Datastream.new({})
       end
 
-      it "should return nil if not an array" do
+      it "should be empty if not assigned an array" do
         @datastream.datapoints = "kittens"
-        @datastream.datapoints.should be_nil
+        @datastream.datapoints.should be_empty
       end
 
       it "should accept an array of datapoints and hashes and store an array of datapoints" do
