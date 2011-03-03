@@ -128,6 +128,10 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
           datastream.unit_symbol.should == ds["unit"]["symbol"]
           datastream.unit_type.should == ds["unit"]["type"]
         end
+        datastream.datapoints.each do |datapoint|
+          dp = ds['datapoints'].detect{|s| s["at"] == datapoint.at}
+          datapoint.value.should == dp["value"]
+        end
       end
       raise "This test is testing a feed with no datastream units" if no_units
       feed.id.should == json["id"]

@@ -31,6 +31,7 @@ module PachubeDataFormats
             "max_value" => datastream["max_value"],
             "updated" => datastream["at"],
             "tags" => join_tags(datastream["tags"]),
+            "datapoints" => setup_datapoints(datastream["datapoints"])
           }.merge(unit_hash)
         end
         if location = hash.delete("location")
@@ -75,6 +76,16 @@ module PachubeDataFormats
           hash["location_name"] = location["name"]
         end
         hash
+      end
+
+      def setup_datapoints(datapoints)
+        return [] unless datapoints
+        datapoints.collect do |datapoint|
+          {
+            "at" => datapoint["at"],
+            "value" => datapoint["value"]
+          }
+        end
       end
 
       def join_tags(tags)
