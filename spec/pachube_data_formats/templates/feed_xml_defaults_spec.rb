@@ -32,6 +32,15 @@ describe "default feed xml templates" do
       end
     end
 
+    it "should ignore blank units" do
+      @feed.datastreams.each do |ds|
+        ds.unit_symbol = nil
+        ds.unit_label = nil
+        ds.unit_type = nil
+      end
+      Nokogiri.parse(@feed.generate_xml("0.5.1")).xpath("//xmlns:unit").should be_blank
+    end
+
   end
 
   context "5 (used by API V1)" do
@@ -62,9 +71,16 @@ describe "default feed xml templates" do
       end
     end
 
+    it "should ignore blank units" do
+      @feed.datastreams.each do |ds|
+        ds.unit_symbol = nil
+        ds.unit_label = nil
+        ds.unit_type = nil
+      end
+      Nokogiri.parse(@feed.generate_xml("5")).xpath("//xmlns:unit").should be_blank
+    end
 
   end
-
 
 end
 
