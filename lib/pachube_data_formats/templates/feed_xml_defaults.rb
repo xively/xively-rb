@@ -20,7 +20,7 @@ module PachubeDataFormats
           xml.eeml(_eeml_0_5_1) do |eeml|
             eeml.environment(:updated => updated.iso8601(6), :id => id, :creator => creator) do |environment|
               environment.title title
-              environment.feed feed
+              environment.feed "#{feed}.xml"
               environment.status status
               environment.private_ self.private
               environment.description description
@@ -45,15 +45,11 @@ module PachubeDataFormats
                   data.max_value ds.max_value
                   data.min_value ds.min_value
                   data.unit ds.unit_label, :type => ds.unit_type, :symbol => ds.unit_symbol
-
-
-
                   data.datapoints do
                     ds.datapoints.each do |datapoint|
                       data.value(datapoint.value, "at" => Time.parse(datapoint.at).iso8601(6))
                     end
                   end if ds.datapoints.any?
-
                 end
               end if datastreams
             end
@@ -68,7 +64,7 @@ module PachubeDataFormats
           xml.eeml(_eeml_5) do |eeml|
             eeml.environment(:updated => updated.iso8601(6), :id => id, :creator => "http://www.haque.co.uk") do |environment|
               environment.title title
-              environment.feed feed
+              environment.feed "#{feed}.xml"
               environment.status status
               environment.description description
               environment.icon icon

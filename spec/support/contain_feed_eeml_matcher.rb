@@ -8,7 +8,7 @@ RSpec::Matchers.define :contain_feed_eeml_for_version do |eeml_version|
       environment.attributes["id"].value.should == hash["id"].to_s
       environment.attributes["creator"].value.should == hash["creator"]
       environment.at_xpath("//xmlns:title").content.should == hash["title"]
-      environment.at_xpath("//xmlns:feed").content.should == hash["feed"]
+      environment.at_xpath("//xmlns:feed").content.should == "#{hash["feed"]}.xml"
       environment.at_xpath("//xmlns:status").content.should == hash["status"]
       environment.at_xpath("//xmlns:private").content.should == hash["private"].to_s
       environment.at_xpath("//xmlns:description").content.should == hash["description"]
@@ -53,7 +53,7 @@ RSpec::Matchers.define :contain_feed_eeml_for_version do |eeml_version|
       environment.attributes["id"].value.should == hash["id"].to_s
       environment.attributes["creator"].value.should == "http://www.haque.co.uk"
       environment.at_xpath("//xmlns:title").content.should == hash["title"]
-      environment.at_xpath("//xmlns:feed").content.should == hash["feed"]
+      environment.at_xpath("//xmlns:feed").content.should == "#{hash["feed"]}.xml"
       environment.at_xpath("//xmlns:status").content.should == hash["status"]
       environment.at_xpath("//xmlns:description").content.should == hash["description"]
       environment.at_xpath("//xmlns:icon").content.should == hash["icon"]

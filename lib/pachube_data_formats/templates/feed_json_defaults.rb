@@ -22,7 +22,7 @@ module PachubeDataFormats
         template.website
         template.tags {tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}} if tags
         template.description
-        template.feed
+        template.feed {"#{feed}.json"}
         template.status
         template.updated {updated.iso8601(6)}
         template.email
@@ -59,7 +59,7 @@ module PachubeDataFormats
         template.icon
         template.website
         template.description
-        template.feed
+        template.feed {"#{feed}.json"}
         template.status
         template.updated {updated.iso8601(6)}
         template.email

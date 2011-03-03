@@ -93,7 +93,7 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
       json[:website].should == "http://pachube.com"
       json[:tags].should == ["aardvark", "kittens", "sofa"]
       json[:description].should == "Test feed"
-      json[:feed].should == "http://test.host/testfeed.html?random=890299&rand2=91"
+      json[:feed].should == "http://test.host/testfeed.html?random=890299&rand2=91.json"
       json[:email].should == "abc@example.com"
       json[:datastreams].should have(2).things
       json[:datastreams].each do |ds|
@@ -115,7 +115,7 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
       json[:website].should == "http://pachube.com"
       json[:tags].should be_nil
       json[:description].should == "Test feed"
-      json[:feed].should == "http://test.host/testfeed.html?random=890299&rand2=91"
+      json[:feed].should == "http://test.host/testfeed.html?random=890299&rand2=91.json"
       json[:email].should == "abc@example.com"
       json[:datastreams].should have(2).things
       json[:datastreams].each do |ds|
@@ -144,7 +144,7 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
       json["website"].should == "http://pachube.com"
       json["tags"].should == ["aardvark", "kittens", "sofa"]
       json["description"].should == "Test feed"
-      json["feed"].should == "http://test.host/testfeed.html?random=890299&rand2=91"
+      json["feed"].should == "http://test.host/testfeed.html?random=890299&rand2=91.json"
       json["email"].should == "abc@example.com"
       json["datastreams"].should have(2).things
       json["datastreams"].each do |ds|
@@ -165,7 +165,7 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
       json["website"].should == "http://pachube.com"
       json["tags"].should be_nil
       json["description"].should == "Test feed"
-      json["feed"].should == "http://test.host/testfeed.html?random=890299&rand2=91"
+      json["feed"].should == "http://test.host/testfeed.html?random=890299&rand2=91.json"
       json["email"].should == "abc@example.com"
       json["datastreams"].should have(2).things
       json["datastreams"].each do |ds|
