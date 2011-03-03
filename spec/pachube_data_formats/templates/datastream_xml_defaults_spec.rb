@@ -16,6 +16,11 @@ describe "default datastream xml templates" do
       xml.should contain_datastream_eeml_for_version("0.5.1")
     end
 
+    it "should handle nil updated" do
+      @datastream.updated = nil
+      lambda {@datastream.generate_xml("0.5.1")}.should_not raise_error
+    end
+
     it "should handle a lack of tags" do
       @datastream.tags = nil
       lambda {@datastream.generate_xml("0.5.1")}.should_not raise_error
@@ -43,11 +48,15 @@ describe "default datastream xml templates" do
   end
 
   context "5 (used by API V1)" do
-
     it "should represent Pachube EEML" do
       xml = Nokogiri.parse(@datastream.generate_xml("5"))
       xml.should describe_eeml_for_version("5")
       xml.should contain_datastream_eeml_for_version("5")
+    end
+
+    it "should handle nil updated" do
+      @datastream.updated = nil
+      lambda {@datastream.generate_xml("5")}.should_not raise_error
     end
 
     it "should handle a lack of tags" do

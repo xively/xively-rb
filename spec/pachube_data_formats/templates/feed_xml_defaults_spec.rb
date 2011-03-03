@@ -16,6 +16,11 @@ describe "default feed xml templates" do
       xml.should contain_feed_eeml_for_version("0.5.1")
     end
 
+    it "should handle a lack of updated" do
+      @feed.updated = nil
+      lambda {@feed.generate_xml("0.5.1")}.should_not raise_error
+    end
+
     it "should handle a lack of tags" do
       @feed.tags = nil
       lambda {@feed.generate_xml("0.5.1")}.should_not raise_error
@@ -49,6 +54,11 @@ describe "default feed xml templates" do
       xml = Nokogiri.parse(@feed.generate_xml("5"))
       xml.should describe_eeml_for_version("5")
       xml.should contain_feed_eeml_for_version("5")
+    end
+
+    it "should handle a lack of updated" do
+      @feed.updated = nil
+      lambda {@feed.generate_xml("5")}.should_not raise_error
     end
 
     it "should handle a lack of tags" do

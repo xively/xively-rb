@@ -4,5 +4,8 @@ class NilClass
 
   def value
   end
+
+  def iso8601(precision = nil)
+  end
 end
 
