@@ -24,7 +24,7 @@ RSpec::Matchers.define :contain_datastream_eeml_for_version do |eeml_version|
       unit.attributes["symbol"].value.should == hash["unit_symbol"]
       datapoints = datastream.at_xpath("xmlns:datapoints")
       datapoints.xpath("xmlns:value").each do |datapoint|
-        dp = hash["datapoints"].detect{|dp| dp["at"] == datapoint.attributes["at"].value}
+        dp = hash["datapoints"].detect{|dp| dp["at"].iso8601(6) == datapoint.attributes["at"].value}
         datapoint.content.should == dp["value"]
       end
     when "5"

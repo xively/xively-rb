@@ -15,15 +15,15 @@ def datastream_as_(format, options = {})
       "feed_creator" => "Dennis",
       "datapoints" => [{
           "value" => "1",
-          "at" => "2011-03-02T15:59:56.895922Z"
+          "at" => Time.parse("2011-03-02T15:59:56.895922Z")
       },
       {
           "value" => "1",
-          "at" => "2011-03-02T16:00:07.188648Z"
+          "at" => Time.parse("2011-03-02T16:00:07.188648Z")
       },
       {
           "value" => "2",
-          "at" => "2011-03-02T16:00:18.416500Z"
+          "at" => Time.parse("2011-03-02T16:00:18.416500Z")
       }]
     }
   when 'json'

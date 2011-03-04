@@ -26,7 +26,7 @@ module PachubeDataFormats
         template.datapoints do
           datapoints.collect do |datapoint|
             {
-              :at => datapoint.at,
+              :at => datapoint.at.iso8601(6),
               :value => datapoint.value
             }
           end

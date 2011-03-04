@@ -46,7 +46,7 @@ describe "default feed json templates" do
           :symbol => datastream.unit_symbol
         }
         ds[:datapoints].each do |dp|
-          datapoint = datastream.datapoints.detect {|point| point.at == dp[:at]}
+          datapoint = datastream.datapoints.detect {|point| point.at.iso8601(6) == dp[:at]}
           dp[:value].should == datapoint.value
         end if ds[:datapoints]
       end

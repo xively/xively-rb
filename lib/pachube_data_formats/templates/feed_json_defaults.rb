@@ -32,7 +32,7 @@ module PachubeDataFormats
           template.datastreams do
             datastreams.collect do |ds|
               if ds.datapoints.any?
-                datapoints = ds.datapoints.collect {|dp| {:value => dp.value, :at => dp.at}}
+                datapoints = ds.datapoints.collect {|dp| {:value => dp.value, :at => dp.at.iso8601(6)}}
               end
               {
                 :id => ds.id,

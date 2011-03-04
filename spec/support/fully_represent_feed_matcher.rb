@@ -101,7 +101,6 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
     end
   end
 
-
   def match_json_feed(feed, formatted_feed)
     json = JSON.parse(formatted_feed)
     case json['version']

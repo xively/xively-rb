@@ -29,7 +29,7 @@ module PachubeDataFormats
                 data.unit unit_label, {:type => unit_type, :symbol => unit_symbol}.delete_if_nil_value if unit_label || unit_type || unit_symbol
                 data.datapoints do
                   datapoints.each do |datapoint|
-                    data.value(datapoint.value, "at" => Time.parse(datapoint.at).iso8601(6))
+                    data.value(datapoint.value, "at" => datapoint.at.iso8601(6))
                   end
                 end if datapoints.any?
               end
