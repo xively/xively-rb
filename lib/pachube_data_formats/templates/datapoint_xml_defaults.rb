@@ -2,7 +2,7 @@ module PachubeDataFormats
   module Templates
     module DatapointXMLDefaults
       include XMLHeaders
-      def generate_xml
+      def generate_xml(version = nil)
         builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
           xml.eeml(_eeml_0_5_1) do |eeml|
              eeml.environment do |environment|

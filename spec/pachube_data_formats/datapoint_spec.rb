@@ -75,9 +75,9 @@ describe PachubeDataFormats::Datapoint do
 
   describe "#to_xml" do
 
-    it "should call the xml generator with default version" do
+    it "should call the xml generator with default version (nil as there only is one version)" do
       datapoint = PachubeDataFormats::Datapoint.new({})
-      datapoint.should_receive(:generate_xml).with("0.5.1").and_return("<xml></xml>")
+      datapoint.should_receive(:generate_xml).with(nil).and_return("<xml></xml>")
       datapoint.to_xml.should == "<xml></xml>"
     end
 
@@ -91,9 +91,9 @@ describe PachubeDataFormats::Datapoint do
 
   describe "#as_json" do
 
-    it "should call the json generator with default version" do
+    it "should call the json generator with default version (nil as there only is one version)" do
       datapoint = PachubeDataFormats::Datapoint.new({})
-      datapoint.should_receive(:generate_json).with("1.0.0").and_return({"title" => "Environment"})
+      datapoint.should_receive(:generate_json).with(nil).and_return({"title" => "Environment"})
       datapoint.as_json.should == {"title" => "Environment"}
     end
 
