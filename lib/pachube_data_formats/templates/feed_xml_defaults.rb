@@ -22,11 +22,11 @@ module PachubeDataFormats
               environment.title title
               environment.feed "#{feed}.xml"
               environment.status status
-              environment.private_ self.private
               environment.description description
               environment.icon icon
               environment.website website
               environment.email email
+              environment.private_ self.private
               split_tags(tags).each do |tag|
                 environment.tag tag
               end if tags
