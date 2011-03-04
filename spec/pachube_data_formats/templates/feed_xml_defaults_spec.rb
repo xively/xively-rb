@@ -26,6 +26,15 @@ describe "default feed xml templates" do
       lambda {@feed.generate_xml("0.5.1")}.should_not raise_error
     end
 
+    it "should ignore blank min/max values" do
+      @feed.datastreams.each do |ds|
+        ds.max_value = nil
+        ds.min_value = nil
+      end
+      Nokogiri.parse(@feed.generate_xml("0.5.1")).xpath("//xmlns:max_value").should be_empty
+      Nokogiri.parse(@feed.generate_xml("0.5.1")).xpath("//xmlns:min_value").should be_empty
+    end
+
     it "should ignore blank attributes" do
       @feed.datastreams.each do |ds|
         ds.unit_symbol = nil

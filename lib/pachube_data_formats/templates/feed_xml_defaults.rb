@@ -42,8 +42,8 @@ module PachubeDataFormats
                     data.tag tag
                   end if ds.tags
                   data.current_value ds.current_value, :at => ds.updated.iso8601(6)
-                  data.max_value ds.max_value
-                  data.min_value ds.min_value
+                  data.max_value ds.max_value if ds.max_value
+                  data.min_value ds.min_value if ds.min_value
                   data.unit ds.unit_label, {:type => ds.unit_type, :symbol => ds.unit_symbol}.delete_if_nil_value if ds.unit_label || ds.unit_symbol || ds.unit_type
                   data.datapoints do
                     ds.datapoints.each do |datapoint|

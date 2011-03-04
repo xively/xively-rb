@@ -24,8 +24,8 @@ module PachubeDataFormats
                   data.tag tag
                 end if tags
                 data.current_value current_value, :at => updated.iso8601(6)
-                data.max_value max_value
-                data.min_value min_value
+                data.max_value max_value if max_value
+                data.min_value min_value if min_value
                 data.unit unit_label, {:type => unit_type, :symbol => unit_symbol}.delete_if_nil_value if unit_label || unit_type || unit_symbol
                 data.datapoints do
                   datapoints.each do |datapoint|
