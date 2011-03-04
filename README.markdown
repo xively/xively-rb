@@ -12,7 +12,6 @@ Allowed inputs
  * XML (Pachube EEML)
  * JSON
  * CSV - Not Yet Implemented
- * Hash
 
 Outputs
 -------
@@ -20,7 +19,6 @@ Outputs
  * XML (Pachube EEML)
  * JSON - Version 2 JSON
  * CSV - Not Yet Implemented
- * Hash
 
 ActiveRecord support
 --------------------
@@ -39,10 +37,19 @@ Attribute to Pachube field mapping in progress.
     end
 
 ### Provided methods
+  
+    @pachube_feed = feed.to_pachube # returns an instance of PachubeDataFormats::Feed
+    @pachube_feed.to_json("1.0.0") # converts your feed and associated datastreams into Pachube V2 JSON
+    @pachube_feed.as_json("0.6-alpha") # provides a json hash for 0.6-alpha
+    @pachube_feed.to_xml("0.5.1") # converts your feed and associated datastreams into Pachube V2 XML (EEML)
 
-    feed.to_pachube_json("1.0.0") # converts your feed and associated datastreams into Pachube V2 JSON
-    feed.as_pachube_json("0.6-alpha") # provides a json hash for 0.6-alpha
-    feed.as_pachube_xml("0.5.1") # converts your feed and associated datastreams into Pachube V2 XML (EEML)
+### Supported formats
+
+ * JSON "1.0.0" - used by Pachube API v2
+ * JSON "0.6-alpha" - used by Pachube API v1
+ * XML "0.5.1" - used by Pachube API v2
+ * XML "5" - used by Pachube API v1
+ * CSV - Not Yet Implemented
 
 ### Mapped fields
 
@@ -112,5 +119,5 @@ Examples
       #      <title>Pachube Office Environment</title>
       #    </environment>
       #  </eeml>
-    feed.to_hash # {:title => "Pachube Office Environment"}
+    feed.attributes # {:title => "Pachube Office Environment"}
 
