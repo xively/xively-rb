@@ -14,6 +14,9 @@ describe "default feed xml templates" do
 
     it "should represent Pachube EEML" do
       xml = Nokogiri.parse(@search_result.generate_xml("0.5.1"))
+      xml.at_xpath("//opensearch:totalResults").content.should == "198"
+      xml.at_xpath("//opensearch:startIndex").content.should == "4"
+      xml.at_xpath("//opensearch:itemsPerPage").content.should == "15"
       xml.should describe_eeml_for_version("0.5.1")
       xml.xpath("//xmlns:environment").should_not be_empty
       xml.xpath("//xmlns:environment").each do |feed_xml|
@@ -26,6 +29,9 @@ describe "default feed xml templates" do
 
     it "should represent Pachube EEML" do
       xml = Nokogiri.parse(@search_result.generate_xml("5"))
+      xml.at_xpath("//opensearch:totalResults").content.should == "198"
+      xml.at_xpath("//opensearch:startIndex").content.should == "4"
+      xml.at_xpath("//opensearch:itemsPerPage").content.should == "15"
       xml.should describe_eeml_for_version("5")
       xml.xpath("//xmlns:environment").should_not be_empty
       xml.xpath("//xmlns:environment").each do |feed_xml|

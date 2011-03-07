@@ -18,7 +18,10 @@ module PachubeDataFormats
       # As used by http://www.pachube.com/api/v2/feeds.xml
       def xml_0_5_1
         builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
-          xml.eeml(_eeml_0_5_1) do |eeml|
+          xml.eeml(_eeml_0_5_1.merge({"xmlns:opensearch" => "http://a9.com/-/spec/opensearch/1.1/"})) do |eeml|
+            eeml['opensearch'].totalResults totalResults
+            eeml['opensearch'].startIndex startIndex
+            eeml['opensearch'].itemsPerPage itemsPerPage
             feeds.each do |env|
               eeml.environment(:updated => env.updated.iso8601(6), :id => env.id, :creator => env.creator) do |environment|
                 environment.title env.title
@@ -64,7 +67,10 @@ module PachubeDataFormats
       # As used by http://www.pachube.com/api/v1/feeds.xml
       def xml_5
         builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
-          xml.eeml(_eeml_5) do |eeml|
+          xml.eeml(_eeml_5.merge({"xmlns:opensearch" => "http://a9.com/-/spec/opensearch/1.1/"})) do |eeml|
+            eeml['opensearch'].totalResults totalResults
+            eeml['opensearch'].startIndex startIndex
+            eeml['opensearch'].itemsPerPage itemsPerPage
             feeds.each do |env|
               eeml.environment(:updated => env.updated.iso8601, :id => env.id, :creator => "http://www.haque.co.uk") do |environment|
                 environment.title env.title
