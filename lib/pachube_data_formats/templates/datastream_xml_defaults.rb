@@ -2,6 +2,7 @@ module PachubeDataFormats
   module Templates
     module DatastreamXMLDefaults
       include XMLHeaders
+      include Helpers
 
       def generate_xml(version)
         case version
@@ -57,9 +58,6 @@ module PachubeDataFormats
         builder.to_xml
       end
 
-      def split_tags(tags)
-        tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}
-      end
     end
   end
 end

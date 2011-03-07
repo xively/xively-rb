@@ -89,7 +89,7 @@ RSpec::Matchers.define :contain_feed_eeml_for_version do |eeml_version|
   end
 
   failure_message_for_should do |xml|
-    "expected #{xml} to describe eeml version #{eeml_version}"
+    "expected #{xml} to contain eeml version #{eeml_version}"
   end
 end
 

@@ -1,6 +1,9 @@
 module PachubeDataFormats
   module Templates
     module FeedJSONDefaults
+
+      include Helpers
+
       def generate_json(version)
         case version
         when "1.0.0"
@@ -107,10 +110,6 @@ module PachubeDataFormats
         } if datastream.unit_type || datastream.unit_label || datastream.unit_symbol
       end
 
-      def split_tags(tag_list)
-        return unless tag_list
-        tag_list.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}
-      end
     end
   end
 end

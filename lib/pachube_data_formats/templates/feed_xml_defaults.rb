@@ -2,6 +2,7 @@ module PachubeDataFormats
   module Templates
     module FeedXMLDefaults
       include XMLHeaders
+      include Helpers
 
       def generate_xml(version)
         case version

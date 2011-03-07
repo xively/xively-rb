@@ -7,7 +7,8 @@ describe "default feed xml templates" do
 
   context "0.5.1 (used by API V2)" do
     it "should be the default" do
-      @feed.generate_json("1.0.0").should == @feed.as_json
+      @feed.should_receive(:generate_xml).with("0.5.1")
+      @feed.to_xml
     end
 
     it "should represent Pachube EEML" do
