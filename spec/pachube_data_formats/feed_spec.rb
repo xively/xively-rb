@@ -164,6 +164,21 @@ describe PachubeDataFormats::Feed do
     end
   end
 
+  describe "#to_csv" do
+    it "should call the csv generator with default version" do
+      feed = PachubeDataFormats::Feed.new({})
+      feed.should_receive(:generate_csv).with("2").and_return("1,2,3,4")
+      feed.to_csv.should == "1,2,3,4"
+    end
+
+    it "should accept optional csv version" do
+      version = "1"
+      feed = PachubeDataFormats::Feed.new({})
+      feed.should_receive(:generate_csv).with(version).and_return("1,2,3,4")
+      feed.to_csv(:version => version).should == "1,2,3,4"
+    end
+  end
+
   describe "#to_xml" do
     it "should call the xml generator with default version" do
       feed = PachubeDataFormats::Feed.new({})

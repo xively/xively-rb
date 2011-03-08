@@ -3,10 +3,10 @@ module PachubeDataFormats
     ALLOWED_KEYS = %w(at value)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
-    include PachubeDataFormats::Templates::DatapointJSONDefaults
-    include PachubeDataFormats::Templates::DatapointXMLDefaults
-    include PachubeDataFormats::Parsers::DatapointJSONDefaults
-    include PachubeDataFormats::Parsers::DatapointXMLDefaults
+    include PachubeDataFormats::Templates::JSON::DatapointDefaults
+    include PachubeDataFormats::Templates::XML::DatapointDefaults
+    include PachubeDataFormats::Parsers::JSON::DatapointDefaults
+    include PachubeDataFormats::Parsers::XML::DatapointDefaults
 
     def initialize(input)
       if input.is_a? Hash

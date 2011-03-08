@@ -3,10 +3,10 @@ module PachubeDataFormats
     ALLOWED_KEYS = %w(creator datastreams description email feed icon id location_disposition location_domain location_ele location_exposure location_lat location_lon location_name private status tags title updated website)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
-    include PachubeDataFormats::Templates::FeedJSONDefaults
-    include PachubeDataFormats::Templates::FeedXMLDefaults
-    include PachubeDataFormats::Parsers::FeedJSONDefaults
-    include PachubeDataFormats::Parsers::FeedXMLDefaults
+    include PachubeDataFormats::Templates::JSON::FeedDefaults
+    include PachubeDataFormats::Templates::XML::FeedDefaults
+    include PachubeDataFormats::Parsers::JSON::FeedDefaults
+    include PachubeDataFormats::Parsers::XML::FeedDefaults
 
     def initialize(input)
       if input.is_a?(Hash)
@@ -57,6 +57,11 @@ module PachubeDataFormats
     def to_xml(options = {})
       options[:version] ||= "0.5.1"
       generate_xml(options[:version])
+    end
+
+    def to_csv(options = {})
+      options[:version] ||= "2"
+      generate_csv(options[:version])
     end
 
   end

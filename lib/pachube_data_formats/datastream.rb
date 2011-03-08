@@ -3,10 +3,10 @@ module PachubeDataFormats
     ALLOWED_KEYS = %w(current_value datapoints feed_creator feed_id id max_value min_value tags unit_label unit_symbol unit_type updated)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
-    include PachubeDataFormats::Templates::DatastreamJSONDefaults
-    include PachubeDataFormats::Templates::DatastreamXMLDefaults
-    include PachubeDataFormats::Parsers::DatastreamJSONDefaults
-    include PachubeDataFormats::Parsers::DatastreamXMLDefaults
+    include PachubeDataFormats::Templates::JSON::DatastreamDefaults
+    include PachubeDataFormats::Templates::XML::DatastreamDefaults
+    include PachubeDataFormats::Parsers::JSON::DatastreamDefaults
+    include PachubeDataFormats::Parsers::XML::DatastreamDefaults
 
     def initialize(input)
       if input.is_a? Hash

@@ -3,11 +3,8 @@ module PachubeDataFormats
     ALLOWED_KEYS = %w(totalResults startIndex itemsPerPage feeds)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
-    # include PachubeDataFormats::Templates::FeedJSONDefaults
-    include PachubeDataFormats::Templates::SearchResultXMLDefaults
-    include PachubeDataFormats::Templates::SearchResultJSONDefaults
-    # include PachubeDataFormats::Parsers::FeedJSONDefaults
-    # include PachubeDataFormats::Parsers::FeedXMLDefaults
+    include PachubeDataFormats::Templates::JSON::SearchResultDefaults
+    include PachubeDataFormats::Templates::XML::SearchResultDefaults
 
     def initialize(input)
       self.attributes = input
@@ -56,5 +53,4 @@ module PachubeDataFormats
 
   end
 end
-
 

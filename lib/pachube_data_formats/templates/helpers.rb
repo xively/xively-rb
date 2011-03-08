@@ -5,7 +5,7 @@ module PachubeDataFormats
       protected
 
       def split_tags(tags)
-        return unless tags
+        return if tags.blank?
         tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}
       end
     end
