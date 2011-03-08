@@ -6,12 +6,12 @@ describe "default datapoint json templates" do
   end
 
   it "should represent Pachube datapoints (only used by API v2)" do
-    csv = @datapoint.generate_csv
+    csv = @datapoint.generate_csv("2")
     csv.should == @datapoint.value
   end
 
   it "should have an optional full representation" do
-    csv = @datapoint.generate_csv(:full => true)
+    csv = @datapoint.generate_csv("2", :full => true)
     csv.should == [@datapoint.feed_id, @datapoint.datastream_id, @datapoint.at.iso8601(6), @datapoint.value].join(',')
   end
 end
