@@ -134,16 +134,21 @@ describe PachubeDataFormats::Datastream do
 
     it "should call the csv generator with default version" do
       datastream = PachubeDataFormats::Datastream.new({})
-      datastream.should_receive(:generate_csv).with("2").and_return("2")
+      datastream.should_receive(:generate_csv).with("2", {}).and_return("2")
       datastream.to_csv.should == "2"
     end
 
     it "should accept optional xml version" do
       datastream = PachubeDataFormats::Datastream.new({})
-      datastream.should_receive(:generate_xml).with("1").and_return("1234,32")
-      datastream.to_xml(:version => "1").should == "1234,32"
+      datastream.should_receive(:generate_csv).with("1", {}).and_return("1234,32")
+      datastream.to_csv(:version => "1").should == "1234,32"
     end
 
+    it "should accept additional options" do
+      datastream = PachubeDataFormats::Datastream.new({})
+      datastream.should_receive(:generate_csv).with("1", {:full => true}).and_return("34")
+      datastream.to_csv(:version => "1", :full => true).should == "34"
+    end
   end
 
   describe "#to_xml" do

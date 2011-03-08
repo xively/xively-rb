@@ -62,7 +62,7 @@ module PachubeDataFormats
 
     def to_csv(options = {})
       options[:version] ||= "2"
-      generate_csv(options[:version])
+      generate_csv(options.delete(:version), options)
     end
 
   end

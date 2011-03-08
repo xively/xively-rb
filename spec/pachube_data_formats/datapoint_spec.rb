@@ -74,20 +74,25 @@ describe PachubeDataFormats::Datapoint do
   end
 
   describe "#to_csv" do
-
     it "should call the csv generator with default version (nil as there only is one version)" do
       datapoint = PachubeDataFormats::Datapoint.new({})
-      datapoint.should_receive(:generate_csv).with(nil).and_return("3")
+      datapoint.should_receive(:generate_csv).with(nil, {}).and_return("3")
       datapoint.to_csv.should == "3"
     end
 
     it "should accept optional csv version" do
       datapoint = PachubeDataFormats::Datapoint.new({})
-      datapoint.should_receive(:generate_csv).with("1").and_return("34")
+      datapoint.should_receive(:generate_csv).with("1", {}).and_return("34")
       datapoint.to_csv(:version => "1").should == "34"
     end
 
+    it "should accept additional options" do
+      datapoint = PachubeDataFormats::Datapoint.new({})
+      datapoint.should_receive(:generate_csv).with("1", {:full => true}).and_return("34")
+      datapoint.to_csv(:version => "1", :full => true).should == "34"
+    end
   end
+
   describe "#to_xml" do
 
     it "should call the xml generator with default version (nil as there only is one version)" do
