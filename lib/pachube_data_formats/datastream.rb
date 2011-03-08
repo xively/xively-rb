@@ -5,6 +5,7 @@ module PachubeDataFormats
 
     include PachubeDataFormats::Templates::JSON::DatastreamDefaults
     include PachubeDataFormats::Templates::XML::DatastreamDefaults
+    include PachubeDataFormats::Templates::CSV::DatastreamDefaults
     include PachubeDataFormats::Parsers::JSON::DatastreamDefaults
     include PachubeDataFormats::Parsers::XML::DatastreamDefaults
 
@@ -59,6 +60,11 @@ module PachubeDataFormats
     def to_xml(options = {})
       options[:version] ||= "0.5.1"
       generate_xml(options[:version])
+    end
+
+    def to_csv(options = {})
+      options[:version] ||= "2"
+      generate_csv(options[:version])
     end
   end
 end

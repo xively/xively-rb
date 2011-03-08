@@ -5,6 +5,7 @@ module PachubeDataFormats
 
     include PachubeDataFormats::Templates::JSON::FeedDefaults
     include PachubeDataFormats::Templates::XML::FeedDefaults
+    include PachubeDataFormats::Templates::CSV::FeedDefaults
     include PachubeDataFormats::Parsers::JSON::FeedDefaults
     include PachubeDataFormats::Parsers::XML::FeedDefaults
 
