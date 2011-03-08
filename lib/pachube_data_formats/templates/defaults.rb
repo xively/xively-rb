@@ -8,4 +8,5 @@ require 'pachube_data_formats/templates/xml/feed_defaults'
 require 'pachube_data_formats/templates/xml/datastream_defaults'
 require 'pachube_data_formats/templates/xml/datapoint_defaults'
 require 'pachube_data_formats/templates/xml/search_result_defaults'
+require 'pachube_data_formats/templates/csv/datapoint_defaults'
 

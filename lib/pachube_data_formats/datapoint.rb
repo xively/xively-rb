@@ -1,10 +1,11 @@
 module PachubeDataFormats
   class Datapoint
-    ALLOWED_KEYS = %w(at value)
+    ALLOWED_KEYS = %w(at value feed_id datastream_id)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
     include PachubeDataFormats::Templates::JSON::DatapointDefaults
     include PachubeDataFormats::Templates::XML::DatapointDefaults
+    include PachubeDataFormats::Templates::CSV::DatapointDefaults
     include PachubeDataFormats::Parsers::JSON::DatapointDefaults
     include PachubeDataFormats::Parsers::XML::DatapointDefaults
 
@@ -41,6 +42,10 @@ module PachubeDataFormats
 
     def to_xml(options = {})
       generate_xml(options[:version])
+    end
+
+    def to_csv(options = {})
+      generate_csv(options[:version])
     end
   end
 end

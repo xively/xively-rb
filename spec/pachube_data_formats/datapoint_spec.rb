@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe PachubeDataFormats::Datapoint do
 
   it "should have a constant that defines the allowed keys" do
-    PachubeDataFormats::Datapoint::ALLOWED_KEYS.should == %w(at value)
+    PachubeDataFormats::Datapoint::ALLOWED_KEYS.should == %w(at value feed_id datastream_id)
   end
 
   describe "#initialize" do
@@ -73,6 +73,21 @@ describe PachubeDataFormats::Datapoint do
     end
   end
 
+  describe "#to_csv" do
+
+    it "should call the csv generator with default version (nil as there only is one version)" do
+      datapoint = PachubeDataFormats::Datapoint.new({})
+      datapoint.should_receive(:generate_csv).with(nil).and_return("3")
+      datapoint.to_csv.should == "3"
+    end
+
+    it "should accept optional csv version" do
+      datapoint = PachubeDataFormats::Datapoint.new({})
+      datapoint.should_receive(:generate_csv).with("1").and_return("34")
+      datapoint.to_csv(:version => "1").should == "34"
+    end
+
+  end
   describe "#to_xml" do
 
     it "should call the xml generator with default version (nil as there only is one version)" do
