@@ -14,11 +14,22 @@ module PachubeDataFormats
         private
 
         def csv_2(options)
-          if options[:full]
-            "#{feed_id},#{id},#{updated.iso8601(6)},#{current_value}"
-          else
-            "#{updated.iso8601(6)},#{current_value}"
+          csv = []
+          if options[:complete] || datapoints.empty?
+            if options[:full]
+              csv << "#{feed_id},#{id},#{updated.iso8601(6)},#{current_value}"
+            else
+              csv << "#{updated.iso8601(6)},#{current_value}"
+            end
           end
+          datapoints.each do |datapoint|
+            if options[:full]
+              csv << "#{feed_id},#{id},#{datapoint.at.iso8601(6)},#{datapoint.value}"
+            else
+              csv << "#{datapoint.at.iso8601(6)},#{datapoint.value}"
+            end
+          end
+          csv.join("\n")
         end
 
         def csv_1
