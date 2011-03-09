@@ -15,9 +15,17 @@ module PachubeDataFormats
 
         def csv_2(options)
           csv = []
-          if options[:full]
+          options[:depth] = 4 if options[:full]
+          case options[:depth].to_i
+          when 4
             datapoints.collect {|datapoint| csv << [feed_id, id, datapoint.at.iso8601(6), datapoint.value] }
             csv << [feed_id, id, updated.iso8601(6), current_value] if csv.empty?
+          when 3
+            datapoints.collect {|datapoint| csv << [id, datapoint.at.iso8601(6), datapoint.value] }
+            csv << [id, updated.iso8601(6), current_value] if csv.empty?
+          when 1
+            datapoints.collect {|datapoint| csv << [datapoint.value] }
+            csv << [current_value] if csv.empty?
           else
             datapoints.collect {|datapoint| csv << [datapoint.at.iso8601(6), datapoint.value] }
             csv << [updated.iso8601(6), current_value] if csv.empty?

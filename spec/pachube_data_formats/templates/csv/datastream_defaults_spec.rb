@@ -22,6 +22,54 @@ describe "default datastream json templates" do
       csv.should == "#{@datastream.updated.iso8601(6)},#{@datastream.current_value}"
     end
 
+    context "depth" do
+      it "should allow representation of datastream at depth 4" do
+        @datastream.datapoints = []
+        csv = @datastream.generate_csv("2", :depth => 4)
+        csv.should == "#{@datastream.feed_id},#{@datastream.id},#{@datastream.updated.iso8601(6)},#{@datastream.current_value}"
+      end
+
+      it "should allow representation of datapoints at depth 4" do
+        csv = @datastream.generate_csv("2", :depth => 4)
+        csv.should == @datastream.datapoints.collect {|dp| "#{@datastream.feed_id},#{@datastream.id},#{dp.at.iso8601(6)},#{dp.value}"}.join("\n")
+      end
+
+      it "should allow representation of datastream at depth 4" do
+        @datastream.datapoints = []
+        csv = @datastream.generate_csv("2", :depth => 3)
+        csv.should == "#{@datastream.id},#{@datastream.updated.iso8601(6)},#{@datastream.current_value}"
+      end
+
+      it "should allow representation of datapoints at depth 4" do
+        csv = @datastream.generate_csv("2", :depth => 3)
+        csv.should == @datastream.datapoints.collect {|dp| "#{@datastream.id},#{dp.at.iso8601(6)},#{dp.value}"}.join("\n")
+      end
+
+      it "should allow representation of datastream at depth 4" do
+        @datastream.datapoints = []
+        csv = @datastream.generate_csv("2", :depth => 2)
+        csv.should == "#{@datastream.updated.iso8601(6)},#{@datastream.current_value}"
+      end
+
+      it "should allow representation of datapoints at depth 4" do
+        csv = @datastream.generate_csv("2", :depth => 2)
+        csv.should == @datastream.datapoints.collect {|dp| "#{dp.at.iso8601(6)},#{dp.value}"}.join("\n")
+      end
+
+      it "should allow representation of datastream at depth 4" do
+        @datastream.datapoints = []
+        csv = @datastream.generate_csv("2", :depth => 1)
+        csv.should == "#{@datastream.current_value}"
+      end
+
+      it "should allow representation of datapoints at depth 4" do
+        csv = @datastream.generate_csv("2", :depth => 1)
+        csv.should == @datastream.datapoints.collect {|dp| "#{dp.value}"}.join("\n")
+      end
+
+    end
+
+
     it "should allow a full representation of datastream" do
       @datastream.datapoints = []
       csv = @datastream.generate_csv("2", :full => true)
