@@ -14,10 +14,25 @@ module PachubeDataFormats
         private
 
         def csv_2(options)
+          csv = []
           if options[:full]
-            csv = datastreams.collect { |datastream| ::CSV.generate_line([id, datastream.id, datastream.updated.iso8601(6), datastream.current_value]) }
+            datastreams.collect do |datastream|
+              if datastream.datapoints.any?
+                datastream.datapoints.collect { |datapoint| csv << ::CSV.generate_line([id, datastream.id, datapoint.at.iso8601(6), datapoint.value]) }
+              else
+                csv << ::CSV.generate_line([id, datastream.id, datastream.updated.iso8601(6), datastream.current_value])
+              end
+ 
+
+            end
           else
-            csv = datastreams.collect { |datastream| ::CSV.generate_line([datastream.id, datastream.updated.iso8601(6), datastream.current_value]) }
+            datastreams.collect do |datastream|
+              if datastream.datapoints.any?
+                datastream.datapoints.collect { |datapoint| csv << ::CSV.generate_line([datastream.id, datapoint.at.iso8601(6), datapoint.value]) }
+              else
+                csv << ::CSV.generate_line([datastream.id, datastream.updated.iso8601(6), datastream.current_value])
+              end
+            end
           end
           csv.join("\n")
         end
