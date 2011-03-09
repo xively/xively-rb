@@ -15,20 +15,15 @@ module PachubeDataFormats
 
         def csv_2(options)
           if options[:full]
-            return datastreams.collect do |datastream|
-              "#{datastream.feed_id},#{datastream.id},#{datastream.updated.iso8601(6)},#{datastream.current_value}"
-            end.join("\n")
+            csv = datastreams.collect { |datastream| ::CSV.generate_line([id, datastream.id, datastream.updated.iso8601(6), datastream.current_value]) }
           else
-            return datastreams.collect do |datastream|
-              "#{datastream.id},#{datastream.updated.iso8601(6)},#{datastream.current_value}"
-            end.join("\n")
+            csv = datastreams.collect { |datastream| ::CSV.generate_line([datastream.id, datastream.updated.iso8601(6), datastream.current_value]) }
           end
+          csv.join("\n")
         end
 
         def csv_1
-          return datastreams.collect do |datastream|
-            datastream.current_value
-          end.join(',')
+          ::CSV.generate_line datastreams.collect {|ds| ds.current_value }
         end
       end
     end

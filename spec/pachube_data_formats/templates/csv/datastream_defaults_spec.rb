@@ -22,13 +22,6 @@ describe "default datastream json templates" do
       csv.should == "#{@datastream.updated.iso8601(6)},#{@datastream.current_value}"
     end
 
-    it "should allow a representation of both" do
-      csv = @datastream.generate_csv("2", :complete => true)
-      expected = ["#{@datastream.updated.iso8601(6)},#{@datastream.current_value}"]
-      @datastream.datapoints.collect {|dp| expected << "#{dp.at.iso8601(6)},#{dp.value}"}
-      csv.should == expected.join("\n")
-    end
-
     it "should allow a full representation of datastream" do
       @datastream.datapoints = []
       csv = @datastream.generate_csv("2", :full => true)
@@ -40,11 +33,36 @@ describe "default datastream json templates" do
       csv.should == @datastream.datapoints.collect {|dp| "#{@datastream.feed_id},#{@datastream.id},#{dp.at.iso8601(6)},#{dp.value}"}.join("\n")
     end
 
-    it "should allow a full representation of both" do
-      csv = @datastream.generate_csv("2", :full => true, :complete => true)
-      expected = ["#{@datastream.feed_id},#{@datastream.id},#{@datastream.updated.iso8601(6)},#{@datastream.current_value}"]
-      @datastream.datapoints.collect {|dp| expected << "#{@datastream.feed_id},#{@datastream.id},#{dp.at.iso8601(6)},#{dp.value}"}
-      csv.should == expected.join("\n")
+    it "should escape characters that could upset csv parsers without datapoints" do
+      @datastream.current_value = "one,field"
+      @datastream.datapoints = []
+      csv = @datastream.generate_csv("2")
+      csv.should == CSV.generate_line([@datastream.updated.iso8601(6),@datastream.current_value])
+    end
+
+    it "should escape characters that could upset csv parsers with datapoints" do
+      @datastream.current_value = "one,field"
+      @datastream.datapoints.each do |dp|
+        dp.value = "1,field"
+      end
+      csv = @datastream.generate_csv("2")
+      csv.should == @datastream.datapoints.collect {|dp| CSV.generate_line([dp.at.iso8601(6),dp.value]) }.join("\n")
+    end
+
+    it "should escape characters that could upset csv parsers without datapoints via full" do
+      @datastream.current_value = "one,field"
+      @datastream.datapoints = []
+      csv = @datastream.generate_csv("2", :full => true)
+      csv.should == CSV.generate_line([@datastream.feed_id,@datastream.id,@datastream.updated.iso8601(6),@datastream.current_value])
+    end
+
+    it "should escape characters that could upset csv parsers with datapoints via full" do
+      @datastream.current_value = "one,field"
+      @datastream.datapoints.each do |dp|
+        dp.value = "1,field"
+      end
+      csv = @datastream.generate_csv("2", :full => true)
+      csv.should == @datastream.datapoints.collect {|dp| CSV.generate_line([@datastream.feed_id,@datastream.id,dp.at.iso8601(6),dp.value]) }.join("\n")
     end
   end
 
@@ -55,6 +73,11 @@ describe "default datastream json templates" do
       csv.should == @datastream.current_value
     end
 
+    it "should escape characters that could upset csv parsers" do
+      @datastream.current_value = "I \n am full of c,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, evil"
+      csv = @datastream.generate_csv("1")
+      csv.should == CSV.generate_line([@datastream.current_value])
+    end
   end
 end
 

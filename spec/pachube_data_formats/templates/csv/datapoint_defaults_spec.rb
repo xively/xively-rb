@@ -14,5 +14,17 @@ describe "default datapoint json templates" do
     csv = @datapoint.generate_csv("2", :full => true)
     csv.should == [@datapoint.feed_id, @datapoint.datastream_id, @datapoint.at.iso8601(6), @datapoint.value].join(',')
   end
+
+  it "should escape stuff that could upset csv parsers" do
+    @datapoint.value = "I \n , am not a csv"
+    csv = @datapoint.generate_csv("2")
+    csv.should == CSV.generate_line([@datapoint.value])
+  end
+
+  it "should escape characters that could upset csv parsers via full" do
+    @datapoint.value = "I \n , am not a csv"
+    csv = @datapoint.generate_csv("2", :full => true)
+    csv.should == CSV.generate_line([@datapoint.feed_id, @datapoint.datastream_id, @datapoint.at.iso8601(6), @datapoint.value])
+  end
 end
 

@@ -17,23 +17,23 @@ module PachubeDataFormats
           csv = []
           if options[:complete] || datapoints.empty?
             if options[:full]
-              csv << "#{feed_id},#{id},#{updated.iso8601(6)},#{current_value}"
+              csv << [feed_id, id, updated.iso8601(6), current_value]
             else
-              csv << "#{updated.iso8601(6)},#{current_value}"
+              csv << [updated.iso8601(6), current_value]
             end
           end
           datapoints.each do |datapoint|
             if options[:full]
-              csv << "#{feed_id},#{id},#{datapoint.at.iso8601(6)},#{datapoint.value}"
+              csv << [feed_id, id, datapoint.at.iso8601(6), datapoint.value]
             else
-              csv << "#{datapoint.at.iso8601(6)},#{datapoint.value}"
+              csv << [datapoint.at.iso8601(6), datapoint.value]
             end
           end
-          csv.join("\n")
+          csv.collect {|row| ::CSV.generate_line(row) }.join("\n")
         end
 
         def csv_1
-          current_value
+          ::CSV.generate_line([current_value])
         end
       end
     end
