@@ -97,6 +97,90 @@ describe "default feed json templates" do
       json[:location].should be_nil
     end
 
+    it "should ignore datastream units if blank" do
+      @feed.datastreams.each do |ds|
+        ds.unit_label = ''
+        ds.unit_symbol = ''
+        ds.unit_type = ''
+      end
+      json = @feed.generate_json("1.0.0")
+      json[:datastreams].each do |ds|
+        ds[:unit].should be_nil
+      end
+    end
+
+    it "should ignore datastream units if nil" do
+      @feed.datastreams.each do |ds|
+        ds.unit_label = nil
+        ds.unit_symbol = nil
+        ds.unit_type = nil
+      end
+      json = @feed.generate_json("1.0.0")
+      json[:datastreams].each do |ds|
+        ds[:unit].should be_nil
+      end
+    end
+
+    it "should ignore location if all elements are nil" do
+      @feed.location_name = nil
+      @feed.location_disposition = nil
+      @feed.location_lat = nil
+      @feed.location_lon = nil
+      @feed.location_exposure = nil
+      @feed.location_ele = nil
+      @feed.location_domain = nil
+      json = @feed.generate_json("1.0.0")
+      json[:location].should be_nil
+    end
+
+    it "should ignore blank location elements" do
+      @feed.location_disposition = ""
+      @feed.location_ele = ""
+      json = @feed.generate_json("1.0.0")
+      json[:location][:disposition].should be_nil
+      json[:location][:ele].should be_nil
+    end
+
+    it "should ignore nil location elements" do
+      @feed.location_disposition = nil
+      @feed.location_ele = nil
+      json = @feed.generate_json("1.0.0")
+      json[:location][:disposition].should be_nil
+      json[:location][:ele].should be_nil
+    end
+
+    it "should ignore datastream tags if blank" do
+      @feed.datastreams.each do |ds|
+        ds.tags = ""
+      end
+      json = @feed.generate_json("1.0.0")
+      json[:datastreams].each do |ds|
+        ds[:tags].should be_nil
+      end
+    end
+
+    it "should ignore datastream tags if nil" do
+      @feed.datastreams.each do |ds|
+        ds.tags = nil
+      end
+      json = @feed.generate_json("1.0.0")
+      json[:datastreams].each do |ds|
+        ds[:tags].should be_nil
+      end
+    end
+
+    it "should ignore tags if blank" do
+      @feed.tags = ""
+      json = @feed.generate_json("1.0.0")
+      json[:tags].should be_nil
+    end
+
+    it "should ignore tags if nil" do
+      @feed.tags = nil
+      json = @feed.generate_json("1.0.0")
+      json[:tags].should be_nil
+    end
+
   end
 
   context "0.6-alpha" do
@@ -138,7 +222,7 @@ describe "default feed json templates" do
       end
     end
 
-    it "should ignore datastream units if blank (0.6-alpha)" do
+    it "should ignore datastream units if blank" do
       @feed.datastreams.each do |ds|
         ds.unit_label = ''
         ds.unit_symbol = ''
@@ -150,31 +234,7 @@ describe "default feed json templates" do
       end
     end
 
-    it "should ignore datastream units if blank (1.0.0)" do
-      @feed.datastreams.each do |ds|
-        ds.unit_label = ''
-        ds.unit_symbol = ''
-        ds.unit_type = ''
-      end
-      json = @feed.generate_json("1.0.0")
-      json[:datastreams].each do |ds|
-        ds[:unit].should be_nil
-      end
-    end
-
-    it "should ignore datastream units if nil (1.0.0)" do
-      @feed.datastreams.each do |ds|
-        ds.unit_label = nil
-        ds.unit_symbol = nil
-        ds.unit_type = nil
-      end
-      json = @feed.generate_json("1.0.0")
-      json[:datastreams].each do |ds|
-        ds[:unit].should be_nil
-      end
-    end
-
-    it "should ignore datastream units if nil (0.6-alpha)" do
+    it "should ignore datastream units if nil" do
       @feed.datastreams.each do |ds|
         ds.unit_label = nil
         ds.unit_symbol = nil
@@ -186,7 +246,7 @@ describe "default feed json templates" do
       end
     end
 
-    it "should ignore datastream tags if blank (0.6-alpha)" do
+    it "should ignore datastream tags if blank" do
       @feed.datastreams.each do |ds|
         ds.tags = ""
       end
@@ -196,27 +256,8 @@ describe "default feed json templates" do
       end
     end
 
-    it "should ignore datastream tags if blank (1.0.0)" do
-      @feed.datastreams.each do |ds|
-        ds.tags = ""
-      end
-      json = @feed.generate_json("1.0.0")
-      json[:datastreams].each do |ds|
-        ds[:tags].should be_nil
-      end
-    end
 
-    it "should ignore datastream tags if nil (1.0.0)" do
-      @feed.datastreams.each do |ds|
-        ds.tags = nil
-      end
-      json = @feed.generate_json("1.0.0")
-      json[:datastreams].each do |ds|
-        ds[:tags].should be_nil
-      end
-    end
-
-    it "should ignore datastream tags if nil (0.6-alpha)" do
+    it "should ignore datastream tags if nil" do
       @feed.datastreams.each do |ds|
         ds.tags = nil
       end
@@ -226,7 +267,7 @@ describe "default feed json templates" do
       end
     end
 
-    it "should ignore datastream value fields if nil (0.6-alpha)" do
+    it "should ignore datastream value fields if nil" do
       @feed.datastreams.each do |ds|
         ds.min_value = nil
       end
@@ -236,7 +277,7 @@ describe "default feed json templates" do
       end
     end
 
-    it "should ignore datastream value fields if blank (0.6-alpha)" do
+    it "should ignore datastream value fields if blank" do
       @feed.datastreams.each do |ds|
         ds.min_value = ""
       end
@@ -245,24 +286,12 @@ describe "default feed json templates" do
         ds[:values].first[:min_value].should be_nil
       end
     end
-
-    it "should ignore tags if blank (1.0.0)" do
-      @feed.tags = ""
-      json = @feed.generate_json("1.0.0")
-      json[:tags].should be_nil
-    end
-
-    it "should ignore tags if blank (0.6-alpha)" do
+    it "should ignore tags if blank" do
       @feed.tags = ""
       json = @feed.generate_json("0.6-alpha")
       json[:tags].should be_nil
     end
 
-    it "should ignore tags if nil (1.0.0)" do
-      @feed.tags = nil
-      json = @feed.generate_json("1.0.0")
-      json[:tags].should be_nil
-    end
 
     it "should ignore tags if nil" do
       @feed.tags = nil
@@ -270,15 +299,7 @@ describe "default feed json templates" do
       json[:tags].should be_nil
     end
 
-    it "should ignore nil location elements (1.0.0)" do
-      @feed.location_disposition = nil
-      @feed.location_ele = nil
-      json = @feed.generate_json("1.0.0")
-      json[:location][:disposition].should be_nil
-      json[:location][:ele].should be_nil
-    end
-
-    it "should ignore nil location elements (0.6-alpha)" do
+    it "should ignore nil location elements" do
       @feed.location_disposition = nil
       @feed.location_ele = nil
       json = @feed.generate_json("0.6-alpha")
@@ -286,15 +307,8 @@ describe "default feed json templates" do
       json[:location][:ele].should be_nil
     end
 
-    it "should ignore blank location elements (1.0.0)" do
-      @feed.location_disposition = ""
-      @feed.location_ele = ""
-      json = @feed.generate_json("1.0.0")
-      json[:location][:disposition].should be_nil
-      json[:location][:ele].should be_nil
-    end
 
-    it "should ignore blank location elements (0.6-alpha)" do
+    it "should ignore blank location elements" do
       @feed.location_disposition = ""
       @feed.location_ele = ""
       json = @feed.generate_json("0.6-alpha")
@@ -302,19 +316,8 @@ describe "default feed json templates" do
       json[:location][:ele].should be_nil
     end
 
-    it "should ignore location if all elements are nil (1.0.0)" do
-      @feed.location_name = nil
-      @feed.location_disposition = nil
-      @feed.location_lat = nil
-      @feed.location_lon = nil
-      @feed.location_exposure = nil
-      @feed.location_ele = nil
-      @feed.location_domain = nil
-      json = @feed.generate_json("1.0.0")
-      json[:location].should be_nil
-    end
 
-    it "should ignore location if all elements are nil (0.6-alpha)" do
+    it "should ignore location if all elements are nil" do
       @feed.location_name = nil
       @feed.location_disposition = nil
       @feed.location_lat = nil
