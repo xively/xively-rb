@@ -173,6 +173,26 @@ describe "default feed templates" do
       end
     end
 
+    it "should ignore datastream value fields if nil (0.6-alpha)" do
+      @feed.datastreams.each do |ds|
+        ds.min_value = nil
+      end
+      json = @feed.generate_json("0.6-alpha")
+      json[:datastreams].each do |ds|
+        ds[:values].first[:min_value].should be_nil
+      end
+    end
+
+    it "should ignore datastream value fields if blank (0.6-alpha)" do
+      @feed.datastreams.each do |ds|
+        ds.min_value = ""
+      end
+      json = @feed.generate_json("0.6-alpha")
+      json[:datastreams].each do |ds|
+        ds[:values].first[:min_value].should be_nil
+      end
+    end
+
     it "should ignore tags if blank (1.0.0)" do
       @feed.tags = ""
       json = @feed.generate_json("1.0.0")

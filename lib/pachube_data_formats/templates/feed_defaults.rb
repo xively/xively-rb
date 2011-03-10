@@ -70,7 +70,7 @@ module PachubeDataFormats
                   :min_value => ds.min_value.to_s,
                   :value => ds.current_value,
                   :recorded_at => ds.updated.iso8601
-              }],
+              }.delete_if{|k,v| v.nil? || v.blank?}],
                 :tags => split_tags(ds.tags),
                 :unit => unit_hash(ds)
               }.delete_if{|k,v| v.nil? || v.blank?}
