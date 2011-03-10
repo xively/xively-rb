@@ -22,7 +22,7 @@ module PachubeDataFormats
         template.max_value {max_value.to_s}
         template.min_value {min_value.to_s}
         template.tags {tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}}
-        template.unit {{:label => unit_label, :symbol => unit_symbol, :type => unit_type}} if unit_type || unit_symbol || unit_label
+        template.unit {unit_hash}
         template.output!
       end
 
@@ -38,9 +38,16 @@ module PachubeDataFormats
             :min_value => min_value.to_s }]
         }
         template.tags {tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}}
-        template.unit {{:label => unit_label, :symbol => unit_symbol, :type => unit_type}} if unit_type || unit_symbol || unit_label
+        template.unit {unit_hash}
         template.output!
       end
+
+      def unit_hash
+        { :type => unit_type,
+          :symbol => unit_symbol,
+          :label => unit_label }.delete_if{|k,v| v.blank?}
+      end
+
     end
   end
 end

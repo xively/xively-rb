@@ -66,7 +66,7 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
       json = @feed.as_pachube_json
       json[:version].should == "1.0.0"
       json[:title].should == "Feed Title"
-      json[:private].should == true
+      json[:private].should == "true"
       json[:icon].should == "http://pachube.com/logo.png"
       json[:website].should == "http://pachube.com"
       json[:tags].should == ["aardvark", "kittens", "sofa"]
@@ -117,7 +117,7 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
       json = JSON.parse(@feed.to_pachube_json)
       json["version"].should == "1.0.0"
       json["title"].should == "Feed Title"
-      json["private"].should == true
+      json["private"].should == "true"
       json["icon"].should == "http://pachube.com/logo.png"
       json["website"].should == "http://pachube.com"
       json["tags"].should == ["aardvark", "kittens", "sofa"]

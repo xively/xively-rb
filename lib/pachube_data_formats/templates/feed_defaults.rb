@@ -17,7 +17,7 @@ module PachubeDataFormats
         template = Template.new(self, :json)
         template.id
         template.title
-        template.private
+        template.private {private.to_s}
         template.icon
         template.website
         template.tags {tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}} if tags
@@ -39,7 +39,7 @@ module PachubeDataFormats
                 :current_value => ds.current_value,
                 :tags => split_tags(ds.tags),
                 :unit => unit_hash(ds)
-              }.delete_if{|k,v| v.nil?}
+              }.delete_if{|k,v| v.nil? || v.blank?}
             end
           end
         end
@@ -73,7 +73,7 @@ module PachubeDataFormats
               }],
                 :tags => split_tags(ds.tags),
                 :unit => unit_hash(ds)
-              }.delete_if{|k,v| v.nil?}
+              }.delete_if{|k,v| v.nil? || v.blank?}
             end
           end
         end
@@ -84,27 +84,25 @@ module PachubeDataFormats
       private
 
       def location_hash
-        {
-          :disposition => location_disposition,
-          :name => location_name,
-          :exposure => location_exposure,
-          :domain => location_domain,
-          :ele => location_ele,
-          :lat => location_lat,
-          :lon => location_lon
-        } if location_disposition || location_name || location_exposure || location_domain || location_ele || location_lat || location_lon
+        if location_disposition || location_name || location_exposure || location_domain || location_ele || location_lat || location_lon
+          { :disposition => location_disposition,
+            :name => location_name,
+            :exposure => location_exposure,
+            :domain => location_domain,
+            :ele => location_ele,
+            :lat => location_lat,
+            :lon => location_lon }.delete_if{|k,v| v.blank?} 
+        end
       end
 
       def unit_hash(datastream)
-        {
-          :type => datastream.unit_type,
-          :symbol => datastream.unit_symbol,
-          :label => datastream.unit_label
-        } if datastream.unit_type || datastream.unit_label || datastream.unit_symbol
+        if datastream.unit_type || datastream.unit_label || datastream.unit_symbol
+          { :type => datastream.unit_type, :symbol => datastream.unit_symbol, :label => datastream.unit_label }.delete_if{|k,v| v.blank?} 
+        end
       end
 
       def split_tags(tag_list)
-        return unless tag_list
+        return if tag_list.blank?
         tag_list.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}
       end
     end
