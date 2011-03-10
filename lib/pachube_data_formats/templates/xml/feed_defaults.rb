@@ -46,7 +46,10 @@ module PachubeDataFormats
                     data.current_value ds.current_value, :at => ds.updated.iso8601(6)
                     data.max_value ds.max_value if ds.max_value
                     data.min_value ds.min_value if ds.min_value
-                    data.unit ds.unit_label, {:type => ds.unit_type, :symbol => ds.unit_symbol}.delete_if_nil_value if ds.unit_label || ds.unit_symbol || ds.unit_type
+                    if ds.unit_symbol || ds.unit_type
+                      units = {:type => ds.unit_type, :symbol => ds.unit_symbol}.delete_if_nil_value
+                    end
+                    data.unit ds.unit_label, units if !ds.unit_label.empty? || !units.empty?
                     data.datapoints do
                       ds.datapoints.each do |datapoint|
                         data.value(datapoint.value, "at" => datapoint.at.iso8601(6))
@@ -84,7 +87,10 @@ module PachubeDataFormats
                       data.tag tag
                     end if ds.tags
                     data.value ds.current_value, {:minValue => ds.min_value, :maxValue => ds.max_value}.delete_if_nil_value
-                    data.unit ds.unit_label, {:type => ds.unit_type, :symbol => ds.unit_symbol}.delete_if_nil_value if ds.unit_label || ds.unit_symbol || ds.unit_type
+                    if ds.unit_symbol || ds.unit_type
+                      units = {:type => ds.unit_type, :symbol => ds.unit_symbol}.delete_if_nil_value
+                    end
+                    data.unit ds.unit_label, units if !ds.unit_label.empty? || !units.empty?
                   end
                 end if datastreams
               end

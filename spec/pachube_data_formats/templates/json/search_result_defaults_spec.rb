@@ -49,7 +49,7 @@ describe "default feed json templates" do
             :label => datastream.unit_label,
             :type => datastream.unit_type,
             :symbol => datastream.unit_symbol
-          } if ds[:unit]
+          }.delete_if_nil_value if ds[:unit]
         end
       end
     end
@@ -94,7 +94,7 @@ describe "default feed json templates" do
             :label => datastream.unit_label,
             :type => datastream.unit_type,
             :symbol => datastream.unit_symbol
-          } if ds[:unit]
+          }.delete_if_nil_value if ds[:unit]
         end
       end
     end

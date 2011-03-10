@@ -7,5 +7,9 @@ class NilClass
 
   def iso8601(precision = nil)
   end
+
+  def empty?
+    true
+  end
 end
 

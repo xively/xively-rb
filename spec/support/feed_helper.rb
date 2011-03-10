@@ -51,7 +51,7 @@ def feed_as_(format, options = {})
         "max_value"=>980.0,
         "unit_type"=>"",
         "min_value"=>0.0,
-        "unit_label"=>"",
+        "unit_label"=>"label",
         "current_value"=>"813",
         "id"=>"1",
         "tags"=>"light level",
@@ -75,7 +75,7 @@ def feed_as_(format, options = {})
         "current_value"=>"0",
         "id"=>"3",
         "tags"=>"door 1",
-        "unit_symbol"=>""},
+        "unit_symbol"=>"symbol"},
         {
         "updated" => Time.parse('2011-01-02'),
         "max_value"=>0.0,
