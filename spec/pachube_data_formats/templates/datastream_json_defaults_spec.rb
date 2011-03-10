@@ -15,8 +15,8 @@ describe "default datastream json templates" do
     json[:version].should == "1.0.0"
     json[:at].should == @datastream.updated.iso8601(6)
     json[:current_value].should == @datastream.current_value
-    json[:max_value].should == @datastream.max_value
-    json[:min_value].should == @datastream.min_value
+    json[:max_value].should == @datastream.max_value.to_s
+    json[:min_value].should == @datastream.min_value.to_s
     json[:tags].should == @datastream.tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}
     json[:unit].should == {
       :type => @datastream.unit_type,
@@ -35,8 +35,8 @@ describe "default datastream json templates" do
     json[:version].should == "0.6-alpha"
     json[:values].first[:recorded_at].should == @datastream.updated.iso8601
     json[:values].first[:value].should == @datastream.current_value
-    json[:values].first[:max_value].should == @datastream.max_value
-    json[:values].first[:min_value].should == @datastream.min_value
+    json[:values].first[:max_value].should == @datastream.max_value.to_s
+    json[:values].first[:min_value].should == @datastream.min_value.to_s
     json[:tags].should == @datastream.tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}
     json[:unit].should == {
       :type => @datastream.unit_type,

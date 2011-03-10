@@ -20,7 +20,7 @@ describe "default feed json templates" do
         json_feed[:id].should == @feed.id
         json_feed[:version].should == "1.0.0"
         json_feed[:title].should == "Pachube Office Environment"
-        json_feed[:private].should == false
+        json_feed[:private].should == "false"
         json_feed[:icon].should == "http://pachube.com/logo.png"
         json_feed[:website].should == "http://pachube.com"
         json_feed[:tags].should == ["aardvark", "kittens", "sofa"]
@@ -41,15 +41,15 @@ describe "default feed json templates" do
         json_feed[:datastreams].each do |ds|
           datastream = @feed.datastreams.detect{|stream| stream.id == ds[:id]}
           ds[:at].should == datastream.updated.iso8601(6)
-          ds[:max_value].should == datastream.max_value
-          ds[:min_value].should == datastream.min_value
+          ds[:max_value].should == datastream.max_value.to_s
+          ds[:min_value].should == datastream.min_value.to_s
           ds[:current_value].should == datastream.current_value
           ds[:tags].should == datastream.tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase} if datastream.tags
           ds[:unit].should == {
             :label => datastream.unit_label,
             :type => datastream.unit_type,
             :symbol => datastream.unit_symbol
-          }
+          } if ds[:unit]
         end
       end
     end
@@ -85,8 +85,8 @@ describe "default feed json templates" do
         json_feed[:datastreams].should have(7).things
         json_feed[:datastreams].each do |ds|
           datastream = @feed.datastreams.detect{|stream| stream.id == ds[:id]}
-          ds[:values].first[:max_value].should == datastream.max_value
-          ds[:values].first[:min_value].should == datastream.min_value
+          ds[:values].first[:max_value].should == datastream.max_value.to_s
+          ds[:values].first[:min_value].should == datastream.min_value.to_s
           ds[:values].first[:value].should == datastream.current_value
           ds[:values].first[:recorded_at].should == datastream.updated.iso8601
           ds[:tags].should == datastream.tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase} if datastream.tags
@@ -94,7 +94,7 @@ describe "default feed json templates" do
             :label => datastream.unit_label,
             :type => datastream.unit_type,
             :symbol => datastream.unit_symbol
-          }
+          } if ds[:unit]
         end
       end
     end
