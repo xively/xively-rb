@@ -26,6 +26,11 @@ describe "default datastream xml templates" do
       lambda {@datastream.generate_xml("0.5.1")}.should_not raise_error
     end
 
+    it "should handle blank tags" do
+      @datastream.tags = ""
+      lambda {@datastream.generate_xml("0.5.1")}.should_not raise_error
+    end
+
     it "should handle a lack of datapoints" do
       @datastream.datapoints = []
       xml = @datastream.generate_xml("0.5.1")
@@ -68,6 +73,11 @@ describe "default datastream xml templates" do
 
     it "should handle a lack of tags" do
       @datastream.tags = nil
+      lambda {@datastream.generate_xml("5")}.should_not raise_error
+    end
+
+    it "should handle blank tags" do
+      @datastream.tags = ""
       lambda {@datastream.generate_xml("5")}.should_not raise_error
     end
 
