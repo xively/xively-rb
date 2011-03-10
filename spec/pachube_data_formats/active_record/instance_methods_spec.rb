@@ -75,8 +75,8 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
       json[:email].should == "abc@example.com"
       json[:datastreams].should have(2).things
       json[:datastreams].each do |ds|
-        ds[:max_value].should == 658.0
-        ds[:min_value].should == 0.0
+        ds[:max_value].should == "658.0"
+        ds[:min_value].should == "0.0"
         ds[:current_value].should == "14"
         ds[:at].should == "2011-01-02T00:00:00.000000+00:00"
         @feed.datastreams.find_by_stream_id(ds[:id]).should_not be_nil
@@ -97,8 +97,8 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
       json[:email].should == "abc@example.com"
       json[:datastreams].should have(2).things
       json[:datastreams].each do |ds|
-        ds[:values].first[:max_value].should == 658.0
-        ds[:values].first[:min_value].should == 0.0
+        ds[:values].first[:max_value].should == "658.0"
+        ds[:values].first[:min_value].should == "0.0"
         ds[:values].first[:value].should == "14"
         ds[:values].first[:recorded_at].should == Time.parse("2011/01/02 00:00:00 +0000").iso8601
         @feed.datastreams.find_by_stream_id(ds[:id]).should_not be_nil
@@ -126,8 +126,8 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
       json["email"].should == "abc@example.com"
       json["datastreams"].should have(2).things
       json["datastreams"].each do |ds|
-        ds["max_value"].should == 658.0
-        ds["min_value"].should == 0.0
+        ds["max_value"].should == "658.0"
+        ds["min_value"].should == "0.0"
         ds["current_value"].should == "14"
         @feed.datastreams.find_by_stream_id(ds["id"]).should_not be_nil
         ds["tags"].should == ["freakin lasers", "humidity", "Temperature"]
@@ -147,8 +147,8 @@ describe PachubeDataFormats::ActiveRecord::InstanceMethods do
       json["email"].should == "abc@example.com"
       json["datastreams"].should have(2).things
       json["datastreams"].each do |ds|
-        ds["values"].first["max_value"].should == 658.0
-        ds["values"].first["min_value"].should == 0.0
+        ds["values"].first["max_value"].should == "658.0"
+        ds["values"].first["min_value"].should == "0.0"
         ds["values"].first["value"].should == "14"
         ds["values"].first["recorded_at"].should == Time.parse("2011/01/02 00:00:00 +0000").iso8601
         @feed.datastreams.find_by_stream_id(ds["id"]).should_not be_nil

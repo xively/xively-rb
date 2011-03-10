@@ -34,8 +34,8 @@ module PachubeDataFormats
               {
                 :id => ds.id,
                 :at => ds.updated.iso8601(6),
-                :max_value => ds.max_value,
-                :min_value => ds.min_value,
+                :max_value => ds.max_value.to_s,
+                :min_value => ds.min_value.to_s,
                 :current_value => ds.current_value,
                 :tags => split_tags(ds.tags),
                 :unit => unit_hash(ds)
@@ -66,8 +66,8 @@ module PachubeDataFormats
               {
                 :id => ds.id,
                 :values => [{
-                  :max_value => ds.max_value,
-                  :min_value => ds.min_value,
+                  :max_value => ds.max_value.to_s,
+                  :min_value => ds.min_value.to_s,
                   :value => ds.current_value,
                   :recorded_at => ds.updated.iso8601
               }],
