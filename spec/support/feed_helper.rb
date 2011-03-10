@@ -59,13 +59,13 @@ def feed_as_(format, options = {})
         {
         "updated" => Time.parse('2011-01-02'),
         "max_value"=>774.0,
-        "unit_type"=>"",
+        "unit_type"=>"some type",
         "min_value"=>158.0,
-        "unit_label"=>"",
+        "unit_label"=>"some measure",
         "current_value"=>"318",
         "id"=>"2",
         "tags"=>"Temperature",
-        "unit_symbol"=>""},
+        "unit_symbol"=>"some % symbol"},
         {
         "updated" => Time.parse('2011-01-02'),
         "max_value"=>0.0,
