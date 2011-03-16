@@ -52,6 +52,13 @@ describe "default feed xml templates" do
       end
     end
 
+    %w(status feed description icon website email title).each do |node|
+      it "should ignore blank '#{node}'" do
+        @feed.send("#{node}=", nil)
+        Nokogiri.parse(@feed.generate_xml("0.5.1")).xpath("//xmlns:#{node}").should be_blank
+      end
+    end
+
     it "should ignore blank units" do
       @feed.datastreams.each do |ds|
         ds.unit_symbol = nil
@@ -98,6 +105,13 @@ describe "default feed xml templates" do
         ds.unit_type = nil
       end
       Nokogiri.parse(@feed.generate_xml("5")).xpath("//xmlns:unit").should be_blank
+    end
+
+    %w(status feed description icon website email title).each do |node|
+      it "should ignore blank '#{node}'" do
+        @feed.send("#{node}=", nil)
+        Nokogiri.parse(@feed.generate_xml("5")).xpath("//xmlns:#{node}").should be_blank
+      end
     end
 
   end

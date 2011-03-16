@@ -21,14 +21,14 @@ module PachubeDataFormats
           builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
             xml.eeml(_eeml_0_5_1) do |eeml|
               eeml.environment(:updated => updated.iso8601(6), :id => id, :creator => creator) do |environment|
-                environment.title title
-                environment.feed "#{feed}.xml"
-                environment.status status
-                environment.description description
-                environment.icon icon
-                environment.website website
-                environment.email email
-                environment.private_ self.private
+                environment.title title unless title.blank?
+                environment.feed "#{feed}.xml" unless feed.blank?
+                environment.status status unless status.blank?
+                environment.description description unless description.blank?
+                environment.icon icon unless icon.blank?
+                environment.website website unless website.blank?
+                environment.email email unless email.blank?
+                environment.private_ self.private.to_s
                 split_tags(tags).each do |tag|
                   environment.tag tag
                 end if tags
@@ -68,13 +68,13 @@ module PachubeDataFormats
           builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
             xml.eeml(_eeml_5) do |eeml|
               eeml.environment(:updated => updated.iso8601, :id => id, :creator => "http://www.haque.co.uk") do |environment|
-                environment.title title
-                environment.feed "#{feed}.xml"
-                environment.status status
-                environment.description description
-                environment.icon icon
-                environment.website website
-                environment.email email
+                environment.title title unless title.blank?
+                environment.feed "#{feed}.xml" unless feed.blank?
+                environment.status status unless status.blank?
+                environment.description description unless description.blank?
+                environment.icon icon unless icon.blank?
+                environment.website website unless website.blank?
+                environment.email email unless email.blank?
                 environment.location({:disposition => location_disposition, :exposure => location_exposure, :domain => location_domain}.delete_if_nil_value) do |location|
                   location.name location_name
                   location.lat location_lat
