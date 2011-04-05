@@ -61,7 +61,6 @@ describe PachubeDataFormats::Feed do
       feed = PachubeDataFormats::Feed.new(feed_as_(:hash))
       feed.title.should == "Pachube Office Environment"
     end
-
   end
 
   describe "#attributes" do
@@ -113,6 +112,11 @@ describe PachubeDataFormats::Feed do
           ds.should be_kind_of(PachubeDataFormats::Datastream)
         end
       end
+
+      it "should default to an empty array" do
+        feed = PachubeDataFormats::Feed.new({})
+        feed.datastreams.should == []
+      end
     end
 
     describe "#datastreams=" do
@@ -120,9 +124,9 @@ describe PachubeDataFormats::Feed do
         @feed = PachubeDataFormats::Feed.new({})
       end
 
-      it "should return nil if not an array" do
+      it "should return an empty array if not an array" do
         @feed.datastreams = "kittens"
-        @feed.datastreams.should be_nil
+        @feed.datastreams.should be_empty
       end
 
       it "should accept an array of datastreams and hashes and store an array of datastreams" do

@@ -28,6 +28,11 @@ module PachubeDataFormats
       return h
     end
 
+    def datastreams
+      return [] if @datastreams.nil?
+      @datastreams
+    end
+
     def attributes=(input)
       return if input.nil?
       ALLOWED_KEYS.each { |key| self.send("#{key}=", input[key]) }
