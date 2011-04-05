@@ -6,6 +6,12 @@ describe "default feed xml parser" do
       @xml = feed_as_(:xml)
       PachubeDataFormats::Feed.new(@xml).should fully_represent_feed(:xml, @xml)
     end
+
+    it "should handle blank location" do
+      @xml = feed_as_(:xml, :except_node => :location)
+      PachubeDataFormats::Feed.new(@xml).should fully_represent_feed(:xml, @xml)
+    end
+
   end
 
   context "5 (used by API v1)" do
@@ -13,6 +19,12 @@ describe "default feed xml parser" do
       @xml = feed_as_(:xml, :version => "5")
       PachubeDataFormats::Feed.new(@xml).should fully_represent_feed(:xml, @xml)
     end
+
+    it "should handle blank location" do
+      @xml = feed_as_(:xml, :version => "5", :except_node => :location)
+      PachubeDataFormats::Feed.new(@xml).should fully_represent_feed(:xml, @xml)
+    end
+
   end
 end
 

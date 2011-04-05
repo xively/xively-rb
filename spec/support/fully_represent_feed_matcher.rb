@@ -32,13 +32,15 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
       feed.private.should == environment.at_xpath("xmlns:private").content
       feed.tags.should == environment.xpath("xmlns:tag").map(&:content).sort{|a,b| a.downcase<=>b.downcase}.join(',')
       location = environment.at_xpath("xmlns:location")
-      feed.location_name.should == location.at_xpath("xmlns:name").content
-      feed.location_lat.should == location.at_xpath("xmlns:lat").content
-      feed.location_lon.should == location.at_xpath("xmlns:lon").content
-      feed.location_ele.should == location.at_xpath("xmlns:ele").content
-      feed.location_domain.should == location.attributes["domain"].value
-      feed.location_exposure.should == location.attributes["exposure"].value
-      feed.location_disposition.should == location.attributes["disposition"].value
+      if location
+        feed.location_name.should == location.at_xpath("xmlns:name").content
+        feed.location_lat.should == location.at_xpath("xmlns:lat").content
+        feed.location_lon.should == location.at_xpath("xmlns:lon").content
+        feed.location_ele.should == location.at_xpath("xmlns:ele").content
+        feed.location_domain.should == location.attributes["domain"].value
+        feed.location_exposure.should == location.attributes["exposure"].value
+        feed.location_disposition.should == location.attributes["disposition"].value
+      end
       feed.datastreams.each do |ds|
         data = environment.at_xpath("xmlns:data[@id=\"#{ds.id}\"]")
         ds.id.should == data.attributes["id"].value
@@ -72,13 +74,15 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
       feed.website.should == environment.at_xpath("xmlns:website").content
       feed.email.should == environment.at_xpath("xmlns:email").content
       location = environment.at_xpath("xmlns:location")
-      feed.location_name.should == location.at_xpath("xmlns:name").content
-      feed.location_lat.should == location.at_xpath("xmlns:lat").content
-      feed.location_lon.should == location.at_xpath("xmlns:lon").content
-      feed.location_ele.should == location.at_xpath("xmlns:ele").content
-      feed.location_domain.should == location.attributes["domain"].value
-      feed.location_exposure.should == location.attributes["exposure"].value
-      feed.location_disposition.should == location.attributes["disposition"].value
+      if location
+        feed.location_name.should == location.at_xpath("xmlns:name").content
+        feed.location_lat.should == location.at_xpath("xmlns:lat").content
+        feed.location_lon.should == location.at_xpath("xmlns:lon").content
+        feed.location_ele.should == location.at_xpath("xmlns:ele").content
+        feed.location_domain.should == location.attributes["domain"].value
+        feed.location_exposure.should == location.attributes["exposure"].value
+        feed.location_disposition.should == location.attributes["disposition"].value
+      end
       feed.datastreams.each do |ds|
         data = environment.at_xpath("xmlns:data[@id=\"#{ds.id}\"]")
         ds.id.should == data.attributes["id"].value

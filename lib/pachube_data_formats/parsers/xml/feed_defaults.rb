@@ -28,13 +28,15 @@ module PachubeDataFormats
           hash["private"] = environment.at_xpath("xmlns:private").content
           hash["tags"] = environment.xpath("xmlns:tag").collect(&:content).sort{|a,b| a.downcase <=> b.downcase}.join(',')
           location = environment.at_xpath("xmlns:location")
-          hash["location_name"] = location.at_xpath("xmlns:name").content
-          hash["location_lat"] = location.at_xpath("xmlns:lat").content
-          hash["location_lon"] = location.at_xpath("xmlns:lon").content
-          hash["location_ele"] = location.at_xpath("xmlns:ele").content
-          hash["location_domain"] = location.attributes["domain"].value
-          hash["location_exposure"] = location.attributes["exposure"].value
-          hash["location_disposition"] = location.attributes["disposition"].value
+          if location
+            hash["location_name"] = location.at_xpath("xmlns:name").content
+            hash["location_lat"] = location.at_xpath("xmlns:lat").content
+            hash["location_lon"] = location.at_xpath("xmlns:lon").content
+            hash["location_ele"] = location.at_xpath("xmlns:ele").content
+            hash["location_domain"] = location.attributes["domain"].value
+            hash["location_exposure"] = location.attributes["exposure"].value
+            hash["location_disposition"] = location.attributes["disposition"].value
+          end
           hash["datastreams"] = environment.xpath("xmlns:data").collect do |datastream|
             current_value = datastream.at_xpath("xmlns:current_value")
             unit = datastream.at_xpath("xmlns:unit")
@@ -74,13 +76,15 @@ module PachubeDataFormats
           hash["website"] = environment.at_xpath("xmlns:website").content
           hash["email"] = environment.at_xpath("xmlns:email").content
           location = environment.at_xpath("xmlns:location")
-          hash["location_name"] = location.at_xpath("xmlns:name").content
-          hash["location_lat"] = location.at_xpath("xmlns:lat").content
-          hash["location_lon"] = location.at_xpath("xmlns:lon").content
-          hash["location_ele"] = location.at_xpath("xmlns:ele").content
-          hash["location_domain"] = location.attributes["domain"].value
-          hash["location_exposure"] = location.attributes["exposure"].value
-          hash["location_disposition"] = location.attributes["disposition"].value
+          if location
+            hash["location_name"] = location.at_xpath("xmlns:name").content
+            hash["location_lat"] = location.at_xpath("xmlns:lat").content
+            hash["location_lon"] = location.at_xpath("xmlns:lon").content
+            hash["location_ele"] = location.at_xpath("xmlns:ele").content
+            hash["location_domain"] = location.attributes["domain"].value
+            hash["location_exposure"] = location.attributes["exposure"].value
+            hash["location_disposition"] = location.attributes["disposition"].value
+          end
           hash["datastreams"] = environment.xpath("xmlns:data").collect do |datastream|
             current_value = datastream.at_xpath("xmlns:value")
             unit = datastream.at_xpath("xmlns:unit")
