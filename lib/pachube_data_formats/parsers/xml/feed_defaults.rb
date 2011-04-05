@@ -40,6 +40,15 @@ module PachubeDataFormats
           hash["datastreams"] = environment.xpath("xmlns:data").collect do |datastream|
             current_value = datastream.at_xpath("xmlns:current_value")
             unit = datastream.at_xpath("xmlns:unit")
+            if unit
+              unit_hash = {
+                "unit_label" => unit.content,
+                "unit_type" => unit.attributes["type"].value,
+                "unit_symbol" => unit.attributes["symbol"].value,
+              }
+            else
+              unit_hash = {}
+            end
             {
               "id" => datastream.attributes["id"].value,
               "tags" => datastream.xpath("xmlns:tag").collect(&:content).sort{|a,b| a.downcase <=> b.downcase}.join(','),
@@ -47,9 +56,6 @@ module PachubeDataFormats
               "updated" => current_value.attributes["at"].value,
               "min_value" => datastream.at_xpath("xmlns:min_value").content,
               "max_value" => datastream.at_xpath("xmlns:max_value").content,
-              "unit_label" => unit.content,
-              "unit_type" => unit.attributes["type"].value,
-              "unit_symbol" => unit.attributes["symbol"].value,
               "datapoints" => datastream.xpath("xmlns:datapoints").collect do |datapoint|
               value = datapoint.at_xpath("xmlns:value")
               {
@@ -57,7 +63,7 @@ module PachubeDataFormats
                 "value" => value.content,
               }
               end
-            }
+            }.merge(unit_hash)
           end
           hash
         end
@@ -88,6 +94,15 @@ module PachubeDataFormats
           hash["datastreams"] = environment.xpath("xmlns:data").collect do |datastream|
             current_value = datastream.at_xpath("xmlns:value")
             unit = datastream.at_xpath("xmlns:unit")
+            if unit
+              unit_hash = {
+                "unit_label" => unit.content,
+                "unit_type" => unit.attributes["type"].value,
+                "unit_symbol" => unit.attributes["symbol"].value,
+              }
+            else
+              unit_hash = {}
+            end
             {
               "id" => datastream.attributes["id"].value,
               "tags" => datastream.xpath("xmlns:tag").collect(&:content).sort{|a,b| a.downcase <=> b.downcase}.join(','),
@@ -95,10 +110,7 @@ module PachubeDataFormats
               "updated" => environment.attributes["updated"].value,
               "min_value" => current_value.attributes["minValue"].value,
               "max_value" => current_value.attributes["maxValue"].value,
-              "unit_label" => unit.content,
-              "unit_type" => unit.attributes["type"].value,
-              "unit_symbol" => unit.attributes["symbol"].value,
-            }
+            }.merge(unit_hash)
           end
           hash
         end

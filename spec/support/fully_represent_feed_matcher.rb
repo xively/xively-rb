@@ -53,8 +53,8 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
         unit = data.at_xpath("xmlns:unit")
         if unit
           ds.unit_label.should == unit.content
-          ds.unit_type.should == unit.attributes["type"].value
-          ds.unit_symbol.should == unit.attributes["symbol"].value
+          ds.unit_type.should == unit.attributes["type"].value if unit.attributes["type"]
+          ds.unit_symbol.should == unit.attributes["symbol"].value if unit.attributes["symbol"]
         end
         ds.datapoints.each do |point|
           dp = data.at_xpath("xmlns:datapoints").at_xpath("xmlns:value[@at=\"#{point.at}\"]")
@@ -95,8 +95,8 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
         unit = data.at_xpath("xmlns:unit")
         if unit
           ds.unit_label.should == unit.content
-          ds.unit_type.should == unit.attributes["type"].value
-          ds.unit_symbol.should == unit.attributes["symbol"].value
+          ds.unit_type.should == unit.attributes["type"].value if unit.attributes["type"]
+          ds.unit_symbol.should == unit.attributes["symbol"].value if unit.attributes["symbol"]
         end
       end
       true
