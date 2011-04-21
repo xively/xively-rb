@@ -4,8 +4,6 @@ module PachubeDataFormats
     attr_accessor :presentation
     attr_accessor :output
 
-    undef_method :id
-
     def initialize(subject, presentation, &block)
       @subject = subject
       @presentation = presentation
