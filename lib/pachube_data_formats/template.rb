@@ -22,6 +22,10 @@ module PachubeDataFormats
       @output[sym] = nil
     end
 
+    def id
+      method_missing(:id)
+    end
+
     def output!
       @output.reject {|k,v| v.nil? || v.blank?}
     end
