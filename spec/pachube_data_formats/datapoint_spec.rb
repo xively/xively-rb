@@ -7,8 +7,11 @@ describe PachubeDataFormats::Datapoint do
   end
 
   describe "#initialize" do
-    it "should require one parameter" do
-      lambda{PachubeDataFormats::Datapoint.new}.should raise_exception(ArgumentError, "wrong number of arguments (0 for 1)")
+    it "should create a blank slate when passed no arguments" do
+      datapoint = PachubeDataFormats::Datapoint.new
+      PachubeDataFormats::Datapoint::ALLOWED_KEYS.each do |attr|
+        datapoint.attributes[attr.to_sym].should be_nil
+      end
     end
 
     it "should accept xml" do

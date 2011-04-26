@@ -9,7 +9,7 @@ module PachubeDataFormats
     include PachubeDataFormats::Parsers::JSON::FeedDefaults
     include PachubeDataFormats::Parsers::XML::FeedDefaults
 
-    def initialize(input)
+    def initialize(input = {})
       if input.is_a?(Hash)
         self.attributes = input
       elsif input.strip.first == "{"
