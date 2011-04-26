@@ -6,7 +6,6 @@ describe PachubeDataFormats::Feed do
     PachubeDataFormats::Feed::ALLOWED_KEYS.should == %w(creator datastreams description email feed icon id location_disposition location_domain location_ele location_exposure location_lat location_lon location_name private status tags title updated website)
   end
 
-
   context "attr accessors" do
     before(:each) do
       @feed = PachubeDataFormats::Feed.new(feed_as_(:json))

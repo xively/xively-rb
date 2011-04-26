@@ -23,12 +23,12 @@ pachube_data_formats is a gem designed to make interfacing with pachube easier. 
 
   s.add_dependency("yajl-ruby", ">=0.8.1")
   s.add_dependency("nokogiri", ">=1.4.4")
+  # s.add_dependency("activemodel", ">=3.0.7")
 
   s.add_development_dependency("rake", ">=0.8.7")
   s.add_development_dependency("rspec", "=2.5.0")
   s.add_development_dependency("ruby-debug")
   s.add_development_dependency("rcov", ">=0.9.9")
-  s.add_development_dependency("activerecord", "~>2.3.8")
   s.add_development_dependency("sqlite3-ruby", "~>1.3.3")
 
   s.extra_rdoc_files = ["README.md", "CHANGELOG.md", "MIT-LICENSE"]

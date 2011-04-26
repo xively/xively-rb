@@ -12,7 +12,7 @@ module PachubeDataFormats
     def initialize(input = {})
       if input.is_a?(Hash)
         self.attributes = input
-      elsif input.strip.first == "{"
+      elsif input.strip[0...1].to_s == "{"
         self.attributes = from_json(input)
       else
         self.attributes = from_xml(input)
