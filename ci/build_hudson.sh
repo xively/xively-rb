@@ -9,8 +9,6 @@ set -x
 outdir='build_artefacts'
 rm -rf $outdir
 mkdir -p $outdir
-rm -f debug.log
-rm -f test.sqlite3.db
 
 echo "started build script $0 in `$outdir` at `date`"
 
@@ -24,8 +22,5 @@ set +e
 rake rcov > $outdir/testtask.log
 spec_rc=$?
 set -e
-
-cp debug.log $outdir/
-cp test.sqlite3.db $outdir/
 
 exit $spec_rc
