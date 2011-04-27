@@ -20,12 +20,12 @@ Outputs
  * JSON
  * CSV
 
-ActiveRecord support
---------------------
+PachubeDataFormats Interface
+----------------------------
 
-If you have a ActiveRecord structure that maps to a Pachube Feed, this plugin will provide many convenience methods.
-Currently it will only work at Feed level and implements a Pachube API V2 JSON formatter.
-Attribute to Pachube field mapping in progress.
+If you have your own model that maps to a Pachube Feed (such as an ActiveRecord model), this plugin will provide many convenience methods to convert your objects into Pachube objects.
+
+### Example with ActiveRecord
 
     class Datastream < ActiveRecord::Base
       belongs_to :feed
@@ -33,6 +33,7 @@ Attribute to Pachube field mapping in progress.
 
     class Feed < ActiveRecord::Base
       has_many :datastreams
+      extend PachubeDataFormats::Base
       is_pachube_data_format :feed
     end
 
@@ -109,6 +110,8 @@ By default the gem expects your object to have the following fields:
 If you use different field names, want to map custom fields or want to map fields onto instance methods you can:
 
     class Feed < ActiveRecord::Base
+      extend PachubeDataFormats::Base
+
       has_one :geo_location
       is_pachube_data_format :feed, {:location_lat => :geo_lat, :location_lon => :geo_lon}
 
@@ -121,8 +124,8 @@ If you use different field names, want to map custom fields or want to map field
       end
     end
 
-Examples
---------
+Examples using the PachubeDataFormat objects
+--------------------------------------------
 
     feed = PachubeDataFormats::Feed.new('{"title":"Pachube Office Environment"}')
     feed.as_json # {"title" => "Pachube Office Environment"}
@@ -136,3 +139,55 @@ Examples
       #  </eeml>
     feed.attributes # {:title => "Pachube Office Environment"}
 
+### Parsing a Datastream using json
+
+    json = '
+      {
+          "max_value": "658.0",
+          "current_value": "14",
+          "datapoints": [{
+              "value": "1",
+              "at": "2011-03-02T15:59:56.895922Z"
+          },
+          {
+              "value": "1",
+              "at": "2011-03-02T16:00:07.188648Z"
+          },
+          {
+              "value": "2",
+              "at": "2011-03-02T16:00:18.416500Z"
+          }],
+          "min_value": "0.0",
+          "id": "0",
+          "tags": ["humidity", "Temperature", "freakin lasers"],
+          "version": "1.0.0",
+          "unit": {
+              "label": "percentage",
+              "symbol": "%",
+              "type": "derived SI"
+          },
+          "at": "2011-02-16T16:21:01.834174Z"
+      }'
+    datastream = PachubeDataFormats::Datastream.new(json)
+    datastream.to_xml # =>
+    # <?xml version="1.0" encoding="UTF-8"?>
+    # <eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.5.1" xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd">
+    #   <environment creator="" updated="2011-02-16T16:21:01.834174Z" id="">
+    #     <data id="0">
+    #       <tag>freakin lasers</tag>
+    #       <tag>humidity</tag>
+    #       <tag>Temperature</tag>
+    #       <current_value at="2011-02-16T16:21:01.834174Z">14</current_value>
+    #       <max_value>658.0</max_value>
+    #       <min_value>0.0</min_value>
+    #       <unit type="derived SI" symbol="%">percentage</unit>
+    #       <datapoints>
+    #         <value at="2011-03-02T15:59:56.895922Z">1</value>
+    #         <value at="2011-03-02T16:00:07.188648Z">1</value>
+    #         <value at="2011-03-02T16:00:18.416500Z">2</value>
+    #       </datapoints>
+    #     </data>
+    #   </environment>
+    # </eeml>
+
+    
