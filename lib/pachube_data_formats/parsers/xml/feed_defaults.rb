@@ -7,7 +7,7 @@ module PachubeDataFormats
           case xml.root.attributes["version"].value
           when "0.5.1"
             transform_0_5_1(xml)
-          else "5"
+          else # "5"
             transform_5(xml)
           end
         end
