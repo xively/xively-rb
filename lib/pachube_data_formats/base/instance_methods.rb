@@ -2,7 +2,7 @@ module PachubeDataFormats
   module Base
     module InstanceMethods
       
-      # Converts an ActiveRecord instance into it's equivalent PachubeDataFormats object
+      # Converts a model that extends PachubeDataFormats::Base into it's equivalent PachubeDataFormats object
       #  this can then be used to convert into xml, json or csv
       def to_pachube
         attributes = {}

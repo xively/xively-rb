@@ -1,8 +1,10 @@
 require 'pachube_data_formats/base/instance_methods'
 
 module PachubeDataFormats
-  # Adds core methods to ActiveRecord
+  # Provide an interface for your model objects by extending this module:
+  # extend PachubeDataFormats::Base
   #
+  # This provides the following configuration class method:
   # is_pachube_data_format:
   #   - specifies that this model represents all or part of a Pachube feed
   module Base
