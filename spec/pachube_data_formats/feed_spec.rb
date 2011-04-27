@@ -54,14 +54,18 @@ describe PachubeDataFormats::Feed do
       end
     end
 
-    it "should accept json" do
-      feed = PachubeDataFormats::Feed.new(feed_as_(:json))
-      feed.title.should == "Pachube Office Environment"
-    end
+    %w(xml json hash).each do |format|
+      it "should accept #{format}" do
+        feed = PachubeDataFormats::Feed.new(feed_as_(format.to_sym))
+        feed.title.downcase.should == "pachube office environment"
+      end
 
-    it "should accept a hash of attributes" do
-      feed = PachubeDataFormats::Feed.new(feed_as_(:hash))
-      feed.title.should == "Pachube Office Environment"
+      %w(to_csv as_json to_xml to_json attributes).each do |output_format|
+        it "should be able to output from #{format} using #{output_format}" do
+          feed = PachubeDataFormats::Feed.new(feed_as_(format.to_sym))
+          lambda {feed.send(output_format.to_sym)}.should_not raise_error
+        end
+      end
     end
   end
 

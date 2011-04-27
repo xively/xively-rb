@@ -14,19 +14,18 @@ describe PachubeDataFormats::Datastream do
       end
     end
 
-    it "should accept xml" do
-      datastream = PachubeDataFormats::Datastream.new(datastream_as_(:xml))
-      datastream.current_value.should == "14"
-    end
+    %w(xml json hash).each do |format|
+      it "should accept #{format}" do
+        datastream = PachubeDataFormats::Datastream.new(datastream_as_(format.to_sym))
+        datastream.current_value.should == "14"
+      end
 
-    it "should accept json" do
-      datastream = PachubeDataFormats::Datastream.new(datastream_as_(:json))
-      datastream.current_value.should == "14"
-    end
-
-    it "should accept a hash of attributes" do
-      datastream = PachubeDataFormats::Datastream.new(datastream_as_(:hash))
-      datastream.current_value.should == "14"
+      %w(to_csv as_json to_xml to_json attributes).each do |output_format|
+        it "should be able to output from #{format} using #{output_format}" do
+          datastream = PachubeDataFormats::Datastream.new(datastream_as_(format.to_sym))
+          lambda {datastream.send(output_format.to_sym)}.should_not raise_error
+        end
+      end
     end
   end
 

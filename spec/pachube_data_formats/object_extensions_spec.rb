@@ -20,5 +20,5 @@ describe "Object extensions" do
       not_blank.should_not be_blank
     end
   end
-end
+ end
 
