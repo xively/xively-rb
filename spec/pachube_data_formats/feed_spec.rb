@@ -47,11 +47,13 @@ describe PachubeDataFormats::Feed do
   end
 
   describe "validation" do
-    it "should require a title" do
-      feed = PachubeDataFormats::Feed.new
-      feed.title = nil
-      feed.should_not be_valid
-      feed.errors[:title].should == ["can't be blank"]
+    %w(title creator).each do |field|
+      it "should require a '#{field}'" do
+        feed = PachubeDataFormats::Feed.new
+        feed.send("#{field}=".to_sym, nil)
+        feed.should_not be_valid
+        feed.errors[field.to_sym].should == ["can't be blank"]
+      end
     end
   end
 

@@ -6,6 +6,76 @@ describe PachubeDataFormats::Datastream do
     PachubeDataFormats::Datastream::ALLOWED_KEYS.should == %w(current_value datapoints feed_creator feed_id id max_value min_value tags unit_label unit_symbol unit_type updated)
   end
 
+  describe "validation" do
+    before(:each) do
+      @datastream = PachubeDataFormats::Datastream.new
+    end
+
+    %w(id).each do |field|
+      it "should require a '#{field}'" do
+        @datastream.send("#{field}=".to_sym, nil)
+        @datastream.should_not be_valid
+        @datastream.errors[field.to_sym].should include("can't be blank")
+      end
+    end
+
+    ["red hat", "foo*", "KYB:FOO"].each do |invalid_id|
+      it "should not allow '#{invalid_id}' as an id" do
+        @datastream.id = invalid_id
+        @datastream.should_not be_valid
+        @datastream.errors[:id].should include("is invalid")
+      end
+    end
+
+    ["current_to_direction-degrees_true-1", "current_to_direction.degrees_true.1"].each do |valid_id|
+      it "should allow '#{valid_id}' as an id" do
+        @datastream.id = valid_id
+        @datastream.should be_valid
+        @datastream.errors[:id].should be_empty
+      end
+
+    end
+
+    %w(current_value tags).each do |field|
+      it "should restrict '#{field}' field length to 255" do
+        @datastream.send("#{field}=".to_sym, "a"*256)
+        @datastream.should_not be_valid
+        @datastream.errors[field.to_sym].should == ["is too long (maximum is 255 characters)"]
+      end
+    end
+
+    it "should not allow arrays of 255 entries for tags" do
+      @datastream.tags = []
+      254.times {@datastream.tags << 'a'}
+      @datastream.should_not be_valid
+      @datastream.errors[:tags].should == ["is too long (maximum is 255 characters)"]
+    end
+
+    %w(unit_type current_value).each do |field|
+      it "should allow blank '#{field}'" do
+        @datastream.send("#{field}=".to_sym, nil)
+        @datastream.valid?
+        @datastream.errors[field.to_sym].should be_blank
+      end
+    end
+
+    %w(basicSI derivedSI conversionBasedUnits derivedUnits contextDependentUnits).each do |valid_unit_type|
+      it "should allow unit_type of '#{valid_unit_type}'" do
+        @datastream.unit_type = valid_unit_type
+        @datastream.valid?
+        @datastream.errors[:unit_type].should be_blank
+      end
+    end
+
+    %w(baicSI deriedSI conversinBasedUnits deriedUnits cotextDependentUnits).each do |invalid_unit_type|
+      it "should not allow unit_type of '#{invalid_unit_type}'" do
+        @datastream.unit_type = invalid_unit_type
+        @datastream.valid?
+        @datastream.errors[:unit_type].should == ["is not a valid unit_type (pick one from #{PachubeDataFormats::Datastream::VALID_UNIT_TYPES} or leave blank)"]
+      end
+    end
+  end
+
   describe "#initialize" do
     it "should create a blank slate when passed no arguments" do
       datastream = PachubeDataFormats::Datastream.new
