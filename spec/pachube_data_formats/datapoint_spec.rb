@@ -6,6 +6,20 @@ describe PachubeDataFormats::Datapoint do
     PachubeDataFormats::Datapoint::ALLOWED_KEYS.should == %w(at value feed_id datastream_id)
   end
 
+  describe "validation" do
+    before(:each) do
+      @datapoint = PachubeDataFormats::Datapoint.new
+    end
+
+    %w(datastream_id value).each do |field|
+      it "should require a '#{field}'" do
+        @datapoint.send("#{field}=".to_sym, nil)
+        @datapoint.should_not be_valid
+        @datapoint.errors[field.to_sym].should include("can't be blank")
+      end
+    end
+  end
+
   describe "#initialize" do
     it "should create a blank slate when passed no arguments" do
       datapoint = PachubeDataFormats::Datapoint.new
