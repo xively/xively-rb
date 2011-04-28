@@ -12,7 +12,6 @@ module PachubeDataFormats
     include PachubeDataFormats::Parsers::XML::FeedDefaults
 
     validates_presence_of :title
-    validates_presence_of :creator
 
     def initialize(input = {})
       if input.is_a?(Hash)

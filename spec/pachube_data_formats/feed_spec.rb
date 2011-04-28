@@ -47,7 +47,7 @@ describe PachubeDataFormats::Feed do
   end
 
   describe "validation" do
-    %w(title creator).each do |field|
+    %w(title).each do |field|
       it "should require a '#{field}'" do
         feed = PachubeDataFormats::Feed.new
         feed.send("#{field}=".to_sym, nil)
