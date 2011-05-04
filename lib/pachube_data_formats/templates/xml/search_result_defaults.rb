@@ -23,7 +23,7 @@ module PachubeDataFormats
               eeml['opensearch'].totalResults totalResults
               eeml['opensearch'].startIndex startIndex
               eeml['opensearch'].itemsPerPage itemsPerPage
-              feeds.each do |env|
+              results.each do |env|
                 eeml.environment(:updated => env.updated.iso8601(6), :id => env.id, :creator => env.creator) do |environment|
                   environment.title env.title
                   environment.feed "#{env.feed}.xml"
@@ -75,7 +75,7 @@ module PachubeDataFormats
               eeml['opensearch'].totalResults totalResults
               eeml['opensearch'].startIndex startIndex
               eeml['opensearch'].itemsPerPage itemsPerPage
-              feeds.each do |env|
+              results.each do |env|
                 eeml.environment(:updated => env.updated.iso8601, :id => env.id, :creator => "http://www.haque.co.uk") do |environment|
                   environment.title env.title
                   environment.feed "#{env.feed}.xml"

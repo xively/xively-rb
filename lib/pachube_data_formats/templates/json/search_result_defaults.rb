@@ -22,8 +22,8 @@ module PachubeDataFormats
           template.totalResults
           template.startIndex
           template.itemsPerPage
-          if feeds
-            template.results {feeds.collect{|f| f.generate_json("1.0.0")}}
+          if results
+            template.results {results.collect{|f| f.generate_json("1.0.0")}}
           end
           template.output!
         end
@@ -34,8 +34,8 @@ module PachubeDataFormats
           template.totalResults
           template.startIndex
           template.itemsPerPage
-          if feeds
-            template.results {feeds.collect{|f| f.generate_json("0.6-alpha")}}
+          if results
+            template.results {results.collect{|f| f.generate_json("0.6-alpha")}}
           end
           template.output!
         end

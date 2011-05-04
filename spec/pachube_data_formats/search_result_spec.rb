@@ -3,13 +3,13 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe PachubeDataFormats::SearchResult do
 
   it "should have a constant that defines the allowed keys" do
-    PachubeDataFormats::SearchResult::ALLOWED_KEYS.should == %w(totalResults startIndex itemsPerPage feeds)
+    PachubeDataFormats::SearchResult::ALLOWED_KEYS.should == %w(totalResults startIndex itemsPerPage results)
   end
 
 
   context "attr accessors" do
     before(:each) do
-      @search_result = PachubeDataFormats::SearchResult.new(:feeds => [feed_as_(:json), feed_as_(:hash)])
+      @search_result = PachubeDataFormats::SearchResult.new(:results => [feed_as_(:json), feed_as_(:hash)])
     end
 
     describe "setting whitelisted fields" do
@@ -53,9 +53,9 @@ describe PachubeDataFormats::SearchResult do
     end
 
     it "should accept a hash of attributes" do
-      search_result = PachubeDataFormats::SearchResult.new("totalResults" => 1000, "feeds" => [feed_as_(:hash)])
+      search_result = PachubeDataFormats::SearchResult.new("totalResults" => 1000, "results" => [feed_as_(:hash)])
       search_result.totalResults.should == 1000
-      search_result.feeds.length.should == 1
+      search_result.results.length.should == 1
     end
   end
 
@@ -65,7 +65,7 @@ describe PachubeDataFormats::SearchResult do
       PachubeDataFormats::SearchResult::ALLOWED_KEYS.each do |key|
         attrs[key] = "key #{rand(1000)}"
       end
-      attrs["feeds"] = [PachubeDataFormats::Feed.new({"id" => "ein"})]
+      attrs["results"] = [PachubeDataFormats::Feed.new({"id" => "ein"})]
       search_result = PachubeDataFormats::SearchResult.new(attrs)
 
       search_result.attributes.should == attrs
@@ -99,25 +99,25 @@ describe PachubeDataFormats::SearchResult do
 
   context "associated feeds" do
 
-    describe "#feeds" do
+    describe "#results" do
       it "should return an array of feeds" do
         feeds = [PachubeDataFormats::Feed.new(feed_as_(:hash))]
-        attrs = {"feeds" => feeds}
+        attrs = {"results" => feeds}
         feed = PachubeDataFormats::SearchResult.new(attrs)
-        feed.feeds.each do |env|
+        feed.results.each do |env|
           env.should be_kind_of(PachubeDataFormats::Feed)
         end
       end
     end
 
-    describe "#feeds=" do
+    describe "#results=" do
       before(:each) do
         @search_result = PachubeDataFormats::SearchResult.new({})
       end
 
       it "should return nil if not an array" do
-        @search_result.feeds = "kittens"
-        @search_result.feeds.should be_nil
+        @search_result.results = "kittens"
+        @search_result.results.should be_nil
       end
 
       it "should accept an array of feeds and hashes and store an array of datastreams" do
@@ -126,16 +126,16 @@ describe PachubeDataFormats::SearchResult do
         PachubeDataFormats::Feed.should_receive(:new).with(feed_as_(:hash)).and_return(new_feed2)
 
         feeds = [new_feed1, feed_as_(:hash)]
-        @search_result.feeds = feeds
-        @search_result.feeds.length.should == 2
-        @search_result.feeds.should include(new_feed1)
-        @search_result.feeds.should include(new_feed2)
+        @search_result.results = feeds
+        @search_result.results.length.should == 2
+        @search_result.results.should include(new_feed1)
+        @search_result.results.should include(new_feed2)
       end
 
       it "should accept an array of feeds and store an array of feeds" do
         feeds = [PachubeDataFormats::Feed.new(feed_as_(:hash))]
-        @search_result.feeds = feeds
-        @search_result.feeds.should == feeds
+        @search_result.results = feeds
+        @search_result.results.should == feeds
       end
 
       it "should accept an array of hashes and store an array of feeds" do
@@ -143,8 +143,8 @@ describe PachubeDataFormats::SearchResult do
         PachubeDataFormats::Feed.should_receive(:new).with(feed_as_(:hash)).and_return(new_feed)
 
         feeds_hash = [feed_as_(:hash)]
-        @search_result.feeds = feeds_hash
-        @search_result.feeds.should == [new_feed]
+        @search_result.results = feeds_hash
+        @search_result.results.should == [new_feed]
       end
     end
 
@@ -205,8 +205,8 @@ describe PachubeDataFormats::SearchResult do
     end
 
     it "should generate feeds" do
-      search_result = PachubeDataFormats::SearchResult.new("feeds" => [feed_as_('hash')])
-      search_result.feeds = feed_as_(:hash)
+      search_result = PachubeDataFormats::SearchResult.new("results" => [feed_as_('hash')])
+      search_result.results = feed_as_(:hash)
       JSON.parse(search_result.to_json)["results"].should_not be_nil
     end
 

@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../../../spec_helper'
 describe "default feed json templates" do
   before(:each) do
     @feed = PachubeDataFormats::Feed.new(feed_as_(:hash))
-    @search_result = PachubeDataFormats::SearchResult.new("totalResults" => 198, "startIndex" => 4, "itemsPerPage" => 15, "feeds" => [@feed])
+    @search_result = PachubeDataFormats::SearchResult.new("totalResults" => 198, "startIndex" => 4, "itemsPerPage" => 15, "results" => [@feed])
   end
 
   context "1.0.0" do
