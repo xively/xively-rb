@@ -172,6 +172,16 @@ describe PachubeDataFormats::Feed do
         @feed.datastreams = datastreams_hash
         @feed.datastreams.should == [new_datastream]
       end
+
+      it "should accept an array of subclass of datastream and store an array of datastreams" do
+        class OurSpecialDatastreamClass < PachubeDataFormats::Datastream
+          attr_accessor :something_new
+        end
+
+        datastreams = [OurSpecialDatastreamClass.new(datastream_as_(:hash))]
+        @feed.datastreams = datastreams
+        @feed.datastreams.should == datastreams
+      end
     end
 
   end
