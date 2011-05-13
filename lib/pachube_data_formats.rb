@@ -14,4 +14,5 @@ require 'pachube_data_formats/feed'
 require 'pachube_data_formats/datastream'
 require 'pachube_data_formats/datapoint'
 require 'pachube_data_formats/search_result'
+require 'pachube_data_formats/trigger'
 
