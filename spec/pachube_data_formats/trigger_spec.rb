@@ -81,5 +81,37 @@ describe PachubeDataFormats::Trigger do
     end
   end
 
+  describe "#as_json" do
+    it "should call the json generator" do
+      trigger = PachubeDataFormats::Trigger.new({})
+      trigger.should_receive(:generate_json).and_return({"title" => "Environment"})
+      trigger.as_json.should == {"title" => "Environment"}
+    end
+  end
+
+  describe "#to_json" do
+    it "should call #as_json" do
+      trigger_hash = {"title" => "Environment"}
+      trigger = PachubeDataFormats::Trigger.new(trigger_hash)
+      trigger.should_receive(:as_json).with({})
+      trigger.to_json
+    end
+
+    it "should pass options through to #as_json" do
+      trigger_hash = {"title" => "Environment"}
+      trigger = PachubeDataFormats::Trigger.new(trigger_hash)
+      trigger.should_receive(:as_json).with({:crazy => "options"})
+      trigger.to_json({:crazy => "options"})
+    end
+
+    it "should pass the output of #as_json to yajl" do
+      trigger_hash = {"title" => "Environment"}
+      trigger = PachubeDataFormats::Trigger.new(trigger_hash)
+      trigger.should_receive(:as_json).and_return({:awesome => "hash"})
+      ::JSON.should_receive(:generate).with({:awesome => "hash"})
+      trigger.to_json
+    end
+  end
+
 end
 

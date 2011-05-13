@@ -3,6 +3,7 @@ module PachubeDataFormats
     ALLOWED_KEYS = %w(threshold_value user notified_at url trigger_type id environment_id stream_id)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
+    include PachubeDataFormats::Templates::JSON::TriggerDefaults
     include PachubeDataFormats::Parsers::JSON::TriggerDefaults
     include PachubeDataFormats::Parsers::XML::TriggerDefaults
 
@@ -37,6 +38,16 @@ module PachubeDataFormats
       ALLOWED_KEYS.each { |key| self.send("#{key}=", input[key]) }
       return attributes
     end
+
+    def as_json(options = {})
+      generate_json
+    end
+
+    def to_json(options = {})
+      ::JSON.generate as_json(options)
+    end
+
+
   end
 end
 
