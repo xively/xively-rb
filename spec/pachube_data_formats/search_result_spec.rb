@@ -48,8 +48,11 @@ describe PachubeDataFormats::SearchResult do
   end
 
   describe "#initialize" do
-    it "should require one parameter" do
-      lambda{PachubeDataFormats::SearchResult.new}.should raise_exception(ArgumentError, "wrong number of arguments (0 for 1)")
+    it "should create a blank slate when passed no arguments" do
+      search_result = PachubeDataFormats::SearchResult.new
+      PachubeDataFormats::SearchResult::ALLOWED_KEYS.each do |attr|
+        search_result.attributes[attr.to_sym].should be_nil
+      end
     end
 
     it "should accept a hash of attributes" do

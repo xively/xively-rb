@@ -7,7 +7,7 @@ module PachubeDataFormats
     include PachubeDataFormats::Templates::XML::SearchResultDefaults
     include PachubeDataFormats::Parsers::JSON::SearchResultDefaults
 
-    def initialize(input)
+    def initialize(input = {})
       if input.is_a?(Hash)
         self.attributes = input
       elsif input.strip[0...1].to_s == "{"
