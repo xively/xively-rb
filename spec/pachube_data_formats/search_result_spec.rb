@@ -57,6 +57,15 @@ describe PachubeDataFormats::SearchResult do
       search_result.totalResults.should == 1000
       search_result.results.length.should == 1
     end
+
+    it "should accept json" do
+      search_result = PachubeDataFormats::SearchResult.new(search_result_as_(:json))
+      search_result.totalResults.should == "10000"
+      search_result.itemsPerPage.should == "100"
+      search_result.startIndex.should == "0"
+      search_result.results.length.should == 1
+
+    end
   end
 
   describe "#attributes" do

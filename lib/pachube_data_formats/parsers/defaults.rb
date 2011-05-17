@@ -1,4 +1,5 @@
 require 'pachube_data_formats/parsers/json/feed_defaults'
+require 'pachube_data_formats/parsers/json/search_result_defaults'
 require 'pachube_data_formats/parsers/json/datastream_defaults'
 require 'pachube_data_formats/parsers/json/datapoint_defaults'
 require 'pachube_data_formats/parsers/json/trigger_defaults'

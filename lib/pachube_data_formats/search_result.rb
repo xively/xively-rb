@@ -5,9 +5,14 @@ module PachubeDataFormats
 
     include PachubeDataFormats::Templates::JSON::SearchResultDefaults
     include PachubeDataFormats::Templates::XML::SearchResultDefaults
+    include PachubeDataFormats::Parsers::JSON::SearchResultDefaults
 
     def initialize(input)
-      self.attributes = input
+      if input.is_a?(Hash)
+        self.attributes = input
+      elsif input.strip[0...1].to_s == "{"
+        self.attributes = from_json(input)
+      end
     end
 
     def attributes
