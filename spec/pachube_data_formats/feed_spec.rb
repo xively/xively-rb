@@ -191,7 +191,7 @@ describe PachubeDataFormats::Feed do
     it "should take a version and generate the appropriate template" do
       feed = PachubeDataFormats::Feed.new({})
       PachubeDataFormats::Template.should_receive(:new).with(feed, :json)
-      lambda {feed.generate_json("1.0.0")}.should raise_error(NoMethodError)
+      lambda {feed.generate_json("1.0.0", {})}.should raise_error(NoMethodError)
     end
   end
 
@@ -220,14 +220,14 @@ describe PachubeDataFormats::Feed do
   describe "#to_xml" do
     it "should call the xml generator with default version" do
       feed = PachubeDataFormats::Feed.new({})
-      feed.should_receive(:generate_xml).with("0.5.1").and_return("<xml></xml>")
+      feed.should_receive(:generate_xml).with("0.5.1", {}).and_return("<xml></xml>")
       feed.to_xml.should == "<xml></xml>"
     end
 
     it "should accept optional xml version" do
       version = "5"
       feed = PachubeDataFormats::Feed.new({})
-      feed.should_receive(:generate_xml).with(version).and_return("<xml></xml>")
+      feed.should_receive(:generate_xml).with(version, {}).and_return("<xml></xml>")
       feed.to_xml(:version => version).should == "<xml></xml>"
     end
   end
@@ -235,14 +235,14 @@ describe PachubeDataFormats::Feed do
   describe "#as_json" do
     it "should call the json generator with default version" do
       feed = PachubeDataFormats::Feed.new({})
-      feed.should_receive(:generate_json).with("1.0.0").and_return({"title" => "Environment"})
+      feed.should_receive(:generate_json).with("1.0.0", {}).and_return({"title" => "Environment"})
       feed.as_json.should == {"title" => "Environment"}
     end
 
     it "should accept optional json version" do
       version = "0.6-alpha"
       feed = PachubeDataFormats::Feed.new({})
-      feed.should_receive(:generate_json).with(version).and_return({"title" => "Environment"})
+      feed.should_receive(:generate_json).with(version, {}).and_return({"title" => "Environment"})
       feed.as_json(:version => version).should == {"title" => "Environment"}
     end
   end

@@ -181,6 +181,13 @@ describe "default feed json templates" do
       json[:tags].should be_nil
     end
 
+    it "should include empty stuff if we pass :include_blank" do
+      @feed.description = ''
+      @feed.location_ele = ''
+      json = @feed.generate_json("1.0.0", :include_blank => true)
+      json[:description].should == ''
+      json[:location][:ele].should == ''
+    end
   end
 
   context "0.6-alpha" do
@@ -327,6 +334,14 @@ describe "default feed json templates" do
       @feed.location_domain = nil
       json = @feed.generate_json("0.6-alpha")
       json[:location].should be_nil
+    end
+
+    it "should include empty stuff if we pass :include_blank" do
+      @feed.description = ''
+      @feed.location_ele = ''
+      json = @feed.generate_json("0.6-alpha", :include_blank => true)
+      json[:description].should == ''
+      json[:location][:ele].should == ''
     end
   end
 end

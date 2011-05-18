@@ -2,19 +2,19 @@ module PachubeDataFormats
   module Templates
     module JSON
       module DatastreamDefaults
-        def generate_json(version)
+        def generate_json(version, options={})
           case version
           when "1.0.0"
-            json_1_0_0
+            json_1_0_0 options
           when "0.6-alpha"
-            json_0_6_alpha
+            json_0_6_alpha options
           end
         end
 
         private
 
         # As used by http://www.pachube.com/api/v2/FEED_ID/datastreams/DATASTREAM_ID.json
-        def json_1_0_0
+        def json_1_0_0(options={})
           template = Template.new(self, :json)
           template.id
           template.version {"1.0.0"}
@@ -23,7 +23,7 @@ module PachubeDataFormats
           template.max_value {max_value.to_s}
           template.min_value {min_value.to_s}
           template.tags {tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}}
-          template.unit {unit_hash}
+          template.unit {unit_hash(options)}
           template.datapoints do
             datapoints.collect do |datapoint|
               {
@@ -32,11 +32,11 @@ module PachubeDataFormats
               }
             end
           end if datapoints.any?
-          template.output!
+          template.output! options
         end
 
         # As used by http://www.pachube.com/api/v1/FEED_ID/datastreams/DATASTREAM_ID.json
-        def json_0_6_alpha
+        def json_0_6_alpha(options={})
           template = Template.new(self, :json)
           template.id
           template.version {"0.6-alpha"}
@@ -47,14 +47,15 @@ module PachubeDataFormats
               :min_value => min_value.to_s }.delete_if_nil_value]
           }
           template.tags {tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}}
-          template.unit {unit_hash}
-          template.output!
+          template.unit {unit_hash(options)}
+          template.output! options
         end
 
-        def unit_hash
-          { :type => unit_type,
-            :symbol => unit_symbol,
-            :label => unit_label }.delete_if_nil_value
+        def unit_hash(options={})
+          hash = { :type => unit_type,
+                   :symbol => unit_symbol,
+                   :label => unit_label }
+          !options[:include_blank] ? hash.delete_if_nil_value : hash
         end
 
       end

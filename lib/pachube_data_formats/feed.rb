@@ -57,7 +57,7 @@ module PachubeDataFormats
 
     def as_json(options = {})
       options[:version] ||= "1.0.0"
-      generate_json(options[:version])
+      generate_json(options.delete(:version), options)
     end
 
     def to_json(options = {})
@@ -66,7 +66,7 @@ module PachubeDataFormats
 
     def to_xml(options = {})
       options[:version] ||= "0.5.1"
-      generate_xml(options[:version])
+      generate_xml(options.delete(:version), options)
     end
 
     def to_csv(options = {})

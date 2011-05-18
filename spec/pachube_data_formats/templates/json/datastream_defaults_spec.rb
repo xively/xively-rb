@@ -77,6 +77,14 @@ describe "default datastream json templates" do
       json = @datastream.generate_json("1.0.0")
       json[:unit].should be_nil
     end
+
+    it "should include empty elements if we pass :include_blank" do
+      @datastream.unit_label = ''
+      @datastream.unit_symbol = ''
+      json = @datastream.generate_json("1.0.0", :include_blank => true)
+      json[:unit][:label].should == ''
+      json[:unit][:symbol].should == ''
+    end
   end
 
   context "0.6-alpha (used by API V1)" do
@@ -138,7 +146,13 @@ describe "default datastream json templates" do
       json[:tags].should be_nil
     end
 
-
+    it "should include empty elements if we pass :include_blank" do
+      @datastream.unit_label = ''
+      @datastream.unit_symbol = ''
+      json = @datastream.generate_json("0.6-alpha", :include_blank => true)
+      json[:unit][:label].should == ''
+      json[:unit][:symbol].should == ''
+    end
   end
 end
 
