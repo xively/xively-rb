@@ -24,8 +24,8 @@ module PachubeDataFormats
       method_missing(:id)
     end
 
-    def output!
-      @output.reject {|k,v| v.nil? || v.blank?}
+    def output!(options = {})
+      !options[:include_blank] ? @output.reject {|k,v| v.nil? || v.blank?} : @output
     end
   end
 end

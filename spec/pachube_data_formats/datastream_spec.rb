@@ -227,13 +227,13 @@ describe PachubeDataFormats::Datastream do
 
     it "should call the xml generator with default version" do
       datastream = PachubeDataFormats::Datastream.new({})
-      datastream.should_receive(:generate_xml).with("0.5.1").and_return("<xml></xml>")
+      datastream.should_receive(:generate_xml).with("0.5.1", {}).and_return("<xml></xml>")
       datastream.to_xml.should == "<xml></xml>"
     end
 
     it "should accept optional xml version" do
       datastream = PachubeDataFormats::Datastream.new({})
-      datastream.should_receive(:generate_xml).with("5").and_return("<xml></xml>")
+      datastream.should_receive(:generate_xml).with("5", {}).and_return("<xml></xml>")
       datastream.to_xml(:version => "5").should == "<xml></xml>"
     end
 
@@ -243,13 +243,13 @@ describe PachubeDataFormats::Datastream do
 
     it "should call the json generator with default version" do
       datastream = PachubeDataFormats::Datastream.new({})
-      datastream.should_receive(:generate_json).with("1.0.0").and_return({"title" => "Environment"})
+      datastream.should_receive(:generate_json).with("1.0.0", {}).and_return({"title" => "Environment"})
       datastream.as_json.should == {"title" => "Environment"}
     end
 
     it "should accept optional json version" do
       datastream = PachubeDataFormats::Datastream.new({})
-      datastream.should_receive(:generate_json).with("0.6-alpha").and_return({"title" => "Environment"})
+      datastream.should_receive(:generate_json).with("0.6-alpha", {}).and_return({"title" => "Environment"})
       datastream.as_json(:version => "0.6-alpha").should == {"title" => "Environment"}
     end
 

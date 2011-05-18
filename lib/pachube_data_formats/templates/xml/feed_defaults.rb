@@ -5,19 +5,19 @@ module PachubeDataFormats
         include XMLHeaders
         include Helpers
 
-        def generate_xml(version)
+        def generate_xml(version, options={})
           case version
           when "0.5.1"
-            xml_0_5_1
+            xml_0_5_1 options
           when "5"
-            xml_5
+            xml_5 options
           end
         end
 
         private
 
         # As used by http://www.pachube.com/api/v2/FEED_ID/datastreams/DATASTREAM_ID.xml
-        def xml_0_5_1
+        def xml_0_5_1(options={})
           builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
             xml.eeml(_eeml_0_5_1) do |eeml|
               eeml.environment(:updated => updated.iso8601(6), :id => id, :creator => creator) do |environment|
@@ -64,7 +64,7 @@ module PachubeDataFormats
         end
 
         # As used by http://www.pachube.com/api/v1/FEED_ID/datastreams/DATASTREAM_ID.xml
-        def xml_5
+        def xml_5(options={})
           builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
             xml.eeml(_eeml_5) do |eeml|
               eeml.environment(:updated => updated.iso8601, :id => id, :creator => "http://www.haque.co.uk") do |environment|
