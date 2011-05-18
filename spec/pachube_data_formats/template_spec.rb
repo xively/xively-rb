@@ -57,6 +57,13 @@ describe PachubeDataFormats::Template do
       @feed.title {litter}
       @template.output!.should == {}
     end
+
+    it "should include blanks if we pass :include_blank" do
+      @feed.title = ''
+      @template.title
+      @template.output!(:include_blank => true).should == {:title => ''}
+    end
+
   end
 end
 
