@@ -24,6 +24,9 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
       feed.updated.should == environment.attributes["updated"].value
       feed.creator.should == environment.attributes["creator"].value
       feed.feed.should == environment.at_xpath("xmlns:feed").content
+      if auto_feed_url = environment.at_xpath("xmlns:auto_feed_url")
+        feed.auto_feed_url.should == auto_feed_url.content
+      end
       feed.status.should == environment.at_xpath("xmlns:status").content
       feed.description.should == environment.at_xpath("xmlns:description").content
       feed.icon.should == environment.at_xpath("xmlns:icon").content
@@ -116,6 +119,7 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
       feed.website.should == json["website"]
       feed.private.should == json["private"]
       feed.feed.should == json["feed"]
+      feed.auto_feed_url.should == json["auto_feed_url"]
       no_units = true
       feed.datastreams.should_not be_empty
       feed.datastreams.each do |datastream|

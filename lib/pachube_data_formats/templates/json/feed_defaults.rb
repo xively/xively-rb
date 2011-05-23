@@ -27,6 +27,7 @@ module PachubeDataFormats
           template.tags {tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}} if tags
           template.description
           template.feed {"#{feed}.json"}
+          template.auto_feed_url
           template.status
           template.updated {updated.iso8601(6)}
           template.email

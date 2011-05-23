@@ -20,6 +20,7 @@ module PachubeDataFormats
           hash["creator"] = environment.attributes["creator"].value
           hash["title"] = environment.at_xpath("xmlns:title").content
           hash["feed"] = environment.at_xpath("xmlns:feed").content
+          hash["auto_feed_url"] = environment.at_xpath("xmlns:auto_feed_url").content
           hash["status"] = environment.at_xpath("xmlns:status").content
           hash["description"] = environment.at_xpath("xmlns:description").content
           hash["icon"] = environment.at_xpath("xmlns:icon").content

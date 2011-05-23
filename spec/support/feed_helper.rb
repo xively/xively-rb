@@ -13,6 +13,7 @@ def feed_as_(format, options = {})
       "tags" => "kittens , sofa, aardvark",
       "description"=>"Sensors in Pachube.com's headquarters.",
       "feed" => "http://test.host/testfeed.html?random=890299&rand2=91",
+      "auto_feed_url" => "http://test.host2/testfeed.xml?q=something",
       "email"=>"abc@example.com",
       "status"=>"live",
       "creator"=>"http://pachube.com/users/skeletor",
@@ -163,6 +164,7 @@ def feed_as_json(version)
         'name' => 'office'
       },
         'feed' => 'http://api.pachube.com/v2/feeds/504.json',
+        "auto_feed_url" => "http://test.host2/testfeed.xml?q=something",
         'datastreams' =>
       [
         {'min_value' => '0.0',
@@ -347,6 +349,7 @@ def feed_as_xml(version, except_node = nil)
  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred"> 
     <title>Pachube Office environment</title> 
     <feed>http://test.host/v2/feeds/2357.xml</feed> 
+    <auto_feed_url>http://test.host2/testfeed.xml?q=something</auto_feed_url>
     <status>frozen</status> 
     <description>meh</description> 
     <website>http://alpha.com</website> 

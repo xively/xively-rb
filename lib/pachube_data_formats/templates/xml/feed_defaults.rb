@@ -23,6 +23,7 @@ module PachubeDataFormats
               eeml.environment(:updated => updated.iso8601(6), :id => id, :creator => creator) do |environment|
                 environment.title title unless title.blank?
                 environment.feed "#{feed}.xml" unless feed.blank?
+                environment.auto_feed_url auto_feed_url unless auto_feed_url.blank?
                 environment.status status unless status.blank?
                 environment.description description unless description.blank?
                 environment.icon icon unless icon.blank?
