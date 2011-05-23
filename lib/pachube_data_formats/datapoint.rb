@@ -3,16 +3,27 @@ module PachubeDataFormats
     ALLOWED_KEYS = %w(at value feed_id datastream_id)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
-    include ActiveModel::Validations
-
     include PachubeDataFormats::Templates::JSON::DatapointDefaults
     include PachubeDataFormats::Templates::XML::DatapointDefaults
     include PachubeDataFormats::Templates::CSV::DatapointDefaults
     include PachubeDataFormats::Parsers::JSON::DatapointDefaults
     include PachubeDataFormats::Parsers::XML::DatapointDefaults
 
-    validates_presence_of :datastream_id
-    validates_presence_of :value
+    # validates_presence_of :datastream_id
+    # validates_presence_of :value
+    
+    include Validations
+
+    def valid?
+      pass = true
+      [:datastream_id, :value].each do |attr|
+        if self.send(attr).blank?
+          errors[attr] = ["can't be blank"]
+          pass = false
+        end
+      end
+      return pass
+    end
 
     def initialize(input = {})
       if input.is_a? Hash

@@ -71,7 +71,7 @@ describe PachubeDataFormats::Datastream do
       it "should not allow unit_type of '#{invalid_unit_type}'" do
         @datastream.unit_type = invalid_unit_type
         @datastream.valid?
-        @datastream.errors[:unit_type].should == ["is not a valid unit_type (pick one from #{PachubeDataFormats::Datastream::VALID_UNIT_TYPES} or leave blank)"]
+        @datastream.errors[:unit_type].should == ["is not a valid unit_type (pick one from #{PachubeDataFormats::Datastream::VALID_UNIT_TYPES.join(', ')} or leave blank)"]
       end
     end
   end

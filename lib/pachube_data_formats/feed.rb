@@ -3,15 +3,22 @@ module PachubeDataFormats
     ALLOWED_KEYS = %w(creator datastreams description email feed icon id location_disposition location_domain location_ele location_exposure location_lat location_lon location_name private status tags title updated website auto_feed_url)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
-    include ActiveModel::Validations
-
     include PachubeDataFormats::Templates::JSON::FeedDefaults
     include PachubeDataFormats::Templates::XML::FeedDefaults
     include PachubeDataFormats::Templates::CSV::FeedDefaults
     include PachubeDataFormats::Parsers::JSON::FeedDefaults
     include PachubeDataFormats::Parsers::XML::FeedDefaults
 
-    validates_presence_of :title
+    include Validations
+
+    def valid?
+      pass = true
+      if title.blank?
+        errors[:title] = ["can't be blank"]
+        pass = false
+      end
+      return pass
+    end
 
     def initialize(input = {})
       if input.is_a?(Hash)

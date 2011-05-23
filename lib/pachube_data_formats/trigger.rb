@@ -7,12 +7,23 @@ module PachubeDataFormats
     include PachubeDataFormats::Parsers::JSON::TriggerDefaults
     include PachubeDataFormats::Parsers::XML::TriggerDefaults
 
-    include ActiveModel::Validations
+    # validates_presence_of :url
+    # validates_presence_of :stream_id
+    # validates_presence_of :environment_id
+    # validates_presence_of :user
 
-    validates_presence_of :url
-    validates_presence_of :stream_id
-    validates_presence_of :environment_id
-    validates_presence_of :user
+    include Validations
+
+    def valid?
+      pass = true
+      [:url, :stream_id, :environment_id, :user].each do |attr|
+        if self.send(attr).blank?
+          errors[attr] = ["can't be blank"]
+          pass = false
+        end
+      end
+      return pass
+    end
 
     def initialize(input = {})
       if input.is_a?(Hash)
