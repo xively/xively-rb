@@ -67,7 +67,14 @@ describe PachubeDataFormats::SearchResult do
       search_result.itemsPerPage.should == "100"
       search_result.startIndex.should == "0"
       search_result.results.length.should == 1
+    end
 
+    it "should accept json with no datastreams within the feeds" do
+      json = %Q(
+        {\"totalResults\":33,\"startIndex\":0,\"results\":[{\"status\":\"frozen\",\"version\":\"1.0.0\",\"updated\":\"2011-05-19T09:50:39.940513Z\",\"title\":\"No map\",\"private\":\"false\",\"feed\":\"http://api.appdev.loc/v2/feeds/79.json\",\"id\":79,\"creator\":\"http://appdev.loc/users/lebreeze\"},{\"status\":\"frozen\",\"location\":{\"lon\":18.28125,\"lat\":28.3043806829628,\"domain\":\"physical\"},\"version\":\"1.0.0\",\"description\":\"Description\",\"updated\":\"2011-05-18T13:25:02.112395Z\",\"title\":\"Title\",\"private\":\"false\",\"feed\":\"http://api.appdev.loc/v2/feeds/78.json\",\"id\":78,\"creator\":\"http://appdev.loc/users/lebreeze\"},{\"status\":\"frozen\",\"location\":{\"exposure\":\"outdoor\",\"domain\":\"physical\",\"disposition\":\"mobile\"},\"version\":\"1.0.0\",\"updated\":\"2011-05-04T12:12:07.352590Z\",\"title\":\"nope\",\"private\":\"false\",\"feed\":\"http://api.appdev.loc/v2/feeds/77.json\",\"id\":77,\"creator\":\"http://appdev.loc/users/lebreeze\"}],\"itemsPerPage\":3}
+)
+      search_result = PachubeDataFormats::SearchResult.new(json)
+      search_result.results.length.should == 3
     end
   end
 
@@ -230,5 +237,7 @@ describe PachubeDataFormats::SearchResult do
       search_result.to_json
     end
   end
+
+
 end
 

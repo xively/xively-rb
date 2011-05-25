@@ -34,7 +34,7 @@ module PachubeDataFormats
               "tags" => join_tags(datastream["tags"]),
               "datapoints" => setup_datapoints(datastream["datapoints"])
             }.merge(unit_hash)
-          end
+          end if hash["datastreams"]
           if location = hash.delete("location")
             hash["location_disposition"] = location["disposition"]
             hash["location_domain"] = location["domain"]
