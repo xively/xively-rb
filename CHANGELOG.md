@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.02
+ * Bug fix release
+ * Handling empty (nil) datastreams in json 1.0.0 (feeds and search results)
+
+## 0.1.01
+ * Major release that 
+ * Eliminates requirement for ActiveSupport / ActiveModel
+ * PachubeDataFormat objects have basic validation
+
 ## 0.0.3
  * Ignore nil tags with json parsers
  * Added templates for datastream level eeml 005 and 0.5.1
