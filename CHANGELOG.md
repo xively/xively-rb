@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.03
+ * Added owner_login and owner_user_level to Feed
+ * user node added to json 1.0.0 and eeml 0.5.1 templates for Feed
+
 ## 0.1.02
  * Bug fix release
  * Handling empty (nil) datastreams in json 1.0.0 (feeds and search results)
