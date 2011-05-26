@@ -14,6 +14,8 @@ def feed_as_(format, options = {})
       "description"=>"Sensors in Pachube.com's headquarters.",
       "feed" => "http://test.host/testfeed.html?random=890299&rand2=91",
       "auto_feed_url" => "http://test.host2/testfeed.xml?q=something",
+      "owner_login" => "skeletor",
+      "owner_user_level" => "pro",
       "email"=>"abc@example.com",
       "status"=>"live",
       "creator"=>"http://pachube.com/users/skeletor",
@@ -153,6 +155,10 @@ def feed_as_json(version)
       'private' => 'false',
       'creator' => 'http://pachube.com/users/skeletor',
       'version' => '1.0.0',
+      'user' => {
+        'login' => 'skeletor',
+        'user_level' => 'pro'
+      },
       'id' => 504,
       'location' =>
       { 'domain' => 'physical',
@@ -359,6 +365,10 @@ def feed_as_xml(version, except_node = nil)
     <tag>lag</tag> 
     <tag>mag</tag> 
     <tag>tag</tag> 
+    <user>
+      <login>fred</login>
+      <user_level>pro</user_level>
+    </user>
     <data id="0"> 
       <tag>freakin lasers</tag> 
       <tag>humidity</tag> 

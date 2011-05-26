@@ -1,6 +1,6 @@
 module PachubeDataFormats
   class Feed
-    ALLOWED_KEYS = %w(creator datastreams description email feed icon id location_disposition location_domain location_ele location_exposure location_lat location_lon location_name private status tags title updated website auto_feed_url)
+    ALLOWED_KEYS = %w(creator datastreams description email feed icon id location_disposition location_domain location_ele location_exposure location_lat location_lon location_name private status tags title updated website auto_feed_url owner_login owner_user_level)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
     include PachubeDataFormats::Templates::JSON::FeedDefaults
