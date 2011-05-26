@@ -39,6 +39,10 @@ module PachubeDataFormats
                   location.lon location_lon
                   location.ele location_ele
                 end
+                environment.user do |user|
+                  user.login owner_login
+                  user.user_level owner_user_level
+                end if owner_login && owner_user_level
                 datastreams.each do |ds|
                   environment.data(:id => ds.id) do |data|
                     split_tags(ds.tags).each do |tag|

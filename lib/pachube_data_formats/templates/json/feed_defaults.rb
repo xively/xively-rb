@@ -32,6 +32,14 @@ module PachubeDataFormats
           template.updated {updated.iso8601(6)}
           template.email
           template.creator
+          if owner_login && owner_user_level
+            template.user do |user|
+              {
+                :login => owner_login,
+                :user_level => owner_user_level
+              }
+            end
+          end
           template.version {"1.0.0"}
           if datastreams
             template.datastreams do

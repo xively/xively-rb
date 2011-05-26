@@ -22,6 +22,8 @@ describe "default feed json templates" do
       json[:description].should == "Sensors in Pachube.com's headquarters."
       json[:feed].should == "http://test.host/testfeed.html?random=890299&rand2=91.json"
       json[:auto_feed_url].should == "http://test.host2/testfeed.xml?q=something"
+      json[:user][:login].should == "skeletor"
+      json[:user][:user_level].should == "pro"
       json[:status].should == "live"
       json[:updated].should == "2011-01-02T00:00:00.000000+00:00"
       json[:email].should == "abc@example.com"
