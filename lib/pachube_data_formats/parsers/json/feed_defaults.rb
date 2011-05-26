@@ -44,6 +44,10 @@ module PachubeDataFormats
             hash["location_lon"] = location["lon"]
             hash["location_name"] = location["name"]
           end
+          if owner = hash.delete("user")
+            hash["owner_login"] = owner["login"]
+            hash["owner_user_level"] = owner["user_level"]
+          end
           hash
         end
 

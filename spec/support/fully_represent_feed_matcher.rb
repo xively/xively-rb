@@ -34,6 +34,11 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
       feed.email.should == environment.at_xpath("xmlns:email").content
       feed.private.should == environment.at_xpath("xmlns:private").content
       feed.tags.should == environment.xpath("xmlns:tag").map(&:content).sort{|a,b| a.downcase<=>b.downcase}.join(',')
+      owner = environment.at_xpath("xmlns:user")
+      if owner
+        feed.owner_login.should == owner.at_xpath("xmlns:login").content
+        feed.owner_user_level.should == owner.at_xpath("xmlns:user_level").content
+      end
       location = environment.at_xpath("xmlns:location")
       if location
         feed.location_name.should == location.at_xpath("xmlns:name").content
@@ -150,6 +155,8 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
       feed.location_lat.should == json["location"]["lat"]
       feed.location_lon.should == json["location"]["lon"]
       feed.location_name.should == json["location"]["name"]
+      feed.owner_login.should == json["user"]["login"]
+      feed.owner_user_level.should == json["user"]["user_level"]
     when '0.6-alpha'
       feed.title.should == json["title"]
       feed.status.should == json["status"]
