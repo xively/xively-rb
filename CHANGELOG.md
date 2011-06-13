@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.05
+ * Added CSV feed parsing with autodetection of version
+
 ## 0.1.04
  * Added user node parsers to Feed eeml 0.5.1 and json 1.0.0
 
