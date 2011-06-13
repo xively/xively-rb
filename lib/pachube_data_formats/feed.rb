@@ -18,6 +18,22 @@ module PachubeDataFormats
         errors[:title] = ["can't be blank"]
         pass = false
       end
+
+      duplicate_datastream_ids = datastreams.inject({}) {|h,v| h[v.id]=h[v.id].to_i+1; h}.reject{|k,v| v==1}.keys
+      if duplicate_datastream_ids.any?
+        errors[:datastreams] = ["can't have duplicate IDs: #{duplicate_datastream_ids.join(',')}"]
+        pass = false
+      end
+
+      datastreams.each do |ds|
+        unless ds.valid?
+          ds.errors.each { |attr, ds_errors|
+            errors["datastreams_#{attr}".to_sym] = ([*errors["datastreams_#{attr}".to_sym]] | [*ds_errors]).compact
+          }
+          pass = false
+        end
+      end
+
       return pass
     end
 

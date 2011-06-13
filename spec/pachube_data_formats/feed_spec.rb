@@ -55,6 +55,20 @@ describe PachubeDataFormats::Feed do
         feed.errors[field.to_sym].should == ["can't be blank"]
       end
     end
+
+    it "should not allow duplicate datastreams" do
+      feed = PachubeDataFormats::Feed.new
+      feed.datastreams = [PachubeDataFormats::Datastream.new('id' => '1'), PachubeDataFormats::Datastream.new('id' => '1')]
+      feed.should_not be_valid
+      feed.errors[:datastreams].should == ["can't have duplicate IDs: 1"]
+    end
+
+    it "should validate all datastreams" do
+      feed = PachubeDataFormats::Feed.new
+      feed.datastreams = [PachubeDataFormats::Datastream.new('id' => '')]
+      feed.should_not be_valid
+      feed.errors[:datastreams_id].should == ["can't be blank"]
+    end
   end
 
   describe "#initialize" do
