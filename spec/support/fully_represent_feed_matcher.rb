@@ -2,8 +2,14 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
   match do |feed|
     if format.to_sym == :xml
       match_xml_feed(feed, formatted_feed)
-    else
+    elsif format.to_sym == :json
       match_json_feed(feed, formatted_feed)
+    elsif format.to_sym == :csv_v2
+      match_csv_v2_feed(feed, formatted_feed)
+    elsif format.to_sym == :csv_v1
+      match_csv_v1_feed(feed, formatted_feed)
+    else
+      raise "No matcher for #{format}"
     end
   end
 
@@ -13,6 +19,23 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
 
   description do
     "expected #{formatted_feed.class} to be fully represented"
+  end
+
+  def match_csv_v1_feed(feed, formatted_feed)
+    csv = CSV.parse(formatted_feed.strip).first
+    feed.datastreams.length.should == csv.length
+    feed.datastreams.each do |datastream|
+      csv.detect {|d| d == datastream.id}.should_not be_nil
+    end
+  end
+
+  def match_csv_v2_feed(feed, formatted_feed)
+    csv = CSV.parse(formatted_feed.strip)
+    feed.datastreams.length.should == csv.length
+    feed.datastreams.each do |datastream|
+      row = csv.detect {|d| d.first == datastream.id}
+      datastream.current_value.should == row.last
+    end
   end
 
   def match_xml_feed(feed, formatted_feed)

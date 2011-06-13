@@ -8,6 +8,7 @@ module PachubeDataFormats
     include PachubeDataFormats::Templates::CSV::FeedDefaults
     include PachubeDataFormats::Parsers::JSON::FeedDefaults
     include PachubeDataFormats::Parsers::XML::FeedDefaults
+    include PachubeDataFormats::Parsers::CSV::FeedDefaults
 
     include Validations
 
@@ -20,13 +21,15 @@ module PachubeDataFormats
       return pass
     end
 
-    def initialize(input = {})
+    def initialize(input = {}, csv_version = nil)
       if input.is_a?(Hash)
         self.attributes = input
       elsif input.strip[0...1].to_s == "{"
         self.attributes = from_json(input)
-      else
+      elsif input.strip[0...5].to_s == "<?xml" || input.strip[0...5].to_s == "<eeml"
         self.attributes = from_xml(input)
+      else
+        self.attributes = from_csv(input, csv_version)
       end
     end
 

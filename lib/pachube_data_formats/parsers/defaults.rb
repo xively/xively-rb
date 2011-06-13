@@ -7,4 +7,5 @@ require 'pachube_data_formats/parsers/xml/feed_defaults'
 require 'pachube_data_formats/parsers/xml/datastream_defaults'
 require 'pachube_data_formats/parsers/xml/datapoint_defaults'
 require 'pachube_data_formats/parsers/xml/trigger_defaults'
+require 'pachube_data_formats/parsers/csv/feed_defaults'
 

@@ -113,6 +113,8 @@ def feed_as_(format, options = {})
     data = feed_as_json(options[:version] || "1.0.0")
   when 'xml'
     data = feed_as_xml(options[:version] || "0.5.1", options[:except_node])
+  when 'csv'
+    data = feed_as_csv(options[:version] || "v2")
   end
 
   # Add extra options we passed
@@ -137,8 +139,29 @@ def feed_as_(format, options = {})
     data.to_json
   when 'xml'
     data
+  when 'csv'
+    data
   else
     raise "#{format} undefined"
+  end
+end
+
+def feed_as_csv(version)
+  case version.to_s
+  when 'v1'
+    '15,912,327,0,0,0,-30361'
+  when 'v2'
+    %Q{
+0,2011-06-13T12:30:04.714629Z,15
+1,2011-06-13T12:30:04.714629Z,905
+2,2011-06-13T12:30:04.714629Z,326
+3,2011-06-13T12:30:04.714629Z,0
+4,2011-06-13T12:30:04.714629Z,0
+5,2011-06-13T12:30:04.714629Z,0
+6,2011-06-13T12:30:04.714629Z,-30362
+}
+  when 'unknown'
+    '34,98'
   end
 end
 
