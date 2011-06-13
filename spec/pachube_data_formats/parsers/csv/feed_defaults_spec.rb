@@ -30,11 +30,6 @@ describe "default feed csv parser" do
       feed = PachubeDataFormats::Feed.new(csv, :v1)
       feed.should fully_represent_feed(:csv_v1, csv)
     end
-    # it "should convert Pachube JSON 0.6-alpha (used by API v1) into attributes hash" do
-    #   json = feed_as_(:json, :version => "0.6-alpha")
-    #   feed = PachubeDataFormats::Feed.new(json)
-    #   feed.should fully_represent_feed(:json, json)
-    # end
   end
 end
 

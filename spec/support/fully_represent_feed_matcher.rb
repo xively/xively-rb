@@ -22,10 +22,13 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
   end
 
   def match_csv_v1_feed(feed, formatted_feed)
-    csv = CSV.parse(formatted_feed.strip).first
+    csv = CSV.parse(formatted_feed.strip)
+    csv.length.should == 1
+    csv = csv.first
     feed.datastreams.length.should == csv.length
-    feed.datastreams.each do |datastream|
-      csv.detect {|d| d == datastream.id}.should_not be_nil
+    feed.datastreams.each_with_index do |datastream, stream_id|
+      csv.detect {|d| d == datastream.current_value}.should_not be_nil
+      datastream.id.should == stream_id
     end
   end
 
