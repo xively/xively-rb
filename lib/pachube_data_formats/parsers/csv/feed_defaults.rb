@@ -16,7 +16,7 @@ module PachubeDataFormats
           elsif version == :v1
             hash["datastreams"] = []
             array.first.each_with_index do |current_value, stream_id|
-              hash["datastreams"] << { "id" => stream_id, "current_value" => current_value }
+              hash["datastreams"] << { "id" => stream_id.to_s, "current_value" => current_value }
             end
           end
           hash
