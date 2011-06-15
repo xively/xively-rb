@@ -88,6 +88,12 @@ describe "default feed json templates" do
       json[:tags].should be_nil
     end
 
+    it "should handle tags if an array" do
+      @feed.tags = %w(b a c)
+      json = @feed.generate_json("1.0.0")
+      json[:tags].should == %w(a b c)
+    end
+
     it "should ignore location if all elements are nil" do
       @feed.location_name = nil
       @feed.location_disposition = nil

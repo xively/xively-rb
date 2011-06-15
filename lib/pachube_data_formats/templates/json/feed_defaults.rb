@@ -24,7 +24,7 @@ module PachubeDataFormats
           template.private {private.to_s}
           template.icon
           template.website
-          template.tags {tags.split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}} if tags
+          template.tags {split_tags(tags)} if tags
           template.description
           template.feed {"#{feed}.json"}
           template.auto_feed_url
