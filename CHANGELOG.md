@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.06
+ * Feeds should invalidate with duplicate datastream ids or invalid datastreams
+ * Fixed a bug in Template#method_missing
+
 ## 0.1.05
  * Added CSV feed parsing with autodetection of version
 
