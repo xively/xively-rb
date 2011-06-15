@@ -53,9 +53,14 @@ describe PachubeDataFormats::Template do
       @template.output!.should == {}
     end
 
-    it "should return nils for NoMethodErrors" do
-      @feed.title {litter}
+    it "should return nils for NameErrors" do
+      @template.title {litter}
       @template.output!.should == {}
+    end
+
+    it "should return nils for NoMethodErrors" do
+      @feed.should_not respond_to(:rubbish)
+      @template.rubbish.should == nil
     end
 
     it "should include blanks if we pass :include_blank" do

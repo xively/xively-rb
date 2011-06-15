@@ -16,7 +16,7 @@ module PachubeDataFormats
       else
         @output[sym] = @subject.send(sym)
       end
-    rescue NoMethodError => e
+    rescue NameError, NoMethodError => e
       @output[sym] = nil
     end
 
