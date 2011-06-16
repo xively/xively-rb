@@ -61,10 +61,6 @@ module PachubeDataFormats
         errors[:feed_id] = ["is invalid"]
         pass = false
       end
-      if self.feed_id.blank?
-        errors[:feed_id] = ["can't be blank"]
-        pass = false
-      end
 
       return pass
     end

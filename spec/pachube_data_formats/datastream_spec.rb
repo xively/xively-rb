@@ -11,7 +11,7 @@ describe PachubeDataFormats::Datastream do
       @datastream = PachubeDataFormats::Datastream.new
     end
 
-    %w(id feed_id).each do |field|
+    %w(id).each do |field|
       it "should require a '#{field}'" do
         @datastream.send("#{field}=".to_sym, nil)
         @datastream.should_not be_valid
@@ -38,6 +38,7 @@ describe PachubeDataFormats::Datastream do
 
     ["red hat", "foo*", 12.05].each do |invalid_feed_id|
       it "should not allow '#{invalid_feed_id}' as a feed_id" do
+        @datastream.id = "1"
         @datastream.feed_id = invalid_feed_id
         @datastream.should_not be_valid
         @datastream.errors[:feed_id].should include("is invalid")
