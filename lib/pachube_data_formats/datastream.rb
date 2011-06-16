@@ -1,6 +1,6 @@
 module PachubeDataFormats
   class Datastream
-    ALLOWED_KEYS = %w(current_value datapoints feed_creator feed_id id max_value min_value tags unit_label unit_symbol unit_type updated)
+    ALLOWED_KEYS = %w(feed_id id feed_creator current_value datapoints max_value min_value tags unit_label unit_symbol unit_type updated)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
     VALID_UNIT_TYPES = %w(basicSI derivedSI conversionBasedUnits derivedUnits contextDependentUnits)
 
@@ -54,7 +54,18 @@ module PachubeDataFormats
       end
       if self.id.blank?
         errors[:id] = ["can't be blank"]
+        pass = false
       end
+
+      unless self.feed_id.to_s =~ /\A\d*\Z/
+        errors[:feed_id] = ["is invalid"]
+        pass = false
+      end
+      if self.feed_id.blank?
+        errors[:feed_id] = ["can't be blank"]
+        pass = false
+      end
+
       return pass
     end
 

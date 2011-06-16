@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe PachubeDataFormats::Datastream do
 
   it "should have a constant that defines the allowed keys" do
-    PachubeDataFormats::Datastream::ALLOWED_KEYS.should == %w(current_value datapoints feed_creator feed_id id max_value min_value tags unit_label unit_symbol unit_type updated)
+    PachubeDataFormats::Datastream::ALLOWED_KEYS.should == %w(feed_id id feed_creator current_value datapoints max_value min_value tags unit_label unit_symbol unit_type updated)
   end
 
   describe "validation" do
@@ -11,7 +11,7 @@ describe PachubeDataFormats::Datastream do
       @datastream = PachubeDataFormats::Datastream.new
     end
 
-    %w(id).each do |field|
+    %w(id feed_id).each do |field|
       it "should require a '#{field}'" do
         @datastream.send("#{field}=".to_sym, nil)
         @datastream.should_not be_valid
@@ -29,11 +29,28 @@ describe PachubeDataFormats::Datastream do
 
     ["current_to_direction-degrees_true-1", "current_to_direction.degrees_true.1"].each do |valid_id|
       it "should allow '#{valid_id}' as an id" do
+        @datastream.feed_id = 1234
         @datastream.id = valid_id
         @datastream.should be_valid
         @datastream.errors[:id].should be_empty
       end
+    end
 
+    ["red hat", "foo*", 12.05].each do |invalid_feed_id|
+      it "should not allow '#{invalid_feed_id}' as a feed_id" do
+        @datastream.feed_id = invalid_feed_id
+        @datastream.should_not be_valid
+        @datastream.errors[:feed_id].should include("is invalid")
+      end
+    end
+
+    [0, 1234, 102931203, "123"].each do |valid_feed_id|
+      it "should allow '#{valid_feed_id}' as a feed_id" do
+        @datastream.id = "1"
+        @datastream.feed_id = valid_feed_id
+        @datastream.should be_valid
+        @datastream.errors[:feed_id].should be_empty
+      end
     end
 
     %w(current_value tags).each do |field|

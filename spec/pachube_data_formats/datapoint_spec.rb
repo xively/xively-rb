@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe PachubeDataFormats::Datapoint do
 
   it "should have a constant that defines the allowed keys" do
-    PachubeDataFormats::Datapoint::ALLOWED_KEYS.should == %w(at value feed_id datastream_id)
+    PachubeDataFormats::Datapoint::ALLOWED_KEYS.should == %w(feed_id datastream_id at value)
   end
 
   describe "validation" do
@@ -11,7 +11,7 @@ describe PachubeDataFormats::Datapoint do
       @datapoint = PachubeDataFormats::Datapoint.new
     end
 
-    %w(datastream_id value).each do |field|
+    %w(datastream_id value feed_id).each do |field|
       it "should require a '#{field}'" do
         @datapoint.send("#{field}=".to_sym, nil)
         @datapoint.should_not be_valid

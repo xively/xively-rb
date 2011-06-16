@@ -1,6 +1,6 @@
 module PachubeDataFormats
   class Datapoint
-    ALLOWED_KEYS = %w(at value feed_id datastream_id)
+    ALLOWED_KEYS = %w(feed_id datastream_id at value)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
     include PachubeDataFormats::Templates::JSON::DatapointDefaults
@@ -16,7 +16,7 @@ module PachubeDataFormats
 
     def valid?
       pass = true
-      [:datastream_id, :value].each do |attr|
+      [:datastream_id, :value, :feed_id].each do |attr|
         if self.send(attr).blank?
           errors[attr] = ["can't be blank"]
           pass = false
