@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.07
+ * Adding some validations on feed_id for datastreams and datapoints
+
 ## 0.1.06
  * Feeds should invalidate with duplicate datastream ids or invalid datastreams
  * Fixed a bug in Template#method_missing
