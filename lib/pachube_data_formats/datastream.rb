@@ -4,6 +4,7 @@ module PachubeDataFormats
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
     VALID_UNIT_TYPES = %w(basicSI derivedSI conversionBasedUnits derivedUnits contextDependentUnits)
 
+    include PachubeDataFormats::Helpers
     include PachubeDataFormats::Templates::JSON::DatastreamDefaults
     include PachubeDataFormats::Templates::XML::DatastreamDefaults
     include PachubeDataFormats::Templates::CSV::DatastreamDefaults
@@ -41,7 +42,7 @@ module PachubeDataFormats
         pass = false
       end
       if tags
-        join_tags
+        self.tags = join_tags(self.tags)
         if tags && tags.length > 255
           errors[:tags] = ["is too long (maximum is 255 characters)"]
           pass = false
@@ -125,9 +126,9 @@ module PachubeDataFormats
 
     private
 
-    def join_tags
-      self.tags = tags.sort{|a,b| a.downcase <=> b.downcase}.join(',') if tags.is_a?(Array)
-    end
+    # def join_tags
+    #   self.tags = tags.sort{|a,b| a.downcase <=> b.downcase}.join(',') if tags.is_a?(Array)
+    # end
   end
 end
 

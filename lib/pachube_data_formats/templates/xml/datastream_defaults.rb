@@ -22,7 +22,7 @@ module PachubeDataFormats
             xml.eeml(_eeml_0_5_1) do |eeml|
               eeml.environment(:updated => updated.iso8601(6), :id => feed_id, :creator => feed_creator) do |environment|
                 environment.data(:id => id) do |data|
-                  split_tags(tags).each do |tag|
+                  parse_tag_string(tags).each do |tag|
                     data.tag tag
                   end if tags
                   data.current_value current_value, :at => updated.iso8601(6)
@@ -47,7 +47,7 @@ module PachubeDataFormats
             xml.eeml(_eeml_5) do |eeml|
               eeml.environment(:updated => updated.iso8601, :id => feed_id, :creator => "http://www.haque.co.uk") do |environment|
                 environment.data(:id => id) do |data|
-                  split_tags(tags).each do |tag|
+                  parse_tag_string(tags).each do |tag|
                     data.tag tag
                   end if tags
                   data.value current_value, {:minValue => min_value, :maxValue => max_value}.delete_if_nil_value

@@ -3,7 +3,7 @@ module PachubeDataFormats
     module JSON
       module FeedDefaults
 
-        include Helpers
+        include PachubeDataFormats::Helpers
 
         def generate_json(version, options = {})
           case version
@@ -24,7 +24,7 @@ module PachubeDataFormats
           template.private {private.to_s}
           template.icon
           template.website
-          template.tags {split_tags(tags)} if tags
+          template.tags {parse_tag_string(tags)} if tags
           template.description
           template.feed {"#{feed}.json"}
           template.auto_feed_url
@@ -53,7 +53,7 @@ module PachubeDataFormats
                   :max_value => ds.max_value.to_s,
                   :min_value => ds.min_value.to_s,
                   :current_value => ds.current_value,
-                  :tags => split_tags(ds.tags),
+                  :tags => parse_tag_string(ds.tags),
                   :unit => unit_hash(ds, options),
                   :datapoints => datapoints
                 }.delete_if_nil_value
@@ -88,7 +88,7 @@ module PachubeDataFormats
                   :value => ds.current_value,
                   :recorded_at => ds.updated.iso8601
                 }.delete_if_nil_value],
-                  :tags => split_tags(ds.tags),
+                  :tags => parse_tag_string(ds.tags),
                   :unit => unit_hash(ds, options)
                 }.delete_if_nil_value
               end

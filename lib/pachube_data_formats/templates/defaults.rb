@@ -1,5 +1,4 @@
 require 'pachube_data_formats/templates/xml_headers'
-require 'pachube_data_formats/templates/helpers'
 require 'pachube_data_formats/templates/json/feed_defaults'
 require 'pachube_data_formats/templates/json/datastream_defaults'
 require 'pachube_data_formats/templates/json/datapoint_defaults'

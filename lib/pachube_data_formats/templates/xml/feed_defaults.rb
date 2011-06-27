@@ -30,7 +30,7 @@ module PachubeDataFormats
                 environment.website website unless website.blank?
                 environment.email email unless email.blank?
                 environment.private_ self.private.to_s
-                split_tags(tags).each do |tag|
+                parse_tag_string(tags).each do |tag|
                   environment.tag tag
                 end if tags
                 environment.location({:disposition => location_disposition, :exposure => location_exposure, :domain => location_domain}.delete_if_nil_value) do |location|
@@ -45,7 +45,7 @@ module PachubeDataFormats
                 end if owner_login && owner_user_level
                 datastreams.each do |ds|
                   environment.data(:id => ds.id) do |data|
-                    split_tags(ds.tags).each do |tag|
+                    parse_tag_string(ds.tags).each do |tag|
                       data.tag tag
                     end if ds.tags
                     data.current_value ds.current_value, :at => ds.updated.iso8601(6)
@@ -88,7 +88,7 @@ module PachubeDataFormats
                 end
                 datastreams.each do |ds|
                   environment.data(:id => ds.id) do |data|
-                    split_tags(ds.tags).each do |tag|
+                    parse_tag_string(ds.tags).each do |tag|
                       data.tag tag
                     end if ds.tags
                     data.value ds.current_value, {:minValue => ds.min_value, :maxValue => ds.max_value}.delete_if_nil_value

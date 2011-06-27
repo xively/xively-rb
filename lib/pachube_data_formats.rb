@@ -1,6 +1,7 @@
 require 'nokogiri'
 require 'yajl/json_gem'
 require 'csv'
+require 'pachube_data_formats/helpers'
 require 'pachube_data_formats/base'
 require 'pachube_data_formats/validations'
 require 'pachube_data_formats/object_extensions'
@@ -16,4 +17,3 @@ require 'pachube_data_formats/datastream'
 require 'pachube_data_formats/datapoint'
 require 'pachube_data_formats/search_result'
 require 'pachube_data_formats/trigger'
-

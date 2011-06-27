@@ -22,7 +22,7 @@ module PachubeDataFormats
           template.current_value
           template.max_value {max_value.to_s}
           template.min_value {min_value.to_s}
-          template.tags {split_tags(tags)}
+          template.tags {parse_tag_string(tags)}
           template.unit {unit_hash(options)}
           template.datapoints do
             datapoints.collect do |datapoint|
@@ -46,7 +46,7 @@ module PachubeDataFormats
               :max_value => max_value.to_s,
               :min_value => min_value.to_s }.delete_if_nil_value]
           }
-          template.tags {split_tags(tags)}
+          template.tags {parse_tag_string(tags)}
           template.unit {unit_hash(options)}
           template.output! options
         end

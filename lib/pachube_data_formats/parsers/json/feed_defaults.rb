@@ -2,6 +2,9 @@ module PachubeDataFormats
   module Parsers
     module JSON
       module FeedDefaults
+
+        include PachubeDataFormats::Helpers
+
         def from_json(json)
           hash = ::JSON.parse(json)
           case hash['version']
@@ -18,6 +21,7 @@ module PachubeDataFormats
         def transform_1_0_0(hash)
           hash["updated"] = hash["updated"]
           hash["status"] = hash["status"]
+          hash["tags"] = join_tags(hash["tags"])
           hash["datastreams"] = hash["datastreams"].collect do |datastream|
             unit_hash = {}
             if unit = datastream.delete('unit')
@@ -91,11 +95,6 @@ module PachubeDataFormats
               "value" => datapoint["value"]
             }
           end
-        end
-
-        def join_tags(tags)
-          return unless tags
-          tags.join(',')
         end
       end
     end
