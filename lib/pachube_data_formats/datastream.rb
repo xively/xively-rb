@@ -123,12 +123,6 @@ module PachubeDataFormats
       options[:version] ||= "2"
       generate_csv(options.delete(:version), options)
     end
-
-    private
-
-    # def join_tags
-    #   self.tags = tags.sort{|a,b| a.downcase <=> b.downcase}.join(',') if tags.is_a?(Array)
-    # end
   end
 end
 
