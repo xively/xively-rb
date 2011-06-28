@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.08
+ * Rewrote tag string parser
+
 ## 0.1.07
  * Adding some validations on feed_id for datastreams and datapoints
 
