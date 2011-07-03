@@ -12,9 +12,7 @@ mkdir -p $outdir
 
 echo "started build script $0 in `$outdir` at `date`"
 
-set +e
-~/sysadmin/show_platform/show_platform.sh > $outdir/platform.txt 2>&1
-set -e
+show_platform.sh > $outdir/platform.txt 2>&1 || true
 
 echo "Running custom build.sh - install bundle, rake"
 bundle --path=.gem/
