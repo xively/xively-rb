@@ -3,7 +3,7 @@ module PachubeDataFormats
     ALLOWED_KEYS = %w(expires_at feed_id id key permissions private_access referer source_ip datastream_id user)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
-    #include PachubeDataFormats::Templates::JSON::KeyDefaults
+    include PachubeDataFormats::Templates::JSON::KeyDefaults
     #include PachubeDataFormats::Templates::XML::KeyDefaults
     include PachubeDataFormats::Parsers::JSON::KeyDefaults
     include PachubeDataFormats::Parsers::XML::KeyDefaults
