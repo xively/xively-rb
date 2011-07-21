@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.09
+ * Adding Key model for api keys, XML/JSON parsers, and JSON template
+
 ## 0.1.08
  * Rewrote tag string parser
 
