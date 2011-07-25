@@ -49,11 +49,11 @@ module PachubeDataFormats
       return attributes
     end
 
-    def as_json(options = {})
-      generate_json(options)
+    def as_json(options = nil)
+      generate_json(options || {})
     end
 
-    def to_json(options = {})
+    def to_json(options = nil)
       ::JSON.generate as_json(options)
     end
   end

@@ -83,9 +83,15 @@ describe PachubeDataFormats::Key do
   describe "#as_json" do
     it "should call the json generator" do
       options = {:include_blanks => true}
-      key = PachubeDataFormats::Key.new(options)
+      key = PachubeDataFormats::Key.new
       key.should_receive(:generate_json).with(options).and_return({"permissions" => [:get, :put]})
       key.as_json(options).should == {"permissions" => [:get, :put]}
+    end
+
+    it "should accept *very* nil options" do
+      key = PachubeDataFormats::Key.new
+      key.should_receive(:generate_json).with({}).and_return({"permissions" => [:get, :put]})
+      key.as_json(nil).should == {"permissions" => [:get, :put]}
     end
   end
 
@@ -96,7 +102,7 @@ describe PachubeDataFormats::Key do
 
     it "should call #as_json" do
       key = PachubeDataFormats::Key.new(@key_hash)
-      key.should_receive(:as_json).with({})
+      key.should_receive(:as_json).with(nil)
       key.to_json
     end
 
