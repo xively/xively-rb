@@ -50,7 +50,7 @@ module PachubeDataFormats
     end
 
     def as_json(options = {})
-      generate_json
+      generate_json(options)
     end
 
     def to_json(options = {})

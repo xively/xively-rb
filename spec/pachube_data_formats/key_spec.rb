@@ -82,9 +82,10 @@ describe PachubeDataFormats::Key do
 
   describe "#as_json" do
     it "should call the json generator" do
-      key = PachubeDataFormats::Key.new({})
-      key.should_receive(:generate_json).and_return({"permissions" => [:get, :put]})
-      key.as_json.should == {"permissions" => [:get, :put]}
+      options = {:include_blanks => true}
+      key = PachubeDataFormats::Key.new(options)
+      key.should_receive(:generate_json).with(options).and_return({"permissions" => [:get, :put]})
+      key.as_json(options).should == {"permissions" => [:get, :put]}
     end
   end
 
