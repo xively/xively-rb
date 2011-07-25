@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.10
+ * Adding label field to Keys
+ * should pass options through to Key#as_json
+ * Clearing up some confusion with trigger/key parsers
+ * Improving the Key.to_json error handling
+
 ## 0.1.09
  * Adding Key model for api keys, XML/JSON parsers, and JSON template
 
