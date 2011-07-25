@@ -1,18 +1,25 @@
 module PachubeDataFormats
   module Parsers
     module XML
-      module TriggerDefaults
+      module KeyDefaults
         def from_xml(xml)
           xml = Nokogiri.parse(xml)
           hash = {}
           hash["id"] = xml.at_xpath("//id").content if xml.at_xpath("//id")
-          hash["url"] = xml.at_xpath("//url").content if xml.at_xpath("//url")
-          hash["trigger_type"] = xml.at_xpath("//trigger-type").content if xml.at_xpath("//trigger-type")
-          hash["threshold_value"] = xml.at_xpath("//threshold-value").content if xml.at_xpath("//threshold-value")
-          hash["notified_at"] = xml.at_xpath("//notified-at").content if xml.at_xpath("//notified-at")
+          hash["expires_at"] = xml.at_xpath("//expires-at").content if xml.at_xpath("//expires-at")
+          hash["feed_id"] = xml.at_xpath("//feed-id").content if xml.at_xpath("//feed-id")
+          hash["datastream_id"] = xml.at_xpath("//datastream-id").content if xml.at_xpath("//datastream-id")
+          hash["key"] = xml.at_xpath("//api-key").content if xml.at_xpath("//api-key")
+
+          hash["permissions"] = xml.xpath("//permissions").map { |permissions|
+            permissions.xpath("//permission").map { |m| m.content.downcase }
+          }.flatten
+
+          hash["private_access"] = xml.at_xpath("//private-access").content if xml.at_xpath("//private-access")
+          hash["referer"] = xml.at_xpath("//referer").content if xml.at_xpath("//referer")
+          hash["source_ip"] = xml.at_xpath("//source-ip").content if xml.at_xpath("//source-ip")
           hash["user"] = xml.at_xpath("//user").content if xml.at_xpath("//user")
-          hash["environment_id"] = xml.at_xpath("//environment-id").content if xml.at_xpath("//environment-id")
-          hash["stream_id"] = xml.at_xpath("//stream-id").content if xml.at_xpath("//stream-id")
+          hash["label"] = xml.at_xpath("//label").content if xml.at_xpath("//label")
           hash
         end
       end

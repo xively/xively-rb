@@ -14,6 +14,7 @@ module PachubeDataFormats
           template.source_ip
           template.datastream_id
           template.user
+          template.label
           template.output! options
         end
       end

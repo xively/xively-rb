@@ -3,9 +3,9 @@ def key_as_(format, options = {})
   # This data is based on http://api.pachube.com/v2/feeds/504
   case format.to_s
   when 'hash'
-    data = {"source_ip"=>"127.0.0.1", "referer"=>"http://www.pachube.com", "permissions"=>%w(get put post delete), "key"=>"abcdefghasdfaoisdj109usasdf0a9sf", "id"=>40, "datastream_id"=>"1", "feed_id"=>424, "expires_at" => 12345, "private_access" => true, "user"=>"lebreeze"}
+    data = {"source_ip"=>"127.0.0.1", "referer"=>"http://www.pachube.com", "permissions"=>%w(get put post delete), "key"=>"abcdefghasdfaoisdj109usasdf0a9sf", "id"=>40, "datastream_id"=>"1", "feed_id"=>424, "expires_at" => 12345, "private_access" => true, "user"=>"lebreeze", "label" => "Our awesome label"}
   when 'json'
-    data = {"source_ip"=>"127.0.0.1", "referer"=>"http://www.pachube.com", "permissions"=>%w(get put post delete), "api_key"=>"abcdefghasdfaoisdj109usasdf0a9sf", "id"=>40, "datastream_id"=>"1", "feed_id"=>424, "expires_at" => 12345, "private_access" => true, "user"=>"lebreeze"}
+    data = {"source_ip"=>"127.0.0.1", "referer"=>"http://www.pachube.com", "permissions"=>%w(get put post delete), "api_key"=>"abcdefghasdfaoisdj109usasdf0a9sf", "id"=>40, "datastream_id"=>"1", "feed_id"=>424, "expires_at" => 12345, "private_access" => true, "user"=>"lebreeze", "label" => "Our awesome label"}
   when 'xml'
     data = <<XML
 <?xml version="1.0" encoding="UTF-8"?> 
@@ -25,6 +25,7 @@ def key_as_(format, options = {})
     <permission>DELETE</permission>
   </permissions>
   <user>lebreeze</user> 
+  <label>Our awesome label</label>
 </key> 
 XML
   end

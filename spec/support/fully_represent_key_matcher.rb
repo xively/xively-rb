@@ -30,6 +30,7 @@ RSpec::Matchers.define :fully_represent_key do |format, formatted_key|
     key.source_ip.should == xml.at_xpath("//source-ip").content
     key.datastream_id.should == xml.at_xpath("//datastream-id").content
     key.user.should == xml.at_xpath("//user").content
+    key.label.should == xml.at_xpath("//label").content
   end
   
   def match_json_key(key, formatted_key)
@@ -44,5 +45,6 @@ RSpec::Matchers.define :fully_represent_key do |format, formatted_key|
     key.source_ip.should == json["source_ip"]
     key.datastream_id.should == json["datastream_id"]
     key.user.should == json["user"]
+    key.label.should == json["label"]
   end
 end

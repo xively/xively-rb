@@ -17,5 +17,6 @@ describe "default feed json templates" do
     json[:source_ip].should == @key.source_ip
     json[:datastream_id].should == @key.datastream_id
     json[:user].should == @key.user
+    json[:label].should == @key.label
   end
 end
