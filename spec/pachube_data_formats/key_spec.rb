@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe PachubeDataFormats::Key do
   it "should have a constant that defines the allowed keys" do
-    PachubeDataFormats::Key::ALLOWED_KEYS.should == %w(expires_at feed_id id key permissions private_access referer source_ip datastream_id user)
+    PachubeDataFormats::Key::ALLOWED_KEYS.should == %w(expires_at feed_id id key label permissions private_access referer source_ip datastream_id user)
   end
 
   describe "validation" do

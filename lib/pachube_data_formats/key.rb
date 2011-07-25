@@ -1,6 +1,6 @@
 module PachubeDataFormats
   class Key
-    ALLOWED_KEYS = %w(expires_at feed_id id key permissions private_access referer source_ip datastream_id user)
+    ALLOWED_KEYS = %w(expires_at feed_id id key label permissions private_access referer source_ip datastream_id user)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
     include PachubeDataFormats::Templates::JSON::KeyDefaults
