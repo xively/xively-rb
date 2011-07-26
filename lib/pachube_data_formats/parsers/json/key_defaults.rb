@@ -3,7 +3,7 @@ module PachubeDataFormats
     module JSON
       module KeyDefaults
         def from_json(json)
-          hash = ::JSON.parse(json)
+          hash = ::JSON.parse(json)["key"]
           hash["id"] = hash.delete("id")
           hash["key"] = hash.delete("api_key")
           hash

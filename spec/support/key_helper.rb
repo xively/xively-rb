@@ -5,7 +5,7 @@ def key_as_(format, options = {})
   when 'hash'
     data = {"source_ip"=>"127.0.0.1", "referer"=>"http://www.pachube.com", "permissions"=>%w(get put post delete), "key"=>"abcdefghasdfaoisdj109usasdf0a9sf", "id"=>40, "datastream_id"=>"1", "feed_id"=>424, "expires_at" => 12345, "private_access" => true, "user"=>"lebreeze", "label" => "Our awesome label"}
   when 'json'
-    data = {"source_ip"=>"127.0.0.1", "referer"=>"http://www.pachube.com", "permissions"=>%w(get put post delete), "api_key"=>"abcdefghasdfaoisdj109usasdf0a9sf", "id"=>40, "datastream_id"=>"1", "feed_id"=>424, "expires_at" => 12345, "private_access" => true, "user"=>"lebreeze", "label" => "Our awesome label"}
+    data = {"key" => {"source_ip"=>"127.0.0.1", "referer"=>"http://www.pachube.com", "permissions"=>%w(get put post delete), "api_key"=>"abcdefghasdfaoisdj109usasdf0a9sf", "id"=>40, "datastream_id"=>"1", "feed_id"=>424, "expires_at" => 12345, "private_access" => true, "user"=>"lebreeze", "label" => "Our awesome label"}}
   when 'xml'
     data = <<XML
 <?xml version="1.0" encoding="UTF-8"?> 

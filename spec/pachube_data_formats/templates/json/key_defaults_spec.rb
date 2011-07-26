@@ -7,16 +7,16 @@ describe "default feed json templates" do
 
   it "should represent Pachube JSON (used by API v2)" do
     json = @key.generate_json
-    json[:id].should == @key.id
-    json[:expires_at].should == @key.expires_at
-    json[:feed_id].should == @key.feed_id
-    json[:api_key].should == @key.key
-    json[:permissions].should == @key.permissions
-    json[:private_access].should == @key.private_access
-    json[:referer].should == @key.referer
-    json[:source_ip].should == @key.source_ip
-    json[:datastream_id].should == @key.datastream_id
-    json[:user].should == @key.user
-    json[:label].should == @key.label
+    json[:key][:id].should == @key.id
+    json[:key][:expires_at].should == @key.expires_at
+    json[:key][:feed_id].should == @key.feed_id
+    json[:key][:api_key].should == @key.key
+    json[:key][:permissions].should == @key.permissions
+    json[:key][:private_access].should == @key.private_access
+    json[:key][:referer].should == @key.referer
+    json[:key][:source_ip].should == @key.source_ip
+    json[:key][:datastream_id].should == @key.datastream_id
+    json[:key][:user].should == @key.user
+    json[:key][:label].should == @key.label
   end
 end
