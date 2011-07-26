@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.11
+ * Keys always have a root node of 'keys'
+
 ## 0.1.10
  * Adding label field to Keys
  * should pass options through to Key#as_json
