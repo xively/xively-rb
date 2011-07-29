@@ -31,10 +31,12 @@ module PachubeDataFormats
         # As produced by http://www.pachube.com/api/v1/FEED_ID/datastreams/DATASTREAM_ID.json
         def transform_0_6_alpha(hash)
           hash["id"] = hash.delete("id")
-          hash["updated"] = hash["values"].first.delete("recorded_at")
-          hash["current_value"] = hash["values"].first.delete("value")
-          hash["max_value"] = hash["values"].first.delete("max_value")
-          hash["min_value"] = hash["values"].first.delete("min_value")
+          if values = [*hash["values"]].first
+            hash["updated"] = hash["values"].first.delete("recorded_at")
+            hash["current_value"] = hash["values"].first.delete("value")
+            hash["max_value"] = hash["values"].first.delete("max_value")
+            hash["min_value"] = hash["values"].first.delete("min_value")
+          end
           hash["tags"] = hash["tags"].join(',') if hash["tags"]
           if unit = hash.delete('unit')
             hash['unit_type'] = unit['type']

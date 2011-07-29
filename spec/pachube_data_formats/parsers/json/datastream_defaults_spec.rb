@@ -72,6 +72,11 @@ describe "default datastream json parser" do
       @json = datastream_as_(:json, :version => "0.6-alpha", :except => [:tags])
       lambda {@datastream.from_json(@json)}.should_not raise_error
     end
+
+    it "should handle blank values" do
+      @json = datastream_as_(:json, :version => "0.6-alpha", :except => [:values])
+      lambda {@datastream.from_json(@json)}.should_not raise_error
+    end
   end
 
 end
