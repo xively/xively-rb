@@ -29,7 +29,9 @@ RSpec::Matchers.define :fully_represent_datastream do |format, formatted_datastr
       datastream.feed_id.should == environment.attributes["id"].value
       datastream.feed_creator.should == environment.attributes["creator"].value
       datastream.id.should == data.attributes["id"].value
-      datastream.tags.should == data.xpath("xmlns:tag").map(&:content).sort{|a,b| a.downcase<=>b.downcase}.join(',')
+      if (tags = data.xpath("xmlns:tag")).any?
+        datastream.tags.should == tags.map(&:content).sort{|a,b| a.downcase<=>b.downcase}.join(',')
+      end
       current_value = data.at_xpath("xmlns:current_value")
       datastream.current_value.should == current_value.content
       datastream.updated.should == current_value.attributes["at"].value if current_value.attributes["at"]
@@ -52,7 +54,9 @@ RSpec::Matchers.define :fully_represent_datastream do |format, formatted_datastr
       datastream.feed_id.should == environment.attributes["id"].value
       datastream.feed_creator.should == "http://www.haque.co.uk"
       datastream.id.should == data.attributes["id"].value
-      datastream.tags.should == data.xpath("xmlns:tag").map(&:content).sort{|a,b| a.downcase<=>b.downcase}.join(',')
+      if (tags = data.xpath("xmlns:tag")).any?
+        datastream.tags.should == tags.map(&:content).sort{|a,b| a.downcase<=>b.downcase}.join(',')
+      end
       current_value = data.at_xpath("xmlns:value")
       datastream.current_value.should == current_value.content
       datastream.updated.should == xml.at_xpath("//xmlns:environment").attributes["updated"].value if xml.at_xpath("//xmlns:environment").attributes["updated"]

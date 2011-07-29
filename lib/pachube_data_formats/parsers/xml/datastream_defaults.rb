@@ -22,7 +22,9 @@ module PachubeDataFormats
           hash["feed_id"] = environment.attributes["id"].value
           hash["feed_creator"] = environment.attributes["creator"].value
           hash["id"] = data.attributes["id"].value
-          hash["tags"] = data.xpath("xmlns:tag").collect(&:content).sort{|a,b| a.downcase <=> b.downcase}.join(',')
+          if (tags = data.xpath("xmlns:tag").collect(&:content)).any?
+            hash["tags"] = tags.sort{|a,b| a.downcase <=> b.downcase}.join(',')
+          end
           current_value = data.at_xpath("xmlns:current_value")
           hash["current_value"] = current_value.content
           hash["updated"] = current_value.attributes["at"].value
@@ -53,7 +55,9 @@ module PachubeDataFormats
           hash["feed_creator"] = "http://www.haque.co.uk"
           hash["updated"] = environment.attributes["updated"].value
           hash["id"] = data.attributes["id"].value
-          hash["tags"] = data.xpath("xmlns:tag").collect(&:content).sort{|a,b| a.downcase <=> b.downcase}.join(',')
+          if (tags = data.xpath("xmlns:tag").collect(&:content)).any?
+            hash["tags"] = tags.sort{|a,b| a.downcase <=> b.downcase}.join(',')
+          end
           current_value = data.at_xpath("xmlns:value")
           hash["current_value"] = current_value.content
           hash["min_value"] = current_value.attributes["minValue"].value
