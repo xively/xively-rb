@@ -1,9 +1,14 @@
 RSpec::Matchers.define :fully_represent_datastream do |format, formatted_datastream|
   match do |datastream|
-    if format.to_sym == :xml
+    case format.to_sym
+    when :xml
       match_xml_datastream(datastream, formatted_datastream)
-    else
+    when :json
       match_json_datastream(datastream, formatted_datastream)
+    when :csv
+      match_csv_datastream(datastream, formatted_datastream)
+    else
+      raise "Unknown Datastream format: '#{format}'"
     end
   end
 
@@ -75,6 +80,9 @@ RSpec::Matchers.define :fully_represent_datastream do |format, formatted_datastr
     end
   end
 
+  def match_csv_datastream(datastream, formatted_datastream)
+    datastream.current_value.to_s.should == formatted_datastream.strip
+  end
 end
 
 

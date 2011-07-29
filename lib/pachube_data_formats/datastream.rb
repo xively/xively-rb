@@ -10,6 +10,7 @@ module PachubeDataFormats
     include PachubeDataFormats::Templates::CSV::DatastreamDefaults
     include PachubeDataFormats::Parsers::JSON::DatastreamDefaults
     include PachubeDataFormats::Parsers::XML::DatastreamDefaults
+    include PachubeDataFormats::Parsers::CSV::DatastreamDefaults
 
     include Validations
     # validate :before, :join_tags
@@ -71,8 +72,10 @@ module PachubeDataFormats
         self.attributes = input
       elsif input.strip[0...1].to_s == "{"
         self.attributes = from_json(input)
-      else
+      elsif input.strip[0...1].to_s == "<"
         self.attributes = from_xml(input)
+      else
+        self.attributes = from_csv(input)
       end
     end
 

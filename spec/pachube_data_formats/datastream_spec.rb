@@ -102,7 +102,7 @@ describe PachubeDataFormats::Datastream do
       end
     end
 
-    %w(xml json hash).each do |format|
+    %w(xml json hash csv).each do |format|
       it "should accept #{format}" do
         datastream = PachubeDataFormats::Datastream.new(datastream_as_(format.to_sym))
         datastream.current_value.should == "14"

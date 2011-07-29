@@ -30,6 +30,8 @@ def datastream_as_(format, options = {})
     data = datastream_as_json(options[:version] || "1.0.0")
   when 'xml'
     data = datastream_as_xml(options[:version] || "0.5.1", options[:except_node])
+  when 'csv'
+    data = '14'
   end
  
   # Add extra options we passed
@@ -53,6 +55,8 @@ def datastream_as_(format, options = {})
   when 'json'
     data.to_json
   when 'xml'
+    data
+  when 'csv'
     data
   else
     raise "#{format} undefined"
