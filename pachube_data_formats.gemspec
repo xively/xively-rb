@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
   s.name        = "pachube_data_formats"
   s.version     = PachubeDataFormats::VERSION::STRING
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["Paul Bellamy", "Levent Ali"]
-  s.email       = ["paul.a.bellamy@gmail.com", "lebreeze@gmail.com"]
+  s.authors     = ["Paul Bellamy", "Levent Ali", "Sam Mulube"]
+  s.email       = ["paul.a.bellamy@gmail.com", "lebreeze@gmail.com", "sam@pachube.com"]
   s.homepage    = "http://github.com/pachube/pachube_data_formats"
   s.summary     = %q{pachube_data_formats is a gem designed to make interfacing with pachube easier. It converts to and from Pachube's data formats.}
   s.description = <<-EOF
