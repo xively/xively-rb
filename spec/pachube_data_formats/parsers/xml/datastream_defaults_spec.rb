@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../../spec_helper'
+require 'spec_helper'
 
 describe "default datastream xml parser" do
   context "0.5.1 (used by API v2)" do
