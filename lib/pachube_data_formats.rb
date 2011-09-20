@@ -1,6 +1,9 @@
 require 'nokogiri'
 require 'yajl/json_gem'
 require 'csv'
+
+$:.unshift(File.dirname(File.expand_path(__FILE__)))
+
 require 'pachube_data_formats/helpers'
 require 'pachube_data_formats/base'
 require 'pachube_data_formats/validations'
