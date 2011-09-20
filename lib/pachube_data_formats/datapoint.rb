@@ -45,7 +45,10 @@ module PachubeDataFormats
     end
 
     def attributes=(input)
+      return if input.nil?
+      input.deep_stringify_keys!
       ALLOWED_KEYS.each { |key| self.send("#{key}=", input[key]) }
+      return attributes
     end
 
     def as_json(options = {})
