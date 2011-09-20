@@ -7,19 +7,29 @@ module PachubeDataFormats
           hash = {}
           hash["id"] = xml.at_xpath("//id").content if xml.at_xpath("//id")
           hash["expires_at"] = xml.at_xpath("//expires-at").content if xml.at_xpath("//expires-at")
-          hash["feed_id"] = xml.at_xpath("//feed-id").content if xml.at_xpath("//feed-id")
-          hash["datastream_id"] = xml.at_xpath("//datastream-id").content if xml.at_xpath("//datastream-id")
           hash["key"] = xml.at_xpath("//api-key").content if xml.at_xpath("//api-key")
-
-          hash["permissions"] = xml.xpath("//permissions").map { |permissions|
-            permissions.xpath("//permission").map { |m| m.content.downcase }
-          }.flatten
-
-          hash["private_access"] = xml.at_xpath("//private-access").content if xml.at_xpath("//private-access")
-          hash["referer"] = xml.at_xpath("//referer").content if xml.at_xpath("//referer")
-          hash["source_ip"] = xml.at_xpath("//source-ip").content if xml.at_xpath("//source-ip")
-          hash["user"] = xml.at_xpath("//user").content if xml.at_xpath("//user")
           hash["label"] = xml.at_xpath("//label").content if xml.at_xpath("//label")
+          hash["user"] = xml.at_xpath("//user").content if xml.at_xpath("//user")
+
+          hash["scopes"] = xml.xpath("//key/scopes/scope").collect { |scope|
+            permissions = scope.xpath("permissions/permission").collect { |permission|
+              permission.content.to_s.downcase
+            }
+            resources = scope.xpath("resources/resource").collect { |resource|
+              { "feed_id" => resource.at_xpath("feed-id").content,
+                "datastream_id" => resource.at_xpath("datastream-id").content,
+                "datastream_trigger_id" => resource.at_xpath("datastream-trigger-id").content
+              }.delete_if_nil_value
+            }
+            {
+              "referer" => scope.at_xpath("referer").content,
+              "source_ip" => scope.at_xpath("source-ip").content,
+              "private_access" => scope.at_xpath("private-access").content,
+              "permissions" => permissions,
+              "resources" => resources
+            }.delete_if_nil_value
+          }
+
           hash
         end
       end

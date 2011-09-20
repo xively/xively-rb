@@ -2,31 +2,45 @@ def key_as_(format, options = {})
   # Default data
   # This data is based on http://api.pachube.com/v2/feeds/504
   case format.to_s
-  when 'hash'
-    data = {"source_ip"=>"127.0.0.1", "referer"=>"http://www.pachube.com", "permissions"=>%w(get put post delete), "key"=>"abcdefghasdfaoisdj109usasdf0a9sf", "id"=>40, "datastream_id"=>"1", "feed_id"=>424, "expires_at" => 12345, "private_access" => true, "user"=>"lebreeze", "label" => "Our awesome label"}
-  when 'json'
-    data = {"key" => {"source_ip"=>"127.0.0.1", "referer"=>"http://www.pachube.com", "permissions"=>%w(get put post delete), "api_key"=>"abcdefghasdfaoisdj109usasdf0a9sf", "id"=>40, "datastream_id"=>"1", "feed_id"=>424, "expires_at" => 12345, "private_access" => true, "user"=>"lebreeze", "label" => "Our awesome label"}}
+  when 'hash', 'json'
+    data = { "id" => 40, "key" => "abcdefghasdfaoisdj109usasdf0a9sf", "label" => "Our awesome label",
+      "user" => "lebreeze", "expires_at" => 12345, "scopes" => [
+        { "source_ip" => "127.0.0.1", "referer" => "http://www.pachube.com",
+          "permissions" => %w(get put post delete), "private_access" => true,
+          "resources" => [
+            { "feed_id" => 424, "datastream_id" => "1" }
+          ]
+        }
+      ]}
   when 'xml'
     data = <<XML
-<?xml version="1.0" encoding="UTF-8"?> 
-<key> 
-  <id type="integer">40</id> 
+<?xml version="1.0" encoding="UTF-8"?>
+<key>
+  <id>40</id>
   <api-key>abcdefghasdfaoisdj109usasdf0a9sf</api-key>
-  <referer>http://www.pachube.com</referer>
-  <source-ip>127.0.0.1</source-ip>
   <expires-at>12345</expires-at>
-  <feed-id type="integer">424</feed-id> 
-  <datastream-id>1</datastream-id> 
-  <private-access>true</private-access>
-  <permissions>
-    <permission>GET</permission>
-    <permission>PUT</permission>
-    <permission>POST</permission>
-    <permission>DELETE</permission>
-  </permissions>
-  <user>lebreeze</user> 
+  <user>lebreeze</user>
   <label>Our awesome label</label>
-</key> 
+  <scopes>
+    <scope>
+      <referer>http://www.pachube.com</referer>
+      <source-ip>127.0.0.1</source-ip>
+      <permissions>
+        <permission>GET</permission>
+        <permission>PUT</permission>
+        <permission>POST</permission>
+        <permission>DELETE</permission>
+      </permissions>
+      <private-access>true</private-access>
+      <resources>
+        <resource>
+          <feed-id>424</feed-id>
+          <datastream-id>1</datastream-id>
+        </resource>
+      </resources>
+    </scope>
+  </scopes>
+</key>
 XML
   end
 
@@ -49,7 +63,7 @@ XML
   when 'hash'
     data
   when 'json'
-    data.to_json
+    { "key" => data }.to_json
   when 'xml'
     data
   else
