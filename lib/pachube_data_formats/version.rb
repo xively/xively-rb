@@ -2,7 +2,7 @@ module PachubeDataFormats #:nodoc:
   module VERSION
     MAJOR = 0
     MINOR = 1
-    TINY  = '11'
+    TINY  = '12'
 
     STRING = [MAJOR, MINOR, TINY].join('.')
   end
