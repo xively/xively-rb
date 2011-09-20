@@ -4,11 +4,12 @@ require 'bundler/setup'
 require 'rake/clean'
 require 'rake/rdoctask'
 require "rspec/core/rake_task"
-require 'rcov/rcovtask'
 
 CLEAN.include('pkg')
 CLEAN.include('coverage')
 CLOBBER.include('html')
+
+Bundler::GemHelper.install_tasks
 
 task :default => :spec
 
