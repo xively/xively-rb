@@ -12,3 +12,6 @@ require 'pachube_data_formats'
 
 require File.dirname(__FILE__) + '/fixtures/models.rb'
 
+RSpec.configure do |c|
+  c.run_all_when_everything_filtered = true
+end

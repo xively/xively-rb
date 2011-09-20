@@ -14,16 +14,20 @@ task :default => :spec
 # run tests before building
 task :build => :spec
 
-
-desc "Run all specs in spec directory (excluding plugin specs)"
+desc "Run all specs in spec directory"
 RSpec::Core::RakeTask.new do |t|
-  t.rspec_opts = %w[--color --options "spec/spec.opts"]
 end
-
 
 desc "Run all specs with rcov"
 Rcov::RcovTask.new do |t|
   t.test_files = FileList['spec/**/*_spec.rb']
   # t.verbose = true     # uncomment to see the executed command
   t.rcov_opts << '--exclude .gem/*,spec/*,features/*,.bundle/*,config/*'
+end
+
+namespace :spec do
+  RSpec::Core::RakeTask.new(:focus) do |t|
+    t.rspec_opts = "--tag focus"
+    t.verbose = true
+  end
 end

@@ -99,7 +99,7 @@ By default the gem expects your object to have the following fields:
  * unit_symbol
  * unit_type
  * updated
- 
+
 #### Datapoints
 
  * at

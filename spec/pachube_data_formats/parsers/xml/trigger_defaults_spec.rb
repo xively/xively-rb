@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../../spec_helper'
+require 'spec_helper'
 
 describe "default trigger xml parser" do
   it "should convert into attributes hash" do

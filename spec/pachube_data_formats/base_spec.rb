@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe PachubeDataFormats::Base do
   describe "#is_pachube_data_format" do
