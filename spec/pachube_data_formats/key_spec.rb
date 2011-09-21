@@ -27,6 +27,14 @@ describe PachubeDataFormats::Key do
       @key.attributes = { :user => "bob", :scopes => [ { :permissions => ["get"], :resources => [{:datastream_id => "0"}] } ] }
       @key.should_not be_valid
     end
+
+    it "should always return a boolean from the scope private_access? attribute, even if nil" do
+      @key.attributes = { :scopes => [{}] }
+      @key.scopes.first.private_access.should be_nil
+      @key.scopes.first.private_access?.should be_false
+      @key.scopes.first.private_access = true
+      @key.scopes.first.private_access?.should be_true
+    end
   end
 
   describe "#initialize" do

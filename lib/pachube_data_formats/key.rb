@@ -105,6 +105,10 @@ module PachubeDataFormats
         ALLOWED_KEYS.each { |key| self.send("#{key}=", input[key]) }
         return attributes
       end
+
+      def private_access?
+        @private_access || false
+      end
     end
 
     ALLOWED_KEYS = %w(id key label user expires_at scopes)
@@ -114,9 +118,6 @@ module PachubeDataFormats
     #include PachubeDataFormats::Templates::XML::KeyDefaults
     include PachubeDataFormats::Parsers::JSON::KeyDefaults
     include PachubeDataFormats::Parsers::XML::KeyDefaults
-
-    # validates_presence_of :user
-    # validates_presence_of :permissions
 
     include Validations
 
