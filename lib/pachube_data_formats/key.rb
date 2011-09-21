@@ -78,7 +78,6 @@ module PachubeDataFormats
       end
 
       def resources=(array)
-        puts array.inspect
         return unless array.is_a?(Array)
         @resources = []
         array.each do |resource|
