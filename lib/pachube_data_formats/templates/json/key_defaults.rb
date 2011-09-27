@@ -5,8 +5,8 @@ module PachubeDataFormats
         def generate_json(options={})
           template = Template.new(self, :json)
           template.key do |k|
-            if self.scopes
-              s = self.scopes.collect { |s|
+            if self.permissions
+              s = self.permissions.collect { |s|
                 if s.resources
                   res = s.resources.collect { |r|
                     {
@@ -22,7 +22,7 @@ module PachubeDataFormats
                   :private_access => s.private_access,
                   :label => s.label,
                   :minimum_interval => s.minimum_interval,
-                  :permissions => s.permissions.collect { |p| p.to_s.downcase },
+                  :access_types => s.access_types.collect { |a| a.to_s.downcase },
                   :resources => res
                 }.delete_if_nil_value
               }
@@ -34,7 +34,7 @@ module PachubeDataFormats
               :api_key => key,
               :user => user,
               :label => label,
-              :scopes => s
+              :permissions => s
             }
           end
           template.output! options

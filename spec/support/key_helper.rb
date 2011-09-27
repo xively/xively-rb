@@ -4,9 +4,9 @@ def key_as_(format, options = {})
   case format.to_s
   when 'hash', 'json'
     data = { "id" => 40, "key" => "abcdefghasdfaoisdj109usasdf0a9sf", "label" => "Our awesome label",
-      "user" => "lebreeze", "expires_at" => 12345, "scopes" => [
+      "user" => "lebreeze", "expires_at" => 12345, "permissions" => [
         { "source_ip" => "127.0.0.1", "referer" => "http://www.pachube.com",
-          "permissions" => %w(get put post delete), "private_access" => true,
+          "access_types" => %w(get put post delete), "private_access" => true,
           "resources" => [
             { "feed_id" => 424, "datastream_id" => "1" }
           ]
@@ -21,16 +21,16 @@ def key_as_(format, options = {})
   <expires-at>12345</expires-at>
   <user>lebreeze</user>
   <label>Our awesome label</label>
-  <scopes>
-    <scope>
+  <permissions>
+    <permission>
       <referer>http://www.pachube.com</referer>
       <source-ip>127.0.0.1</source-ip>
-      <permissions>
-        <permission>GET</permission>
-        <permission>PUT</permission>
-        <permission>POST</permission>
-        <permission>DELETE</permission>
-      </permissions>
+      <access-types>
+        <access-type>GET</access-type>
+        <access-type>PUT</access-type>
+        <access-type>POST</access-type>
+        <access-type>DELETE</access-type>
+      </access-types>
       <private-access>true</private-access>
       <resources>
         <resource>
@@ -38,8 +38,8 @@ def key_as_(format, options = {})
           <datastream-id>1</datastream-id>
         </resource>
       </resources>
-    </scope>
-  </scopes>
+    </permission>
+  </permissions>
 </key>
 XML
   end

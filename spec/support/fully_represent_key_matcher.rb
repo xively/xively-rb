@@ -25,21 +25,25 @@ RSpec::Matchers.define :fully_represent_key do |format, formatted_key|
     key.label.should == xml.at_xpath("//label").content
 
     # TODO: fix this
-    key.scopes.each do |scope|
+    key.permissions.each_index do |permission_index|
+      permission = key.permissions[permission_index]
+      permission_node = xml.xpath("//permissions/permission")[permission_index]
 
+      permission.label.should == permission_node.at_xpath("label").content
+      permission.referer.should == permission_node.at_xpath("referer").content
+      permission.source_ip.should == permission_node.at_xpath("source-ip").content
+      permission.private_access.should == permission_node.at_xpath("private-access").content
+      permission.access_types.should == permission_node.xpath("access-types/access-type").collect { |a| a.content.downcase }
+
+      permission.resources.each_index do |res_index|
+        resource = permission.resources[res_index]
+        resource_node = permission_node.xpath("resources/resource")[res_index]
+
+        resource.feed_id.should == resource_node.at_xpath("feed-id").content
+        resource.datastream_id.should == resource_node.at_xpath("datastream-id").content
+        resource.datastream_trigger_id.should == resource_node.at_xpath("datastream-trigger-id").content
+      end
     end
-
-    # key.scopes.should == xml.xpath("//scopes/scope").collect { |scope|
-    # }
-
-    # key.permissions.should == xml.xpath("//permissions").map { |permissions|
-    #   permissions.xpath("//permission").map { |m| m.content.downcase }
-    # }.flatten
-    # key.private_access.should == xml.at_xpath("//private-access").content
-    # key.referer.should == xml.at_xpath("//referer").content
-    # key.source_ip.should == xml.at_xpath("//source-ip").content
-    # key.datastream_id.should == xml.at_xpath("//datastream-id").content
-    # key.feed_id.should == xml.at_xpath("//feed-id").content
   end
 
   def match_json_key(key, formatted_key)
@@ -49,21 +53,21 @@ RSpec::Matchers.define :fully_represent_key do |format, formatted_key|
     key.key.should == json["api_key"]
     key.user.should == json["user"]
     key.label.should == json["label"]
-    key.scopes.each_index do |index|
-      scope = key.scopes[index]
+    key.permissions.each_index do |index|
+      permission = key.permissions[index]
 
-      scope.referer.should == json["scopes"][index]["referer"]
-      scope.source_ip.should == json["scopes"][index]["source_ip"]
-      scope.label.should == json["scopes"][index]["label"]
-      scope.permissions.should == json["scopes"][index]["permissions"]
-      scope.private_access.should == json["scopes"][index]["private_access"]
+      permission.referer.should == json["permissions"][index]["referer"]
+      permission.source_ip.should == json["permissions"][index]["source_ip"]
+      permission.label.should == json["permissions"][index]["label"]
+      permission.access_types.should == json["permissions"][index]["access_types"]
+      permission.private_access.should == json["permissions"][index]["private_access"]
 
-      scope.resources.each_index do |res_index|
-        resource = scope.resources[res_index]
+      permission.resources.each_index do |res_index|
+        resource = permission.resources[res_index]
 
-        resource.feed_id.should == json["scopes"][index]["resources"][res_index]["feed_id"]
-        resource.datastream_id.should == json["scopes"][index]["resources"][res_index]["datastream_id"]
-        resource.datastream_trigger_id.should == json["scopes"][index]["resources"][res_index]["datastream_trigger_id"]
+        resource.feed_id.should == json["permissions"][index]["resources"][res_index]["feed_id"]
+        resource.datastream_id.should == json["permissions"][index]["resources"][res_index]["datastream_id"]
+        resource.datastream_trigger_id.should == json["permissions"][index]["resources"][res_index]["datastream_trigger_id"]
       end
     end
   end
