@@ -12,17 +12,17 @@ describe "default feed json templates" do
     json[:key][:api_key].should == @key.key
     json[:key][:user].should == @key.user
     json[:key][:label].should == @key.label
-    json[:key][:scopes].each_index do |scope_index|
-      json[:key][:scopes][scope_index][:permissions].should == @key.scopes[scope_index].permissions
-      json[:key][:scopes][scope_index][:label].should == @key.scopes[scope_index].label
-      json[:key][:scopes][scope_index][:private_access].should == @key.scopes[scope_index].private_access
-      json[:key][:scopes][scope_index][:referer].should == @key.scopes[scope_index].referer
-      json[:key][:scopes][scope_index][:source_ip].should == @key.scopes[scope_index].source_ip
-      json[:key][:scopes][scope_index][:minimum_interval].should == @key.scopes[scope_index].minimum_interval
-      json[:key][:scopes][scope_index][:resources].each_index do |res_index|
-        json[:key][:scopes][scope_index][:resources][res_index][:feed_id].should == @key.scopes[scope_index].resources[res_index].feed_id
-        json[:key][:scopes][scope_index][:resources][res_index][:datastream_id].should == @key.scopes[scope_index].resources[res_index].datastream_id
-        json[:key][:scopes][scope_index][:resources][res_index][:datastream_trigger_id].should == @key.scopes[scope_index].resources[res_index].datastream_trigger_id
+    json[:key][:permissions].each_index do |permission_index|
+      json[:key][:permissions][permission_index][:access_types].should == @key.permissions[permission_index].access_types
+      json[:key][:permissions][permission_index][:label].should == @key.permissions[permission_index].label
+      json[:key][:permissions][permission_index][:private_access].should == @key.permissions[permission_index].private_access
+      json[:key][:permissions][permission_index][:referer].should == @key.permissions[permission_index].referer
+      json[:key][:permissions][permission_index][:source_ip].should == @key.permissions[permission_index].source_ip
+      json[:key][:permissions][permission_index][:minimum_interval].should == @key.permissions[permission_index].minimum_interval
+      json[:key][:permissions][permission_index][:resources].each_index do |res_index|
+        json[:key][:permissions][permission_index][:resources][res_index][:feed_id].should == @key.permissions[permission_index].resources[res_index].feed_id
+        json[:key][:permissions][permission_index][:resources][res_index][:datastream_id].should == @key.permissions[permission_index].resources[res_index].datastream_id
+        json[:key][:permissions][permission_index][:resources][res_index][:datastream_trigger_id].should == @key.permissions[permission_index].resources[res_index].datastream_trigger_id
       end
     end
   end
