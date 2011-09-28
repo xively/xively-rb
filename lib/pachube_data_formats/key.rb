@@ -2,6 +2,7 @@ module PachubeDataFormats
   class Key
     ALLOWED_KEYS = %w(id key label user expires_at permissions)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
+    NESTED_KEYS = %w(permissions)
 
     include PachubeDataFormats::Templates::JSON::KeyDefaults
     #include PachubeDataFormats::Templates::XML::KeyDefaults
@@ -55,6 +56,9 @@ module PachubeDataFormats
       return if input.nil?
       input.deep_stringify_keys!
       ALLOWED_KEYS.each { |key| self.send("#{key}=", input[key]) }
+      NESTED_KEYS.each { |key|
+        self.send("#{key}=".to_sym, input["#{key}_attributes"]) unless input["#{key}_attributes"].nil?
+      }
       return attributes
     end
 
