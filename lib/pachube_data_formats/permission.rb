@@ -2,6 +2,7 @@ module PachubeDataFormats
   class Permission
     ALLOWED_KEYS = %w(label access_types private_access referer source_ip minimum_interval resources)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
+    NESTED_KEYS = %w(resources)
 
     include Validations
 
@@ -59,6 +60,7 @@ module PachubeDataFormats
       return if input.nil?
       input.deep_stringify_keys!
       ALLOWED_KEYS.each { |key| self.send("#{key}=", input[key]) }
+      NESTED_KEYS.each { |key| self.send("#{key}=", input["#{key}_attributes"]) unless input["#{key}_attributes"].nil? }
       return attributes
     end
 

@@ -97,6 +97,15 @@ describe PachubeDataFormats::Key do
       end
       key.attributes=(attrs)
     end
+
+    it "should accept deep nested attributes for permissions array" do
+      key = PachubeDataFormats::Key.new({})
+      key.attributes = { :permissions_attributes => [{:label => "label", :access_types => [:get, :put], :resources_attributes => [{:feed_id => 123, :datastream_id => "0"}]}] }
+      key.permissions.size.should == 1
+      key.permissions.first.label.should == "label"
+      key.permissions.first.resources.size.should == 1
+      key.permissions.first.resources.first.feed_id.should == 123
+    end
   end
 
   describe "#as_json" do
