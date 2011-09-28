@@ -35,7 +35,7 @@ module PachubeDataFormats
               :user => user,
               :label => label,
               :permissions => s
-            }
+            }.delete_if_nil_value
           end
           template.output! options
         end
