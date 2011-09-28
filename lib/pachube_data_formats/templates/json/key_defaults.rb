@@ -24,7 +24,7 @@ module PachubeDataFormats
                   :minimum_interval => s.minimum_interval,
                   :access_types => s.access_types.collect { |a| a.to_s.downcase },
                   :resources => res
-                }.delete_if_nil_value
+                }
               }
             end
 
@@ -35,7 +35,7 @@ module PachubeDataFormats
               :user => user,
               :label => label,
               :permissions => s
-            }.delete_if_nil_value
+            }
           end
           template.output! options
         end
