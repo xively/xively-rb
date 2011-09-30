@@ -32,11 +32,10 @@ module PachubeDataFormats
           template.updated {updated.iso8601(6)}
           template.email
           template.creator
-          if owner_login && owner_user_level
+          if owner_login
             template.user do |user|
               {
-                :login => owner_login,
-                :user_level => owner_user_level
+                :login => owner_login
               }
             end
           end

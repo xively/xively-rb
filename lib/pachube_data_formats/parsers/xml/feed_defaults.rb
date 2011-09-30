@@ -41,7 +41,6 @@ module PachubeDataFormats
           owner = environment.at_xpath("xmlns:user")
           if owner
             hash["owner_login"] = owner.at_xpath("xmlns:login").content
-            hash["owner_user_level"] = owner.at_xpath("xmlns:user_level").content
           end
           hash["datastreams"] = environment.xpath("xmlns:data").collect do |datastream|
             current_value = datastream.at_xpath("xmlns:current_value")

@@ -50,7 +50,6 @@ module PachubeDataFormats
           end
           if owner = hash.delete("user")
             hash["owner_login"] = owner["login"]
-            hash["owner_user_level"] = owner["user_level"]
           end
           hash
         end

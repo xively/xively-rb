@@ -52,7 +52,7 @@ describe "default feed xml templates" do
       end
     end
 
-    %w(status feed description icon website email title auto_feed_url owner_login owner_user_level).each do |node|
+    %w(status feed description icon website email title auto_feed_url owner_login).each do |node|
       it "should ignore blank '#{node}'" do
         @feed.send("#{node}=", nil)
         Nokogiri.parse(@feed.generate_xml("0.5.1")).xpath("//xmlns:#{node}").should be_blank

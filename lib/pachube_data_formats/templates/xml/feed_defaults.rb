@@ -41,8 +41,7 @@ module PachubeDataFormats
                 end
                 environment.user do |user|
                   user.login owner_login
-                  user.user_level owner_user_level
-                end if owner_login && owner_user_level
+                end if owner_login
                 datastreams.each do |ds|
                   environment.data(:id => ds.id) do |data|
                     parse_tag_string(ds.tags).each do |tag|
