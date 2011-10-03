@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "default feed json templates" do
+describe "default key json templates" do
   before(:each) do
     @key = PachubeDataFormats::Key.new(key_as_(:hash))
   end
