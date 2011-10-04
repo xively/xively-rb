@@ -19,12 +19,12 @@ describe PachubeDataFormats::Key do
     end
 
     it "should not be valid if resource present with no feed_id" do
-      @key.attributes = { :user => "bob", :permissions => [ { :permissions => ["get"], :resources => [{}] } ] }
+      @key.attributes = { :user => "bob", :permissions => [ { :access_types => ["get"], :resources => [{}] } ] }
       @key.should_not be_valid
     end
 
     it "should not be valid if we have a datastream_id with no feed_id in a resource" do
-      @key.attributes = { :user => "bob", :permissions => [ { :permissions => ["get"], :resources => [{:datastream_id => "0"}] } ] }
+      @key.attributes = { :user => "bob", :permissions => [ { :access_types => ["get"], :resources => [{:datastream_id => "0"}] } ] }
       @key.should_not be_valid
     end
 
