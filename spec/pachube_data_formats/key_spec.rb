@@ -10,7 +10,7 @@ describe PachubeDataFormats::Key do
       @key = PachubeDataFormats::Key.new
     end
 
-    %w(permissions user).each do |field|
+    %w(label permissions user).each do |field|
       it "should require a '#{field}'" do
         @key.send("#{field}=".to_sym, nil)
         @key.should_not be_valid
@@ -33,6 +33,12 @@ describe PachubeDataFormats::Key do
       @key.private_access?.should be_false
       @key.private_access = true
       @key.private_access?.should be_true
+    end
+
+    it "should not be valid if a permission object with no access_types is added" do
+      @key.attributes = { :user => "bob", :permissions => [ { :label => "label" } ] } ##["get"], :resources => [{}] } ] }
+      @key.should_not be_valid
+      @key.errors[:permissions_access_types].should include("can't be blank")
     end
   end
 
@@ -104,6 +110,14 @@ describe PachubeDataFormats::Key do
       key.permissions.first.label.should == "label"
       key.permissions.first.resources.size.should == 1
       key.permissions.first.resources.first.feed_id.should == 123
+    end
+
+    it "should set deep nested attributes using class instances as well (not just hashes of attributes)" do
+      resource = PachubeDataFormats::Resource.new(:feed_id => 123)
+      permission = PachubeDataFormats::Permission.new(:label => "label", :access_types => [:get], :resources => [resource])
+      key = PachubeDataFormats::Key.new(:permissions => [permission])
+      key.permissions.size.should == 1
+      key.permissions.first.resources.size.should == 1
     end
   end
 

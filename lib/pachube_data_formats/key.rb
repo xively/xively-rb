@@ -13,7 +13,7 @@ module PachubeDataFormats
 
     def valid?
       pass = true
-      [:permissions, :user].each do |attr|
+      [:label, :permissions, :user].each do |attr|
         if self.send(attr).blank?
           errors[attr] = ["can't be blank"]
           pass = false
