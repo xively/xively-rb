@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe PachubeDataFormats::Key do
   it "should have a constant that defines the allowed keys" do
-    PachubeDataFormats::Key::ALLOWED_KEYS.sort.should == %w(expires_at id key label user permissions).sort
+    PachubeDataFormats::Key::ALLOWED_KEYS.sort.should == %w(expires_at id key label user permissions private_access).sort
   end
 
   describe "validation" do
@@ -29,11 +29,10 @@ describe PachubeDataFormats::Key do
     end
 
     it "should always return a boolean from the permission private_access? attribute, even if nil" do
-      @key.attributes = { :permissions => [{}] }
-      @key.permissions.first.private_access.should be_nil
-      @key.permissions.first.private_access?.should be_false
-      @key.permissions.first.private_access = true
-      @key.permissions.first.private_access?.should be_true
+      @key.private_access.should be_nil
+      @key.private_access?.should be_false
+      @key.private_access = true
+      @key.private_access?.should be_true
     end
   end
 

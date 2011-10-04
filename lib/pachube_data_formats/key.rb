@@ -1,6 +1,6 @@
 module PachubeDataFormats
   class Key
-    ALLOWED_KEYS = %w(id key label user expires_at permissions)
+    ALLOWED_KEYS = %w(id key label user expires_at permissions private_access)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
     NESTED_KEYS = %w(permissions)
 
@@ -85,6 +85,10 @@ module PachubeDataFormats
           @permissions << Permission.new(permission)
         end
       end
+    end
+
+    def private_access?
+      @private_access || false
     end
   end
 end

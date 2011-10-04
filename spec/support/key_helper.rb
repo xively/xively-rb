@@ -4,9 +4,10 @@ def key_as_(format, options = {})
   case format.to_s
   when 'hash', 'json'
     data = { "id" => 40, "key" => "abcdefghasdfaoisdj109usasdf0a9sf", "label" => "Our awesome label",
-      "user" => "lebreeze", "expires_at" => 12345, "permissions" => [
+      "user" => "lebreeze", "expires_at" => 12345, "private_access" => true,
+      "permissions" => [
         { "source_ip" => "127.0.0.1", "referer" => "http://www.pachube.com",
-          "access_types" => %w(get put post delete), "private_access" => true,
+          "access_types" => %w(get put post delete), 
           "resources" => [
             { "feed_id" => 424, "datastream_id" => "1" }
           ]
@@ -21,6 +22,7 @@ def key_as_(format, options = {})
   <expires-at>12345</expires-at>
   <user>lebreeze</user>
   <label>Our awesome label</label>
+  <private-access>true</private-access>
   <permissions>
     <permission>
       <referer>http://www.pachube.com</referer>
@@ -31,7 +33,6 @@ def key_as_(format, options = {})
         <access-type>POST</access-type>
         <access-type>DELETE</access-type>
       </access-types>
-      <private-access>true</private-access>
       <resources>
         <resource>
           <feed-id>424</feed-id>

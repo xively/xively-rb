@@ -63,9 +63,5 @@ module PachubeDataFormats
       NESTED_KEYS.each { |key| self.send("#{key}=", input["#{key}_attributes"]) unless input["#{key}_attributes"].nil? }
       return attributes
     end
-
-    def private_access?
-      @private_access || false
-    end
   end
 end
