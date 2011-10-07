@@ -1,8 +1,8 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe PachubeDataFormats::Key do
   it "should have a constant that defines the allowed keys" do
-    PachubeDataFormats::Key::ALLOWED_KEYS.should == %w(expires_at feed_id id key label permissions private_access referer source_ip datastream_id user)
+    PachubeDataFormats::Key::ALLOWED_KEYS.sort.should == %w(expires_at id key label user permissions private_access).sort
   end
 
   describe "validation" do
@@ -10,12 +10,35 @@ describe PachubeDataFormats::Key do
       @key = PachubeDataFormats::Key.new
     end
 
-    %w(permissions user).each do |field|
+    %w(label permissions user).each do |field|
       it "should require a '#{field}'" do
         @key.send("#{field}=".to_sym, nil)
         @key.should_not be_valid
         @key.errors[field.to_sym].should include("can't be blank")
       end
+    end
+
+    it "should not be valid if resource present with no feed_id" do
+      @key.attributes = { :user => "bob", :permissions => [ { :access_types => ["get"], :resources => [{}] } ] }
+      @key.should_not be_valid
+    end
+
+    it "should not be valid if we have a datastream_id with no feed_id in a resource" do
+      @key.attributes = { :user => "bob", :permissions => [ { :access_types => ["get"], :resources => [{:datastream_id => "0"}] } ] }
+      @key.should_not be_valid
+    end
+
+    it "should always return a boolean from the permission private_access? attribute, even if nil" do
+      @key.private_access.should be_nil
+      @key.private_access?.should be_false
+      @key.private_access = true
+      @key.private_access?.should be_true
+    end
+
+    it "should not be valid if a permission object with no access_types is added" do
+      @key.attributes = { :user => "bob", :permissions => [ { :label => "label" } ] } ##["get"], :resources => [{}] } ] }
+      @key.should_not be_valid
+      @key.errors[:permissions_access_types].should include("can't be blank")
     end
   end
 
@@ -29,26 +52,27 @@ describe PachubeDataFormats::Key do
 
     it "should accept xml" do
       key = PachubeDataFormats::Key.new(key_as_(:xml))
-      key.permissions.should == ["get", "put", "post", "delete"]
+      key.permissions.first.access_types.should == ["get", "put", "post", "delete"]
     end
 
     it "should accept json" do
       key = PachubeDataFormats::Key.new(key_as_(:json))
-      key.permissions.should == ["get", "put", "post", "delete"]
+      key.permissions.first.access_types.should == ["get", "put", "post", "delete"]
     end
 
     it "should accept a hash of attributes" do
       key = PachubeDataFormats::Key.new(key_as_(:hash))
-      key.permissions.should == ["get", "put", "post", "delete"]
+      key.permissions.first.access_types.should == ["get", "put", "post", "delete"]
     end
   end
 
   describe "#attributes" do
-    it "should return a hash of datapoint properties" do
+    it "should return a hash of key properties" do
       attrs = {}
       PachubeDataFormats::Key::ALLOWED_KEYS.each do |key|
         attrs[key] = "key #{rand(1000)}"
       end
+      attrs["permissions"] = [PachubeDataFormats::Permission.new(:permissions => [:get])]
       key = PachubeDataFormats::Key.new(attrs)
 
       key.attributes.should == attrs
@@ -78,6 +102,23 @@ describe PachubeDataFormats::Key do
       end
       key.attributes=(attrs)
     end
+
+    it "should accept deep nested attributes for permissions array" do
+      key = PachubeDataFormats::Key.new({})
+      key.attributes = { :permissions_attributes => [{:label => "label", :access_types => [:get, :put], :resources_attributes => [{:feed_id => 123, :datastream_id => "0"}]}] }
+      key.permissions.size.should == 1
+      key.permissions.first.label.should == "label"
+      key.permissions.first.resources.size.should == 1
+      key.permissions.first.resources.first.feed_id.should == 123
+    end
+
+    it "should set deep nested attributes using class instances as well (not just hashes of attributes)" do
+      resource = PachubeDataFormats::Resource.new(:feed_id => 123)
+      permission = PachubeDataFormats::Permission.new(:label => "label", :access_types => [:get], :resources => [resource])
+      key = PachubeDataFormats::Key.new(:permissions => [permission])
+      key.permissions.size.should == 1
+      key.permissions.first.resources.size.should == 1
+    end
   end
 
   describe "#as_json" do
@@ -97,7 +138,7 @@ describe PachubeDataFormats::Key do
 
   describe "#to_json" do
     before(:each) do
-      @key_hash = {"permissions" => [:get, :put, :post]}
+      @key_hash = { "permissions" => [{"permissions" => [:get, :put, :post], :resources => [{:feed_id => 504, :datastream_id => "0"}]}] }
     end
 
     it "should call #as_json" do

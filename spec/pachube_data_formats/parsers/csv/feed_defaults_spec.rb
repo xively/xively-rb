@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../../spec_helper'
+require 'spec_helper'
 
 describe "default feed csv parser" do
   describe "csv" do

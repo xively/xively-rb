@@ -1,7 +1,7 @@
 class Feed
   extend PachubeDataFormats::Base
 
-  is_pachube_data_format :feed 
+  is_pachube_data_format :feed
   attr_accessor :datastreams
   attr_accessor :feed
   attr_accessor :creator

@@ -12,4 +12,3 @@ require 'pachube_data_formats/templates/xml/search_result_defaults'
 require 'pachube_data_formats/templates/csv/datapoint_defaults'
 require 'pachube_data_formats/templates/csv/datastream_defaults'
 require 'pachube_data_formats/templates/csv/feed_defaults'
-

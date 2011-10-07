@@ -11,4 +11,3 @@ require 'pachube_data_formats/parsers/xml/trigger_defaults'
 require 'pachube_data_formats/parsers/xml/key_defaults'
 require 'pachube_data_formats/parsers/csv/feed_defaults'
 require 'pachube_data_formats/parsers/csv/datastream_defaults'
-

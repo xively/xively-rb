@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../../spec_helper'
+require 'spec_helper'
 
 describe "default datastream json parser" do
   before(:each) do

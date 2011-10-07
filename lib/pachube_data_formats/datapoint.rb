@@ -11,7 +11,7 @@ module PachubeDataFormats
 
     # validates_presence_of :datastream_id
     # validates_presence_of :value
-    
+
     include Validations
 
     def valid?
@@ -45,7 +45,10 @@ module PachubeDataFormats
     end
 
     def attributes=(input)
+      return if input.nil?
+      input.deep_stringify_keys!
       ALLOWED_KEYS.each { |key| self.send("#{key}=", input[key]) }
+      return attributes
     end
 
     def as_json(options = {})

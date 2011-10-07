@@ -4,19 +4,37 @@ module PachubeDataFormats
       module KeyDefaults
         def generate_json(options={})
           template = Template.new(self, :json)
-          template.key do
+          template.key do |k|
+            if self.permissions
+              s = self.permissions.collect { |s|
+                if s.resources
+                  res = s.resources.collect { |r|
+                    {
+                      :feed_id => r.feed_id,
+                      :datastream_id => r.datastream_id,
+                      :datastream_trigger_id => r.datastream_trigger_id
+                    }.delete_if_nil_value
+                  }
+                end
+                {
+                  :referer => s.referer,
+                  :source_ip => s.source_ip,
+                  :private_access => s.private_access,
+                  :label => s.label,
+                  :minimum_interval => s.minimum_interval,
+                  :access_types => s.access_types.collect { |a| a.to_s.downcase },
+                  :resources => res
+                }
+              }
+            end
+
             {
               :id => id,
               :expires_at => expires_at,
-              :feed_id => feed_id,
               :api_key => key,
-              :permissions => permissions,
-              :private_access => private_access,
-              :referer => referer,
-              :source_ip => source_ip,
-              :datastream_id => datastream_id,
               :user => user,
-              :label => label
+              :label => label,
+              :permissions => s
             }
           end
           template.output! options
