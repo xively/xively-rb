@@ -3,7 +3,7 @@ require 'spec_helper'
 describe PachubeDataFormats::Datastream do
 
   it "should have a constant that defines the allowed keys" do
-    PachubeDataFormats::Datastream::ALLOWED_KEYS.should == %w(feed_id id feed_creator current_value datapoints max_value min_value tags unit_label unit_symbol unit_type updated)
+    PachubeDataFormats::Datastream::ALLOWED_KEYS.should == %w(feed_id id feed_creator current_value datapoints max_value min_value tags unit_label unit_symbol unit_type updated datapoints_function)
   end
 
   describe "validation" do

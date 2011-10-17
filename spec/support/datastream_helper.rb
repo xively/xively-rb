@@ -73,6 +73,7 @@ def datastream_as_json(version)
       'tags' => ['humidity', 'Temperature', 'freakin lasers'],
       'current_value' => '14',
       'max_value' => '658.0',
+      'datapoints_function' => 'average',
       "datapoints" => [{
           "value" => "1",
           "at" => "2011-03-02T15:59:56.895922Z"

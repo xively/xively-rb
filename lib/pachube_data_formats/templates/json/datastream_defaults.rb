@@ -24,6 +24,7 @@ module PachubeDataFormats
           template.min_value {min_value.to_s}
           template.tags {parse_tag_string(tags)}
           template.unit {unit_hash(options)}
+          template.datapoints_function
           template.datapoints do
             datapoints.collect do |datapoint|
               {

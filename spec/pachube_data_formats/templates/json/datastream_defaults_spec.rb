@@ -58,6 +58,18 @@ describe "default datastream json templates" do
       json[:unit].should be_nil
     end
 
+    it "should ignore datapoints_function if it is not set" do
+      @datastream.datapoints_function = nil
+      json = @datastream.generate_json("1.0.0")
+      json[:datapoints_function].should be_nil
+    end
+
+    it "should use datapoints_function if it is set" do
+      @datastream.datapoints_function = 'average'
+      json = @datastream.generate_json("1.0.0")
+      json[:datapoints_function].should == 'average'
+    end
+
     it "should ignore tags if nil" do
       @datastream.tags = nil
       json = @datastream.generate_json("1.0.0")
