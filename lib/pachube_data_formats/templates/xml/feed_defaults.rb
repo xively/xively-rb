@@ -84,7 +84,7 @@ module PachubeDataFormats
                   location.lat location_lat
                   location.lon location_lon
                   location.ele location_ele
-                end
+                end if location_disposition || location_exposure || location_domain || location_name || location_lat || location_lon || location_ele
                 datastreams.each do |ds|
                   environment.data(:id => ds.id) do |data|
                     parse_tag_string(ds.tags).each do |tag|
