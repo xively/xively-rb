@@ -16,7 +16,6 @@ describe "default key json templates" do
     json[:key][:permissions].each_index do |permission_index|
       json[:key][:permissions][permission_index][:access_types].should == @key.permissions[permission_index].access_types
       json[:key][:permissions][permission_index][:label].should == @key.permissions[permission_index].label
-      json[:key][:permissions][permission_index][:private_access].should == @key.permissions[permission_index].private_access
       json[:key][:permissions][permission_index][:referer].should == @key.permissions[permission_index].referer
       json[:key][:permissions][permission_index][:source_ip].should == @key.permissions[permission_index].source_ip
       json[:key][:permissions][permission_index][:minimum_interval].should == @key.permissions[permission_index].minimum_interval

@@ -33,7 +33,6 @@ RSpec::Matchers.define :fully_represent_key do |format, formatted_key|
       permission.label.should == permission_node.at_xpath("label").content
       permission.referer.should == permission_node.at_xpath("referer").content
       permission.source_ip.should == permission_node.at_xpath("source-ip").content
-      #permission.private_access.should == permission_node.at_xpath("private-access").content
       permission.access_types.should == permission_node.xpath("access-types/access-type").collect { |a| a.content.downcase }
 
       permission.resources.each_index do |res_index|
@@ -62,7 +61,6 @@ RSpec::Matchers.define :fully_represent_key do |format, formatted_key|
       permission.source_ip.should == json["permissions"][index]["source_ip"]
       permission.label.should == json["permissions"][index]["label"]
       permission.access_types.should == json["permissions"][index]["access_types"]
-      permission.private_access.should == json["permissions"][index]["private_access"]
 
       permission.resources.each_index do |res_index|
         resource = permission.resources[res_index]

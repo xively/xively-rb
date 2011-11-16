@@ -19,7 +19,6 @@ module PachubeDataFormats
                 {
                   :referer => s.referer,
                   :source_ip => s.source_ip,
-                  :private_access => s.private_access,
                   :label => s.label,
                   :minimum_interval => s.minimum_interval,
                   :access_types => s.access_types.collect { |a| a.to_s.downcase },

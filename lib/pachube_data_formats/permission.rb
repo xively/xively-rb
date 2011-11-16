@@ -1,6 +1,6 @@
 module PachubeDataFormats
   class Permission
-    ALLOWED_KEYS = %w(label access_types private_access referer source_ip minimum_interval resources)
+    ALLOWED_KEYS = %w(label access_types referer source_ip minimum_interval resources)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
     NESTED_KEYS = %w(resources)
 
