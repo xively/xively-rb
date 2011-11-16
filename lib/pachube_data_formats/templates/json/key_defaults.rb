@@ -34,6 +34,7 @@ module PachubeDataFormats
               :api_key => key,
               :user => user,
               :label => label,
+              :private_access => private_access,
               :permissions => s
             }
           end

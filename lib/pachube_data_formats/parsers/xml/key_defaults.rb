@@ -10,6 +10,7 @@ module PachubeDataFormats
           hash["key"] = xml.at_xpath("//api-key").content if xml.at_xpath("//api-key")
           hash["label"] = xml.at_xpath("//label").content if xml.at_xpath("//label")
           hash["user"] = xml.at_xpath("//user").content if xml.at_xpath("//user")
+          hash["private_access"] = xml.at_xpath("//private-access").content if xml.at_xpath("//private-access")
 
           hash["permissions"] = xml.xpath("//key/permissions/permission").collect { |permission|
             access_types = permission.xpath("access-types/access-type").collect { |access_type|
