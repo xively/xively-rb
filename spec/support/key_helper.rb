@@ -7,7 +7,7 @@ def key_as_(format, options = {})
       "user" => "lebreeze", "expires_at" => 12345, "private_access" => true,
       "permissions" => [
         { "source_ip" => "127.0.0.1", "referer" => "http://www.pachube.com",
-          "methods" => %w(get put post delete),
+          "access_methods" => %w(get put post delete),
           "resources" => [
             { "feed_id" => 424, "datastream_id" => "1" }
           ]
@@ -27,12 +27,12 @@ def key_as_(format, options = {})
     <permission>
       <referer>http://www.pachube.com</referer>
       <source-ip>127.0.0.1</source-ip>
-      <methods>
-        <method>GET</method>
-        <method>PUT</method>
-        <method>POST</method>
-        <method>DELETE</method>
-      </methods>
+      <access-methods>
+        <access-method>GET</access-method>
+        <access-method>PUT</access-method>
+        <access-method>POST</access-method>
+        <access-method>DELETE</access-method>
+      </access-methods>
       <resources>
         <resource>
           <feed-id>424</feed-id>
