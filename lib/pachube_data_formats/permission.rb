@@ -1,6 +1,6 @@
 module PachubeDataFormats
   class Permission
-    ALLOWED_KEYS = %w(label access_types referer source_ip minimum_interval resources)
+    ALLOWED_KEYS = %w(label methods referer source_ip minimum_interval resources)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
     NESTED_KEYS = %w(resources)
 
@@ -8,8 +8,8 @@ module PachubeDataFormats
 
     def valid?
       pass = true
-      if access_types.nil? || access_types.empty?
-        errors[:access_types] = ["can't be blank"]
+      if methods.nil? || methods.empty?
+        errors[:methods] = ["can't be blank"]
         pass = false
       end
 

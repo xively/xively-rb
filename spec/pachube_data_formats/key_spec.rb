@@ -19,12 +19,12 @@ describe PachubeDataFormats::Key do
     end
 
     it "should not be valid if resource present with no feed_id" do
-      @key.attributes = { :user => "bob", :permissions => [ { :access_types => ["get"], :resources => [{}] } ] }
+      @key.attributes = { :user => "bob", :permissions => [ { :methods => ["get"], :resources => [{}] } ] }
       @key.should_not be_valid
     end
 
     it "should not be valid if we have a datastream_id with no feed_id in a resource" do
-      @key.attributes = { :user => "bob", :permissions => [ { :access_types => ["get"], :resources => [{:datastream_id => "0"}] } ] }
+      @key.attributes = { :user => "bob", :permissions => [ { :methods => ["get"], :resources => [{:datastream_id => "0"}] } ] }
       @key.should_not be_valid
     end
 
@@ -35,10 +35,10 @@ describe PachubeDataFormats::Key do
       @key.private_access?.should be_true
     end
 
-    it "should not be valid if a permission object with no access_types is added" do
+    it "should not be valid if a permission object with no methods is added" do
       @key.attributes = { :user => "bob", :permissions => [ { :label => "label" } ] } ##["get"], :resources => [{}] } ] }
       @key.should_not be_valid
-      @key.errors[:permissions_access_types].should include("can't be blank")
+      @key.errors[:permissions_methods].should include("can't be blank")
     end
   end
 
@@ -52,17 +52,17 @@ describe PachubeDataFormats::Key do
 
     it "should accept xml" do
       key = PachubeDataFormats::Key.new(key_as_(:xml))
-      key.permissions.first.access_types.should == ["get", "put", "post", "delete"]
+      key.permissions.first.methods.should == ["get", "put", "post", "delete"]
     end
 
     it "should accept json" do
       key = PachubeDataFormats::Key.new(key_as_(:json))
-      key.permissions.first.access_types.should == ["get", "put", "post", "delete"]
+      key.permissions.first.methods.should == ["get", "put", "post", "delete"]
     end
 
     it "should accept a hash of attributes" do
       key = PachubeDataFormats::Key.new(key_as_(:hash))
-      key.permissions.first.access_types.should == ["get", "put", "post", "delete"]
+      key.permissions.first.methods.should == ["get", "put", "post", "delete"]
     end
   end
 
@@ -105,7 +105,7 @@ describe PachubeDataFormats::Key do
 
     it "should accept deep nested attributes for permissions array" do
       key = PachubeDataFormats::Key.new({})
-      key.attributes = { :permissions_attributes => [{:label => "label", :access_types => [:get, :put], :resources_attributes => [{:feed_id => 123, :datastream_id => "0"}]}] }
+      key.attributes = { :permissions_attributes => [{:label => "label", :methods => [:get, :put], :resources_attributes => [{:feed_id => 123, :datastream_id => "0"}]}] }
       key.permissions.size.should == 1
       key.permissions.first.label.should == "label"
       key.permissions.first.resources.size.should == 1
@@ -114,7 +114,7 @@ describe PachubeDataFormats::Key do
 
     it "should set deep nested attributes using class instances as well (not just hashes of attributes)" do
       resource = PachubeDataFormats::Resource.new(:feed_id => 123)
-      permission = PachubeDataFormats::Permission.new(:label => "label", :access_types => [:get], :resources => [resource])
+      permission = PachubeDataFormats::Permission.new(:label => "label", :methods => [:get], :resources => [resource])
       key = PachubeDataFormats::Key.new(:permissions => [permission])
       key.permissions.size.should == 1
       key.permissions.first.resources.size.should == 1

@@ -21,7 +21,7 @@ module PachubeDataFormats
                   :source_ip => s.source_ip,
                   :label => s.label,
                   :minimum_interval => s.minimum_interval,
-                  :access_types => s.access_types.collect { |a| a.to_s.downcase },
+                  :methods => s.methods.collect { |a| a.to_s.downcase },
                   :resources => res
                 }
               }

@@ -13,8 +13,8 @@ module PachubeDataFormats
           hash["private_access"] = xml.at_xpath("//private-access").content if xml.at_xpath("//private-access")
 
           hash["permissions"] = xml.xpath("//key/permissions/permission").collect { |permission|
-            access_types = permission.xpath("access-types/access-type").collect { |access_type|
-              access_type.content.to_s.downcase
+            methods = permission.xpath("methods/method").collect { |method|
+              method.content.to_s.downcase
             }
             resources = permission.xpath("resources/resource").collect { |resource|
               { "feed_id" => resource.at_xpath("feed-id").content,
@@ -26,7 +26,7 @@ module PachubeDataFormats
               "referer" => permission.at_xpath("referer").content,
               "source_ip" => permission.at_xpath("source-ip").content,
               "private_access" => permission.at_xpath("private-access").content,
-              "access_types" => access_types,
+              "methods" => methods,
               "resources" => resources
             }.delete_if_nil_value
           }
