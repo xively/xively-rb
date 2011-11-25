@@ -107,6 +107,17 @@ describe "default feed xml templates" do
       Nokogiri.parse(@feed.generate_xml("5")).xpath("//xmlns:unit").should be_blank
     end
 
+    it "should ignore blank locations" do
+      @feed.location_disposition = nil
+      @feed.location_domain = nil
+      @feed.location_ele = nil
+      @feed.location_exposure = nil
+      @feed.location_lat = nil
+      @feed.location_lon = nil
+      @feed.location_name = nil
+      Nokogiri.parse(@feed.generate_xml("5")).xpath("//xmlns:location").should be_blank
+    end
+
     %w(status feed description icon website email title).each do |node|
       it "should ignore blank '#{node}'" do
         @feed.send("#{node}=", nil)
