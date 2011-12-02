@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 
 describe PachubeDataFormats::Datastream do
@@ -27,7 +28,7 @@ describe PachubeDataFormats::Datastream do
       end
     end
 
-    ["current_to_direction-degrees_true-1", "current_to_direction.degrees_true.1"].each do |valid_id|
+    ["üöäÜÖÄ", "ÜÖÄ", "üöä", "current_to_direction-degrees_true-1", "current_to_direction.degrees_true.1"].each do |valid_id|
       it "should allow '#{valid_id}' as an id" do
         @datastream.feed_id = 1234
         @datastream.id = valid_id
