@@ -4,6 +4,8 @@ require 'csv'
 
 $:.unshift(File.dirname(File.expand_path(__FILE__)))
 
+$KCODE = 'u' if RUBY_VERSION.to_f < 1.9
+
 require 'pachube_data_formats/helpers'
 require 'pachube_data_formats/base'
 require 'pachube_data_formats/validations'

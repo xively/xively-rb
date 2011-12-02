@@ -50,7 +50,13 @@ module PachubeDataFormats
         end
       end
 
-      unless self.id =~ /\A[\w\-\+\.]+\Z/
+      if RUBY_VERSION.to_f >= 1.9
+        stream_id_regexp = /\A[\p{L}\w\-\+\.]+\Z/u
+      else
+        stream_id_regexp = /\A[\w\-\+\.]+\Z/u
+      end
+
+      unless self.id =~ stream_id_regexp
         errors[:id] = ["is invalid"]
         pass = false
       end
