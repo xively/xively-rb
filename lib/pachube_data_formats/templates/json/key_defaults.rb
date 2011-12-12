@@ -29,7 +29,7 @@ module PachubeDataFormats
 
             {
               :id => id,
-              :expires_at => expires_at,
+              :expires_at => expires_at.respond_to?(:iso8601) ? expires_at.iso8601(6) : expires_at,
               :api_key => key,
               :user => user,
               :label => label,
