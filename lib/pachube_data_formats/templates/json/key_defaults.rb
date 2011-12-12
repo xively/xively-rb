@@ -8,12 +8,7 @@ module PachubeDataFormats
             if self.permissions
               s = self.permissions.collect { |s|
                 if s.resources
-                  res = s.resources.collect { |r|
-                    {
-                      :feed_id => r.feed_id,
-                      :datastream_id => r.datastream_id,
-                      :datastream_trigger_id => r.datastream_trigger_id
-                    }.delete_if_nil_value
+                  res = s.resources.collect { |r| { :feed_id => r.feed_id, :datastream_id => r.datastream_id, :datastream_trigger_id => r.datastream_trigger_id }.delete_if_nil_value
                   }
                 end
                 {
