@@ -134,11 +134,18 @@ describe PachubeDataFormats::Key do
       key.should_receive(:generate_json).with({}).and_return({"permissions" => [:get, :put]})
       key.as_json(nil).should == {"permissions" => [:get, :put]}
     end
+
+    it "should return iso8601 formatted expires_at string if present" do
+      time = Time.now
+      key = PachubeDataFormats::Key.new(:expires_at => time)
+      key.as_json[:key][:expires_at].should == time.iso8601(6)
+    end
   end
 
   describe "#to_json" do
     before(:each) do
-      @key_hash = { "permissions" => [{"permissions" => [:get, :put, :post], :resources => [{:feed_id => 504, :datastream_id => "0"}]}] }
+      @time = Time.now
+      @key_hash = { "label" => "label", :expires_at => @time, "permissions" => [{"permissions" => [:get, :put, :post], :resources => [{:feed_id => 504, :datastream_id => "0"}]}] }
     end
 
     it "should call #as_json" do
