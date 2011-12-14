@@ -1,5 +1,8 @@
 require 'spec_helper'
 
+class CustomPachubeFeed < PachubeDataFormats::Feed
+end
+
 describe PachubeDataFormats::SearchResult do
 
   it "should have a constant that defines the allowed keys" do
@@ -122,10 +125,22 @@ describe PachubeDataFormats::SearchResult do
       it "should return an array of feeds" do
         feeds = [PachubeDataFormats::Feed.new(feed_as_(:hash))]
         attrs = {"results" => feeds}
-        feed = PachubeDataFormats::SearchResult.new(attrs)
-        feed.results.each do |env|
+        search_result = PachubeDataFormats::SearchResult.new(attrs)
+        search_result.results.each do |env|
           env.should be_kind_of(PachubeDataFormats::Feed)
         end
+      end
+
+
+      it "should allow overriding the feed class to use" do
+        PachubeDataFormats::SearchResult.class_eval("@@feed_class = CustomPachubeFeed")
+        feeds = [feed_as_(:hash)]
+        attrs = {"results" => feeds}
+        search_result = PachubeDataFormats::SearchResult.new(attrs)
+        search_result.results.each do |env|
+          env.should be_kind_of(CustomPachubeFeed)
+        end
+        PachubeDataFormats::SearchResult.class_eval("@@feed_class = PachubeDataFormats::Feed")
       end
     end
 
