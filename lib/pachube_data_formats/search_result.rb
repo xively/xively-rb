@@ -7,6 +7,8 @@ module PachubeDataFormats
     include PachubeDataFormats::Templates::XML::SearchResultDefaults
     include PachubeDataFormats::Parsers::JSON::SearchResultDefaults
 
+    @@feed_class = PachubeDataFormats::Feed
+
     def initialize(input = {})
       if input.is_a?(Hash)
         self.attributes = input
@@ -34,10 +36,10 @@ module PachubeDataFormats
       return unless array.is_a?(Array)
       @results = []
       array.each do |feed|
-        if feed.is_a?(Feed)
+        if feed.is_a?(@@feed_class)
           @results << feed
         elsif feed.is_a?(Hash)
-          @results << Feed.new(feed)
+          @results << @@feed_class.new(feed)
         end
       end
     end
