@@ -19,6 +19,7 @@ module PachubeDataFormats
               hash["datastreams"] << { "id" => stream_id.to_s, "current_value" => current_value }
             end
           end
+          hash["csv_version"] = version
           hash
         end
 

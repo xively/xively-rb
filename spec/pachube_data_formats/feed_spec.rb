@@ -106,6 +106,10 @@ describe PachubeDataFormats::Feed do
       feed.attributes.should == attrs
     end
 
+    it "should contain csv_version in the allowed keys" do
+      PachubeDataFormats::Feed::ALLOWED_KEYS.contains(:csv_version).should be_true
+    end
+
     it "should not return nil values" do
       attrs = {}
       PachubeDataFormats::Feed::ALLOWED_KEYS.each do |key|
