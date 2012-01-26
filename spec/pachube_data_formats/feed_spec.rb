@@ -3,7 +3,7 @@ require 'spec_helper'
 describe PachubeDataFormats::Feed do
 
   it "should have a constant that defines the allowed keys" do
-    PachubeDataFormats::Feed::ALLOWED_KEYS.should == %w(id creator owner_login datastreams description email feed icon location_disposition location_domain location_ele location_exposure location_lat location_lon location_name private status tags title updated website auto_feed_url)
+    PachubeDataFormats::Feed::ALLOWED_KEYS.should == %w(id creator owner_login datastreams description email feed icon location_disposition location_domain location_ele location_exposure location_lat location_lon location_name private status tags title updated website auto_feed_url csv_version)
   end
 
   context "attr accessors" do
@@ -107,7 +107,7 @@ describe PachubeDataFormats::Feed do
     end
 
     it "should contain csv_version in the allowed keys" do
-      PachubeDataFormats::Feed::ALLOWED_KEYS.contains(:csv_version).should be_true
+      PachubeDataFormats::Feed::ALLOWED_KEYS.should include("csv_version")
     end
 
     it "should not return nil values" do
