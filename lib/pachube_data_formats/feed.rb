@@ -1,7 +1,7 @@
 module PachubeDataFormats
   class Feed
     # The order of these keys is the order attributes are assigned in. (i.e. id should come before datastreams)
-    ALLOWED_KEYS = %w(id creator owner_login datastreams description email feed icon location_disposition location_domain location_ele location_exposure location_lat location_lon location_name location_history private status tags title updated website auto_feed_url csv_version)
+    ALLOWED_KEYS = %w(id creator owner_login datastreams description email feed icon location_disposition location_domain location_ele location_exposure location_lat location_lon location_name location_waypoints private status tags title updated website auto_feed_url csv_version)
     ALLOWED_KEYS.each { |key| attr_accessor(key.to_sym) }
 
     include PachubeDataFormats::Templates::JSON::FeedDefaults

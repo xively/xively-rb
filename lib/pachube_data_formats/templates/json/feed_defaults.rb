@@ -107,13 +107,13 @@ module PachubeDataFormats
             :ele => location_ele,
             :lat => location_lat,
             :lon => location_lon }
-          hash[:history] = format_location_history if location_history
+          hash[:waypoints] = format_location_waypoints if location_waypoints
           !options[:include_blank] ? (hash.delete_if_nil_value if location_disposition || location_name || location_exposure || location_domain || location_ele || location_lat || location_lon) : hash
         end
         
-        def format_location_history
+        def format_location_waypoints
           output = []
-          location_history.each{ |item|
+          location_waypoints.each{ |item|
             output << item
             output.last[:at] = output.last[:at].iso8601(6)
           }
