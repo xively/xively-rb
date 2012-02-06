@@ -156,6 +156,28 @@ describe "default feed json templates" do
       json[:location][:disposition].should be_nil
       json[:location][:ele].should be_nil
     end
+    
+    it "should ignore location_history if it is nil" do
+      @feed.location_disposition = 'mobile'
+      @feed.location_history = nil
+      json = @feed.generate_json("1.0.0")
+      json[:location][:disposition].should == 'mobile'
+      json[:location][:history].should be_nil
+    end
+    
+    it "should use location_history if it is set" do
+      @feed.location_disposition = 'mobile'
+      @feed.location_history = [
+        {:at => Time.parse('2012-01-01 12:00:00'), :lat => 1.0, :lon => 1.1, :ele => "1.2"},
+        {:at => Time.parse('2012-01-01 13:00:00'), :lat => 2.0, :lon => 2.1, :ele => "2.2"}
+      ]
+      json = @feed.generate_json("1.0.0")
+      json[:location][:disposition].should == 'mobile'
+      json[:location][:history].should == [
+        {:at => Time.parse('2012-01-01 12:00:00').iso8601(6), :lat => 1.0, :lon => 1.1, :ele => "1.2"},
+        {:at => Time.parse('2012-01-01 13:00:00').iso8601(6), :lat => 2.0, :lon => 2.1, :ele => "2.2"}
+      ]
+    end
 
     it "should ignore datastream tags if blank" do
       @feed.datastreams.each do |ds|
