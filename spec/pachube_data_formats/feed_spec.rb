@@ -3,7 +3,7 @@ require 'spec_helper'
 describe PachubeDataFormats::Feed do
 
   it "should have a constant that defines the allowed keys" do
-    PachubeDataFormats::Feed::ALLOWED_KEYS.should == %w(id creator owner_login datastreams description email feed icon location_disposition location_domain location_ele location_exposure location_lat location_lon location_name location_history private status tags title updated website auto_feed_url csv_version)
+    PachubeDataFormats::Feed::ALLOWED_KEYS.should == %w(id creator owner_login datastreams description email feed icon location_disposition location_domain location_ele location_exposure location_lat location_lon location_name location_waypoints private status tags title updated website auto_feed_url csv_version)
   end
 
   context "attr accessors" do
