@@ -90,5 +90,9 @@ module PachubeDataFormats
     def private_access?
       @private_access || false
     end
+
+    def id
+      @id.nil? ? @key : @id
+    end
   end
 end
