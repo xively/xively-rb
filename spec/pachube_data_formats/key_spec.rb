@@ -40,6 +40,13 @@ describe PachubeDataFormats::Key do
       @key.should_not be_valid
       @key.errors[:permissions_access_methods].should include("can't be blank")
     end
+
+    it "should return the key as the id if no id attribute is specified" do
+      hash = key_as_(:hash)
+      hash.delete("id")
+      @key.attributes = hash
+      @key.id.should == "abcdefghasdfaoisdj109usasdf0a9sf"
+    end
   end
 
   describe "#initialize" do
