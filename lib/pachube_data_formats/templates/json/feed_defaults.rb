@@ -30,6 +30,7 @@ module PachubeDataFormats
           template.auto_feed_url
           template.status
           template.updated {updated.iso8601(6)}
+          template.created {created.iso8601(6)}
           template.email
           template.creator
           if owner_login

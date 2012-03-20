@@ -24,7 +24,7 @@ module PachubeDataFormats
               eeml['opensearch'].startIndex startIndex
               eeml['opensearch'].itemsPerPage itemsPerPage
               results.each do |env|
-                eeml.environment(:updated => env.updated.iso8601(6), :id => env.id, :creator => env.creator) do |environment|
+                eeml.environment(:created => env.created.iso8601(6), :updated => env.updated.iso8601(6), :id => env.id, :creator => env.creator) do |environment|
                   environment.title env.title
                   environment.feed "#{env.feed}.xml"
                   environment.status env.status

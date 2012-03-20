@@ -20,7 +20,7 @@ module PachubeDataFormats
         def xml_0_5_1(options={})
           builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
             xml.eeml(_eeml_0_5_1) do |eeml|
-              eeml.environment(:updated => updated.iso8601(6), :id => id, :creator => creator) do |environment|
+              eeml.environment(:updated => updated.iso8601(6), :created => created.iso8601(6), :id => id, :creator => creator) do |environment|
                 environment.title title unless title.blank?
                 environment.feed "#{feed}.xml" unless feed.blank?
                 environment.auto_feed_url auto_feed_url unless auto_feed_url.blank?
