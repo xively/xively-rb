@@ -25,6 +25,7 @@ describe "default feed json templates" do
       json[:user][:login].should == "skeletor"
       json[:status].should == "live"
       json[:updated].should == "2011-01-02T00:00:00.000000+00:00"
+      json[:created].should == "2011-01-01T00:00:00.000000+00:00"
       json[:email].should == "abc@example.com"
       json[:creator].should == "http://pachube.com/users/skeletor"
       json[:location][:disposition].should == "fixed"
@@ -79,6 +80,12 @@ describe "default feed json templates" do
       @feed.updated = nil
       json = @feed.generate_json("1.0.0")
       json[:updated].should be_nil
+    end
+
+    it "should ignore updated if nil" do
+      @feed.created = nil
+      json = @feed.generate_json("1.0.0")
+      json[:created].should be_nil
     end
 
     it "should ignore tags if nil" do

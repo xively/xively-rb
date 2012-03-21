@@ -5,6 +5,7 @@ def feed_as_(format, options = {})
   when 'hash'
     data = {
       "updated"=>Time.parse('2011-01-02'),
+      "created"=>Time.parse('2011-01-01'),
       "title"=>"Pachube Office Environment",
       "private"=>false,
       "id"=>504,

@@ -5,6 +5,7 @@ RSpec::Matchers.define :contain_feed_eeml_for_version do |eeml_version|
     when "0.5.1"
       environment = xml.at_xpath("//xmlns:environment")
       environment.attributes["updated"].value.should == hash["updated"].iso8601(6)
+      environment.attributes["created"].value.should == hash["created"].iso8601(6)
       environment.attributes["id"].value.should == hash["id"].to_s
       environment.attributes["creator"].value.should == hash["creator"]
       environment.at_xpath("//xmlns:title").content.should == hash["title"]

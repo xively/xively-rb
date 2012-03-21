@@ -20,6 +20,7 @@ module PachubeDataFormats
         # As produced by http://www.pachube.com/api/v2/FEED_ID.json
         def transform_1_0_0(hash)
           hash["updated"] = hash["updated"]
+          hash["created"] = hash["created"]
           hash["status"] = hash["status"]
           hash["tags"] = join_tags(hash["tags"])
           hash["datastreams"] = hash["datastreams"].collect do |datastream|

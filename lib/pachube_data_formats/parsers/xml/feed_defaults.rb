@@ -17,6 +17,7 @@ module PachubeDataFormats
           hash = {}
           environment = xml.at_xpath("//xmlns:environment")
           hash["updated"] = environment.attributes["updated"].value
+          hash["created"] = environment.attributes["created"].value
           hash["creator"] = environment.attributes["creator"].value
           hash["title"] = environment.at_xpath("xmlns:title").content
           hash["feed"] = environment.at_xpath("xmlns:feed").content
