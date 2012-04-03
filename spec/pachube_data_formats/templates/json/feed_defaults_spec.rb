@@ -76,6 +76,18 @@ describe "default feed json templates" do
       end
     end
 
+    it "should blank feed if blank" do
+      @feed.feed = ''
+      json = @feed.generate_json("1.0.0")
+      json[:feed].should be_blank
+    end
+
+    it "should blank feed if nil" do
+      @feed.feed = nil
+      json = @feed.generate_json("1.0.0")
+      json[:feed].should be_blank
+    end
+
     it "should ignore updated if nil" do
       @feed.updated = nil
       json = @feed.generate_json("1.0.0")
