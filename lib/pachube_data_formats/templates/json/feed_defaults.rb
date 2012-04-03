@@ -26,7 +26,7 @@ module PachubeDataFormats
           template.website
           template.tags {parse_tag_string(tags)} if tags
           template.description
-          template.feed {"#{feed}.json"}
+          template.feed {feed.blank? ? "" : "#{feed}.json"}
           template.auto_feed_url
           template.status
           template.updated {updated.iso8601(6)}
