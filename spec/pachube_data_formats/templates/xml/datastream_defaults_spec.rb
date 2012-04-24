@@ -16,6 +16,18 @@ describe "default datastream xml templates" do
       xml.should contain_datastream_eeml_for_version("0.5.1")
     end
 
+    it "should ignore datapoints_function if it is not set" do
+      @datastream.datapoints_function = nil
+      xml = @datastream.generate_xml("0.5.1")
+      Nokogiri.parse(xml).xpath("//xmlns:datapoints").first.attributes.should == {}
+    end
+
+    it "should use datapoints_function if it is set" do
+      @datastream.datapoints_function = 'average'
+      xml = @datastream.generate_xml("0.5.1")
+      Nokogiri.parse(xml).xpath("//xmlns:datapoints").first.attributes["function"].value.should == 'average'
+    end
+
     it "should handle nil updated" do
       @datastream.updated = nil
       lambda {@datastream.generate_xml("0.5.1")}.should_not raise_error
