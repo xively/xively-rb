@@ -29,7 +29,7 @@ module PachubeDataFormats
                   data.max_value max_value if max_value
                   data.min_value min_value if min_value
                   data.unit unit_label, {:type => unit_type, :symbol => unit_symbol}.delete_if_nil_value if unit_label || unit_type || unit_symbol
-                  data.datapoints do
+                  data.datapoints({"function" => datapoints_function}.delete_if_nil_value) do
                     datapoints.each do |datapoint|
                       data.value(datapoint.value, "at" => datapoint.at.iso8601(6))
                     end
