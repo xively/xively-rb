@@ -4,7 +4,7 @@ require "cosm-rb/version"
 
 Gem::Specification.new do |s|
   s.name        = "cosm-rb"
-  s.version     = Cosm::VERSION::STRING
+  s.version     = Cosm::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Paul Bellamy", "Levent Ali", "Sam Mulube"]
   s.email       = ["paul.a.bellamy@gmail.com", "lebreeze@gmail.com", "sam@pachube.com"]
