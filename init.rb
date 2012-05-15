@@ -1,2 +1,2 @@
-require 'lib/pachube_data_formats'
+require 'lib/cosm-rb'
 

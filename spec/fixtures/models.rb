@@ -1,5 +1,5 @@
 class Feed
-  extend PachubeDataFormats::Base
+  extend Cosm::Base
 
   is_pachube_data_format :feed
   attr_accessor :datastreams
@@ -23,7 +23,7 @@ class Feed
 
   def attributes
     attributes = {}
-    PachubeDataFormats::Feed::ALLOWED_KEYS.each do |key|
+    Cosm::Feed::ALLOWED_KEYS.each do |key|
       attributes[key] = self.send(key) if self.respond_to?(key)
     end
     attributes
@@ -31,7 +31,7 @@ class Feed
 end
 
 class Datastream
-  extend PachubeDataFormats::Base
+  extend Cosm::Base
 
   is_pachube_data_format :datastream, {:id => :stream_id}
 
@@ -52,7 +52,7 @@ class Datastream
 
   def attributes
     attributes = {}
-    PachubeDataFormats::Datastream::ALLOWED_KEYS.each do |key|
+    Cosm::Datastream::ALLOWED_KEYS.each do |key|
       attributes[key] = self.send(key) if self.respond_to?(key)
     end
     attributes
@@ -61,7 +61,7 @@ class Datastream
 end
 
 class Datapoint
-  extend PachubeDataFormats::Base
+  extend Cosm::Base
 
   is_pachube_data_format :datapoint
   attr_accessor :datastream_id
@@ -70,7 +70,7 @@ class Datapoint
 
   def attributes
     attributes = {}
-    PachubeDataFormats::Datapoint::ALLOWED_KEYS.each do |key|
+    Cosm::Datapoint::ALLOWED_KEYS.each do |key|
       attributes[key] = self.send(key) if self.respond_to?(key)
     end
     attributes
