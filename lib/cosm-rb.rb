@@ -25,3 +25,5 @@ require 'cosm-rb/trigger'
 require 'cosm-rb/key'
 require 'cosm-rb/permission'
 require 'cosm-rb/resource'
+
+require 'cosm-rb/client'
