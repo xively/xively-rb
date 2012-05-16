@@ -1,31 +1,31 @@
 [![Build Status](https://secure.travis-ci.org/pachube/pachube_data_formats.png)](http://travis-ci.org/pachube/pachube_data_formats)
 
-Pachube Data Formats gem
+Cosm gem
 ========================
 
 WORK IN PROGRESS
 
-This gem will convert between Pachube Data Formats.
-You can use it to prepare data for sending to Pachube or for parsing data received from Pachube.
+This gem will convert between Cosm Data Formats.
+You can use it to prepare data for sending to Cosm or for parsing data received from Cosm.
 
 Allowed inputs
 --------------
 
- * XML (Pachube EEML)
+ * XML (EEML)
  * JSON
  * CSV
 
 Outputs
 -------
 
- * XML (Pachube EEML)
+ * XML (EEML)
  * JSON
  * CSV
 
-PachubeDataFormats Interface
+Cosm Interface
 ----------------------------
 
-If you have your own model that maps to a Pachube Feed (such as an ActiveRecord model), this plugin will provide many convenience methods to convert your objects into Pachube objects.
+If you have your own model that maps to a Cosm Feed (such as an ActiveRecord model), this plugin will provide many convenience methods to convert your objects into Cosm objects.
 
 ### Example with ActiveRecord
 
@@ -35,31 +35,31 @@ If you have your own model that maps to a Pachube Feed (such as an ActiveRecord 
 
     class Feed < ActiveRecord::Base
       has_many :datastreams
-      extend PachubeDataFormats::Base
-      is_pachube_data_format :feed
+      extend Cosm::Base
+      is_cosm :feed
     end
 
 ### Provided methods
   
-    @pachube_feed = feed.to_pachube # returns an instance of PachubeDataFormats::Feed
-    @pachube_feed.to_json(:version => "1.0.0") # converts your feed and associated datastreams into Pachube V2 JSON
-    @pachube_feed.as_json(:version => "0.6-alpha") # provides a json hash for 0.6-alpha
-    @pachube_feed.to_xml(:version => "0.5.1") # converts your feed and associated datastreams into Pachube V2 XML (EEML)
+    @cosm_feed = feed.to_cosm # returns an instance of Cosm::Feed
+    @cosm_feed.to_json(:version => "1.0.0") # converts your feed and associated datastreams into Cosm V2 JSON
+    @cosm_feed.as_json(:version => "0.6-alpha") # provides a json hash for 0.6-alpha
+    @cosm_feed.to_xml(:version => "0.5.1") # converts your feed and associated datastreams into Cosm V2 XML (EEML)
 
 ### Supported formats
 
- * JSON "1.0.0" - used by Pachube API v2
- * JSON "0.6-alpha" - used by Pachube API v1
- * XML "0.5.1" - used by Pachube API v2
- * XML "5" - used by Pachube API v1
- * CSV v1 - used by Pachube API v1
- * CSV v2 - used by Pachube API v2
+ * JSON "1.0.0" - used by Cosm API v2
+ * JSON "0.6-alpha" - used by Cosm API v1
+ * XML "0.5.1" - used by Cosm API v2
+ * XML "5" - used by Cosm API v1
+ * CSV v1 - used by Cosm API v1
+ * CSV v2 - used by Cosm API v2
 
 ### Mapped fields
 
-See [the Pachube Api docs] [1] for a description of each field.
+See [the Cosm Api docs] [1] for a description of each field.
 
-  [1]: http://api.pachube.com/v2/#data-structure "Pachube Api Docs"
+  [1]: https://cosm.com/docs/v2/ "Cosm Api Docs"
 
 By default the gem expects your object to have the following fields:
 
@@ -112,10 +112,10 @@ By default the gem expects your object to have the following fields:
 If you use different field names, want to map custom fields or want to map fields onto instance methods you can:
 
     class Feed < ActiveRecord::Base
-      extend PachubeDataFormats::Base
+      extend Cosm::Base
 
       has_one :geo_location
-      is_pachube_data_format :feed, {:location_lat => :geo_lat, :location_lon => :geo_lon}
+      is_cosm :feed, {:location_lat => :geo_lat, :location_lon => :geo_lon}
 
       def geo_lat
         geo_location.try(:latitude)
@@ -126,20 +126,20 @@ If you use different field names, want to map custom fields or want to map field
       end
     end
 
-Examples using the PachubeDataFormat objects
+Examples using the Cosm objects
 --------------------------------------------
 
-    feed = PachubeDataFormats::Feed.new('{"title":"Pachube Office Environment"}')
-    feed.as_json # {"title" => "Pachube Office Environment"}
-    feed.to_json # {"title":"Pachube Office Environment"}
+    feed = Cosm::Feed.new('{"title":"Cosm Office Environment"}')
+    feed.as_json # {"title" => "Cosm Office Environment"}
+    feed.to_json # {"title":"Cosm Office Environment"}
     feed.to_xml
       #  <?xml version="1.0" encoding="UTF-8"?
       #  <eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.5.1" xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd"> 
-      #    <environment updated="2010-11-11T15:57:17.637887Z" id="12567" creator="http://www.pachube.com"> 
-      #      <title>Pachube Office Environment</title>
+      #    <environment updated="2010-11-11T15:57:17.637887Z" id="12567" creator="https://cosm.com"> 
+      #      <title>Cosm Office Environment</title>
       #    </environment>
       #  </eeml>
-    feed.attributes # {:title => "Pachube Office Environment"}
+    feed.attributes # {:title => "Cosm Office Environment"}
 
 ### Parsing a Datastream using json
 
@@ -170,7 +170,7 @@ Examples using the PachubeDataFormat objects
           },
           "at": "2011-02-16T16:21:01.834174Z"
       }'
-    datastream = PachubeDataFormats::Datastream.new(json)
+    datastream = Cosm::Datastream.new(json)
     datastream.to_xml # =>
     # <?xml version="1.0" encoding="UTF-8"?>
     # <eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.5.1" xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd">

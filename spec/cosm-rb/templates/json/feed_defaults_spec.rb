@@ -10,16 +10,16 @@ describe "default feed json templates" do
       @feed.generate_json("1.0.0").should == @feed.as_json
     end
 
-    it "should represent Pachube JSON (used by API v2)" do
+    it "should represent Cosm JSON (used by API v2)" do
       json = @feed.generate_json("1.0.0")
       json[:id].should == @feed.id
       json[:version].should == "1.0.0"
-      json[:title].should == "Pachube Office Environment"
+      json[:title].should == "Cosm Office Environment"
       json[:private].should == "false"
-      json[:icon].should == "http://pachube.com/logo.png"
-      json[:website].should == "http://pachube.com"
+      json[:icon].should == "http://cosm.com/logo.png"
+      json[:website].should == "http://cosm.com"
       json[:tags].should == ["aardvark", "kittens", "sofa"]
-      json[:description].should == "Sensors in Pachube.com's headquarters."
+      json[:description].should == "Sensors in cosm.com's headquarters."
       json[:feed].should == "http://test.host/testfeed.html?random=890299&rand2=91.json"
       json[:auto_feed_url].should == "http://test.host2/testfeed.xml?q=something"
       json[:user][:login].should == "skeletor"
@@ -27,7 +27,7 @@ describe "default feed json templates" do
       json[:updated].should == "2011-01-02T00:00:00.000000+00:00"
       json[:created].should == "2011-01-01T00:00:00.000000+00:00"
       json[:email].should == "abc@example.com"
-      json[:creator].should == "http://pachube.com/users/skeletor"
+      json[:creator].should == "http://cosm.com/users/skeletor"
       json[:location][:disposition].should == "fixed"
       json[:location][:name].should == "office"
       json[:location][:exposure].should == "indoor"
@@ -241,16 +241,16 @@ describe "default feed json templates" do
 
   context "0.6-alpha" do
 
-    it "should represent Pachube JSON (used by API v1)" do
+    it "should represent Cosm JSON (used by API v1)" do
       json = @feed.generate_json("0.6-alpha")
       json[:id].should == @feed.id
       json[:version].should == "0.6-alpha"
-      json[:title].should == "Pachube Office Environment"
+      json[:title].should == "Cosm Office Environment"
       json[:private].should be_nil
-      json[:icon].should == "http://pachube.com/logo.png"
-      json[:website].should == "http://pachube.com"
+      json[:icon].should == "http://cosm.com/logo.png"
+      json[:website].should == "http://cosm.com"
       json[:tags].should be_nil
-      json[:description].should == "Sensors in Pachube.com's headquarters."
+      json[:description].should == "Sensors in cosm.com's headquarters."
       json[:feed].should == "http://test.host/testfeed.html?random=890299&rand2=91.json"
       json[:status].should == "live"
       json[:updated].should == "2011-01-02T00:00:00.000000+00:00"

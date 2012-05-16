@@ -13,7 +13,7 @@ module Cosm
 
         private
 
-        # As used by http://www.pachube.com/api/v2/FEED_ID/datastreams/DATASTREAM_ID.json
+        # As used by http://cosm.com/api/v2/FEED_ID/datastreams/DATASTREAM_ID.json
         def json_1_0_0(options={})
           template = Template.new(self, :json)
           template.id
@@ -36,7 +36,7 @@ module Cosm
           template.output! options
         end
 
-        # As used by http://www.pachube.com/api/v1/FEED_ID/datastreams/DATASTREAM_ID.json
+        # As used by http://cosm.com/api/v1/FEED_ID/datastreams/DATASTREAM_ID.json
         def json_0_6_alpha(options={})
           template = Template.new(self, :json)
           template.id

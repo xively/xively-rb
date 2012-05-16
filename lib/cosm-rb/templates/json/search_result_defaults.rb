@@ -16,7 +16,7 @@ module Cosm
 
         private
 
-        # As used by http://www.pachube.com/api/v2/feeds.json
+        # As used by http://cosm.com/api/v2/feeds.json
         def json_1_0_0
           template = Template.new(self, :json)
           template.totalResults
@@ -28,7 +28,7 @@ module Cosm
           template.output!
         end
 
-        # As used by http://www.pachube.com/api/v1/feeds.json
+        # As used by http://cosm.com/api/v1/feeds.json
         def json_0_6_alpha
           template = Template.new(self, :json)
           template.totalResults

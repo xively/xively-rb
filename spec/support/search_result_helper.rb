@@ -1,6 +1,6 @@
 def search_result_as_(format, options = {})
   # Default data
-  # This data is based on http://api.pachube.com/v2/feeds/504
+  # This data is based on http://api.cosm.com/v2/feeds/504
   case format.to_s
   when 'hash'
     data = {
@@ -9,17 +9,17 @@ def search_result_as_(format, options = {})
       "startIndex" => "0",
     "results" => [{
       "updated"=>Time.parse('2011-01-02'),
-      "title"=>"Pachube Office Environment",
+      "title"=>"Cosm Office Environment",
       "private"=>false,
       "id"=>504,
-      "icon"=>"http://pachube.com/logo.png",
-      "website"=>"http://pachube.com",
+      "icon"=>"http://cosm.com/logo.png",
+      "website"=>"http://cosm.com",
       "tags" => "kittens , sofa, aardvark",
-      "description"=>"Sensors in Pachube.com's headquarters.",
+      "description"=>"Sensors in cosm.com's headquarters.",
       "feed" => "http://test.host/testfeed.html?random=890299&rand2=91",
       "email"=>"abc@example.com",
       "status"=>"live",
-      "creator"=>"http://pachube.com/users/skeletor",
+      "creator"=>"http://cosm.com/users/skeletor",
       'location_domain' => 'physical',
       'location_lon' => -0.0807666778564453,
       'location_disposition' => 'fixed',
@@ -152,14 +152,14 @@ def search_result_as_json(version)
     "itemsPerPage" => "100",
     "startIndex" => "0",
     'results' => [{
-      'title' => 'Pachube Office Environment',
+      'title' => 'Cosm Office Environment',
       'status' => 'live',
       'updated' => '2011-02-16T16:21:01.834174Z',
       'tags' => ['hq', 'office'],
-      'description' => 'Sensors in Pachube.com\'s headquarters.',
-      'website' => 'http://www.pachube.com/',
+      'description' => 'Sensors in cosm.com\'s headquarters.',
+      'website' => 'http://cosm.com/',
       'private' => 'false',
-      'creator' => 'http://pachube.com/users/skeletor',
+      'creator' => 'http://cosm.com/users/skeletor',
       'version' => '1.0.0',
       'id' => 504,
       'location' =>
@@ -171,7 +171,7 @@ def search_result_as_json(version)
         'lat' => 51.5235375648154,
         'name' => 'office'
       },
-        'feed' => 'http://api.pachube.com/v2/feeds/504.json',
+        'feed' => 'http://api.cosm.com/v2/feeds/504.json',
         'datastreams' =>
       [
         {'min_value' => '0.0',

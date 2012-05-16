@@ -16,7 +16,7 @@ module Cosm
 
         private
 
-        # As used by http://www.pachube.com/api/v2/FEED_ID/datastreams/DATASTREAM_ID.xml
+        # As used by http://cosm.com/api/v2/FEED_ID/datastreams/DATASTREAM_ID.xml
         def xml_0_5_1(options={})
           builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
             xml.eeml(_eeml_0_5_1) do |eeml|
@@ -41,7 +41,7 @@ module Cosm
           builder.to_xml
         end
 
-        # As used by http://www.pachube.com/api/v1/FEED_ID/datastreams/DATASTREAM_ID.xml
+        # As used by http://cosm.com/api/v1/FEED_ID/datastreams/DATASTREAM_ID.xml
         def xml_5(options={})
           builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
             xml.eeml(_eeml_5) do |eeml|

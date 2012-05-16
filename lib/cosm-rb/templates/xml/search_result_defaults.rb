@@ -16,7 +16,7 @@ module Cosm
 
         private
 
-        # As used by http://www.pachube.com/api/v2/feeds.xml
+        # As used by http://cosm.com/api/v2/feeds.xml
         def xml_0_5_1
           builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
             xml.eeml(_eeml_0_5_1.merge({"xmlns:opensearch" => "http://a9.com/-/spec/opensearch/1.1/"})) do |eeml|
@@ -68,7 +68,7 @@ module Cosm
           builder.to_xml
         end
 
-        # As used by http://www.pachube.com/api/v1/feeds.xml
+        # As used by http://cosm.com/api/v1/feeds.xml
         def xml_5
           builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
             xml.eeml(_eeml_5.merge({"xmlns:opensearch" => "http://a9.com/-/spec/opensearch/1.1/"})) do |eeml|

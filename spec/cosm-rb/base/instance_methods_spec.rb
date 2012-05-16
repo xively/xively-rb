@@ -6,13 +6,13 @@ describe Cosm::Base::InstanceMethods do
     @feed.updated = Time.parse("20110202")
     @feed.title = "Feed Title"
     @feed.private = true
-    @feed.icon = "http://pachube.com/logo.png"
-    @feed.website = "http://pachube.com"
+    @feed.icon = "http://cosm.com/logo.png"
+    @feed.website = "http://cosm.com"
     @feed.tags = "kittens, sofa, aardvark"
     @feed.description = "Test feed"
     @feed.feed = "http://test.host/testfeed.html?random=890299&rand2=91"
     @feed.email = "abc@example.com"
-    @feed.creator = "http://www.pachube.com"
+    @feed.creator = "http://www.cosm.com"
     @feed.location_name = "London"
     @feed.location_disposition = "fixed"
     @feed.location_domain = "here"
@@ -40,31 +40,31 @@ describe Cosm::Base::InstanceMethods do
     @datastream2.datapoints = datapoints
   end
 
-  describe "#to_pachube" do
+  describe "#to_cosm" do
     it "should return the appropriate Cosm Object" do
-      @feed.to_pachube.should be_kind_of(Cosm::Feed)
-      @datastream1.to_pachube.should be_kind_of(Cosm::Datastream)
-      @datastream2.datapoints.first.to_pachube.should be_kind_of(Cosm::Datapoint)
+      @feed.to_cosm.should be_kind_of(Cosm::Feed)
+      @datastream1.to_cosm.should be_kind_of(Cosm::Datastream)
+      @datastream2.datapoints.first.to_cosm.should be_kind_of(Cosm::Datapoint)
     end
 
     context "Feed" do
       it "should map the default fields by default" do
         Cosm::Feed.should_receive(:new).with(@feed.attributes)
-        @feed.to_pachube
+        @feed.to_cosm
       end
     end
 
     context "Datastream" do
       it "should map the default fields merged with the optionals by default" do
         Cosm::Datastream.should_receive(:new).with(@datastream2.attributes.merge({"id" => "two"}))
-        @datastream2.to_pachube
+        @datastream2.to_cosm
       end
     end
 
     context "Datapoint" do
       it "should map the default fields by default" do
         Cosm::Datapoint.should_receive(:new).with(@datastream2.datapoints.first.attributes)
-        @datastream2.datapoints.first.to_pachube
+        @datastream2.datapoints.first.to_cosm
       end
     end
   end
@@ -76,7 +76,7 @@ describe Cosm::Base::InstanceMethods do
 
         undef_method :id if method_defined?(:id)
         attr_accessor :title
-        is_pachube_data_format :feed, {:feed => :custom_method}
+        is_cosm :feed, {:feed => :custom_method}
 
         def custom_method
           "I haz customer"
@@ -85,7 +85,7 @@ describe Cosm::Base::InstanceMethods do
       feed = CustomFeed.new
       feed.title = "Name"
       Cosm::Feed.should_receive(:new).with({"feed" => feed.custom_method, "title" => feed.title})
-      feed.to_pachube
+      feed.to_cosm
     end
 
     it "should not rely on datastreams using this gem" do
@@ -93,7 +93,7 @@ describe Cosm::Base::InstanceMethods do
         extend Cosm::Base
 
         attr_accessor :title
-        is_pachube_data_format :feed
+        is_cosm :feed
 
         def datastreams
           ["fake datastream"]
@@ -102,7 +102,7 @@ describe Cosm::Base::InstanceMethods do
 
       feed = NewCustomFeed.new
       feed.title = "Name"
-      feed.to_pachube
+      feed.to_cosm
     end
   end
 end

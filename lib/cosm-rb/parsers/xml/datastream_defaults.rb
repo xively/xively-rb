@@ -14,7 +14,7 @@ module Cosm
 
         private
 
-        # As produced by http://www.pachube.com/api/v2/FEED_ID/datastreams/DATASTREAM_ID.xml
+        # As produced by http://cosm.com/api/v2/FEED_ID/datastreams/DATASTREAM_ID.xml
         def transform_0_5_1(xml)
           hash = {}
           environment = xml.at_xpath("//xmlns:environment")
@@ -46,7 +46,7 @@ module Cosm
           hash
         end
 
-        # As produced by http://www.pachube.com/api/v1/FEED_ID/datastreams/DATASTREAM_ID.xml
+        # As produced by http://cosm.com/api/v1/FEED_ID/datastreams/DATASTREAM_ID.xml
         def transform_5(xml)
           hash = {}
           environment = xml.at_xpath("//xmlns:environment")

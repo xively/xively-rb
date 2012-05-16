@@ -82,7 +82,7 @@ describe Cosm::Feed do
     %w(xml json hash).each do |format|
       it "should accept #{format}" do
         feed = Cosm::Feed.new(feed_as_(format.to_sym))
-        feed.title.downcase.should == "pachube office environment"
+        feed.title.downcase.should == "cosm office environment"
       end
 
       %w(to_csv as_json to_xml to_json attributes).each do |output_format|

@@ -1,7 +1,7 @@
 class Feed
   extend Cosm::Base
 
-  is_pachube_data_format :feed
+  is_cosm :feed
   attr_accessor :datastreams
   attr_accessor :feed
   attr_accessor :creator
@@ -33,7 +33,7 @@ end
 class Datastream
   extend Cosm::Base
 
-  is_pachube_data_format :datastream, {:id => :stream_id}
+  is_cosm :datastream, {:id => :stream_id}
 
   attr_accessor :feed
   attr_accessor :feed_id
@@ -63,7 +63,7 @@ end
 class Datapoint
   extend Cosm::Base
 
-  is_pachube_data_format :datapoint
+  is_cosm :datapoint
   attr_accessor :datastream_id
   attr_accessor :at
   attr_accessor :value

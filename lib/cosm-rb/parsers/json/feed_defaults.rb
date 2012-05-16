@@ -17,7 +17,7 @@ module Cosm
 
         private
 
-        # As produced by http://www.pachube.com/api/v2/FEED_ID.json
+        # As produced by http://cosm.com/api/v2/FEED_ID.json
         def transform_1_0_0(hash)
           hash["updated"] = hash["updated"]
           hash["created"] = hash["created"]
@@ -55,7 +55,7 @@ module Cosm
           hash
         end
 
-        # As produced by http://www.pachube.com/api/v1/FEED_ID.json
+        # As produced by http://cosm.com/api/v1/FEED_ID.json
         def transform_0_6_alpha(hash)
           hash["retrieved_at"] = hash["updated"]
           hash["state"] = hash["status"]
