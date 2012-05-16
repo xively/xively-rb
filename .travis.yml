@@ -1,6 +1,7 @@
 branches:
   only:
     - cosm-rb
+    - master
     - version_0.3.xx_branch
 language: ruby
 rvm:
