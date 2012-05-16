@@ -74,7 +74,7 @@ describe Cosm::Base::InstanceMethods do
       class CustomFeed
         extend Cosm::Base
 
-        undef_method :id
+        undef_method :id if method_defined?(:id)
         attr_accessor :title
         is_pachube_data_format :feed, {:feed => :custom_method}
 

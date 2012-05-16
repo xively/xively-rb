@@ -26,8 +26,8 @@ describe Cosm::Template do
     end
 
     it "should allow describing :tags => @feed.tags.map(&:strip).sort" do
-      @template.tags { tags.map(&:strip).sort }
-      @template.output!.should == {:tags => @feed.tags.map(&:strip).sort}
+      @template.tags { [*tags].map(&:strip).sort }
+      @template.output!.should == {:tags => [*@feed.tags].map(&:strip).sort}
     end
 
     it "should allow describing datastreams" do
