@@ -1,6 +1,6 @@
 def trigger_as_(format, options = {})
   # Default data
-  # This data is based on http://api.pachube.com/v2/feeds/504
+  # This data is based on http://api.cosm.com/v2/feeds/504
   case format.to_s
   when 'hash'
     data = {"threshold_value"=>"44", "notified_at"=>"", "url"=>"http://www.postbin.org/zc9sca", "trigger_type"=>"eq", "id"=>40, "stream_id"=>"1", "environment_id"=>424, "user"=>"lebreeze"}
