@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Paul Bellamy", "Levent Ali", "Sam Mulube"]
   s.email       = ["paul.a.bellamy@gmail.com", "lebreeze@gmail.com", "sam@pachube.com"]
-  s.homepage    = "http://github.com/pachube/pachube_data_formats"
+  s.homepage    = "http://github.com/cosm/cosm-rb"
   s.summary     = "A library for communicating with the Cosm REST API, parsing and rendering Cosm feed formats"
   s.description = "A library for communicating with the Cosm REST API, parsing and rendering Cosm feed formats"
 

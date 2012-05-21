@@ -1,1 +1,1 @@
-rvm --create 1.8.7-p249@pachube_data_formats
+rvm --create 1.8.7-p249@cosm-rb

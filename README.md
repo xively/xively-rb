@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/pachube/pachube_data_formats.png)](http://travis-ci.org/pachube/pachube_data_formats)
+[![Build Status](https://secure.travis-ci.org/cosm/cosm-rb.png)](http://travis-ci.org/cosm/cosm-rb)
 
 Cosm gem
 ========================

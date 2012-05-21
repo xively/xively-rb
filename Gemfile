@@ -1,4 +1,4 @@
 source :rubygems
 
-# Gem dependencies specified in pachube_data_formats.gemspec
+# Gem dependencies specified in cosm-rb.gemspec
 gemspec
