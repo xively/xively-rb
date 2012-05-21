@@ -7,7 +7,7 @@ You can also interact with the Cosm REST API using this gem.
 
 ### Documentation
 
-Documentation can be found on the [Wiki](https://github.com/cosm/cosm-rb/wiki).
+Documentation can be found on the [wiki](https://github.com/cosm/cosm-rb/wiki/Documentation).
 
 ### Examples
 
