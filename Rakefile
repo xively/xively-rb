@@ -23,7 +23,7 @@ end
 desc "Run all specs with rcov"
 RSpec::Core::RakeTask.new(:rcov => :clean) do |t|
   t.rcov = true
-  t.rcov_opts = '--exclude .gem/*,spec/*,.bundle/*,config/*,.rvm/*'
+  t.rcov_opts = '--exclude .gem/*,spec/*,.bundle/*,config/*,.rvm/*,lib/cosm-rb.rb'
 end
 
 namespace :spec do
