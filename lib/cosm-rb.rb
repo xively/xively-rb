@@ -1,5 +1,9 @@
 require 'nokogiri'
-require 'yajl/json_gem'
+if defined?(JRUBY_VERSION)
+  require 'json/pure'
+else
+  require 'yajl/json_gem'
+end
 require 'csv'
 
 $:.unshift(File.dirname(File.expand_path(__FILE__)))

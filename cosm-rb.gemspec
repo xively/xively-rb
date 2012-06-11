@@ -17,12 +17,16 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency("yajl-ruby", ">=0.8.1")
+  if defined?(JRUBY_VERSION)
+    s.add_dependency("json_pure")
+  else
+    s.add_dependency("yajl-ruby", ">=0.8.1")
+  end
   s.add_dependency("nokogiri", ">=1.4.4")
   s.add_dependency("httparty", ">=0.8.3")
 
   begin
-    if RUBY_VERSION < "1.9"
+    if RUBY_VERSION < "1.9" && !defined?(JRUBY_VERSION)
       s.add_development_dependency("ruby-debug")
       s.add_development_dependency("rcov", ">=0.9.9")
     end
