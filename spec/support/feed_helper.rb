@@ -265,7 +265,7 @@ def feed_as_json(version)
       }
       ]
     }
-  when "0.6-alpha"
+  when "0.6-alpha", "0.6"
     {
       "datastreams" => [{
       "tags" => ["humidity"],

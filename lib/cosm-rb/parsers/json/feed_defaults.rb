@@ -10,7 +10,7 @@ module Cosm
           case hash['version']
           when '1.0.0'
             transform_1_0_0(hash)
-          when '0.6-alpha'
+          when '0.6-alpha', '0.6'
             transform_0_6_alpha(hash)
           end
         end
@@ -66,14 +66,17 @@ module Cosm
               unit_hash['unit_symbol'] = unit['symbol']
               unit_hash['unit_label'] = unit['label']
             end
+            value_hash = {}
+            if datastream["values"].size >= 1
+              value_hash["current_value"] = datastream["values"].first["value"]
+              value_hash["min_value"] = datastream["values"].first["min_value"]
+              value_hash["max_value"] = datastream["values"].first["max_value"]
+              value_hash["updated"] = datastream["values"].first["recorded_at"]
+            end
             {
               "id" => datastream["id"],
-              "current_value" => datastream["values"].first["value"],
-              "min_value" => datastream["values"].first["min_value"],
-              "max_value" => datastream["values"].first["max_value"],
-              "updated" => datastream["values"].first["recorded_at"],
               "tags" => join_tags(datastream["tags"]),
-            }.merge(unit_hash)
+            }.merge(value_hash).merge(unit_hash)
           end
           if location = hash.delete("location")
             hash["location_disposition"] = location["disposition"]
