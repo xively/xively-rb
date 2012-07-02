@@ -27,6 +27,14 @@ describe "default feed json parser" do
         feed.datastreams.size.should == 1
       }.to_not raise_error
     end
+
+    it "should capture empty fields if present" do
+      json = "{\"version\":\"1.0.0\",\"description\":\"\",\"feed\":\"\",\"location\":{\"name\":\"\"}}"
+      feed = Cosm::Feed.new(json)
+      feed.description.should == ""
+      feed.feed.should == ""
+      feed.location_name.should == ""
+    end
   end
 end
 

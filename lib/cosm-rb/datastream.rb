@@ -13,16 +13,6 @@ module Cosm
     include Cosm::Parsers::CSV::DatastreamDefaults
 
     include Validations
-    # validate :before, :join_tags
-
-    # validates_presence_of :id
-    # validates_length_of :current_value, :maximum => 255
-    # validates_length_of :tags, :maximum => 255
-    # validates_inclusion_of :unit_type, :in => VALID_UNIT_TYPES,
-    #                                    :allow_nil => true,
-    #                                    :message => "is not a valid unit_type (pick one from #{VALID_UNIT_TYPES} or leave blank)"
-    # validates_format_of :id, :with => /\A[\w\-\+\.]+\Z/
-    #
 
     def valid?
       pass = true

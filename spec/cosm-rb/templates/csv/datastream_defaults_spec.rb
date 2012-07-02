@@ -85,7 +85,7 @@ describe "default datastream json templates" do
       @datastream.current_value = "one,field"
       @datastream.datapoints = []
       csv = @datastream.generate_csv("2")
-      csv.should == CSV.generate_line([@datastream.updated.iso8601(6),@datastream.current_value]).strip
+      csv.should == Cosm::CSV.generate_line([@datastream.updated.iso8601(6),@datastream.current_value]).strip
     end
 
     it "should escape characters that could upset csv parsers with datapoints" do
@@ -94,14 +94,14 @@ describe "default datastream json templates" do
         dp.value = "1,field"
       end
       csv = @datastream.generate_csv("2")
-      csv.should == @datastream.datapoints.collect {|dp| CSV.generate_line([dp.at.iso8601(6),dp.value]).strip }.join("\n")
+      csv.should == @datastream.datapoints.collect {|dp| Cosm::CSV.generate_line([dp.at.iso8601(6),dp.value]).strip }.join("\n")
     end
 
     it "should escape characters that could upset csv parsers without datapoints via full" do
       @datastream.current_value = "one,field"
       @datastream.datapoints = []
       csv = @datastream.generate_csv("2", :full => true)
-      csv.should == CSV.generate_line([@datastream.feed_id,@datastream.id,@datastream.updated.iso8601(6),@datastream.current_value]).strip
+      csv.should == Cosm::CSV.generate_line([@datastream.feed_id,@datastream.id,@datastream.updated.iso8601(6),@datastream.current_value]).strip
     end
 
     it "should escape characters that could upset csv parsers with datapoints via full" do
@@ -110,7 +110,7 @@ describe "default datastream json templates" do
         dp.value = "1,field"
       end
       csv = @datastream.generate_csv("2", :full => true)
-      csv.should == @datastream.datapoints.collect {|dp| CSV.generate_line([@datastream.feed_id,@datastream.id,dp.at.iso8601(6),dp.value]).strip }.join("\n")
+      csv.should == @datastream.datapoints.collect {|dp| Cosm::CSV.generate_line([@datastream.feed_id,@datastream.id,dp.at.iso8601(6),dp.value]).strip }.join("\n")
     end
   end
 
@@ -124,7 +124,7 @@ describe "default datastream json templates" do
     it "should escape characters that could upset csv parsers" do
       @datastream.current_value = "I \n am full of c,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, evil"
       csv = @datastream.generate_csv("1")
-      csv.should == CSV.generate_line([@datastream.current_value]).strip
+      csv.should == Cosm::CSV.generate_line([@datastream.current_value]).strip
     end
   end
 end

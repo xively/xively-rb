@@ -25,9 +25,13 @@ Gem::Specification.new do |s|
   s.add_dependency("nokogiri", ">=1.4.4")
   s.add_dependency("httparty", ">=0.8.3")
 
+  if RUBY_VERSION.to_f < 1.9
+    s.add_dependency("fastercsv", ">=1.5.x")
+  end
+
   begin
     if !defined?(JRUBY_VERSION)
-      if RUBY_VERSION < "1.9"
+      if RUBY_VERSION.to_f < 1.9
         s.add_development_dependency("ruby-debug")
         s.add_development_dependency("rcov", ">=0.9.9")
       else

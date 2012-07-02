@@ -30,11 +30,11 @@ module Cosm
             datapoints.collect {|datapoint| csv << [datapoint.at.iso8601(6), datapoint.value] }
             csv << [updated.iso8601(6), current_value] if csv.empty?
           end
-          csv.collect {|row| ::CSV.generate_line(row).strip }.join("\n")
+          csv.collect {|row| Cosm::CSV.generate_line(row).strip }.join("\n")
         end
 
         def csv_1
-          ::CSV.generate_line([current_value]).strip
+          Cosm::CSV.generate_line([current_value]).strip
         end
       end
     end

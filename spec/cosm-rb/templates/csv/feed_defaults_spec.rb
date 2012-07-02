@@ -22,7 +22,7 @@ describe "default feed json templates" do
       end
       csv = @feed.generate_csv("2")
       expected_csv = @feed.datastreams.collect do |datastream|
-        CSV.generate_line([datastream.id, datastream.updated.iso8601(6), datastream.current_value]).strip
+        Cosm::CSV.generate_line([datastream.id, datastream.updated.iso8601(6), datastream.current_value]).strip
       end.join("\n")
       csv.should == expected_csv
     end
@@ -33,7 +33,7 @@ describe "default feed json templates" do
       end
       csv = @feed.generate_csv("2", :full => true)
       expected_csv = @feed.datastreams.collect do |datastream|
-        CSV.generate_line([@feed.id, datastream.id, datastream.updated.iso8601(6), datastream.current_value]).strip
+        Cosm::CSV.generate_line([@feed.id, datastream.id, datastream.updated.iso8601(6), datastream.current_value]).strip
       end.join("\n")
       csv.should == expected_csv
     end
@@ -42,9 +42,9 @@ describe "default feed json templates" do
       csv = @feed.generate_csv("2")
       expected_csv = @feed.datastreams.collect do |datastream|
         if datastream.datapoints.any?
-          datastream.datapoints.collect {|dp| CSV.generate_line([datastream.id, dp.at.iso8601(6), dp.value]).strip }
+          datastream.datapoints.collect {|dp| Cosm::CSV.generate_line([datastream.id, dp.at.iso8601(6), dp.value]).strip }
         else
-          CSV.generate_line([datastream.id, datastream.updated.iso8601(6), datastream.current_value]).strip
+          Cosm::CSV.generate_line([datastream.id, datastream.updated.iso8601(6), datastream.current_value]).strip
         end
       end.join("\n")
       csv.should == expected_csv
@@ -54,9 +54,9 @@ describe "default feed json templates" do
       csv = @feed.generate_csv("2", :full => true)
       expected_csv = @feed.datastreams.collect do |datastream|
         if datastream.datapoints.any?
-          datastream.datapoints.collect {|dp| CSV.generate_line([@feed.id, datastream.id, dp.at.iso8601(6), dp.value]).strip }
+          datastream.datapoints.collect {|dp| Cosm::CSV.generate_line([@feed.id, datastream.id, dp.at.iso8601(6), dp.value]).strip }
         else
-          CSV.generate_line([@feed.id, datastream.id, datastream.updated.iso8601(6), datastream.current_value]).strip
+          Cosm::CSV.generate_line([@feed.id, datastream.id, datastream.updated.iso8601(6), datastream.current_value]).strip
         end
       end.join("\n")
       csv.should == expected_csv
@@ -68,7 +68,7 @@ describe "default feed json templates" do
     it "should represent Pachube JSON" do
       csv = @feed.generate_csv("1")
       expected_csv = @feed.datastreams.collect do |datastream|
-        CSV.generate_line([datastream.current_value]).strip
+        Cosm::CSV.generate_line([datastream.current_value]).strip
       end.join(",")
       csv.should == expected_csv
     end
