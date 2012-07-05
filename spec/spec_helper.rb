@@ -13,6 +13,7 @@ if !defined?(JRUBY_VERSION)
       require 'simplecov'
       SimpleCov.start do
         add_filter "/spec/"
+        add_filter "/lib/cosm-rb.rb"
       end
     end
   end

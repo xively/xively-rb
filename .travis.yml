@@ -9,3 +9,4 @@ matrix:
   allow_failures:
     - rvm: jruby-18mode
     - rvm: jruby-19mode
+env: COVERAGE=on

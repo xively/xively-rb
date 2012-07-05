@@ -16,9 +16,7 @@ module Cosm
               if row.size == 3
                 timestamp["updated"] = row[1]
               end
-              { "id" => row.first.to_s,
-                "current_value" => row.last.to_s
-              }.merge(timestamp)
+              { "id" => row.first.to_s, "current_value" => row.last.to_s }.merge(timestamp)
             }
           elsif version == :v1
             hash["datastreams"] = []
