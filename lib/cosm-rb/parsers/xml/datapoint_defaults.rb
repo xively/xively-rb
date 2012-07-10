@@ -6,6 +6,7 @@ module Cosm
           xml = Nokogiri.parse(xml)
           hash = {}
           environment = xml.at_xpath("//xmlns:environment")
+          raise InvalidXMLError, "Missing 'environment' node from base node" if environment.nil?
           data = environment.at_xpath("xmlns:data")
           datapoint = data.at_xpath("xmlns:datapoints")
           value = datapoint.at_xpath("xmlns:value")

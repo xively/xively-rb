@@ -18,12 +18,13 @@ module Cosm
         def transform_0_5_1(xml)
           hash = {}
           environment = xml.at_xpath("//xmlns:environment")
+          raise InvalidXMLError, "Missing 'environment' node from base node" if environment.nil?
           data = environment.at_xpath("xmlns:data")
           hash["feed_id"] = environment.attributes["id"].value
           hash["feed_creator"] = environment.attributes["creator"].value
           hash["id"] = data.attributes["id"].value
-          if (tags = data.xpath("xmlns:tag").collect(&:content)).any?
-            hash["tags"] = tags.sort{|a,b| a.downcase <=> b.downcase}.join(',')
+          if (tags = data.xpath("xmlns:tag").collect { |t| t.content.strip }).any?
+            hash["tags"] = Cosm::CSV.generate_line(tags.sort{|a,b| a.downcase <=> b.downcase}).strip
           end
           current_value = data.at_xpath("xmlns:current_value")
           hash["current_value"] = current_value.content
@@ -40,7 +41,7 @@ module Cosm
             value = datapoint.at_xpath("xmlns:value")
             {
               "value" => value.content,
-              "at" => value.attributes["at"].content
+              "at" => value.attributes["at"].value
             }
           end
           hash
@@ -50,13 +51,14 @@ module Cosm
         def transform_5(xml)
           hash = {}
           environment = xml.at_xpath("//xmlns:environment")
+          raise InvalidXMLError, "Missing 'environment' node from base node" if environment.nil?
           data = environment.at_xpath("xmlns:data")
           hash["feed_id"] = environment.attributes["id"].value
           hash["feed_creator"] = "http://www.haque.co.uk"
           hash["updated"] = environment.attributes["updated"].value
           hash["id"] = data.attributes["id"].value
-          if (tags = data.xpath("xmlns:tag").collect(&:content)).any?
-            hash["tags"] = tags.sort{|a,b| a.downcase <=> b.downcase}.join(',')
+          if (tags = data.xpath("xmlns:tag").collect { |t| t.content.strip }).any?
+            hash["tags"] = Cosm::CSV.generate_line(tags.sort{ |a,b| a.downcase <=> b.downcase }).strip
           end
           current_value = data.at_xpath("xmlns:value")
           hash["current_value"] = current_value.content

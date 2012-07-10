@@ -18,9 +18,9 @@ module Cosm
           if options[:full]
             datastreams.collect do |datastream|
               if datastream.datapoints.any?
-                datastream.datapoints.collect { |datapoint| csv << ::CSV.generate_line([id, datastream.id, datapoint.at.iso8601(6), datapoint.value]).strip }
+                datastream.datapoints.collect { |datapoint| csv << Cosm::CSV.generate_line([id, datastream.id, datapoint.at.iso8601(6), datapoint.value]).strip }
               else
-                csv << ::CSV.generate_line([id, datastream.id, datastream.updated.iso8601(6), datastream.current_value]).strip
+                csv << Cosm::CSV.generate_line([id, datastream.id, datastream.updated.iso8601(6), datastream.current_value]).strip
               end
  
 
@@ -28,9 +28,9 @@ module Cosm
           else
             datastreams.collect do |datastream|
               if datastream.datapoints.any?
-                datastream.datapoints.collect { |datapoint| csv << ::CSV.generate_line([datastream.id, datapoint.at.iso8601(6), datapoint.value]).strip }
+                datastream.datapoints.collect { |datapoint| csv << Cosm::CSV.generate_line([datastream.id, datapoint.at.iso8601(6), datapoint.value]).strip }
               else
-                csv << ::CSV.generate_line([datastream.id, datastream.updated.iso8601(6), datastream.current_value]).strip
+                csv << Cosm::CSV.generate_line([datastream.id, datastream.updated.iso8601(6), datastream.current_value]).strip
               end
             end
           end
@@ -38,7 +38,7 @@ module Cosm
         end
 
         def csv_1
-          ::CSV.generate_line(datastreams.collect {|ds| ds.current_value }).strip
+          Cosm::CSV.generate_line(datastreams.collect {|ds| ds.current_value }).strip
         end
       end
     end

@@ -5,6 +5,20 @@ require 'rspec'
 
 require 'time'
 
+if !defined?(JRUBY_VERSION)
+  if RUBY_VERSION < "1.9"
+    require 'ruby-debug'
+  else
+    if ENV["COVERAGE"] == "on"
+      require 'simplecov'
+      SimpleCov.start do
+        add_filter "/spec/"
+        add_filter "/lib/cosm-rb.rb"
+      end
+    end
+  end
+end
+
 Dir['./spec/support/**/*.rb'].map {|f| require f}
 
 $:.push File.expand_path("../lib", __FILE__)

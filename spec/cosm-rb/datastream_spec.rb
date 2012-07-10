@@ -93,6 +93,7 @@ describe Cosm::Datastream do
         @datastream.errors[:unit_type].should == ["is not a valid unit_type (pick one from #{Cosm::Datastream::VALID_UNIT_TYPES.join(', ')} or leave blank)"]
       end
     end
+
   end
 
   describe "#initialize" do
