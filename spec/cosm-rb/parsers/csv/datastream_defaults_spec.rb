@@ -9,11 +9,10 @@ describe "default datastream csv parser" do
     end
 
     it "should capture timestamp if present" do
-      timestamp = Time.now.iso8601(6)
-      csv = "#{timestamp},123"
+      csv = datastream_as_(:csv, :version => "timestamped")
       datastream = Cosm::Datastream.new(csv)
-      datastream.updated.should == timestamp
-      datastream.current_value.should == "123"
+      datastream.updated.should == "2011-02-16T16:21:01.834174Z"
+      datastream.current_value.should == "14"
     end
 
     it "should raise error if passed more than a single row" do
