@@ -5,14 +5,6 @@ else
   require 'yajl/json_gem'
 end
 
-if RUBY_VERSION.to_f < 1.9
-  require 'fastercsv'
-  Cosm::CSV = FasterCSV
-else
-  require 'csv'
-  Cosm::CSV = CSV
-end
-
 $:.unshift(File.dirname(File.expand_path(__FILE__)))
 
 $KCODE = 'u' if RUBY_VERSION.to_f < 1.9
@@ -38,3 +30,12 @@ require 'cosm-rb/permission'
 require 'cosm-rb/resource'
 
 require 'cosm-rb/client'
+
+if RUBY_VERSION.to_f < 1.9
+  require 'fastercsv'
+  Cosm::CSV = FasterCSV
+else
+  require 'csv'
+  Cosm::CSV = CSV
+end
+
