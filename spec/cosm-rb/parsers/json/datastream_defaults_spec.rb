@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe "default datastream json parser" do
+  include Cosm::Helpers
+
   before(:each) do
     @datastream = Cosm::Datastream.new(datastream_as_(:json))
   end
@@ -14,7 +16,7 @@ describe "default datastream json parser" do
     attributes["current_value"].should == json["current_value"]
     attributes["max_value"].should == json["max_value"]
     attributes["min_value"].should == json["min_value"]
-    attributes["tags"].should == json["tags"].join(',')
+    attributes["tags"].should == join_tags(json["tags"])
     attributes["unit_type"].should == json["unit"]["type"]
     attributes["unit_label"].should == json["unit"]["label"]
     attributes["unit_symbol"].should == json["unit"]["symbol"]
@@ -38,7 +40,7 @@ describe "default datastream json parser" do
       attributes["current_value"].should == json["current_value"]
       attributes["max_value"].should == json["max_value"]
       attributes["min_value"].should == json["min_value"]
-      attributes["tags"].should == json["tags"].join(',')
+      attributes["tags"].should == join_tags(json["tags"])
       attributes["unit_type"].should == json["unit"]["type"]
       attributes["unit_label"].should == json["unit"]["label"]
       attributes["unit_symbol"].should == json["unit"]["symbol"]

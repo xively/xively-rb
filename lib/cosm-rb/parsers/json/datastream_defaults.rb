@@ -19,7 +19,7 @@ module Cosm
           hash["id"] = hash.delete("id")
           hash["updated"] = hash.delete("at")
           hash["current_value"] = hash.delete("current_value")
-          hash["tags"] = hash["tags"].join(',') if hash["tags"]
+          hash["tags"] = join_tags(hash["tags"])
           if unit = hash.delete('unit')
             hash['unit_type'] = unit['type']
             hash['unit_symbol'] = unit['symbol']
@@ -37,7 +37,7 @@ module Cosm
             hash["max_value"] = hash["values"].first.delete("max_value")
             hash["min_value"] = hash["values"].first.delete("min_value")
           end
-          hash["tags"] = hash["tags"].join(',') if hash["tags"]
+          hash["tags"] = join_tags(hash["tags"])
           if unit = hash.delete('unit')
             hash['unit_type'] = unit['type']
             hash['unit_symbol'] = unit['symbol']
