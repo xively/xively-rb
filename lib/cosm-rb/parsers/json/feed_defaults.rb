@@ -8,10 +8,10 @@ module Cosm
         def from_json(json)
           hash = ::JSON.parse(json)
           case hash['version']
-          when '1.0.0'
-            transform_1_0_0(hash)
           when '0.6-alpha', '0.6'
             transform_0_6_alpha(hash)
+          else
+            transform_1_0_0(hash)
           end
         end
 
