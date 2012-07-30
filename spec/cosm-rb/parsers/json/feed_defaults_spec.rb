@@ -29,7 +29,7 @@ describe "default feed json parser" do
     end
 
     it "should capture empty fields if present" do
-      json = "{\"version\":\"1.0.0\",\"description\":\"\",\"feed\":\"\",\"location\":{\"name\":\"\"},\"tags\":[],\"datastreams\":[{\"unit\":{\"label\":\"\",\"symbol\":\"\"}}]}"
+      json = "{\"version\":\"1.0.0\",\"description\":\"\",\"feed\":\"\",\"location\":{\"name\":\"\"},\"tags\":[],\"datastreams\":[{\"unit\":{\"label\":\"\",\"symbol\":\"\"},\"tags\":[]}]}"
       feed = Cosm::Feed.new(json)
       feed.description.should == ""
       feed.feed.should == ""
@@ -38,6 +38,7 @@ describe "default feed json parser" do
       feed.datastreams.size.should == 1
       feed.datastreams[0].unit_label.should == ""
       feed.datastreams[0].unit_symbol.should == ""
+      feed.datastreams[0].tags.should == ""
     end
   end
 end

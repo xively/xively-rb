@@ -31,7 +31,7 @@ module Cosm
           hash["email"] = strip(environment.at_xpath("xmlns:email").content)
           hash["private"] = strip(environment.at_xpath("xmlns:private").content)
           if (tags = environment.xpath("xmlns:tag").collect { |t| t.content.strip }).any?
-            hash["tags"] = Cosm::CSV.generate_line(tags.sort{|a,b| a.downcase <=> b.downcase}).strip
+            hash["tags"] = Cosm::CSV.generate_line(tags.delete_if { |v| v.to_s.strip == "" }.sort{ |a,b| a.downcase <=> b.downcase}).strip
           end
           location = environment.at_xpath("xmlns:location")
           if location
@@ -68,7 +68,7 @@ module Cosm
               unit_hash = {}
             end
             if (tags = datastream.xpath("xmlns:tag").collect { |t| t.content.strip }).any?
-              tags_hash = { "tags" => Cosm::CSV.generate_line(tags.sort { |a, b| a.downcase <=> b.downcase }).strip }
+              tags_hash = { "tags" => Cosm::CSV.generate_line(tags.delete_if { |v| v.strip.to_s == "" }.sort { |a, b| a.downcase <=> b.downcase }).strip }
             else
               tags_hash = {}
             end
@@ -125,7 +125,7 @@ module Cosm
               unit_hash = {}
             end
             if (tags = datastream.xpath("xmlns:tag").collect { |t| t.content.strip }).any?
-              tags_hash = { "tags" => Cosm::CSV.generate_line(tags.sort { |a, b| a.downcase <=> b.downcase }).strip }
+              tags_hash = { "tags" => Cosm::CSV.generate_line(tags.delete_if { |v| v.to_s.strip == "" }.sort { |a, b| a.downcase <=> b.downcase }).strip }
             else
               tags_hash = {}
             end
@@ -133,8 +133,8 @@ module Cosm
               "id" => datastream.attributes["id"].value,
               "current_value" => strip(current_value.content),
               "updated" => environment.attributes["updated"].value,
-              "min_value" => current_value.attributes["minValue"].value,
-              "max_value" => current_value.attributes["maxValue"].value,
+              "min_value" => (current_value.nil? ? "" : current_value.attributes["minValue"].value),
+              "max_value" => (current_value.nil? ? "" : current_value.attributes["maxValue"].value),
             }.merge(unit_hash).merge(tags_hash)
           end
           hash
