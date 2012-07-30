@@ -48,6 +48,17 @@ CSV
         Cosm::Feed.new(csv)
       }.to raise_error(Cosm::Parsers::CSV::InvalidCSVError)
     end
+
+    it "should raise an error if passed more than one row when we state it's v1" do
+      csv =<<-CSV
+This,2
+Wrong,3
+CSV
+
+      expect {
+        Cosm::Feed.new(csv, :v1)
+      }.to raise_error(Cosm::Parsers::CSV::InvalidCSVError)
+    end
   end
 end
 
