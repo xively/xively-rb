@@ -3,7 +3,12 @@ module Cosm
     module JSON
       module DatastreamDefaults
         def from_json(json)
-          hash = ::JSON.parse(json)
+          begin
+            hash = ::JSON.parse(json)
+          rescue ::JSON::ParserError => e
+            raise InvalidJSONError, e.message
+          end
+          raise InvalidJSONError, "JSON doesn't appear to be a hash" unless hash.is_a?(Hash)
           case hash['version']
           when '0.6-alpha'
             transform_0_6_alpha(hash)

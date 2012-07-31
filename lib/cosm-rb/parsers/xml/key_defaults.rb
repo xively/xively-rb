@@ -3,7 +3,13 @@ module Cosm
     module XML
       module KeyDefaults
         def from_xml(xml)
-          xml = Nokogiri.parse(xml)
+          begin
+            xml = Nokogiri::XML(xml) do |config|
+              config.strict.nonet
+            end
+          rescue Nokogiri::SyntaxError => e
+            raise InvalidXMLError, e.message
+          end
           hash = {}
           hash["id"] = xml.at_xpath("//id").content if xml.at_xpath("//id")
           hash["expires_at"] = xml.at_xpath("//expires-at").content if xml.at_xpath("//expires-at")

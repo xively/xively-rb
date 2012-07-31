@@ -5,7 +5,13 @@ module Cosm
         include FeedDefaults
 
         def from_json(json)
-          hash = ::JSON.parse(json)
+          begin
+            hash = ::JSON.parse(json)
+          rescue ::JSON::ParserError => e
+            raise InvalidJSONError, e.message
+          end
+          raise InvalidJSONError, "JSON doesn't appear to be a hash" unless hash.is_a?(Hash)
+
           hash['results'] = hash['results'].collect do |feed|
             transform_1_0_0(feed)
           end

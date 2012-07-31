@@ -6,7 +6,13 @@ module Cosm
 
       module FeedDefaults
         def from_csv(csv, csv_version = nil)
-          rows = Cosm::CSV.parse(csv.strip)
+          begin
+            rows = Cosm::CSV.parse(csv.strip)
+          rescue Exception => e
+            # this might be a FasterCSV or CSV exception depending on whether
+            # we are running under 1.8.x or 1.9.x
+            raise InvalidCSVError, e.message
+          end
           version = detect_version(rows, csv_version)
           hash = Hash.new
           if version == :v2

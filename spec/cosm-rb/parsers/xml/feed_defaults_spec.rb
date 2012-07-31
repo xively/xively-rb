@@ -77,7 +77,6 @@ EOXML
       feed.datastreams.size.should == 1
       feed.datastreams.first.tags.should == "freakin lasers,humidity,Temperature"
     end
-
   end
 
   context "5 (used by API v1)" do

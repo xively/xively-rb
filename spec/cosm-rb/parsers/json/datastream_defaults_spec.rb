@@ -30,6 +30,12 @@ describe "default datastream json parser" do
     at_least_one_datapoint.should be_true
   end
 
+  it "should raise known exception if passed garbage as JSON" do
+    expect {
+      Cosm::Datastream.new("This is not json", :json)
+    }.to raise_error(Cosm::Parsers::JSON::InvalidJSONError)
+  end
+
   context "1.0.0 (used by API v2)" do
     it "should convert into attributes hash" do
       @json = datastream_as_(:json)

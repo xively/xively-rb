@@ -4,7 +4,13 @@ module Cosm
       class InvalidXMLError < StandardError; end
       module FeedDefaults
         def from_xml(xml)
-          xml = Nokogiri.parse(xml)
+          begin
+            xml = Nokogiri::XML(xml) do |config|
+              config.strict.nonet
+            end
+          rescue Nokogiri::SyntaxError => e
+            raise InvalidXMLError, e.message
+          end
           case xml.root.attributes["version"].value
           when "5"
             transform_5(xml)

@@ -28,6 +28,12 @@ describe "default datastream csv parser" do
         Cosm::Datastream.new(csv)
       }.to raise_error(Cosm::Parsers::CSV::InvalidCSVError)
     end
+
+    it "should raise exception if passed garbage csv" do
+      expect {
+        Cosm::Datastream.new("badly, \"quoted", :csv)
+      }.to raise_error(Cosm::Parsers::CSV::InvalidCSVError)
+    end
   end
 end
 

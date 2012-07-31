@@ -1,4 +1,5 @@
 module Cosm
+  class InvalidFormatError < StandardError; end
   class Feed
     # The order of these keys is the order attributes are assigned in. (i.e. id should come before datastreams)
     ALLOWED_KEYS = %w(id creator owner_login datastreams description email feed icon location_disposition location_domain location_ele location_exposure location_lat location_lon location_name location_waypoints private status tags title updated created website auto_feed_url csv_version)
@@ -38,12 +39,13 @@ module Cosm
       return pass
     end
 
-    def initialize(input = {}, csv_version = nil)
+    def initialize(input = {}, csv_version = nil, format = nil)
+      raise InvalidFormatError, "Unknown format specified, currently we can only parse JSON, XML or CSV." unless [nil,:json,:xml,:csv].include?(format)
       if input.is_a?(Hash)
         self.attributes = input
-      elsif input.strip[0...1].to_s == "{"
+      elsif format == :json || (format.nil? && input.strip[0...1].to_s == "{")
         self.attributes = from_json(input)
-      elsif input.strip[0...5].to_s == "<?xml" || input.strip[0...5].to_s == "<eeml"
+      elsif format == :xml || (format.nil? && input.strip[0...5].to_s == "<?xml" || input.strip[0...5].to_s == "<eeml")
         self.attributes = from_xml(input)
       else
         self.attributes = from_csv(input, csv_version)

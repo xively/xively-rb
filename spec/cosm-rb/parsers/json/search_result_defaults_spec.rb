@@ -7,6 +7,12 @@ describe "default search result json parser" do
       search_result = Cosm::SearchResult.new(json)
       search_result.should fully_represent_search_result(:json, json)
     end
+
+    it "should raise known exception if passed garbage as json" do
+      expect {
+        Cosm::SearchResult.new("Guess what, not JSON!")
+      }.to raise_error(Cosm::Parsers::JSON::InvalidJSONError)
+    end
   end
 end
 

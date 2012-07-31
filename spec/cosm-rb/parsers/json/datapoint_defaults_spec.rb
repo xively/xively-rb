@@ -12,4 +12,10 @@ describe "default datapoint json parser" do
     attributes["at"].should == json["at"]
     attributes["value"].should == json["value"]
   end
+
+  it "should raise known exeception if passed garbage as json" do
+    expect {
+      Cosm::Datapoint.new("This is not\nJSON", :json)
+    }.to raise_error(Cosm::Parsers::JSON::InvalidJSONError)
+  end
 end

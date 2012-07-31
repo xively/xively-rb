@@ -71,6 +71,26 @@ describe Cosm::Key do
       key = Cosm::Key.new(key_as_(:hash))
       key.permissions.first.access_methods.should == ["get", "put", "post", "delete"]
     end
+
+    context "specifying format" do
+      it "should raise known exception if told xml but given json" do
+        expect {
+          Cosm::Key.new(key_as_(:json), :xml)
+        }.to raise_error(Cosm::Parsers::XML::InvalidXMLError)
+      end
+
+      it "should raise known exception if told json but given xml" do
+        expect {
+          Cosm::Key.new(key_as_(:xml), :json)
+        }.to raise_error(Cosm::Parsers::JSON::InvalidJSONError)
+      end
+
+      it "should raise known exception if given unknown format" do
+        expect {
+          Cosm::Key.new(key_as_(:xml), :gif)
+        }.to raise_error(Cosm::InvalidFormatError)
+      end
+    end
   end
 
   describe "#attributes" do

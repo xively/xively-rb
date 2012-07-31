@@ -42,6 +42,46 @@ describe Cosm::Trigger do
       trigger = Cosm::Trigger.new(trigger_as_(:hash))
       trigger.url.should == "http://www.postbin.org/zc9sca"
     end
+
+    context "specifying format explicitly" do
+      it "should raise known exception if passed json but told xml" do
+        expect {
+          Cosm::Trigger.new(trigger_as_(:json), :xml)
+        }.to raise_error(Cosm::Parsers::XML::InvalidXMLError)
+      end
+
+      it "should raise known exception if passed xml but told json" do
+        expect {
+          Cosm::Trigger.new(trigger_as_(:json), :xml)
+        }.to raise_error(Cosm::Parsers::XML::InvalidXMLError)
+      end
+
+      it "should raise known exception if passed unknown format" do
+        expect {
+          Cosm::Trigger.new(trigger_as_(:json), :png)
+        }.to raise_error(Cosm::InvalidFormatError)
+      end
+    end
+
+    context "specifying format" do
+      it "should raise known exception if told xml but given json" do
+        expect {
+          Cosm::Trigger.new(trigger_as_(:json), :xml)
+        }.to raise_error(Cosm::Parsers::XML::InvalidXMLError)
+      end
+
+      it "should raise known exception if told json but given xml" do
+        expect {
+          Cosm::Trigger.new(trigger_as_(:xml), :json)
+        }.to raise_error(Cosm::Parsers::JSON::InvalidJSONError)
+      end
+
+      it "should raise known exception if given unknown format" do
+        expect {
+          Cosm::Trigger.new(trigger_as_(:xml), :gif)
+        }.to raise_error(Cosm::InvalidFormatError)
+      end
+    end
   end
 
   describe "#attributes" do

@@ -42,6 +42,24 @@ describe Cosm::Datapoint do
       datapoint = Cosm::Datapoint.new(datapoint_as_(:hash))
       datapoint.value.should == "2000"
     end
+
+    it "should raise known exception if passed json but told xml" do
+      expect {
+        Cosm::Datapoint.new(datapoint_as_(:json), :xml)
+      }.to raise_error(Cosm::Parsers::XML::InvalidXMLError)
+    end
+
+    it "should raise known exception if passed xml but told json" do
+      expect {
+        Cosm::Datapoint.new(datapoint_as_(:xml), :json)
+      }.to raise_error(Cosm::Parsers::JSON::InvalidJSONError)
+    end
+
+    it "should raise known exception if given unknown format" do
+      expect {
+        Cosm::Datapoint.new(datapoint_as_(:json), :msgpack)
+      }.to raise_error(Cosm::InvalidFormatError)
+    end
   end
 
   describe "#attributes" do

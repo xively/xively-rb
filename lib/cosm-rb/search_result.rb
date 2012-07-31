@@ -12,7 +12,7 @@ module Cosm
     def initialize(input = {})
       if input.is_a?(Hash)
         self.attributes = input
-      elsif input.strip[0...1].to_s == "{"
+      else
         self.attributes = from_json(input)
       end
     end
