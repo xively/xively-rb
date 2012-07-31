@@ -1,7 +1,7 @@
 module Cosm
   module Parsers
     module JSON
-      class InvalidJSONError < StandardError; end
+      class InvalidJSONError < Cosm::ParserError; end
       module FeedDefaults
 
         include Cosm::Helpers

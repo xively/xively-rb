@@ -1,8 +1,8 @@
 module Cosm
   module Parsers
     module CSV
-      class UnknownVersionError < StandardError ; end
-      class InvalidCSVError < StandardError ; end
+      class UnknownVersionError < Cosm::ParserError ; end
+      class InvalidCSVError < Cosm::ParserError ; end
 
       module FeedDefaults
         def from_csv(csv, csv_version = nil)

@@ -1,7 +1,7 @@
 module Cosm
   module Parsers
     module XML
-      class InvalidXMLError < StandardError; end
+      class InvalidXMLError < Cosm::ParserError; end
       module FeedDefaults
         def from_xml(xml)
           begin
