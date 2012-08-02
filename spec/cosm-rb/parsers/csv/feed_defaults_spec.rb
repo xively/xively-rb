@@ -59,6 +59,30 @@ CSV
         Cosm::Feed.new(csv, :v1)
       }.to raise_error(Cosm::Parsers::CSV::InvalidCSVError)
     end
+
+    context "unwanted whitespace" do
+      it "should strip whitespace from v2" do
+        dodgy_csv = <<-CSV
+      0, 00035  
+stream1, 0012
+      2, 2012-08-02T14:11:14Z ," red car "
+CSV
+        good_csv = <<-CSV
+0,00035
+stream1,0012
+2,2012-08-02T14:11:14Z,red car
+CSV
+        feed = Cosm::Feed.new(dodgy_csv)
+        feed.should fully_represent_feed(:csv_v2, good_csv)
+      end
+
+      it "should strip whitespace from v1" do
+        dodgy_csv = %Q{  00035  ,  0012," red car"}
+        good_csv = "00035,0012,red car"
+        feed = Cosm::Feed.new(dodgy_csv)
+        feed.should fully_represent_feed(:csv_v1, good_csv)
+      end
+    end
   end
 end
 
