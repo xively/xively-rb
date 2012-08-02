@@ -7,14 +7,14 @@ module Cosm
             xml = Nokogiri::XML(xml) do |config|
               config.strict.nonet
             end
+            case xml.root.attributes["version"].value
+            when "5"
+              transform_5(xml)
+            else
+              transform_0_5_1(xml)
+            end
           rescue Nokogiri::SyntaxError => e
             raise InvalidXMLError, e.message
-          end
-          case xml.root.attributes["version"].value
-          when "5"
-            transform_5(xml)
-          else
-            transform_0_5_1(xml)
           end
         end
 

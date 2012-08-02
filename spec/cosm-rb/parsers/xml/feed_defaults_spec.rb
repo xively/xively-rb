@@ -166,5 +166,45 @@ EOXML
       datastream.unit_label.should == "celsius"
     end
   end
+
+  context "garbage input" do
+    it "should not propogate nokogiri error for invalid xml" do
+      xml = <<-EOXML
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Skype Statistics</title>
+        <description>Statistics From Skype</description>
+        <link>http://www.skype.com/</link>
+        <lastBuildDate>Thu, 02 Aug 2012 13:50:01 +0000</lastBuildDate>
+        <image>
+            <url>http://www.skype.com/i/logos/skype.png</url>
+            <title>Skype</title>
+            <link>http://www.skype.com/</link>
+            <description>Statistics From Skype</description>
+        </image>
+        <ttl>60</ttl>
+        <item>
+            <title>Total Skype Downloads</title>
+            <link>http://www.skype.com/</link>
+            <description>2992280145</description>
+            <pubDate>Thu, 02 Aug 2012 13:50:01 +0000</pubDate>
+            <guid>Total Skype Downloads Thu, 02 Aug 2012 13:50:01 +0000</guid>
+        </item>
+        <item>
+            <title>Users Online Now</title>
+            <link>http://www.skype.com/</link>
+            <description>39393244</description>
+            <pubDate>Thu, 02 Aug 2012 13:50:01 +0000</pubDate>
+            <guid>Users Online Now Thu, 02 Aug 2012 13:50:01 +0000</guid>
+        </item>
+    </channel>
+</rss>
+EOXML
+      expect {
+        Cosm::Feed.new(xml)
+      }.to raise_error(Cosm::Parsers::XML::InvalidXMLError)
+    end
+  end
 end
 
