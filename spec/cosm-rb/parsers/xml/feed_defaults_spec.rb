@@ -27,6 +27,25 @@ describe "default feed xml parser" do
       Cosm::Feed.new(@xml).should fully_represent_feed(:xml, @xml)
     end
 
+    it "should handle present but empty tags" do
+      xml = <<-EOXML
+<?xml version="1.0" encoding="UTF-8"?>
+<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.5.1" xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd">
+  <environment>
+    <title>ohai</title>
+    <tag></tag>
+    <data id="123">
+      <tag></tag>
+    </data>
+  </environment>
+</eeml>
+EOXML
+
+      feed = Cosm::Feed.new(xml)
+      feed.tags.should == ""
+      feed.datastreams.first.tags.should == ""
+    end
+
     it "should gracefully handle 0.5.1 xml missing the base environment node" do
       xml = <<-EOXML
 <?xml version="1.0" encoding="UTF-8"?>
@@ -58,7 +77,6 @@ EOXML
       feed.datastreams.size.should == 1
       feed.datastreams.first.tags.should == "freakin lasers,humidity,Temperature"
     end
-
   end
 
   context "5 (used by API v1)" do
@@ -92,8 +110,25 @@ EOXML
       feed = Cosm::Feed.new(@xml)
       Cosm::Feed.new(@xml).should fully_represent_feed(:xml, @xml)
     end
+    
+    it "should handle present but empty tags" do
+      xml = <<-EOXML
+<?xml version="1.0" encoding="UTF-8"?>
+<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="5" xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
+  <environment>
+    <title>ohai</title>
+    <data id="123">
+      <tag></tag>
+    </data>
+  </environment>
+</eeml>
+EOXML
 
-    it "should gracefully handle 0.5.1 xml missing the base environment node" do
+      feed = Cosm::Feed.new(xml)
+      feed.datastreams.first.tags.should == ""
+    end
+
+    it "should gracefully handle 5 xml missing the base environment node" do
       xml = <<-EOXML
 <?xml version="1.0" encoding="UTF-8"?>
 <eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="5" xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 

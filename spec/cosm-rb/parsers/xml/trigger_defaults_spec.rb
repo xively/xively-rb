@@ -12,5 +12,11 @@ describe "default trigger xml parser" do
       Cosm::Trigger.new(@xml).should fully_represent_trigger(:xml, @xml)
     end
   end
+
+  it "should raise known exception if passed garbage as xml" do
+    expect {
+      Cosm::Trigger.new("This is not XML", :xml)
+    }.to raise_error(Cosm::Parsers::XML::InvalidXMLError)
+  end
 end
 

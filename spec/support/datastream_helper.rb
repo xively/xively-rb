@@ -31,7 +31,7 @@ def datastream_as_(format, options = {})
   when 'xml'
     data = datastream_as_xml(options[:version] || "0.5.1", options[:except_node])
   when 'csv'
-    data = '14'
+    data = datastream_as_csv(options[:version] || "plain")
   end
  
   # Add extra options we passed
@@ -93,6 +93,21 @@ def datastream_as_json(version)
       "label" => "percentage"
     },
       'version' => '1.0.0'
+    }
+  when "1.0.0-minimal"
+    {
+      "current_value" => "294",
+      "max_value" => "697.0",
+      "min_value" => "0.0",
+      "id" => "1"
+    }
+  when "1.0.0-minimal_timestamp"
+    {
+      "current_value" => "294",
+      "max_value" => "697.0",
+      "min_value" => "0.0",
+      "id" => "1",
+      "at" => "2011-03-02T16:00:18.416500Z"
     }
   when "0.6-alpha"
     {
@@ -296,5 +311,14 @@ XML
     end
   else
     raise "Datastream as XML #{version} not implemented"
+  end
+end
+
+def datastream_as_csv(version)
+  case version
+  when "timestamped"
+    return "2011-02-16T16:21:01.834174Z,14"
+  else
+    return "14"
   end
 end

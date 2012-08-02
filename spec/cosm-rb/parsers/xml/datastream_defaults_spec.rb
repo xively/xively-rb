@@ -59,5 +59,11 @@ describe "default datastream xml parser" do
       Cosm::Datastream.new(@xml).should fully_represent_datastream(:xml, @xml)
     end
   end
+
+  it "should raise exception if passed garbage as XML" do
+    expect {
+      Cosm::Datastream.new("This is not xml", :xml)
+    }.to raise_error(Cosm::Parsers::XML::InvalidXMLError)
+  end
 end
 

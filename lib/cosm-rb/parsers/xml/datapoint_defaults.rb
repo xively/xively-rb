@@ -3,7 +3,13 @@ module Cosm
     module XML
       module DatapointDefaults
         def from_xml(xml)
-          xml = Nokogiri.parse(xml)
+          begin
+            xml = Nokogiri::XML(xml) do |config|
+              config.strict.nonet
+            end
+          rescue Nokogiri::SyntaxError => e
+            raise InvalidXMLError, e.message
+          end
           hash = {}
           environment = xml.at_xpath("//xmlns:environment")
           raise InvalidXMLError, "Missing 'environment' node from base node" if environment.nil?

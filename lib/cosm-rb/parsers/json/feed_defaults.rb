@@ -1,17 +1,23 @@
 module Cosm
   module Parsers
     module JSON
+      class InvalidJSONError < Cosm::ParserError; end
       module FeedDefaults
 
         include Cosm::Helpers
 
         def from_json(json)
-          hash = ::JSON.parse(json)
+          begin
+            hash = ::JSON.parse(json)
+          rescue ::JSON::ParserError => e
+            raise InvalidJSONError, e.message
+          end
+          raise InvalidJSONError, "JSON doesn't appear to be a hash" unless hash.is_a?(Hash)
           case hash['version']
-          when '1.0.0'
-            transform_1_0_0(hash)
           when '0.6-alpha', '0.6'
             transform_0_6_alpha(hash)
+          else
+            transform_1_0_0(hash)
           end
         end
 

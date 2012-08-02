@@ -1,12 +1,18 @@
 module Cosm
   module Parsers
     module CSV
-      class UnknownVersionError < StandardError ; end
-      class InvalidCSVError < StandardError ; end
+      class UnknownVersionError < Cosm::ParserError ; end
+      class InvalidCSVError < Cosm::ParserError ; end
 
       module FeedDefaults
         def from_csv(csv, csv_version = nil)
-          rows = Cosm::CSV.parse(csv.strip)
+          begin
+            rows = Cosm::CSV.parse(csv.strip)
+          rescue Exception => e
+            # this might be a FasterCSV or CSV exception depending on whether
+            # we are running under 1.8.x or 1.9.x
+            raise InvalidCSVError, e.message
+          end
           version = detect_version(rows, csv_version)
           hash = Hash.new
           if version == :v2
@@ -19,6 +25,7 @@ module Cosm
               { "id" => row.first.to_s, "current_value" => row.last.to_s }.merge(timestamp)
             }
           elsif version == :v1
+            raise InvalidCSVError, "CSV is invalid. Currently we can only accept CSV for your most recent set of values. You have submitted 2 rows of data." if rows.size > 1
             hash["datastreams"] = []
             rows.first.each_with_index do |current_value, stream_id|
               hash["datastreams"] << { "id" => stream_id.to_s, "current_value" => current_value }

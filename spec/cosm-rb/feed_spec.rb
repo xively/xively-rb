@@ -92,6 +92,50 @@ describe Cosm::Feed do
         end
       end
     end
+
+    context "specifying format" do
+      it "should raise known exception if told xml but given csv" do
+        expect {
+          Cosm::Feed.new(feed_as_(:csv), :v2, :xml)
+        }.to raise_error(Cosm::Parsers::XML::InvalidXMLError)
+      end
+
+      it "should raise known exception if told xml but given json" do
+        expect {
+          Cosm::Feed.new(feed_as_(:json), nil, :xml)
+        }.to raise_error(Cosm::Parsers::XML::InvalidXMLError)
+      end
+
+      it "should raise known exception if told json but given xml" do
+        expect {
+          Cosm::Feed.new(feed_as_(:xml), nil, :json)
+        }.to raise_error(Cosm::Parsers::JSON::InvalidJSONError)
+      end
+
+      it "should raise known exception if told json but given csv" do
+        expect {
+          Cosm::Feed.new(feed_as_(:csv), nil, :json)
+        }.to raise_error(Cosm::Parsers::JSON::InvalidJSONError)
+      end
+
+      it "should raise known exception if told csv but given xml" do
+        expect {
+          Cosm::Feed.new(feed_as_(:xml), :v2, :csv)
+        }.to raise_error(Cosm::Parsers::CSV::InvalidCSVError)
+      end
+
+      it "should raise known exception if told csv but given json" do
+        expect {
+          Cosm::Feed.new(feed_as_(:json), :v2, :csv)
+        }.to raise_error(Cosm::Parsers::CSV::InvalidCSVError)
+      end
+
+      it "should raise known exception if told format is something unknown" do
+        expect {
+          Cosm::Feed.new(feed_as_(:json), :v2, :msgpack)
+        }.to raise_error(Cosm::InvalidFormatError)
+      end
+    end
   end
 
   describe "#attributes" do

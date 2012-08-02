@@ -59,12 +59,13 @@ module Cosm
       return pass
     end
 
-    def initialize(input = {})
+    def initialize(input = {}, format = nil)
+      raise InvalidFormatError, "Unknown format specified, currently we can only parse JSON, XML or CSV." unless [nil,:json,:xml,:csv].include?(format)
       if input.is_a? Hash
         self.attributes = input
-      elsif input.strip[0...1].to_s == "{"
+      elsif format == :json || (format.nil? && input.strip[0...1].to_s == "{")
         self.attributes = from_json(input)
-      elsif input.strip[0...1].to_s == "<"
+      elsif format == :xml || (format.nil? && input.strip[0...1].to_s == "<")
         self.attributes = from_xml(input)
       else
         self.attributes = from_csv(input)

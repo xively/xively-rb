@@ -13,4 +13,10 @@ describe "default trigger json parser" do
       attributes[key].should == json[key]
     end
   end
+
+  it "should raise known exception if passed garbage as json" do
+    expect {
+      Cosm::Trigger.new("This is not JSON", :json)
+    }.to raise_error(Cosm::Parsers::JSON::InvalidJSONError)
+  end
 end

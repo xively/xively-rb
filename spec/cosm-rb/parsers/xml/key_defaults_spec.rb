@@ -12,5 +12,11 @@ describe "default key xml parser" do
       Cosm::Key.new(@xml).should fully_represent_key(:xml, @xml)
     end
   end
+
+  it "should raise known exception if passed garbage as xml" do
+    expect {
+      Cosm::Key.new("This is not XML", :xml)
+    }.to raise_error(Cosm::Parsers::XML::InvalidXMLError)
+  end
 end
 

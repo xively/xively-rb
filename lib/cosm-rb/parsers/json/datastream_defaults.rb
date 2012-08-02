@@ -3,12 +3,17 @@ module Cosm
     module JSON
       module DatastreamDefaults
         def from_json(json)
-          hash = ::JSON.parse(json)
+          begin
+            hash = ::JSON.parse(json)
+          rescue ::JSON::ParserError => e
+            raise InvalidJSONError, e.message
+          end
+          raise InvalidJSONError, "JSON doesn't appear to be a hash" unless hash.is_a?(Hash)
           case hash['version']
-          when '1.0.0'
-            transform_1_0_0(hash)
-          when '0.6-alpha', nil
+          when '0.6-alpha'
             transform_0_6_alpha(hash)
+          when '1.0.0', nil
+            transform_1_0_0(hash)
           end
         end
 
@@ -19,7 +24,7 @@ module Cosm
           hash["id"] = hash.delete("id")
           hash["updated"] = hash.delete("at")
           hash["current_value"] = hash.delete("current_value")
-          hash["tags"] = hash["tags"].join(',') if hash["tags"]
+          hash["tags"] = join_tags(hash["tags"])
           if unit = hash.delete('unit')
             hash['unit_type'] = unit['type']
             hash['unit_symbol'] = unit['symbol']
@@ -37,7 +42,7 @@ module Cosm
             hash["max_value"] = hash["values"].first.delete("max_value")
             hash["min_value"] = hash["values"].first.delete("min_value")
           end
-          hash["tags"] = hash["tags"].join(',') if hash["tags"]
+          hash["tags"] = join_tags(hash["tags"])
           if unit = hash.delete('unit')
             hash['unit_type'] = unit['type']
             hash['unit_symbol'] = unit['symbol']
