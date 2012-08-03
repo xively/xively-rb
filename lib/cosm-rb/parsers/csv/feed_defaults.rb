@@ -20,15 +20,15 @@ module Cosm
             hash["datastreams"] = rows.collect {|row|
               timestamp = {}
               if row.size == 3
-                timestamp["updated"] = row[1]
+                timestamp["updated"] = row[1].strip
               end
-              { "id" => row.first.to_s, "current_value" => row.last.to_s }.merge(timestamp)
+              { "id" => row.first.to_s.strip, "current_value" => row.last.to_s.strip }.merge(timestamp)
             }
           elsif version == :v1
             raise InvalidCSVError, "CSV is invalid. Currently we can only accept CSV for your most recent set of values. You have submitted 2 rows of data." if rows.size > 1
             hash["datastreams"] = []
             rows.first.each_with_index do |current_value, stream_id|
-              hash["datastreams"] << { "id" => stream_id.to_s, "current_value" => current_value }
+              hash["datastreams"] << { "id" => stream_id.to_s.strip, "current_value" => current_value.to_s.strip }
             end
           end
           hash["csv_version"] = version
