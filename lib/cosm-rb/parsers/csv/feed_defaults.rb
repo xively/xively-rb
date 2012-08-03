@@ -28,7 +28,7 @@ module Cosm
             raise InvalidCSVError, "CSV is invalid. Currently we can only accept CSV for your most recent set of values. You have submitted 2 rows of data." if rows.size > 1
             hash["datastreams"] = []
             rows.first.each_with_index do |current_value, stream_id|
-              hash["datastreams"] << { "id" => stream_id.to_s.strip, "current_value" => current_value.strip }
+              hash["datastreams"] << { "id" => stream_id.to_s.strip, "current_value" => current_value.to_s.strip }
             end
           end
           hash["csv_version"] = version

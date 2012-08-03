@@ -14,9 +14,9 @@ module Cosm
           row = rows.first
           raise InvalidCSVError, "CSV is invalid. Too many fields; must only be a single value, or a timestamp and a value" if row.size > 2
           if row.size == 2
-            return { "updated" => row[0], "current_value" => row[1].to_s }
+            return { "updated" => row[0].to_s.strip, "current_value" => row[1].to_s.strip }
           else
-            return { "current_value" => row[0].to_s }
+            return { "current_value" => row[0].to_s.strip }
           end
         end
       end
