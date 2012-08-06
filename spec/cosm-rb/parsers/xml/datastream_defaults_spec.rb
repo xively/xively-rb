@@ -7,6 +7,11 @@ describe "default datastream xml parser" do
       Cosm::Datastream.new(@xml).should fully_represent_datastream(:xml, @xml)
     end
 
+    it "should convert into attributes hash when no version string but correct xmlns" do
+      xml = datastream_as_(:xml, :omit_version => true)
+      Cosm::Datastream.new(xml).should fully_represent_datastream(:xml, datastream_as_(:xml))
+    end
+
     it "should handle blank tags" do
       @xml = datastream_as_(:xml, :except_node => :tag)
       Cosm::Datastream.new(@xml).should fully_represent_datastream(:xml, @xml)
@@ -32,6 +37,11 @@ describe "default datastream xml parser" do
     it "should convert into attributes hash" do
       @xml = datastream_as_(:xml, :version => "5")
       Cosm::Datastream.new(@xml).should fully_represent_datastream(:xml, @xml)
+    end
+
+    it "should convert into attributes hash even when no version attribute if correct xmlns" do
+      xml = datastream_as_(:xml, :version => "5", :omit_version => true)
+      Cosm::Datastream.new(xml).should fully_represent_datastream(:xml, datastream_as_(:xml, :version => "5"))
     end
 
     it "should handle blank tags" do
