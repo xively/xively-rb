@@ -77,12 +77,22 @@ EOXML
       feed.datastreams.size.should == 1
       feed.datastreams.first.tags.should == "freakin lasers,humidity,Temperature"
     end
+
+    it "should parse xml missing the version attribute, but with the correct 0.5.1 xmlns" do
+      xml = feed_as_(:xml, :omit_version => true)
+      Cosm::Feed.new(xml).should fully_represent_feed(:xml, feed_as_(:xml))
+    end
   end
 
   context "5 (used by API v1)" do
     it "should convert into attributes hash" do
       @xml = feed_as_(:xml, :version => "5")
       Cosm::Feed.new(@xml).should fully_represent_feed(:xml, @xml)
+    end
+
+    it "should convert into attributes hash if missing version attribute, but with correct xmlns" do
+      xml = feed_as_(:xml, :version => "5", :omit_version => true)
+      Cosm::Feed.new(xml).should fully_represent_feed(:xml, feed_as_(:xml, :version => "5"))
     end
 
     it "should handle blank tags" do
