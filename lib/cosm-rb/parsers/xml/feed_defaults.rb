@@ -8,8 +8,8 @@ module Cosm
             xml = Nokogiri::XML(xml) do |config|
               config.strict.nonet
             end
-            case xml.root.attributes["version"].value
-            when "5"
+            if xml.root.attributes["version"].value == "5" ||
+              xml.collect_namespaces["xmlns"] == "http://www.eeml.org/xsd/005"
               transform_5(xml)
             else
               transform_0_5_1(xml)
