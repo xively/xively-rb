@@ -53,11 +53,12 @@ CSV
       csv =<<-CSV
 This,2
 Wrong,3
+Is,4
 CSV
 
       expect {
         Cosm::Feed.new(csv, :v1)
-      }.to raise_error(Cosm::Parsers::CSV::InvalidCSVError)
+      }.to raise_error(Cosm::Parsers::CSV::InvalidCSVError, /3 rows/)
     end
 
     context "unwanted whitespace" do
