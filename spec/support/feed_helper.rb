@@ -112,7 +112,7 @@ def feed_as_(format, options = {})
   when 'json'
     data = feed_as_json(options[:version] || "1.0.0")
   when 'xml'
-    data = feed_as_xml(options[:version] || "0.5.1", options[:except_node])
+    data = feed_as_xml(options[:version] || "0.5.1", options[:except_node], options[:omit_version])
   when 'csv'
     data = feed_as_csv(options[:version] || "v2")
   end
@@ -376,14 +376,14 @@ def feed_as_json(version)
   end
 end
 
-def feed_as_xml(version, except_node = nil)
+def feed_as_xml(version, except_node = nil, omit_version = false)
 
   case version
   when "0.5.1"
     if except_node == :location
       xml = <<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.5.1" xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd"> 
+<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="0.5.1"'} xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd"> 
  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred"> 
     <title>Cosm Office environment</title> 
     <feed>http://test.host/v2/feeds/2357.xml</feed> 
@@ -432,7 +432,7 @@ XML
     elsif except_node == :unit
       xml = <<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.5.1" xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd"> 
+<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="0.5.1"'} xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd"> 
  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred"> 
     <title>Cosm Office environment</title> 
     <feed>http://test.host/v2/feeds/2357.xml</feed> 
@@ -480,7 +480,7 @@ XML
     elsif except_node == :tag
       xml = <<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.5.1" xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd"> 
+<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="0.5.1"'} xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd"> 
  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred"> 
     <title>Cosm Office environment</title> 
     <feed>http://test.host/v2/feeds/2357.xml</feed> 
@@ -525,7 +525,7 @@ XML
     else
       xml = <<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.5.1" xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd"> 
+<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="0.5.1"'} xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd"> 
  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred"> 
     <title>Cosm Office environment</title> 
     <feed>http://test.host/v2/feeds/2357.xml</feed> 
@@ -578,7 +578,7 @@ XML
     if except_node == :location
       xml = <<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="5" xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
+<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="5"'} xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred"> 
     <title>Cosm Office environment</title> 
     <feed>http://test.host/v2/feeds/2357.xml</feed> 
@@ -607,7 +607,7 @@ XML
     elsif except_node == :unit
       xml = <<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="5" xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
+<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="5"'} xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred"> 
     <title>Cosm Office environment</title> 
     <feed>http://test.host/v2/feeds/2357.xml</feed> 
@@ -639,7 +639,7 @@ XML
     elsif except_node == :unit_attributes
       xml = <<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="5" xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
+<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="5"'} xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred"> 
     <title>Cosm Office environment</title> 
     <feed>http://test.host/v2/feeds/2357.xml</feed> 
@@ -674,7 +674,7 @@ XML
     elsif except_node == :value_attributes
       xml = <<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="5" xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
+<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="5"'} xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred"> 
     <title>Cosm Office environment</title> 
     <feed>http://test.host/v2/feeds/2357.xml</feed> 
@@ -709,7 +709,7 @@ XML
     elsif except_node == :tag
       xml = <<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="5" xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
+<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="5"'} xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred"> 
     <title>Cosm Office environment</title> 
     <feed>http://test.host/v2/feeds/2357.xml</feed> 
@@ -741,7 +741,7 @@ XML
     else
       xml = <<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="5" xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
+<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="5"'} xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred"> 
     <title>Cosm Office environment</title> 
     <feed>http://test.host/v2/feeds/2357.xml</feed> 

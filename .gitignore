@@ -10,3 +10,4 @@ debug.log
 test.sqlite3.db
 *.gem
 *.orig
+vendor/bundle
