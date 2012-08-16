@@ -216,5 +216,39 @@ EOXML
       }.to raise_error(Cosm::Parsers::XML::InvalidXMLError)
     end
   end
+
+  context "feeds with datapoints" do
+    it "should grab all datapoints present in valid xml" do
+      xml = <<-XML
+<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.5.1" xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd"> 
+  <environment>
+    <data id="0">
+      <datapoints>
+        <value at="2010-05-20T11:01:43Z">294</value>
+        <value at="2010-05-20T11:01:44Z">295</value>
+        <value at="2010-05-20T11:01:45Z">296</value>
+        <value at="2010-05-20T11:01:46Z">297</value>
+      </datapoints>
+    </data>
+    <data id="1">
+      <current_value at="2010-05-20T11:01:47Z">23</current_value> 
+      <datapoints>
+        <value at="2010-05-20T11:01:43Z">24</value>
+        <value at="2010-05-20T11:01:44Z">25</value>
+      </datapoints>
+    </data>
+  </environment>
+</eeml>
+XML
+      feed = Cosm::Feed.new(xml)
+      feed.datastreams.size.should == 2
+      feed.datastreams[0].current_value.should == nil
+      feed.datastreams[0].datapoints.size.should == 4
+      feed.datastreams[0].datapoints.collect { |d| d.value }.should == ["294", "295", "296", "297"]
+      feed.datastreams[1].current_value.should == "23"
+      feed.datastreams[1].datapoints.size.should == 2
+      feed.datastreams[1].datapoints.collect { |d| d.value }.should == ["24", "25"]
+    end
+  end
 end
 

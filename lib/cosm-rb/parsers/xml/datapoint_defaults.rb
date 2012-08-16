@@ -11,8 +11,10 @@ module Cosm
             raise InvalidXMLError, "Missing 'environment' node from base node" if parsed['eeml'].nil? || !parsed['eeml'].key?('environment')
             return {} if parsed['eeml']['environment'].nil?
             datastream = parsed['eeml']['environment']['data']
+            raise InvalidXMLError, "Multiple 'data' nodes are not permitted for Datapoint level XML" if datastream.is_a?(Array)
             datapoint = datastream['datapoints']
-            _extract_datapoint(datapoint)
+            raise InvalidXMLError, "Multiple 'value' nodes are not permitted for Datapoint level XML" if datapoint.is_a?(Array)
+            _extract_datapoints(datapoint).first
           rescue MultiXml::ParseError => e
             raise InvalidXMLError, e.message
           end

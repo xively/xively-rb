@@ -77,10 +77,14 @@ RSpec::Matchers.define :fully_represent_datastream do |format, formatted_datastr
   def match_json_datastream(datastream, formatted_datastream)
     json = MultiJson.load(formatted_datastream)
     case json['version']
-    when '1.0.0'
+    when '0.6-alpha'
       raise "Not implemented"
     else
-      false
+      datastream.current_value.should == json["current_value"]
+      datastream.id.should == json["id"]
+      datastream.updated.should == json["at"]
+      datastream.min_value.should == json["min_value"]
+      datastream.max_value.should == json["max_value"]
     end
   end
 
