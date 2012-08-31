@@ -44,6 +44,11 @@ module Cosm
       end
     end
 
+    def results
+      return [] if @results.nil?
+      @results
+    end
+
     def as_json(options = {})
       options[:version] ||= "1.0.0"
       generate_json(options[:version])

@@ -102,9 +102,9 @@ describe Cosm::Datapoint do
   # Provided by Cosm::Templates::DatapointDefaults
   describe "#generate_json" do
     it "should take a version and generate the appropriate template" do
-      datapoint = Cosm::Datapoint.new({})
-      Cosm::Template.should_receive(:new).with(datapoint, :json)
-      lambda {datapoint.generate_json}.should raise_error(NoMethodError)
+      now = Time.now
+      datapoint = Cosm::Datapoint.new({:at => now, :value => 123})
+      datapoint.generate_json.should == {:at => now.iso8601(6), :value => 123}
     end
   end
 

@@ -6,15 +6,14 @@ module Cosm
       tags = []
       quoted_mode = false
       tags << string.chars.reduce("") do |buffer, char|
-        case char
-        when ','
+        if char == ','
           if !quoted_mode
             tags << buffer
             buffer = ""
           else
             buffer << char
           end
-        when '"'
+        elsif char == '"'
           if buffer.length > 0 && buffer[-1,1] == '\\'
             buffer[-1] = char
           else

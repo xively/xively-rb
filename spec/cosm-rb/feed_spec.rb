@@ -252,8 +252,7 @@ describe Cosm::Feed do
   describe "#generate_json" do
     it "should take a version and generate the appropriate template" do
       feed = Cosm::Feed.new({})
-      Cosm::Template.should_receive(:new).with(feed, :json)
-      lambda {feed.generate_json("1.0.0", {})}.should raise_error(NoMethodError)
+      feed.generate_json("1.0.0").should == {:version => "1.0.0"}
     end
   end
 

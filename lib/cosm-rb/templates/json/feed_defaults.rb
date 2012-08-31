@@ -6,96 +6,57 @@ module Cosm
         include Cosm::Helpers
 
         def generate_json(version, options = {})
-          case version
-          when "1.0.0"
-            json_1_0_0 options
-          when "0.6-alpha"
-            json_0_6_alpha options
+          if version == "1.0.0"
+            output = json_100(options)
+          elsif version == "0.6-alpha"
+            output = json_06alpha(options)
           end
+          !options[:include_blank] ? output.delete_if_nil_value : output
         end
 
         private
 
         # As used by http://cosm.com/api/v2/FEED_ID.json
-        def json_1_0_0(options = {})
-          template = Template.new(self, :json)
-          template.id
-          template.title
-          template.private {private.to_s}
-          template.icon
-          template.website
-          template.tags {parse_tag_string(tags)} if tags
-          template.description
-          template.feed {feed.blank? ? "" : "#{feed}.json"}
-          template.auto_feed_url
-          template.status
-          template.updated {updated.iso8601(6)}
-          template.created {created.iso8601(6)}
-          template.email
-          template.creator
-          if owner_login
-            template.user do |user|
-              {
-                :login => owner_login
-              }
-            end
-          end
-          template.version {"1.0.0"}
-          if datastreams
-            template.datastreams do
-              datastreams.collect do |ds|
-                if ds.datapoints.any?
-                  datapoints = ds.datapoints.collect {|dp| {:value => dp.value, :at => dp.at.iso8601(6)}}
-                end
-                {
-                  :id => ds.id,
-                  :at => ds.updated.iso8601(6),
-                  :max_value => ds.max_value.to_s,
-                  :min_value => ds.min_value.to_s,
-                  :current_value => ds.current_value,
-                  :tags => parse_tag_string(ds.tags),
-                  :unit => unit_hash(ds, options),
-                  :datapoints => datapoints
-                }.delete_if_nil_value
-              end
-            end
-          end
-          template.location {location_hash(options)}
-          template.output! options
+        def json_100(options = {})
+          {
+            :id => self.id,
+            :title => self.title,
+            :private => self.private.to_s,
+            :icon => icon,
+            :website => website,
+            :tags => parse_tag_string(tags),
+            :description => self.description,
+            :feed  => (feed.blank? ? "" : "#{feed}.json"),
+            :auto_feed_url => auto_feed_url,
+            :status => status,
+            :updated => updated.iso8601(6),
+            :created => created.iso8601(6),
+            :email => email,
+            :creator => creator,
+            :user => ({ :login => owner_login } if owner_login),
+            :version => "1.0.0",
+            :datastreams => datastreams.map {|ds| ds.generate_json("1.0.0", options.merge({:hide_version => true}))},
+            :location => location_hash(options)
+          }
         end
 
+
         # As used by http://cosm.com/api/v1/FEED_ID.json
-        def json_0_6_alpha(options={})
-          template = Template.new(self, :json)
-          template.id
-          template.title
-          template.icon
-          template.website
-          template.description
-          template.feed {"#{feed}.json"}
-          template.status
-          template.updated {updated.iso8601(6)}
-          template.email
-          template.version {"0.6-alpha"}
-          if datastreams
-            template.datastreams do
-              datastreams.collect do |ds|
-                {
-                  :id => ds.id,
-                  :values => [{
-                  :max_value => ds.max_value.to_s,
-                  :min_value => ds.min_value.to_s,
-                  :value => ds.current_value,
-                  :recorded_at => ds.updated.iso8601
-                }.delete_if_nil_value],
-                  :tags => parse_tag_string(ds.tags),
-                  :unit => unit_hash(ds, options)
-                }.delete_if_nil_value
-              end
-            end
-          end
-          template.location {location_hash(options)}
-          template.output! options
+        def json_06alpha(options = {})
+          {
+            :id => self.id,
+            :title => self.title,
+            :icon => icon,
+            :website => website,
+            :description => self.description,
+            :feed  => (feed.blank? ? "" : "#{feed}.json"),
+            :status => status,
+            :updated => updated.iso8601(6),
+            :email => email,
+            :version => "0.6-alpha",
+            :datastreams => datastreams.map {|ds| ds.generate_json("0.6-alpha", options.merge({:hide_version => true}))},
+            :location => location_hash(options)
+          }
         end
 
         private
@@ -111,7 +72,7 @@ module Cosm
           hash[:waypoints] = format_location_waypoints if location_waypoints
           !options[:include_blank] ? (hash.delete_if_nil_value if location_disposition || location_name || location_exposure || location_domain || location_ele || location_lat || location_lon) : hash
         end
-        
+
         def format_location_waypoints
           output = []
           location_waypoints.each{ |item|
@@ -119,13 +80,6 @@ module Cosm
             output.last[:at] = output.last[:at].iso8601(6)
           }
           output
-        end
-        
-        def unit_hash(datastream, options={})
-          hash = { :type => datastream.unit_type,
-            :symbol => datastream.unit_symbol,
-            :label => datastream.unit_label }
-          !options[:include_blank] ? (hash.delete_if_nil_value if datastream.unit_type || datastream.unit_label || datastream.unit_symbol) : hash
         end
       end
     end

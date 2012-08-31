@@ -2,61 +2,56 @@ module Cosm
   module Templates
     module JSON
       module DatastreamDefaults
+
         def generate_json(version, options={})
-          case version
-          when "1.0.0"
-            json_1_0_0 options
-          when "0.6-alpha"
-            json_0_6_alpha options
+          if version == "1.0.0"
+            output = json_100(options)
+          elsif version == "0.6-alpha"
+            output = json_06alpha(options)
           end
+          output[:version] = version unless options[:hide_version]
+          !options[:include_blank] ? output.delete_if_nil_value : output
         end
 
         private
 
         # As used by http://cosm.com/api/v2/FEED_ID/datastreams/DATASTREAM_ID.json
-        def json_1_0_0(options={})
-          template = Template.new(self, :json)
-          template.id
-          template.version {"1.0.0"}
-          template.at {updated.iso8601(6)}
-          template.current_value
-          template.max_value {max_value.to_s}
-          template.min_value {min_value.to_s}
-          template.tags {parse_tag_string(tags)}
-          template.unit {unit_hash(options)}
-          template.datapoints_function
-          template.datapoints do
-            datapoints.collect do |datapoint|
-              {
-                :at => datapoint.at.iso8601(6),
-                :value => datapoint.value
-              }
-            end
-          end if datapoints.any?
-          template.output! options
+        def json_100(options = {})
+          datapoints = self.datapoints.map {|dp| {:value => dp.value, :at => dp.at.iso8601(6)}}
+          {
+            :id => self.id,
+            :current_value => self.current_value,
+            :at => self.updated.iso8601(6),
+            :max_value => self.max_value.to_s,
+            :min_value => self.min_value.to_s,
+            :tags => parse_tag_string(self.tags),
+            :unit => unit_hash(options),
+            :datapoints_function => datapoints_function,
+            :datapoints => datapoints
+          }
         end
 
         # As used by http://cosm.com/api/v1/FEED_ID/datastreams/DATASTREAM_ID.json
-        def json_0_6_alpha(options={})
-          template = Template.new(self, :json)
-          template.id
-          template.version {"0.6-alpha"}
-          template.values {
-            [{ :recorded_at => updated.iso8601,
+        def json_06alpha(options = {})
+          {
+            :id => self.id,
+            :values =>
+            [{
+              :recorded_at => updated.iso8601,
               :value => current_value,
               :max_value => max_value.to_s,
-              :min_value => min_value.to_s }.delete_if_nil_value]
+              :min_value => min_value.to_s
+            }.delete_if_nil_value],
+            :tags => parse_tag_string(self.tags),
+            :unit => unit_hash(options),
           }
-          template.tags {parse_tag_string(tags)}
-          template.unit {unit_hash(options)}
-          template.output! options
         end
 
         def unit_hash(options={})
           hash = { :type => unit_type,
                    :symbol => unit_symbol,
                    :label => unit_label }
-          !options[:include_blank] ? hash.delete_if_nil_value : hash
+          !options[:include_blank] ? (hash.delete_if_nil_value if unit_type || unit_label || unit_symbol) : hash
         end
 
       end

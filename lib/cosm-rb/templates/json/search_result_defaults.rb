@@ -6,38 +6,33 @@ module Cosm
         include Helpers
 
         def generate_json(version)
-          case version
-          when "1.0.0"
-            json_1_0_0
-          when "0.6-alpha"
-            json_0_6_alpha
+          if version == "1.0.0"
+            json_100.delete_if_nil_value
+          elsif version == "0.6-alpha"
+            json_06alpha.delete_if_nil_value
           end
         end
 
         private
 
         # As used by http://cosm.com/api/v2/feeds.json
-        def json_1_0_0
-          template = Template.new(self, :json)
-          template.totalResults
-          template.startIndex
-          template.itemsPerPage
-          if results
-            template.results {results.collect{|f| f.generate_json("1.0.0")}}
-          end
-          template.output!
+        def json_100
+          {
+            :totalResults => totalResults,
+            :startIndex => startIndex,
+            :itemsPerPage => itemsPerPage,
+            :results => results.collect{|f| f.generate_json("1.0.0")}
+          }
         end
 
         # As used by http://cosm.com/api/v1/feeds.json
-        def json_0_6_alpha
-          template = Template.new(self, :json)
-          template.totalResults
-          template.startIndex
-          template.itemsPerPage
-          if results
-            template.results {results.collect{|f| f.generate_json("0.6-alpha")}}
-          end
-          template.output!
+        def json_06alpha
+          {
+            :totalResults => totalResults,
+            :startIndex => startIndex,
+            :itemsPerPage => itemsPerPage,
+            :results => results.collect{|f| f.generate_json("0.6-alpha")}
+          }
         end
 
       end
