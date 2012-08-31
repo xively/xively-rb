@@ -149,9 +149,9 @@ describe Cosm::SearchResult do
         @search_result = Cosm::SearchResult.new({})
       end
 
-      it "should return nil if not an array" do
+      it "should return [] if not an array" do
         @search_result.results = "kittens"
-        @search_result.results.should be_nil
+        @search_result.results.should be_empty
       end
 
       it "should accept an array of feeds and hashes and store an array of datastreams" do
@@ -187,9 +187,8 @@ describe Cosm::SearchResult do
   # Provided by Cosm::Templates::SearchResultDefaults
   describe "#generate_json" do
     it "should take a version and generate the appropriate template" do
-      search_result = Cosm::SearchResult.new({})
-      Cosm::Template.should_receive(:new).with(search_result, :json)
-      lambda {search_result.generate_json("1.0.0")}.should raise_error(NoMethodError)
+      search_result = Cosm::SearchResult.new({"totalResults" => 100, "itemsPerPage" => 12, :results => []})
+      search_result.generate_json("1.0.0").should == {:totalResults => 100, :itemsPerPage => 12}
     end
   end
 

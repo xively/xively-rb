@@ -3,10 +3,10 @@ module Cosm
     module JSON
       module DatapointDefaults
         def generate_json(version = nil)
-          template = Template.new(self, :json)
-          template.at {at.iso8601(6)}
-          template.value
-          template.output!
+          {
+            :at => at.iso8601(6),
+            :value => value
+          }.delete_if_nil_value
         end
       end
     end
