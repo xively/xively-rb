@@ -190,7 +190,7 @@ describe Cosm::Key do
     it "should pass the output of #as_json to yajl" do
       key = Cosm::Key.new(@key_hash)
       key.should_receive(:as_json).and_return({:awesome => "hash"})
-      ::JSON.should_receive(:generate).with({:awesome => "hash"})
+      MultiJson.should_receive(:dump).with({:awesome => "hash"})
       key.to_json
     end
   end

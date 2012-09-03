@@ -240,14 +240,14 @@ describe Cosm::SearchResult do
     it "should generate feeds" do
       search_result = Cosm::SearchResult.new("results" => [feed_as_('hash')])
       search_result.results = feed_as_(:hash)
-      JSON.parse(search_result.to_json)["results"].should_not be_nil
+      MultiJson.load(search_result.to_json)["results"].should_not be_nil
     end
 
     it "should pass the output of #as_json to yajl" do
       search_result_hash = {"totalResults" => 100}
       search_result = Cosm::SearchResult.new(search_result_hash)
       search_result.should_receive(:as_json).and_return({:awesome => "hash"})
-      ::JSON.should_receive(:generate).with({:awesome => "hash"})
+      MultiJson.should_receive(:dump).with({:awesome => "hash"})
       search_result.to_json
     end
   end

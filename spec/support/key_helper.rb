@@ -64,7 +64,7 @@ XML
   when 'hash'
     data
   when 'json'
-    { "key" => data }.to_json
+    MultiJson.dump({ "key" => data })
   when 'xml'
     data
   else

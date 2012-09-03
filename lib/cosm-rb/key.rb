@@ -68,7 +68,7 @@ module Cosm
     end
 
     def to_json(options = nil)
-      ::JSON.generate as_json(options)
+      MultiJson.dump(as_json(options))
     end
 
     def permissions

@@ -8,7 +8,7 @@ describe "default datapoint json parser" do
   it "should convert into attributes hash" do
     @json = datapoint_as_(:json)
     attributes = @datapoint.from_json(@json)
-    json = JSON.parse(@json)
+    json = MultiJson.load(@json)
     attributes["at"].should == json["at"]
     attributes["value"].should == json["value"]
   end

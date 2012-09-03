@@ -1,9 +1,5 @@
 require 'nokogiri'
-if defined?(JRUBY_VERSION)
-  require 'json/pure'
-else
-  require 'yajl/json_gem'
-end
+require 'multi_json'
 
 $:.unshift(File.dirname(File.expand_path(__FILE__)))
 

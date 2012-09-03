@@ -179,7 +179,7 @@ describe Cosm::Datapoint do
       datapoint_hash = {"id" => "env001", "value" => "2344"}
       datapoint = Cosm::Datapoint.new(datapoint_hash)
       datapoint.should_receive(:as_json).and_return({:awesome => "hash"})
-      ::JSON.should_receive(:generate).with({:awesome => "hash"})
+      MultiJson.should_receive(:dump).with({:awesome => "hash"})
       datapoint.to_json
     end
   end

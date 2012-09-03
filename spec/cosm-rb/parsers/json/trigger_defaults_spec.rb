@@ -8,7 +8,7 @@ describe "default trigger json parser" do
   it "should convert into attributes hash" do
     @json = trigger_as_(:json)
     attributes = @trigger.from_json(@json)
-    json = JSON.parse(@json)
+    json = MultiJson.load(@json)
     Cosm::Trigger::ALLOWED_KEYS.each do |key|
       attributes[key].should == json[key]
     end

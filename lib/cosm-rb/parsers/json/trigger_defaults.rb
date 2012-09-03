@@ -4,8 +4,8 @@ module Cosm
       module TriggerDefaults
         def from_json(json)
           begin
-            ::JSON.parse(json)
-          rescue ::JSON::ParserError => e
+            MultiJson.load(json)
+          rescue MultiJson::DecodeError => e
             raise InvalidJSONError, e.message
           end
         end

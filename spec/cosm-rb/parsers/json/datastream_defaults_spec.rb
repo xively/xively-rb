@@ -10,7 +10,7 @@ describe "default datastream json parser" do
   it "should default to v2 if no version is present" do
     @json = datastream_as_(:json, :version => "1.0.0", :except => [:version])
     attributes = @datastream.from_json(@json)
-    json = JSON.parse(@json)
+    json = MultiJson.load(@json)
     attributes["id"].should == json["id"]
     attributes["updated"].should == json["at"]
     attributes["current_value"].should == json["current_value"]
@@ -40,7 +40,7 @@ describe "default datastream json parser" do
     it "should convert into attributes hash" do
       @json = datastream_as_(:json)
       attributes = @datastream.from_json(@json)
-      json = JSON.parse(@json)
+      json = MultiJson.load(@json)
       attributes["id"].should == json["id"]
       attributes["updated"].should == json["at"]
       attributes["current_value"].should == json["current_value"]
@@ -68,7 +68,7 @@ describe "default datastream json parser" do
     it "should capture timestamp" do
       @json = datastream_as_(:json, :version => "1.0.0-minimal_timestamp")
       attributes = @datastream.from_json(@json)
-      json = JSON.parse(@json)
+      json = MultiJson.load(@json)
       attributes["updated"].should_not be_nil
       attributes["updated"].should == json["at"]
     end
@@ -79,7 +79,7 @@ describe "default datastream json parser" do
     it "should convert into attributes hash" do
       @json = datastream_as_(:json, :version => "0.6-alpha")
       attributes = @datastream.from_json(@json)
-      json = JSON.parse(@json)
+      json = MultiJson.load(@json)
       attributes["id"].should == json["id"]
       attributes["updated"].should == json["values"].first["recorded_at"]
       attributes["current_value"].should == json["values"].first["value"]

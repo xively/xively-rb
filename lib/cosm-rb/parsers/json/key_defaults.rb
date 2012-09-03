@@ -4,8 +4,8 @@ module Cosm
       module KeyDefaults
         def from_json(json)
           begin
-            hash = ::JSON.parse(json)["key"]
-          rescue ::JSON::ParserError => e
+            hash = MultiJson.load(json)["key"]
+          rescue MultiJson::DecodeError => e
             raise InvalidJSONError, e.message
           end
           raise InvalidJSONError, "JSON doesn't appear to be a hash" unless hash.is_a?(Hash)

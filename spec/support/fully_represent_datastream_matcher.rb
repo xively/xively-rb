@@ -75,7 +75,7 @@ RSpec::Matchers.define :fully_represent_datastream do |format, formatted_datastr
   end
 
   def match_json_datastream(datastream, formatted_datastream)
-    json = JSON.parse(formatted_datastream)
+    json = MultiJson.load(formatted_datastream)
     case json['version']
     when '1.0.0'
       raise "Not implemented"
