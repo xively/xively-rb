@@ -148,7 +148,7 @@ describe Cosm::Trigger do
       trigger_hash = {"title" => "Environment"}
       trigger = Cosm::Trigger.new(trigger_hash)
       trigger.should_receive(:as_json).and_return({:awesome => "hash"})
-      ::JSON.should_receive(:generate).with({:awesome => "hash"})
+      MultiJson.should_receive(:dump).with({:awesome => "hash"})
       trigger.to_json
     end
   end

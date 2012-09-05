@@ -336,7 +336,7 @@ describe Cosm::Datastream do
       datastream_hash = {"id" => "env001", "value" => "2344"}
       datastream = Cosm::Datastream.new(datastream_hash)
       datastream.should_receive(:as_json).and_return({:awesome => "hash"})
-      ::JSON.should_receive(:generate).with({:awesome => "hash"})
+      MultiJson.should_receive(:dump).with({:awesome => "hash"})
       datastream.to_json
     end
   end

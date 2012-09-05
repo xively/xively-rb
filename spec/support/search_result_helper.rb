@@ -136,7 +136,7 @@ def search_result_as_(format, options = {})
   when 'hash'
     data
   when 'json'
-    data.to_json
+    MultiJson.dump(data)
   when 'xml'
     data
   else

@@ -41,7 +41,7 @@ XML
   when 'hash'
     data
   when 'json'
-    data.to_json
+    MultiJson.dump(data)
   when 'xml'
     data
   else

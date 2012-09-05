@@ -47,7 +47,7 @@ RSpec::Matchers.define :fully_represent_key do |format, formatted_key|
   end
 
   def match_json_key(key, formatted_key)
-    json = JSON.parse(formatted_key)["key"]
+    json = MultiJson.load(formatted_key)["key"]
     key.id.should == json["id"]
     key.expires_at.should == json["expires_at"]
     key.key.should == json["api_key"]

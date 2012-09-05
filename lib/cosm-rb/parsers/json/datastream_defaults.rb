@@ -4,8 +4,8 @@ module Cosm
       module DatastreamDefaults
         def from_json(json)
           begin
-            hash = ::JSON.parse(json)
-          rescue ::JSON::ParserError => e
+            hash = MultiJson.load(json)
+          rescue MultiJson::DecodeError => e
             raise InvalidJSONError, e.message
           end
           raise InvalidJSONError, "JSON doesn't appear to be a hash" unless hash.is_a?(Hash)

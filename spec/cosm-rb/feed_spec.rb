@@ -326,14 +326,14 @@ describe Cosm::Feed do
     it "should generate datastreams" do
       feed = Cosm::Feed.new(feed_as_('hash'))
       feed.datastreams = datastream_as_(:hash)
-      JSON.parse(feed.to_json)["datastreams"].should_not be_nil
+      MultiJson.load(feed.to_json)["datastreams"].should_not be_nil
     end
 
     it "should pass the output of #as_json to yajl" do
       feed_hash = {"title" => "Environment"}
       feed = Cosm::Feed.new(feed_hash)
       feed.should_receive(:as_json).and_return({:awesome => "hash"})
-      ::JSON.should_receive(:generate).with({:awesome => "hash"})
+      MultiJson.should_receive(:dump).with({:awesome => "hash"})
       feed.to_json
     end
   end

@@ -149,7 +149,7 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
   end
 
   def match_json_feed(feed, formatted_feed)
-    json = JSON.parse(formatted_feed)
+    json = MultiJson.load(formatted_feed)
     case json['version']
     when '1.0.0'
       feed.title.should == json["title"]

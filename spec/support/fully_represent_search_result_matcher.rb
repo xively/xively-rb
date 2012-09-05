@@ -12,7 +12,7 @@ RSpec::Matchers.define :fully_represent_search_result do |format, formatted_sear
   end
 
   def match_json_search_result(search_result, formatted_search_result)
-    json = JSON.parse(formatted_search_result)
+    json = MultiJson.load(formatted_search_result)
     search_result.totalResults.should == json['totalResults']
     search_result.startIndex.should == json['startIndex']
     search_result.itemsPerPage.should == json['itemsPerPage']
