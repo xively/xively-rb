@@ -2,24 +2,21 @@ module Cosm
   module Parsers
     module XML
       module DatapointDefaults
+
+        include Cosm::Parsers::XML::Helpers
+
         def from_xml(xml)
           begin
-            xml = Nokogiri::XML(xml) do |config|
-              config.strict.nonet
-            end
-            hash = {}
-            environment = xml.at_xpath("//xmlns:environment")
-            raise InvalidXMLError, "Missing 'environment' node from base node" if environment.nil?
-            data = environment.at_xpath("xmlns:data")
-            datapoint = data.at_xpath("xmlns:datapoints")
-            value = datapoint.at_xpath("xmlns:value")
-            hash["value"] = value.content
-            hash["at"] = value.attributes["at"].value
-            hash
-          rescue Nokogiri::SyntaxError => e
+            parsed = MultiXml.parse(xml)
+            raise InvalidXMLError if parsed['eeml'].nil? || parsed['eeml']['environment'].nil?
+            datastream = parsed['eeml']['environment']['data']
+            datapoint = datastream['datapoints']
+            _extract_datapoint(datapoint)
+          rescue MultiXml::ParseError => e
             raise InvalidXMLError, e.message
           end
         end
+
       end
     end
   end

@@ -132,7 +132,6 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
         end
         current_value = data.at_xpath("xmlns:value")
         ds.current_value.should == current_value.content
-        ds.updated.should == environment.attributes["updated"].value
         ds.min_value.should == current_value.attributes["minValue"].value
         ds.max_value.should == current_value.attributes["maxValue"].value
         unit = data.at_xpath("xmlns:unit")
