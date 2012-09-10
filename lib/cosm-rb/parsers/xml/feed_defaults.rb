@@ -7,7 +7,7 @@ module Cosm
         def from_xml(xml)
           begin
             parsed = MultiXml.parse(xml)
-            raise InvalidXMLError if parsed['eeml'].nil? || parsed['eeml']['environment'].nil?
+            raise InvalidXMLError, "Missing 'environment' node from base node" if parsed['eeml'].nil? || parsed['eeml']['environment'].nil?
             if parsed['eeml']['version'] == '5' || parsed['eeml']['xmlns'] == 'http://www.eeml.org/xsd/005'
               transform_v1(parsed['eeml']['environment'])
             else
