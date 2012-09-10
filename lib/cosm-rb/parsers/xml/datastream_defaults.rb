@@ -24,8 +24,8 @@ module Cosm
         def transform_v2(xml)
           datastream = convert_to_hash(xml['data'])
           _extract_datastream(datastream).merge({
-            :feed_id => strip(xml['id']),
-            :feed_creator => strip(xml['creator'])
+            :feed_id => strip(xml,'id'),
+            :feed_creator => strip(xml,'creator')
           })
         end
 
@@ -33,8 +33,8 @@ module Cosm
         def transform_v1(xml)
           datastream = convert_to_hash(xml['data'])
           _extract_datastream_v1(datastream).merge({
-            :feed_id => strip(xml['id']),
-            :updated => strip(xml['updated']),
+            :feed_id => strip(xml,'id'),
+            :updated => strip(xml,'updated'),
             :feed_creator => 'http://www.haque.co.uk'
           })
         end
