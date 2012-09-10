@@ -17,7 +17,7 @@ module Cosm
           if val.class == String
             {'__content__' => val}
           else
-            val || {}
+            val ? val.merge({'__content__' => val['__content__']}) : {}
           end
         end
 
