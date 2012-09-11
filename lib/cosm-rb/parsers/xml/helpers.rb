@@ -5,15 +5,19 @@ module Cosm
 
         private
 
-        def strip(value)
-          return value.nil? ? nil : value.strip
+        def strip(xml, value)
+          if xml.key?(value)
+            xml[value].nil? ? '' : xml[value].strip
+          else
+            nil
+          end
         end
 
         def convert_to_hash(val)
           if val.class == String
             {'__content__' => val}
           else
-            val || {}
+            val ? val.merge({'__content__' => val['__content__']}) : {}
           end
         end
 
@@ -38,14 +42,14 @@ module Cosm
           current_value = convert_to_hash(xml['current_value'])
           unit = convert_to_hash(xml['unit'])
           {
-            :current_value => strip(current_value['__content__']),
-            :updated => strip(current_value['at']),
-            :id => strip(xml['id']),
-            :unit_symbol => strip(unit['symbol']),
-            :unit_type => strip(unit['type']),
-            :unit_label => strip(unit['__content__']),
-            :min_value => strip(xml['min_value']),
-            :max_value => strip(xml['max_value']),
+            :current_value => strip(current_value,'__content__'),
+            :updated => strip(current_value,'at'),
+            :id => strip(xml,'id'),
+            :unit_symbol => strip(unit,'symbol'),
+            :unit_type => strip(unit,'type'),
+            :unit_label => strip(unit,'__content__'),
+            :min_value => strip(xml,'min_value'),
+            :max_value => strip(xml,'max_value'),
             :datapoints => _extract_datapoints(xml['datapoints'])
           }.merge(sanitised_tags(xml))
         end
@@ -62,13 +66,13 @@ module Cosm
           unit = convert_to_hash(xml['unit'])
           value = convert_to_hash(xml['value'])
           {
-            :current_value => strip(value['__content__']),
-            :id => strip(xml['id']),
-            :unit_symbol => strip(unit['symbol']),
-            :unit_type => strip(unit['type']),
-            :unit_label => strip(unit['__content__']),
-            :min_value => strip(value['minValue']),
-            :max_value => strip(value['maxValue'])
+            :current_value => strip(value,'__content__'),
+            :id => strip(xml,'id'),
+            :unit_symbol => strip(unit,'symbol'),
+            :unit_type => strip(unit,'type'),
+            :unit_label => strip(unit,'__content__'),
+            :min_value => strip(value,'minValue'),
+            :max_value => strip(value,'maxValue')
           }.merge(sanitised_tags(xml))
         end
 
@@ -84,8 +88,8 @@ module Cosm
         def _extract_datapoint(xml)
           value = convert_to_hash(xml['value'])
           {
-            :at => strip(value['at']),
-            :value => strip(value['__content__'])
+            :at => strip(value,'at'),
+            :value => strip(value,'__content__')
           }
         end
 

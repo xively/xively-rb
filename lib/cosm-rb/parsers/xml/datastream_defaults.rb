@@ -7,7 +7,8 @@ module Cosm
         def from_xml(xml)
           begin
             parsed = MultiXml.parse(xml)
-            raise InvalidXMLError if parsed['eeml'].nil? || parsed['eeml']['environment'].nil?
+            raise InvalidXMLError, "Missing 'environment' node from base node" if parsed['eeml'].nil? || !parsed['eeml'].key?('environment')
+            return {} if parsed['eeml']['environment'].nil?
             if parsed['eeml']['version'] == '5' || parsed['eeml']['xmlns'] == 'http://www.eeml.org/xsd/005'
               transform_v1(parsed['eeml']['environment'])
             else
@@ -24,8 +25,8 @@ module Cosm
         def transform_v2(xml)
           datastream = convert_to_hash(xml['data'])
           _extract_datastream(datastream).merge({
-            :feed_id => strip(xml['id']),
-            :feed_creator => strip(xml['creator'])
+            :feed_id => strip(xml,'id'),
+            :feed_creator => strip(xml,'creator')
           })
         end
 
@@ -33,8 +34,8 @@ module Cosm
         def transform_v1(xml)
           datastream = convert_to_hash(xml['data'])
           _extract_datastream_v1(datastream).merge({
-            :feed_id => strip(xml['id']),
-            :updated => strip(xml['updated']),
+            :feed_id => strip(xml,'id'),
+            :updated => strip(xml,'updated'),
             :feed_creator => 'http://www.haque.co.uk'
           })
         end

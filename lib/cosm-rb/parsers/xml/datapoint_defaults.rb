@@ -8,7 +8,8 @@ module Cosm
         def from_xml(xml)
           begin
             parsed = MultiXml.parse(xml)
-            raise InvalidXMLError if parsed['eeml'].nil? || parsed['eeml']['environment'].nil?
+            raise InvalidXMLError, "Missing 'environment' node from base node" if parsed['eeml'].nil? || !parsed['eeml'].key?('environment')
+            return {} if parsed['eeml']['environment'].nil?
             datastream = parsed['eeml']['environment']['data']
             datapoint = datastream['datapoints']
             _extract_datapoint(datapoint)
