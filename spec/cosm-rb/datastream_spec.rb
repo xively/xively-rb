@@ -120,43 +120,43 @@ describe Cosm::Datastream do
 
     it "should raise known exception if passed json but told xml" do
       expect {
-        Cosm::Datastream.new(datastream_as_(:json), :xml)
+        Cosm::Datastream.new(datastream_as_(:json), :v2, :xml)
       }.to raise_error(Cosm::Parsers::XML::InvalidXMLError)
     end
 
     it "should raise known exception if passed csv but told xml" do
       expect {
-        Cosm::Datastream.new(datastream_as_(:csv), :xml)
+        Cosm::Datastream.new(datastream_as_(:csv), :v2, :xml)
       }.to raise_error(Cosm::Parsers::XML::InvalidXMLError)
     end
 
     it "should raise known exception if passed xml but told json" do
       expect {
-        Cosm::Datastream.new(datastream_as_(:xml), :json)
+        Cosm::Datastream.new(datastream_as_(:xml), :v2, :json)
       }.to raise_error(Cosm::Parsers::JSON::InvalidJSONError)
     end
 
     it "should raise known exception if passed csv but told json" do
       expect {
-        Cosm::Datastream.new(datastream_as_(:csv), :json)
+        Cosm::Datastream.new(datastream_as_(:csv), :v2, :json)
       }.to raise_error(Cosm::Parsers::JSON::InvalidJSONError)
     end
 
     it "should raise known exception if passed json but told csv" do
       expect {
-        Cosm::Datastream.new(datastream_as_(:json), :csv)
+        Cosm::Datastream.new(datastream_as_(:json), :v2, :csv)
       }.to raise_error(Cosm::Parsers::CSV::InvalidCSVError)
     end
 
     it "should raise known exception if passed xml but told csv" do
       expect {
-        Cosm::Datastream.new(datastream_as_(:xml), :csv)
+        Cosm::Datastream.new(datastream_as_(:xml), :v2, :csv)
       }.to raise_error(Cosm::Parsers::CSV::InvalidCSVError)
     end
 
     it "should raise known exception if told some format we don't accept" do
       expect {
-        Cosm::Datastream.new(datastream_as_(:xml), :html)
+        Cosm::Datastream.new(datastream_as_(:xml), :v2, :html)
       }.to raise_error(Cosm::InvalidFormatError)
     end
 

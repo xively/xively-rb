@@ -32,7 +32,7 @@ describe "default datastream json parser" do
 
   it "should raise known exception if passed garbage as JSON" do
     expect {
-      Cosm::Datastream.new("This is not json", :json)
+      Cosm::Datastream.new("This is not json", :v2, :json)
     }.to raise_error(Cosm::Parsers::JSON::InvalidJSONError)
   end
 

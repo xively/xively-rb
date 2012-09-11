@@ -14,6 +14,7 @@ if !defined?(JRUBY_VERSION)
       SimpleCov.start do
         add_filter "/spec/"
         add_filter "/lib/cosm-rb.rb"
+        add_filter "/vendor/"
       end
     end
   end
