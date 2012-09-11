@@ -123,5 +123,26 @@ XML
       Cosm::Datastream.new("This is not xml", :v2, :xml)
     }.to raise_error(Cosm::Parsers::XML::InvalidXMLError)
   end
+
+  it "should handle being passed xml containing datapoints with no timestamp" do
+    xml = <<-XML
+<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.5.1" xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd"> 
+  <environment>
+    <data>
+      <datapoints>
+        <value at="2010-05-20T11:01:43Z">294</value>
+        <value>295</value>
+        <value at="2010-05-20T11:01:45Z">296</value>
+        <value at="2010-05-20T11:01:46Z">297</value>
+      </datapoints>
+    </data>
+  </environment>
+</eeml>
+XML
+
+    expect {
+      Cosm::Datastream.new(xml)
+    }.to_not raise_error
+  end
 end
 

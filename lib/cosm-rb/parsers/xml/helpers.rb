@@ -86,9 +86,10 @@ module Cosm
         end
 
         def _extract_datapoint(xml)
+          value = convert_to_hash(xml)
           {
-            :at => strip(xml,'at'),
-            :value => strip(xml,'__content__')
+            :at => strip(value,'at'),
+            :value => strip(value,'__content__')
           }
         end
 
