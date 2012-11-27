@@ -43,11 +43,12 @@ module Cosm
 
         private
 
+        # This is used by v2 only
         def extract_datastreams(rows)
           row_sizes = rows.collect { |row| row.size }.uniq
           row_ids = rows.collect { |row| row.first.to_s.strip }.uniq
 
-          raise InvalidCSVError, "CSV is invalid. Incorrect number of fields" if row_sizes.max > 3
+          raise InvalidCSVError, "CSV is invalid. Incorrect number of fields" if row_sizes.max > 3 || row_sizes.min <= 1
 
           datastream_buckets = {}
 
