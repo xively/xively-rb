@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency("multi_json", ">=1.3.6")
   s.add_dependency("multi_xml", ">=0.5.1")
   s.add_dependency("yajl-ruby", ">=1.1.0")
-  s.add_dependency("nokogiri", ">=1.4.4")
+  s.add_dependency("nokogiri", ">=1.5.6")
   s.add_dependency("httparty", ">=0.8.3")
 
   if RUBY_VERSION.to_f < 1.9
