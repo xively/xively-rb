@@ -25,7 +25,7 @@ module Cosm
           if val.is_a?(Hash)
             val = [val]
           else
-            val
+            [*val]
           end
         end
 
