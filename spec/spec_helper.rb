@@ -15,6 +15,7 @@ if !defined?(JRUBY_VERSION)
         add_filter "/spec/"
         add_filter "/lib/cosm-rb.rb"
         add_filter "/vendor/"
+        minimum_coverage 100
       end
     end
   end
