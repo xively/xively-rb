@@ -1,3 +1,3 @@
 module Cosm #:nodoc:
-  VERSION = '0.2.04'
+  VERSION = '0.2.05'
 end
