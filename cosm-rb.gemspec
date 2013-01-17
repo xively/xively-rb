@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency("multi_xml", ">=0.5.2")
   s.add_dependency("yajl-ruby", ">=1.1.0")
   s.add_dependency("nokogiri", ">=1.5.6")
-  s.add_dependency("httparty", ">=0.8.3")
+  s.add_dependency("httparty", ">=0.10.0")
 
   if RUBY_VERSION.to_f < 1.9
     s.add_dependency("fastercsv", ">=1.5.x")
