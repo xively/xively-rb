@@ -6,17 +6,13 @@ require 'rspec'
 require 'time'
 
 if !defined?(JRUBY_VERSION)
-  if RUBY_VERSION < "1.9"
-    require 'ruby-debug'
-  else
-    if ENV["COVERAGE"] == "on"
-      require 'simplecov'
-      SimpleCov.start do
-        add_filter "/spec/"
-        add_filter "/lib/cosm-rb.rb"
-        add_filter "/vendor/"
-        minimum_coverage 100
-      end
+  if ENV["COVERAGE"] == "on"
+    require 'simplecov'
+    SimpleCov.start do
+      add_filter "/spec/"
+      add_filter "/lib/cosm-rb.rb"
+      add_filter "/vendor/"
+      minimum_coverage 100
     end
   end
 end
