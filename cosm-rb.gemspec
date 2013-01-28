@@ -30,19 +30,10 @@ Gem::Specification.new do |s|
   begin
     if !defined?(JRUBY_VERSION)
       s.add_dependency("ox", ">= 1.5.9")
-      if RUBY_VERSION.to_f < 1.9
-        s.add_development_dependency("ruby-debug")
-        s.add_development_dependency("rcov", ">=0.9.9")
-      else
-        s.add_development_dependency("debugger")
-        s.add_development_dependency("simplecov", ">=0.7.1")
-      end
     end
   rescue
     p "Could not detect ruby version"
   end
-  s.add_development_dependency("rake", "=0.8.7")
-  s.add_development_dependency("rspec", "=2.6.0")
 
   s.extra_rdoc_files = ["README.md", "CHANGELOG.md", "MIT-LICENSE"]
   s.rdoc_options << '--main' << 'README'
