@@ -28,6 +28,8 @@ module Cosm
 
           hash = Hash.new
 
+          raise InvalidCSVError, "Submitted CSV is empty." if rows.empty?
+
           if version == :v2
             hash["datastreams"] = extract_datastreams(rows)
           elsif version == :v1

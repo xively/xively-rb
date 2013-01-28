@@ -49,6 +49,18 @@ describe "default feed csv parser" do
       }.to raise_error(Cosm::Parsers::CSV::InvalidCSVError)
     end
 
+    it "should raise an error if passed empty content as v2" do
+      expect {
+        Cosm::Feed.new("", :v2)
+      }.to raise_error(Cosm::Parsers::CSV::InvalidCSVError)
+    end
+
+    it "should raise an error if passed empty content as v1" do
+      expect {
+        Cosm::Feed.new("", :v1)
+      }.to raise_error(Cosm::Parsers::CSV::InvalidCSVError)
+    end
+
     it "should raise an error if passed some wild csv with more than max permitted three columns" do
       csv =<<-CSV
 Date-Time, System HOA,Jockey Pump HOA,VFD Pump HOA,Lag Pump HOA,Lag Pump 2 HOA,Power Monitor,Water Level Relay,High Discharge Pressure,Reset Function,Jockey Running,VFD Run,Lag Pump Run,VFD Fault,Filter In Auto,Filter In Hand,Differential Press 1,Filter 1 Running,High Limit Switch,Low Limit Switch,Lag Pump Running,VFD Run Output Auto,VFD Pump On,Lag Pump,Lag Pump 1 On,System Auto Mode,Fault,Lag Pump 2 Run,Jockey On,Jockey Pump Run,Lag Pump 2,Filter Forward,Filter Reverse,Filter Solenoid,Pressure,Flow,Unknown?,VFD Input,VFD Output,
