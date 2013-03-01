@@ -61,13 +61,13 @@ EOXML
     it "should handle datastream with no current_value" do
       xml = <<-EOXML
 <?xml version="1.0" encoding="UTF-8"?>
-<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.5.1" xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd"> 
- <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred"> 
-    <title>Cosm Office environment</title> 
-    <data id="0"> 
-      <tag>freakin lasers</tag> 
-      <tag>humidity</tag> 
-      <tag>Temperature</tag> 
+<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.5.1" xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd">
+ <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred">
+    <title>Cosm Office environment</title>
+    <data id="0">
+      <tag>freakin lasers</tag>
+      <tag>humidity</tag>
+      <tag>Temperature</tag>
     </data>
   </environment>
 </eeml>
@@ -120,11 +120,11 @@ EOXML
       feed = Cosm::Feed.new(@xml)
       Cosm::Feed.new(@xml).should fully_represent_feed(:xml, @xml)
     end
-    
+
     it "should handle present but empty tags" do
       xml = <<-EOXML
 <?xml version="1.0" encoding="UTF-8"?>
-<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="5" xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
+<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="5" xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd">
   <environment>
     <title>ohai</title>
     <data id="123">
@@ -141,7 +141,7 @@ EOXML
     it "should gracefully handle 5 xml missing the base environment node" do
       xml = <<-EOXML
 <?xml version="1.0" encoding="UTF-8"?>
-<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="5" xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
+<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="5" xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd">
   <title>ohai</title>
 </eeml>
 EOXML
@@ -220,7 +220,7 @@ EOXML
   context "feeds with datapoints" do
     it "should grab all datapoints present in valid xml" do
       xml = <<-XML
-<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.5.1" xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd"> 
+<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.5.1" xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd">
   <environment>
     <data id="0">
       <datapoints>
@@ -231,7 +231,7 @@ EOXML
       </datapoints>
     </data>
     <data id="1">
-      <current_value at="2010-05-20T11:01:47Z">23</current_value> 
+      <current_value at="2010-05-20T11:01:47Z">23</current_value>
       <datapoints>
         <value at="2010-05-20T11:01:43Z">24</value>
         <value at="2010-05-20T11:01:44Z">25</value>

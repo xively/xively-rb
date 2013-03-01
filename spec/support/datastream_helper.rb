@@ -33,7 +33,7 @@ def datastream_as_(format, options = {})
   when 'csv'
     data = datastream_as_csv(options[:version] || "plain")
   end
- 
+
   # Add extra options we passed
   if options[:with]
     options[:with].each do |field, value|
@@ -136,88 +136,88 @@ def datastream_as_xml(version, except_node = nil, omit_version = true)
   when "0.5.1"
     if except_node == :tag
       xml = <<XML
-<?xml version="1.0" encoding="UTF-8"?> 
-<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="0.5.1"'} xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd"> 
-  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://appdev.loc:3000/users/occaecati"> 
-    <data id="0"> 
-      <current_value at="2011-02-16T16:21:01.834174Z">14</current_value> 
-      <max_value>658.0</max_value> 
-      <min_value>0.0</min_value> 
-      <unit type="derivedSI" symbol="A">Alpha</unit> 
-    </data> 
-  </environment> 
+<?xml version="1.0" encoding="UTF-8"?>
+<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="0.5.1"'} xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd">
+  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://appdev.loc:3000/users/occaecati">
+    <data id="0">
+      <current_value at="2011-02-16T16:21:01.834174Z">14</current_value>
+      <max_value>658.0</max_value>
+      <min_value>0.0</min_value>
+      <unit type="derivedSI" symbol="A">Alpha</unit>
+    </data>
+  </environment>
 </eeml>
 XML
     elsif except_node == :unit
       xml = <<XML
-<?xml version="1.0" encoding="UTF-8"?> 
-<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="0.5.1"'} xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd"> 
-  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://appdev.loc:3000/users/occaecati"> 
-    <data id="0"> 
-      <tag>freakin lasers</tag> 
-      <tag>humidity</tag> 
-      <tag>Temperature</tag> 
-      <current_value at="2011-02-16T16:21:01.834174Z">14</current_value> 
-      <max_value>658.0</max_value> 
-      <min_value>0.0</min_value> 
-    </data> 
-  </environment> 
+<?xml version="1.0" encoding="UTF-8"?>
+<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="0.5.1"'} xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd">
+  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://appdev.loc:3000/users/occaecati">
+    <data id="0">
+      <tag>freakin lasers</tag>
+      <tag>humidity</tag>
+      <tag>Temperature</tag>
+      <current_value at="2011-02-16T16:21:01.834174Z">14</current_value>
+      <max_value>658.0</max_value>
+      <min_value>0.0</min_value>
+    </data>
+  </environment>
 </eeml>
 XML
     elsif except_node == :unit_attributes
       xml = <<XML
-<?xml version="1.0" encoding="UTF-8"?> 
-<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="0.5.1"'} xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd"> 
-  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://appdev.loc:3000/users/occaecati"> 
-    <data id="0"> 
-      <tag>freakin lasers</tag> 
-      <tag>humidity</tag> 
-      <tag>Temperature</tag> 
-      <current_value at="2011-02-16T16:21:01.834174Z">14</current_value> 
-      <max_value>658.0</max_value> 
-      <min_value>0.0</min_value> 
-      <unit>Alpha</unit> 
-    </data> 
-  </environment> 
+<?xml version="1.0" encoding="UTF-8"?>
+<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="0.5.1"'} xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd">
+  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://appdev.loc:3000/users/occaecati">
+    <data id="0">
+      <tag>freakin lasers</tag>
+      <tag>humidity</tag>
+      <tag>Temperature</tag>
+      <current_value at="2011-02-16T16:21:01.834174Z">14</current_value>
+      <max_value>658.0</max_value>
+      <min_value>0.0</min_value>
+      <unit>Alpha</unit>
+    </data>
+  </environment>
 </eeml>
 XML
     elsif except_node == :timestamps
       xml = <<XML
-<?xml version="1.0" encoding="UTF-8"?> 
-<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="0.5.1"'} xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd"> 
-  <environment id="504" creator="http://appdev.loc:3000/users/occaecati"> 
-    <data id="0"> 
-      <tag>freakin lasers</tag> 
-      <tag>humidity</tag> 
-      <tag>Temperature</tag> 
-      <current_value>14</current_value> 
-      <max_value>658.0</max_value> 
-      <min_value>0.0</min_value> 
-      <unit type="derivedSI" symbol="A">Alpha</unit> 
-    </data> 
-  </environment> 
+<?xml version="1.0" encoding="UTF-8"?>
+<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="0.5.1"'} xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd">
+  <environment id="504" creator="http://appdev.loc:3000/users/occaecati">
+    <data id="0">
+      <tag>freakin lasers</tag>
+      <tag>humidity</tag>
+      <tag>Temperature</tag>
+      <current_value>14</current_value>
+      <max_value>658.0</max_value>
+      <min_value>0.0</min_value>
+      <unit type="derivedSI" symbol="A">Alpha</unit>
+    </data>
+  </environment>
 </eeml>
 XML
     else
       xml = <<XML
-<?xml version="1.0" encoding="UTF-8"?> 
-<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="0.5.1"'} xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd"> 
-  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://appdev.loc:3000/users/occaecati"> 
-    <data id="0"> 
-      <tag>freakin lasers</tag> 
-      <tag>humidity</tag> 
-      <tag>Temperature</tag> 
-      <current_value at="2011-02-16T16:21:01.834174Z">14</current_value> 
-      <max_value>658.0</max_value> 
-      <min_value>0.0</min_value> 
-      <unit type="derivedSI" symbol="A">Alpha</unit> 
-      <datapoints> 
-        <value at="2011-03-02T15:59:56.895922Z">1</value> 
-        <value at="2011-03-02T16:00:07.188648Z">1</value> 
-        <value at="2011-03-02T16:00:18.416500Z">2</value> 
+<?xml version="1.0" encoding="UTF-8"?>
+<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="0.5.1"'} xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd">
+  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://appdev.loc:3000/users/occaecati">
+    <data id="0">
+      <tag>freakin lasers</tag>
+      <tag>humidity</tag>
+      <tag>Temperature</tag>
+      <current_value at="2011-02-16T16:21:01.834174Z">14</current_value>
+      <max_value>658.0</max_value>
+      <min_value>0.0</min_value>
+      <unit type="derivedSI" symbol="A">Alpha</unit>
+      <datapoints>
+        <value at="2011-03-02T15:59:56.895922Z">1</value>
+        <value at="2011-03-02T16:00:07.188648Z">1</value>
+        <value at="2011-03-02T16:00:18.416500Z">2</value>
       </datapoints>
-    </data> 
-  </environment> 
+    </data>
+  </environment>
 </eeml>
 XML
     end
@@ -225,87 +225,87 @@ XML
     if except_node == :tag
       xml = <<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="5"'} xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
- <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://appdev.loc:3000/users/occaecati"> 
-    <data id="0"> 
-      <value maxValue="658.0" minValue="658">14</value> 
-      <unit type="derivedSI" symbol="A">Alpha</unit> 
-    </data> 
-  </environment> 
+<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="5"'} xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd">
+ <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://appdev.loc:3000/users/occaecati">
+    <data id="0">
+      <value maxValue="658.0" minValue="658">14</value>
+      <unit type="derivedSI" symbol="A">Alpha</unit>
+    </data>
+  </environment>
 </eeml>
 XML
     elsif except_node == :unit
       xml = <<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="5" xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
- <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://appdev.loc:3000/users/occaecati"> 
-    <data id="0"> 
-      <tag>freakin lasers</tag> 
-      <tag>humidity</tag> 
-      <tag>Temperature</tag> 
-      <value maxValue="658.0" minValue="658">14</value> 
-    </data> 
-  </environment> 
+<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="5" xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd">
+ <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://appdev.loc:3000/users/occaecati">
+    <data id="0">
+      <tag>freakin lasers</tag>
+      <tag>humidity</tag>
+      <tag>Temperature</tag>
+      <value maxValue="658.0" minValue="658">14</value>
+    </data>
+  </environment>
 </eeml>
 XML
     elsif except_node == :unit_attributes
       xml = <<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="5"'} xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
- <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://appdev.loc:3000/users/occaecati"> 
-    <data id="0"> 
-      <tag>freakin lasers</tag> 
-      <tag>humidity</tag> 
-      <tag>Temperature</tag> 
-      <value maxValue="658.0" minValue="658">14</value> 
-      <unit>Alpha</unit> 
-    </data> 
-  </environment> 
+<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="5"'} xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd">
+ <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://appdev.loc:3000/users/occaecati">
+    <data id="0">
+      <tag>freakin lasers</tag>
+      <tag>humidity</tag>
+      <tag>Temperature</tag>
+      <value maxValue="658.0" minValue="658">14</value>
+      <unit>Alpha</unit>
+    </data>
+  </environment>
 </eeml>
 XML
     elsif except_node == :value_attributes
       xml = <<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="5" xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
- <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://appdev.loc:3000/users/occaecati"> 
-    <data id="0"> 
-      <tag>freakin lasers</tag> 
-      <tag>humidity</tag> 
-      <tag>Temperature</tag> 
-      <value>14</value> 
-      <unit type="derivedSI" symbol="A">Alpha</unit> 
-    </data> 
-  </environment> 
+<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="5" xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd">
+ <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://appdev.loc:3000/users/occaecati">
+    <data id="0">
+      <tag>freakin lasers</tag>
+      <tag>humidity</tag>
+      <tag>Temperature</tag>
+      <value>14</value>
+      <unit type="derivedSI" symbol="A">Alpha</unit>
+    </data>
+  </environment>
 </eeml>
 XML
     elsif except_node == :timestamps
       xml = <<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="5"'} xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
- <environment id="504" creator="http://appdev.loc:3000/users/occaecati"> 
-    <data id="0"> 
-      <tag>freakin lasers</tag> 
-      <tag>humidity</tag> 
-      <tag>Temperature</tag> 
-      <value maxValue="658.0" minValue="658">14</value> 
-      <unit type="derivedSI" symbol="A">Alpha</unit> 
-    </data> 
-  </environment> 
+<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="5"'} xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd">
+ <environment id="504" creator="http://appdev.loc:3000/users/occaecati">
+    <data id="0">
+      <tag>freakin lasers</tag>
+      <tag>humidity</tag>
+      <tag>Temperature</tag>
+      <value maxValue="658.0" minValue="658">14</value>
+      <unit type="derivedSI" symbol="A">Alpha</unit>
+    </data>
+  </environment>
 </eeml>
 XML
     else
       xml = <<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="5"'} xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
- <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://appdev.loc:3000/users/occaecati"> 
-    <data id="0"> 
-      <tag>freakin lasers</tag> 
-      <tag>humidity</tag> 
-      <tag>Temperature</tag> 
-      <value maxValue="658.0" minValue="658">14</value> 
-      <unit type="derivedSI" symbol="A">Alpha</unit> 
-    </data> 
-  </environment> 
+<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="5"'} xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd">
+ <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://appdev.loc:3000/users/occaecati">
+    <data id="0">
+      <tag>freakin lasers</tag>
+      <tag>humidity</tag>
+      <tag>Temperature</tag>
+      <value maxValue="658.0" minValue="658">14</value>
+      <unit type="derivedSI" symbol="A">Alpha</unit>
+    </data>
+  </environment>
 </eeml>
 XML
     end

@@ -12,19 +12,19 @@ def datapoint_as_(format, options = {})
     }
   when 'xml'
     data = <<-XML
-<?xml version="1.0" encoding="UTF-8"?> 
-<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.5.1" xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd"> 
-  <environment> 
-    <data> 
-      <datapoints> 
-        <value at="2011-03-02T15:59:56.895922Z">2000</value> 
-      </datapoints> 
-    </data> 
-  </environment> 
-</eeml> 
+<?xml version="1.0" encoding="UTF-8"?>
+<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.5.1" xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd">
+  <environment>
+    <data>
+      <datapoints>
+        <value at="2011-03-02T15:59:56.895922Z">2000</value>
+      </datapoints>
+    </data>
+  </environment>
+</eeml>
 XML
   end
- 
+
   # Add extra options we passed
   if options[:with]
     options[:with].each do |field, value|

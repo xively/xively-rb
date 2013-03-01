@@ -47,10 +47,10 @@ describe "default datastream xml parser" do
 
     it "should raise exception if passed xml without any datastreams" do
       xml = <<-XML
-<?xml version="1.0" encoding="UTF-8"?> 
-<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.5.1" xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd"> 
-  <environment id="504" creator="http://appdev.loc:3000/users/occaecati"> 
-  </environment> 
+<?xml version="1.0" encoding="UTF-8"?>
+<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.5.1" xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd">
+  <environment id="504" creator="http://appdev.loc:3000/users/occaecati">
+  </environment>
 </eeml>
 XML
 
@@ -106,9 +106,9 @@ XML
     it "should raise exception if passed xml without any datastreams" do
       xml = <<-XML
 <?xml version="1.0" encoding="UTF-8"?>
-<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="5" xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd"> 
- <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://appdev.loc:3000/users/occaecati"> 
-  </environment> 
+<eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="5" xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd">
+ <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://appdev.loc:3000/users/occaecati">
+  </environment>
 </eeml>
 XML
 
@@ -126,7 +126,7 @@ XML
 
   it "should handle being passed xml containing datapoints with no timestamp" do
     xml = <<-XML
-<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.5.1" xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd"> 
+<eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.5.1" xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd">
   <environment>
     <data>
       <datapoints>

@@ -175,7 +175,7 @@ describe "default feed json templates" do
       json[:location][:disposition].should be_nil
       json[:location][:ele].should be_nil
     end
-    
+
     it "should ignore location_waypoints if it is nil" do
       @feed.location_disposition = 'mobile'
       @feed.location_waypoints = nil
@@ -183,7 +183,7 @@ describe "default feed json templates" do
       json[:location][:disposition].should == 'mobile'
       json[:location][:waypoints].should be_nil
     end
-    
+
     it "should use location_waypoints if it is set" do
       @feed.location_disposition = 'mobile'
       @feed.location_waypoints = [

@@ -18,7 +18,7 @@ describe "default search result json templates" do
       }
     end
   end
- 
+
   context "0.6-alpha" do
     it "should represent Pachube v1 json for search results" do
       @search_result.results.each do |feed|
@@ -31,7 +31,7 @@ describe "default search result json templates" do
         :results => ["feed_6_json"]
       }
     end
-  end 
+  end
 end
 
 

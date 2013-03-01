@@ -62,7 +62,7 @@ describe "default datastream xml templates" do
       Nokogiri.parse(@datastream.generate_xml("0.5.1")).at_xpath("//xmlns:max_value").should be_nil
       Nokogiri.parse(@datastream.generate_xml("0.5.1")).at_xpath("//xmlns:min_value").should be_nil
     end
- 
+
     it "should ignore blank units" do
       @datastream.unit_symbol = nil
       @datastream.unit_label = nil
