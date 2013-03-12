@@ -3,6 +3,5 @@ language: ruby
 env: COVERAGE=on
 script: bundle exec rspec spec
 rvm:
- - 1.8.7
  - 1.9.2
  - 1.9.3
