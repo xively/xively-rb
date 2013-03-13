@@ -2,7 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 
 require 'rspec'
-
+require 'webmock/rspec'
 require 'time'
 
 if !defined?(JRUBY_VERSION)
