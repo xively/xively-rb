@@ -29,7 +29,7 @@ describe "Template helpers" do
 
     it "should handle complex tags" do
       string = 'apple, orange, "red room", "  I like space  ", "tennis, later"'
-      parse_tag_string(string).should == 
+      parse_tag_string(string).should ==
         [
           "  I like space  ",
           "apple",
@@ -41,7 +41,7 @@ describe "Template helpers" do
 
     it "should handle tags with escaped double quote" do
       string = 'apple, orange, "horse:height=2\"", "  I like space  ", "tennis, later", "\"quote\""'
-      parse_tag_string(string).should == 
+      parse_tag_string(string).should ==
         [
           "  I like space  ",
           "\"quote\"",

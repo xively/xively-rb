@@ -8,17 +8,17 @@ def trigger_as_(format, options = {})
     data = {"threshold_value"=>"44", "notified_at"=>"", "url"=>"http://www.postbin.org/zc9sca", "trigger_type"=>"eq", "id"=>40, "stream_id"=>"1", "environment_id"=>424, "user"=>"lebreeze"}
   when 'xml'
     data = <<XML
-<?xml version="1.0" encoding="UTF-8"?> 
-<datastream-trigger> 
-  <id type="integer">40</id> 
-  <url>http://www.postbin.org/zc9sca</url> 
-  <trigger-type>eq</trigger-type> 
-  <threshold-value type="float">44</threshold-value> 
-  <notified-at type="datetime"></notified-at> 
-  <user>lebreeze</user> 
-  <environment-id type="integer">424</environment-id> 
-  <stream-id>1</stream-id> 
-</datastream-trigger> 
+<?xml version="1.0" encoding="UTF-8"?>
+<datastream-trigger>
+  <id type="integer">40</id>
+  <url>http://www.postbin.org/zc9sca</url>
+  <trigger-type>eq</trigger-type>
+  <threshold-value type="float">44</threshold-value>
+  <notified-at type="datetime"></notified-at>
+  <user>lebreeze</user>
+  <environment-id type="integer">424</environment-id>
+  <stream-id>1</stream-id>
+</datastream-trigger>
 XML
   end
 

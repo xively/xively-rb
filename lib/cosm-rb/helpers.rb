@@ -27,7 +27,7 @@ module Cosm
       end
       # strip the tags
       tags.map { |t|
-        /\A\s*("(.*)"|(.*))\s*\Z/.match(t) 
+        /\A\s*("(.*)"|(.*))\s*\Z/.match(t)
         $2 || $3.strip
       }.sort{|a,b| a.downcase <=> b.downcase}
     end

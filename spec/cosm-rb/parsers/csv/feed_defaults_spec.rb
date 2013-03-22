@@ -64,9 +64,9 @@ describe "default feed csv parser" do
     it "should raise an error if passed some wild csv with more than max permitted three columns" do
       csv =<<-CSV
 Date-Time, System HOA,Jockey Pump HOA,VFD Pump HOA,Lag Pump HOA,Lag Pump 2 HOA,Power Monitor,Water Level Relay,High Discharge Pressure,Reset Function,Jockey Running,VFD Run,Lag Pump Run,VFD Fault,Filter In Auto,Filter In Hand,Differential Press 1,Filter 1 Running,High Limit Switch,Low Limit Switch,Lag Pump Running,VFD Run Output Auto,VFD Pump On,Lag Pump,Lag Pump 1 On,System Auto Mode,Fault,Lag Pump 2 Run,Jockey On,Jockey Pump Run,Lag Pump 2,Filter Forward,Filter Reverse,Filter Solenoid,Pressure,Flow,Unknown?,VFD Input,VFD Output,
-2009;Apr;19;12;44;15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, 
-2009;Apr;19;12;44;30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, 
-2009;Apr;19;12;48;52, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, 
+2009;Apr;19;12;44;15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1,
+2009;Apr;19;12;44;30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1,
+2009;Apr;19;12;48;52, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1,
 CSV
       expect {
         Cosm::Feed.new(csv)
@@ -108,7 +108,7 @@ CSV
     context "unwanted whitespace" do
       it "should strip whitespace from v2" do
         dodgy_csv = <<-CSV
-      0, 00035  
+      0, 00035
 stream1, 0012
       2, 2012-08-02T14:11:14Z ," red car "
 CSV

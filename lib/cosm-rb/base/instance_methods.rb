@@ -1,7 +1,7 @@
 module Cosm
   module Base
     module InstanceMethods
-      
+
       # Converts a model that extends Cosm::Base into it's equivalent Cosm object
       #  this can then be used to convert into xml, json or csv
       def to_cosm

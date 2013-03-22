@@ -22,7 +22,7 @@ module Cosm
               else
                 csv << Cosm::CSV.generate_line([id, datastream.id, datastream.updated.iso8601(6), datastream.current_value]).strip
               end
- 
+
 
             end
           else
