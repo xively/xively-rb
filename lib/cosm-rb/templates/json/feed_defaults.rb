@@ -36,7 +36,9 @@ module Cosm
             :user => ({ :login => owner_login } if owner_login),
             :version => "1.0.0",
             :datastreams => datastreams.map {|ds| ds.generate_json("1.0.0", options.merge({:hide_version => true}))},
-            :location => location_hash(options)
+            :location => location_hash(options),
+            :product_id => product_id,
+            :device_serial => device_serial
           }
         end
 

@@ -16,6 +16,8 @@ RSpec::Matchers.define :contain_feed_eeml_for_version do |eeml_version|
       environment.at_xpath("//xmlns:icon").content.should == hash["icon"]
       environment.at_xpath("//xmlns:website").content.should == hash["website"]
       environment.at_xpath("//xmlns:email").content.should == hash["email"]
+      environment.at_xpath("//xmlns:product_id").content.should == hash["product_id"]
+      environment.at_xpath("//xmlns:device_serial").content.should == hash["device_serial"]
       tags = environment.xpath("//xmlns:tag")
       hash["tags"].split(',').map(&:strip).sort{|a,b| a.downcase <=> b.downcase}.each_with_index do |tag, index|
         tags[index].content.should == tag

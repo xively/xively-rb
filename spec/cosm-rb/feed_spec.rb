@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Cosm::Feed do
 
   it "should have a constant that defines the allowed keys" do
-    Cosm::Feed::ALLOWED_KEYS.should == %w(id creator owner_login datastreams description email feed icon location_disposition location_domain location_ele location_exposure location_lat location_lon location_name location_waypoints private status tags title updated created website auto_feed_url csv_version)
+    Cosm::Feed::ALLOWED_KEYS.should == %w(id creator owner_login datastreams description email feed icon location_disposition location_domain location_ele location_exposure location_lat location_lon location_name location_waypoints private status tags title updated created website auto_feed_url product_id device_serial csv_version)
   end
 
   context "attr accessors" do
