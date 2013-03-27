@@ -32,6 +32,8 @@ module Cosm
                   environment.icon env.icon
                   environment.website env.website
                   environment.email env.email
+                  environment.product_id env.product_id
+                  environment.device_serial env.device_serial
                   environment.private_ env.private
                   parse_tag_string(env.tags).each do |tag|
                     environment.tag tag

@@ -29,6 +29,8 @@ module Cosm
                 environment.icon icon unless icon.blank?
                 environment.website website unless website.blank?
                 environment.email email unless email.blank?
+                environment.product_id product_id unless product_id.blank?
+                environment.device_serial device_serial unless device_serial.blank?
                 environment.private_ self.private.to_s
                 parse_tag_string(tags).each do |tag|
                   environment.tag tag

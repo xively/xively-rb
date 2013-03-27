@@ -28,6 +28,8 @@ describe "default feed json templates" do
       json[:created].should == "2011-01-01T00:00:00.000000+00:00"
       json[:email].should == "abc@example.com"
       json[:creator].should == "http://cosm.com/users/skeletor"
+      json[:product_id].should == "product_id"
+      json[:device_serial].should == "device_serial"
       json[:location][:disposition].should == "fixed"
       json[:location][:name].should == "office"
       json[:location][:exposure].should == "indoor"
