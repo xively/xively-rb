@@ -1,4 +1,4 @@
-source :rubygems
+source 'https://rubygems.org'
 
 # Gem dependencies specified in cosm-rb.gemspec
 gemspec
