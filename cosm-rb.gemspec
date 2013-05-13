@@ -35,7 +35,7 @@ Gem::Specification.new do |s|
     p "Could not detect ruby version"
   end
 
-  s.extra_rdoc_files = ["README.md", "CHANGELOG.md", "MIT-LICENSE"]
+  s.extra_rdoc_files = ["README.md", "CHANGELOG.md", "LICENSE.md", "CONTRIBUTING.md"]
   s.rdoc_options << '--main' << 'README'
 end
 
