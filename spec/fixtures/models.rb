@@ -1,7 +1,7 @@
 class Feed
-  extend Cosm::Base
+  extend Xively::Base
 
-  is_cosm :feed
+  is_xively :feed
   attr_accessor :datastreams
   attr_accessor :feed
   attr_accessor :creator
@@ -23,7 +23,7 @@ class Feed
 
   def attributes
     attributes = {}
-    Cosm::Feed::ALLOWED_KEYS.each do |key|
+    Xively::Feed::ALLOWED_KEYS.each do |key|
       attributes[key] = self.send(key) if self.respond_to?(key)
     end
     attributes
@@ -31,9 +31,9 @@ class Feed
 end
 
 class Datastream
-  extend Cosm::Base
+  extend Xively::Base
 
-  is_cosm :datastream, {:id => :stream_id}
+  is_xively :datastream, {:id => :stream_id}
 
   attr_accessor :feed
   attr_accessor :feed_id
@@ -52,7 +52,7 @@ class Datastream
 
   def attributes
     attributes = {}
-    Cosm::Datastream::ALLOWED_KEYS.each do |key|
+    Xively::Datastream::ALLOWED_KEYS.each do |key|
       attributes[key] = self.send(key) if self.respond_to?(key)
     end
     attributes
@@ -61,16 +61,16 @@ class Datastream
 end
 
 class Datapoint
-  extend Cosm::Base
+  extend Xively::Base
 
-  is_cosm :datapoint
+  is_xively :datapoint
   attr_accessor :datastream_id
   attr_accessor :at
   attr_accessor :value
 
   def attributes
     attributes = {}
-    Cosm::Datapoint::ALLOWED_KEYS.each do |key|
+    Xively::Datapoint::ALLOWED_KEYS.each do |key|
       attributes[key] = self.send(key) if self.respond_to?(key)
     end
     attributes

@@ -22,7 +22,7 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
   end
 
   def match_csv_v1_feed(feed, formatted_feed)
-    csv = Cosm::CSV.parse(formatted_feed.strip)
+    csv = Xively::CSV.parse(formatted_feed.strip)
     csv.length.should == 1
     csv = csv.first
     feed.datastreams.length.should == csv.length
@@ -33,7 +33,7 @@ RSpec::Matchers.define :fully_represent_feed do |format, formatted_feed|
   end
 
   def match_csv_v2_feed(feed, formatted_feed)
-    csv = Cosm::CSV.parse(formatted_feed.strip)
+    csv = Xively::CSV.parse(formatted_feed.strip)
     feed.datastreams.length.should == csv.length
     feed.datastreams.each do |datastream|
       row = csv.detect {|d| d.first == datastream.id}

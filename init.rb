@@ -1,2 +1,2 @@
-require 'lib/cosm-rb'
+require 'lib/xively-rb'
 

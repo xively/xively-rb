@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-# Gem dependencies specified in cosm-rb.gemspec
+# Gem dependencies specified in xively-rb.gemspec
 gemspec
 
 group :development do

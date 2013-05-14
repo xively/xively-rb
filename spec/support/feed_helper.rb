@@ -1,24 +1,24 @@
 def feed_as_(format, options = {})
   # Default data
-  # This data is based on http://api.cosm.com/v2/feeds/504
+  # This data is based on http://api.xively.com/v2/feeds/504
   case format.to_s
   when 'hash'
     data = {
       "updated"=>Time.parse('2011-01-02'),
       "created"=>Time.parse('2011-01-01'),
-      "title"=>"Cosm Office Environment",
+      "title"=>"Xively Office Environment",
       "private"=>false,
       "id"=>504,
-      "icon"=>"http://cosm.com/logo.png",
-      "website"=>"http://cosm.com",
+      "icon"=>"http://xively.com/logo.png",
+      "website"=>"http://xively.com",
       "tags" => "kittens , sofa, aardvark",
-      "description"=>"Sensors in cosm.com's headquarters.",
+      "description"=>"Sensors in xively.com's headquarters.",
       "feed" => "http://test.host/testfeed.html?random=890299&rand2=91",
       "auto_feed_url" => "http://test.host2/testfeed.xml?q=something",
       "owner_login" => "skeletor",
       "email"=>"abc@example.com",
       "status"=>"live",
-      "creator"=>"http://cosm.com/users/skeletor",
+      "creator"=>"http://xively.com/users/skeletor",
       "product_id" => "product_id",
       "device_serial" => "device_serial",
       'location_domain' => 'physical',
@@ -181,14 +181,14 @@ def feed_as_json(version)
   case version
   when "1.0.0"
     {
-      'title' => 'Cosm Office Environment',
+      'title' => 'Xively Office Environment',
       'status' => 'live',
       'updated' => '2011-02-16T16:21:01.834174Z',
       'tags' => ['hq', 'office'],
-      'description' => 'Sensors in cosm.com\'s headquarters.',
-      'website' => 'http://www.cosm.com/',
+      'description' => 'Sensors in xively.com\'s headquarters.',
+      'website' => 'http://www.xively.com/',
       'private' => 'false',
-      'creator' => 'http://cosm.com/users/skeletor',
+      'creator' => 'http://xively.com/users/skeletor',
       'version' => '1.0.0',
       'user' => {
         'login' => 'skeletor'
@@ -203,7 +203,7 @@ def feed_as_json(version)
         'lat' => 51.5235375648154,
         'name' => 'office'
       },
-        'feed' => 'http://api.cosm.com/v2/feeds/504.json',
+        'feed' => 'http://api.xively.com/v2/feeds/504.json',
         "auto_feed_url" => "http://test.host2/testfeed.xml?q=something",
         'datastreams' =>
       [
@@ -357,9 +357,9 @@ def feed_as_json(version)
     }],
       "status" => "live",
       "updated" => "2011-02-22T14:28:50.590716Z",
-      "description" => "Sensors in cosm.com's headquarters.",
-      "title" => "Cosm Office environment",
-      "website" => "http://www.cosm.com/",
+      "description" => "Sensors in xively.com's headquarters.",
+      "title" => "Xively Office environment",
+      "website" => "http://www.xively.com/",
       "version" => "0.6-alpha",
       "id" => 504,
       "location" => {
@@ -371,7 +371,7 @@ def feed_as_json(version)
       "lat" => 51.5235375648154,
       "name" => "office"
     },
-      "feed" => "http://api.cosm.com/v2/feeds/504.json"
+      "feed" => "http://api.xively.com/v2/feeds/504.json"
     }
   else
     raise "No such JSON version"
@@ -387,7 +387,7 @@ def feed_as_xml(version, except_node = nil, omit_version = false)
 <?xml version="1.0" encoding="UTF-8"?>
 <eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="0.5.1"'} xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd">
  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred">
-    <title>Cosm Office environment</title>
+    <title>Xively Office environment</title>
     <feed>http://test.host/v2/feeds/2357.xml</feed>
     <auto_feed_url>http://test.host2/testfeed.xml?q=something</auto_feed_url>
     <status>frozen</status>
@@ -436,7 +436,7 @@ XML
 <?xml version="1.0" encoding="UTF-8"?>
 <eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="0.5.1"'} xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd">
  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred">
-    <title>Cosm Office environment</title>
+    <title>Xively Office environment</title>
     <feed>http://test.host/v2/feeds/2357.xml</feed>
     <status>frozen</status>
     <description>meh</description>
@@ -484,7 +484,7 @@ XML
 <?xml version="1.0" encoding="UTF-8"?>
 <eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="0.5.1"'} xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd">
  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred">
-    <title>Cosm Office environment</title>
+    <title>Xively Office environment</title>
     <feed>http://test.host/v2/feeds/2357.xml</feed>
     <status>frozen</status>
     <description>meh</description>
@@ -529,7 +529,7 @@ XML
 <?xml version="1.0" encoding="UTF-8"?>
 <eeml xmlns="http://www.eeml.org/xsd/0.5.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="0.5.1"'} xsi:schemaLocation="http://www.eeml.org/xsd/0.5.1 http://www.eeml.org/xsd/0.5.1/0.5.1.xsd">
  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred">
-    <title>Cosm Office environment</title>
+    <title>Xively Office environment</title>
     <feed>http://test.host/v2/feeds/2357.xml</feed>
     <status>frozen</status>
     <description>meh</description>
@@ -582,7 +582,7 @@ XML
 <?xml version="1.0" encoding="UTF-8"?>
 <eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="5"'} xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd">
  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred">
-    <title>Cosm Office environment</title>
+    <title>Xively Office environment</title>
     <feed>http://test.host/v2/feeds/2357.xml</feed>
     <status>frozen</status>
     <description>meh</description>
@@ -611,7 +611,7 @@ XML
 <?xml version="1.0" encoding="UTF-8"?>
 <eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="5"'} xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd">
  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred">
-    <title>Cosm Office environment</title>
+    <title>Xively Office environment</title>
     <feed>http://test.host/v2/feeds/2357.xml</feed>
     <status>frozen</status>
     <description>meh</description>
@@ -643,7 +643,7 @@ XML
 <?xml version="1.0" encoding="UTF-8"?>
 <eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="5"'} xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd">
  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred">
-    <title>Cosm Office environment</title>
+    <title>Xively Office environment</title>
     <feed>http://test.host/v2/feeds/2357.xml</feed>
     <status>frozen</status>
     <description>meh</description>
@@ -678,7 +678,7 @@ XML
 <?xml version="1.0" encoding="UTF-8"?>
 <eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="5"'} xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd">
  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred">
-    <title>Cosm Office environment</title>
+    <title>Xively Office environment</title>
     <feed>http://test.host/v2/feeds/2357.xml</feed>
     <status>frozen</status>
     <description>meh</description>
@@ -713,7 +713,7 @@ XML
 <?xml version="1.0" encoding="UTF-8"?>
 <eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="5"'} xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd">
  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred">
-    <title>Cosm Office environment</title>
+    <title>Xively Office environment</title>
     <feed>http://test.host/v2/feeds/2357.xml</feed>
     <status>frozen</status>
     <description>meh</description>
@@ -745,7 +745,7 @@ XML
 <?xml version="1.0" encoding="UTF-8"?>
 <eeml xmlns="http://www.eeml.org/xsd/005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" #{omit_version ? '' : 'version="5"'} xsi:schemaLocation="http://www.eeml.org/xsd/005 http://www.eeml.org/xsd/005/005.xsd">
  <environment updated="2011-02-16T16:21:01.834174Z" id="504" creator="http://test.host/users/fred">
-    <title>Cosm Office environment</title>
+    <title>Xively Office environment</title>
     <feed>http://test.host/v2/feeds/2357.xml</feed>
     <status>frozen</status>
     <description>meh</description>

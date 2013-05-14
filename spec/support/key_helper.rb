@@ -1,12 +1,12 @@
 def key_as_(format, options = {})
   # Default data
-  # This data is based on http://api.cosm.com/v2/feeds/504
+  # This data is based on http://api.xively.com/v2/feeds/504
   case format.to_s
   when 'hash', 'json'
     data = { "id" => 40, "key" => "abcdefghasdfaoisdj109usasdf0a9sf", "label" => "Our awesome label",
       "user" => "lebreeze", "expires_at" => 12345, "private_access" => true,
       "permissions" => [
-        { "source_ip" => "127.0.0.1", "referer" => "http://cosm.com",
+        { "source_ip" => "127.0.0.1", "referer" => "http://xively.com",
           "access_methods" => %w(get put post delete),
           "resources" => [
             { "feed_id" => 424, "datastream_id" => "1" }
@@ -25,7 +25,7 @@ def key_as_(format, options = {})
   <private-access>true</private-access>
   <permissions>
     <permission>
-      <referer>http://cosm.com</referer>
+      <referer>http://xively.com</referer>
       <source-ip>127.0.0.1</source-ip>
       <access-methods>
         <access-method>GET</access-method>

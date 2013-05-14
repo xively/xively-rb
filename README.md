@@ -1,10 +1,10 @@
-[![Build Status](https://secure.travis-ci.org/cosm/cosm-rb.png)](http://travis-ci.org/cosm/cosm-rb)
+[![Build Status](https://secure.travis-ci.org/xively/xively-rb.png)](http://travis-ci.org/xively/xively-rb)
 
-## Cosm gem
+## Xively gem
 
-Use this gem if you would like to convert between Cosm data formats or represent Cosm objects in Ruby.
-You can also interact with the Cosm REST API using this gem.
+Use this gem if you would like to convert between Xively data formats or represent Xively objects in Ruby.
+You can also interact with the Xively REST API using this gem.
 
 ### Documentation
 
-Documentation can be found on the [wiki](https://github.com/cosm/cosm-rb/wiki/Documentation).
+Documentation can be found on the [wiki](https://github.com/xively/xively-rb/wiki/Documentation).

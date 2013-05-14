@@ -1,10 +1,10 @@
-Whether it's clarifying how to use them, requesting new features, finding bugs, or contributing to writing them yourself, the Cosm libraries are completely open-source and always being updated, and we want to hear your thoughts.
+Whether it's clarifying how to use them, requesting new features, finding bugs, or contributing to writing them yourself, the Xively libraries are completely open-source and always being updated, and we want to hear your thoughts.
 
 Feel free to fork and improve this library any way you want. If you feel that the library benefits from your changes, please open a pull request and contribute back!
 
 
 ## Getting Help with Using a Library
-For discussion, questions, and help with implementation, we use [Stack Overflow](http://stackoverflow.com/questions/tagged/cosm).  Be sure to use a `cosm` tag.
+For discussion, questions, and help with implementation, we use [Stack Overflow](http://stackoverflow.com/questions/tagged/xively).  Be sure to use a `xively` tag.
 
 ## Requesting New Features
 If you've got a feature request for this library, file it with the GitHub issue tracker.  (You can find it on the Github page for each library, under the "Issues" tab.)  We're always expanding our libraries, and would love to hear your ideas.
@@ -17,7 +17,7 @@ If you find a problem with a library, whether you are stuck or want to address i
 #### Reporting bugs effectively
 
 Please include as much information as you have available.  Where possible:
-  - your IDE software and library version (e.g. Visual Studio 2012, mbed Online IDE, Cosm Java Lib 1.0)
+  - your IDE software and library version (e.g. Visual Studio 2012, mbed Online IDE, Xively Java Lib 1.0)
   - what device you were running the code on (e.g. iOS 5, Android 4.0, Arduino Uno)
   - how you are connected to the web (e.g. Gainspan wireless module, Ethernet)
   - and any more detail you have (e.g. what are the underlying versions of software stack)
@@ -25,7 +25,7 @@ Please include as much information as you have available.  Where possible:
 Mention very precisely what went wrong. For example, instead of "I can't add a datapoint", it is more helpful to say "the library returned an error 'X' when I tried datapoint.upload()".  What did you expect to happen? What happened instead? Describe the exact steps you could take to recreate it.
 
 
-## Contributing to Cosm Libraries
+## Contributing to Xively Libraries
 If you see an improvement that you can make to a library, bring it on!  All of our libraries are open-source and constantly improving, so take a look at our guidelines below and send in your contribution.
 
 ### Include Tests
@@ -40,18 +40,18 @@ patches or inline code blocks for discussing and merging the changes.
 
 1) Clone the Repo of the library you want to contribute to:
 ```
-git clone git://github.com/cosm/cosm-rb.git
+git clone git://github.com/xively/xively-rb.git
 ```
 2) Create a new Branch, named for the feature you're addressing or adding:
 ```
-cd cosm-rb
+cd xively-rb
 git checkout -b new_feature_branch
 ```
 3) Code:
 
 Do what you do best here!  Follow these guidelines, and be mindful of how your change will impact the whole of the library: 
 - write with testing in mind (and write tests!)
-- keep the transport layer of a library (e.g. TCP/HTTP) separate from the Cosm layer (e.g. Cosm Feed object)
+- keep the transport layer of a library (e.g. TCP/HTTP) separate from the Xively layer (e.g. Xively Feed object)
 - make sure it won't break anything that relied on a previous version
 - check to see if documentation updates are needed
 
@@ -59,7 +59,7 @@ Do what you do best here!  Follow these guidelines, and be mindful of how your c
 
 Many fixes require a multitude of commits, but when submitting a pull request, we'd prefer if you'd squash them into a single commit for readability:
 ```
-git remote add upstream https://github.com/cosm/cosm-rb
+git remote add upstream https://github.com/xively/xively-rb
 git fetch upstream
 git checkout new_feature_branch
 git rebase upstream/master
@@ -74,13 +74,13 @@ git pull --rebase
 
 5) Issue a Pull Request
 
-First, push your rebased single commit to your remote fork of the Cosm library
+First, push your rebased single commit to your remote fork of the Xively library
 ```
 git remote add mine git@github.com:<your user name>/discourse.git
 git push mine new_feature_branch
 ```
 Then:
-- Navigate to the  repository you just pushed to (e.g. https://github.com/your-user-name/cosm-rb)
+- Navigate to the  repository you just pushed to (e.g. https://github.com/your-user-name/xively-rb)
 - Click "Pull Request"
 - Select your branch name (new_feature_branch) in the branch field
 - Click "Update Commit Range"
