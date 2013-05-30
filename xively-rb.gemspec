@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.homepage    = "http://github.com/xively/xively-rb"
   s.summary     = "A library for communicating with the Xively REST API, parsing and rendering Xively feed formats"
   s.description = "A library for communicating with the Xively REST API, parsing and rendering Xively feed formats"
+  s.license     = "BSD 3-Clause License"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
