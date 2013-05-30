@@ -25,6 +25,7 @@ require 'xively-rb/trigger'
 require 'xively-rb/key'
 require 'xively-rb/permission'
 require 'xively-rb/resource'
+require 'xively-rb/version'
 
 require 'xively-rb/client'
 
