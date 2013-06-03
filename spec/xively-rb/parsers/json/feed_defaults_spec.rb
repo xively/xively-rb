@@ -40,6 +40,13 @@ describe "default feed json parser" do
       feed.datastreams[0].unit_symbol.should == ""
       feed.datastreams[0].tags.should == ""
     end
+
+    it "should throw an error if datastreams is not an array" do
+      json = "{\"version\":\"1.0.0\",\"datastreams\":\"foobar\"}"
+      expect {
+        Xively::Feed.new(json)
+      }.should raise_error(Xively::Parsers::JSON::InvalidJSONError, "\"datastreams\" must be an array")
+    end
   end
 end
 
