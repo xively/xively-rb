@@ -1,3 +1,3 @@
 module Xively #:nodoc:
-  VERSION = '0.2.09'
+  VERSION = '0.2.10'
 end
