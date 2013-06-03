@@ -29,7 +29,8 @@ module Xively
           hash["created"] = hash["created"]
           hash["status"] = hash["status"]
           hash["tags"] = join_tags(hash["tags"])
-          hash["datastreams"] = hash["datastreams"].collect do |datastream|
+          raise InvalidJSONError, "\"datastreams\" must be an array" unless hash["datastreams"].nil? || hash["datastreams"].is_a?(Array)
+          hash["datastreams"] = [*hash["datastreams"]].collect do |datastream|
             unit_hash = {}
             if unit = datastream.delete('unit')
               unit_hash['unit_type'] = unit['type']
