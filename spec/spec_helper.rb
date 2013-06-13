@@ -4,6 +4,8 @@ require 'bundler/setup'
 require 'rspec'
 require 'webmock/rspec'
 require 'time'
+require 'coveralls'
+Coveralls.wear!
 
 if !defined?(JRUBY_VERSION)
   if ENV["COVERAGE"] == "on"
